@@ -1,0 +1,65 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+
+
+    <div class="container-fluid">
+        <br>
+        <div class="card text-center">
+            <div class="card-header">
+                <h3 class="text-info"><img src="{{ asset('Images/groupe.jpg') }}" class="img img-fluid" alt="" width="50" height="50">
+                  {{ groupe.nomgroup }} : {{ 'grp-versement.titre'|trans }}
+                </h3>
+            </div>
+            <div class="card-body">
+                <form class="container" id="formmembre" action="#" method="POST" enctype="multipart/form-data">
+
+
+                    <div class="form-group">
+
+                            <form action="#" method="post" enctype="multipart/form-data" autocomplete="off">
+                                <div class="form-group">
+                                    <label class="float-left" for="date_versement">{{ 'grp-versement.date'|trans }}</label>
+                                    <div class="input-group date" id="date_versement" data-target-input="nearest">
+                                        <input type="text" id="date_versement" name="date_versement"  class="form-control datetimepicker-input" data-target="#date_versement"/>
+                                        <div class="input-group-append" data-target="#date_versement" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script>
+                                    $('#date_versement').datetimepicker({
+                                        format: 'DD/MM/YYYY'
+                                    });
+                                </script>
+                                <div class="form-group">
+
+                                    <label class="float-left"  for="numero_compte">{{ 'grp-versement.numero'|trans }}</label>
+                                    <select id="numero" name="numero_compte" class="form-control" required>
+                                        {% for numero in numero_compte %}
+                                            <option value="{{ numero.id }}" selected>{{ numero.banque }} - {{ numero.numeroCompte }}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="float-left"  for="montant">{{ 'grp-versement.montant'|trans }}</label>
+                                    <input  name="montant" type="text" class="form-control" id="montant"   required autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <label class="float-left"  for="fichier_cheque">{{ 'grp-versement.info'|trans }}</label>
+                                    <input  name="fichier_cheque" type="file" class="form-control" id="fichier_cheque"   required >
+                                </div>
+                                <div class="mx-auto">
+                                    <button type="submit" class="btn btn-primary text-right">{{ 'grp-versement.valider'|trans }}</button></div>
+                            </form>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

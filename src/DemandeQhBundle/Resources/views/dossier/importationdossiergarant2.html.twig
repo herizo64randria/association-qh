@@ -1,0 +1,247 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+
+{% block body_container %}
+
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+            background-color: #0088CC;
+        }
+        fieldset {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,b,input,select,textarea,p {
+            text-shadow: 0.5px 0.5px 2px black;
+
+        }
+
+    </style>
+    <br> <br>
+    <form action="#" method="post" id="formulaire" enctype="multipart/form-data">
+        <div class="container mt-auto ">
+            <h1 class="text-success" >{{ 'importationdossierQH.titre2'|trans }}</h1><br>
+
+            <div class="row">
+                <div class="col-12">
+                    <div id="myCarousel" class="carousel slide " data-interval="false">
+
+                        <div class="carousel-inner">
+
+                            <fieldset class="groove">
+                                <br>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>{{ 'importationdossierQH.formulaire_garant'|trans }}</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if( dossier.formulaireGarantie1 !=null) %}
+                                                <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.formulaireGarantie1) }}">
+                                                    {{ 'importationdossierQH.voir'|trans }}
+                                                </a>-
+                                                <a href="#" id="show_formulaire_garant1">Modifier</a>
+                                                <div class="d-none" id="modif_formulaire_garant1">
+                                                    <input class="form-control" type="file" id="formulaire_garant1" name="formulaire_garant1"><br>
+                                                </div>
+                                            {% else %}
+                                                <input class="form-control" type="file" id="formulaire_garant1" name="formulaire_garant1">
+                                            {% endif %}
+                                            <br>
+                                            <b class="text-danger alert-danger" id="err_formulaire_garant1"></b>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label for="">{{ 'importationdossierQH.cheque1'|trans }}</label><br>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>{{ 'importationdossierQH.chequebarre'|trans }} 1</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if(dossier.chequeBare1 !=null) %}
+                                                <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.chequeBare1) }}">
+                                                    {{ 'importationdossierQH.voir'|trans }}
+                                                </a>-
+                                                <a href="#" id="show_chequebarre1">Modifier</a>
+                                                <div class="d-none " id="modif_chequebarre1">
+                                                    <input class="form-control " type="file" id="chequebarre1" name="chequebarre1"><br>
+                                                </div>
+                                            {% else %}
+                                                <input class="form-control "  type="file" id="chequebarre1" name="chequebarre1">
+                                            {% endif %}
+                                            <br>
+                                            <b class="text-danger" id="err_chequebarre"></b>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>{{ 'importationdossierQH.chequebarre'|trans }} 2</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if(dossier.cheque1Bare1 !=null) %}
+                                                <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.cheque1Bare1) }}">
+                                                    {{ 'importationdossierQH.voir'|trans }}
+                                                </a>-
+                                                <a href="#" id="show_cheque1barre1">Modifier</a>
+                                                <div class="d-none " id="modif_cheque1barre1">
+                                                    <input class="form-control " type="file" id="cheque1barre1" name="cheque1barre1"><br>
+                                                </div>
+                                            {% else %}
+                                                <input class="form-control "  type="file" id="chequebarre1" name="cheque1barre1">
+                                            {% endif %}
+                                            <br>
+                                            <b class="text-danger" id="err_cheque1barre"></b>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>{{ 'importationdossierQH.chequebarre'|trans }} 3</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {% if(dossier.cheque2Bare1 !=null) %}
+                                                <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.cheque2Bare1) }}">
+                                                    {{ 'importationdossierQH.voir'|trans }}
+                                                </a>-
+                                                <a href="#" id="show_cheque2barre1">Modifier</a>
+                                                <div class="d-none " id="modif_cheque2barre1">
+                                                    <input class="form-control " type="file" id="cheque2barre1" name="cheque2barre1"><br>
+                                                </div>
+                                            {% else %}
+                                                <input class="form-control "  type="file" id="cheque2barre1" name="cheque2barre1">
+                                            {% endif %}
+                                            <br>
+                                            <b class="text-danger" id="err_cheque2barre"></b>
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                </div>
+                                <button  type="submit" class="btn-link btn btn-lg text-center float-right " id="import" >{{ 'demandeqh_ajouter.suivant'|trans }}</button>
+                            </fieldset>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        $(document).ready(function() {
+            $("#show_formulaire_garant1").click(function(){
+                    $("#modif_formulaire_garant1").removeClass("d-none");
+                    $("#modif_formulaire_garant1").addClass("d-block");
+                }
+
+            )
+            $("#show_chequebarre1").click(function(){
+                    $("#modif_chequebarre1").removeClass("d-none");
+                    $("#modif_chequebarre1").addClass("d-block");
+                }
+
+            )
+            $("#show_cheque1barre1").click(function(){
+                    $("#modif_cheque1barre1").removeClass("d-none");
+                    $("#modif_cheque1barre1").addClass("d-block");
+                }
+
+            )
+            $("#show_cheque2barre1").click(function(){
+                    $("#modif_cheque2barre1").removeClass("d-none");
+                    $("#modif_cheque2barre1").addClass("d-block");
+                }
+
+            )
+            tailleFichier('#formulaire_garant1','#err_formulaire_garant1');
+            tailleFichier('#chequebarre1','#err_chequebarre1');
+            tailleFichier('#cheque1barre1','#err_cheque1barre1');
+            tailleFichier('#cheque2barre1','#err_cheque2barre1');
+            $("#import").click(function () {
+
+                var ext = $('#formulaire_garant1').val().split('.').pop();
+
+                if (ext != '') {
+
+                    if (testExtension(ext)===false) {
+                        $('#err_formulaire_garant1').html("Choisir une fichier image");
+                        return false;
+
+                    }
+
+                }
+
+                var ext1 = $('#chequebarre1').val().split('.').pop();
+
+                if (ext1 != '') {
+
+                    if (testExtension(ext1)===false) {
+                        $('#err_chequebarre1').html("Choisir une fichier image");
+                        return false;
+                    }
+
+                }
+
+                var ext2 = $('#cheque1barre1').val().split('.').pop();
+
+                if (ext2 != '') {
+
+                    if (testExtension(ext2)===false) {
+                        $('#err_cheque1barre1').html("Choisir une fichier image");
+                        return false;
+                    }
+
+                }
+
+                var ext13 = $('#cheque2barre1').val().split('.').pop();
+
+                if (ext13 != '') {
+
+                    if (testExtension(ext3)===false) {
+                        $('#err_cheque2barre1').html("Choisir une fichier image");
+                        return false;
+                    }
+
+                }
+
+
+            })
+
+            function testExtension(ext) {
+
+                var res = false;
+                var tabext = ["jpg", "jpeg", "png", "gif", "ico"];
+                var i;
+                if (ext) {
+                    ext = ext.toLowerCase();
+                    for (i = 0; i < tabext.length; i++) {
+                        if (tabext[i].toLowerCase() === ext) {
+                            res = true;
+                            break;
+                        }
+                    }
+                }
+                return res;
+            }
+
+            function tailleFichier(id,err_id) {
+                $(id).bind('change', function() {
+
+                    if(this.files[0].size > 8388608){
+
+                        $(err_id).html("Taille de l'image doit inférieur à 5 Méga");
+                        return false;
+                    }
+
+
+                });
+            }
+        })
+
+    </script>
+{% endblock %}

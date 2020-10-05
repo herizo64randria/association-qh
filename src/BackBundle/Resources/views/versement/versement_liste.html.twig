@@ -1,0 +1,109 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}Listes des versements{% endblock %}
+{% block body_container %}
+
+    {% set solde=0%}
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="myTable">
+                <thead>
+                <tr>
+                    <th scope="col">{{ 'versement_liste.photo'|trans }}</th>
+                    <th scope="col">{{ 'versement_liste.nom'|trans }}</th>
+                    <th scope="col">{{ 'versement_liste.date'|trans }}</th>
+                    <th scope="col">{{ 'versement_liste.numero'|trans }}</th>
+                    <th scope="col" class="text-right">{{ 'versement_liste.montant'|trans }}</th>
+                    <th scope="col" class="text-right">{{ 'versement_liste.borderau'|trans }}</th>
+                    <th scope="col" class="text-right">{{ 'versement_liste.action'|trans }}</th>
+
+                    <th scope="col" class="text-right">{{ 'versement_liste.etat'|trans }}</th>
+
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for versements in versements %}
+                    {% set couleur = '' %}
+                    {% set noir = '' %}
+                    {% if  versements.etat == 'En attente de confirmation' %}
+                        {% set couleur = 'alert-primary' %}
+                    {% endif %}
+                    {% if  versements.etat == 'Demande acceptée' %}
+                        {% set couleur = 'alert-success' %}
+                    {% endif %}
+
+                    {% if  versements.etat == 'Demande refusée' %}
+                        {% set couleur = 'alert-danger' %}
+                    {% endif %}
+                    <tr>
+                        <td><img src="{{ asset('document/'~ versements.personne.photo) }}" class="img img-fluid" alt="" width="50" height="50"></td>
+                        <td><a href="{{ path('formulaireVersement',{'id':versements.id}) }}">{{ versements.personne.nom ~' '~ versements.personne.prenom }}</a></td>
+                        <td><strong class="d-none">{{ versements.date|date('Ymd') }}</strong> {{ versements.date|date('d/m/Y') }}</td>
+
+                        <td >
+                            {% if versements.compteHussen %}
+                            {{ versements.compteHussen.numeroCompte}}
+                            {% endif %}
+                        </td>
+                        <td class="text-right">{{ versements.montant|number_format('2',',',' ')}} </td>
+                        {% set solde=solde+versements.montant %}
+
+                        <td class="text-center">
+                            {% for borderau in  versements.borderauUrl %}
+                            <a href="{{ asset('document/'~ borderau.url) }}" target="_blank"><i class="fa fa-paperclip"></i></a>
+                            {% endfor %}
+                        </td>
+
+                        <td><a href="{{ path('formulaireVersement',{'id':versements.id}) }}"><i class="fa fa-eye"></i> détail</a></td>
+
+                        <td style="text-align: center;  {% if noir != "" %}background-color: #dddddd; {% endif %}" class="{{ couleur }}">
+                            {{ versements.etat }}
+                        </td>
+
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    {#SORT DU TABLE#}
+    <link rel="stylesheet" href="{{ asset('assets/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.css') }}">
+    <script src="{{ asset('assets/DataTables/datatables.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                info: false,
+                pageLength: 25,
+                order: [[ 2, "desc" ]],
+                language: {
+                    processing:     "Traitement en cours...",
+                    search:         "Rechercher&nbsp;:",
+                    lengthMenu:    "Afficher _MENU_ &eacute;l&eacute;ments",
+                    info:           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                    infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    infoPostFix:    "",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    emptyTable:     "Aucune donnée disponible dans le tableau",
+                    paginate: {
+                        first:      "Premier",
+                        previous:   "Pr&eacute;c&eacute;dent",
+                        next:       "Suivant",
+                        last:       "Dernier"
+                    },
+                    aria: {
+                        sortAscending:  ": activer pour trier la colonne par ordre croissant",
+                        sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                    }
+                }
+            });
+        });
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{%extends '@CompteAssociation/BaseAssociation.html.twig' %}
+
+{% block body_container %}
+    <style>
+
+        .container .img{
+            text-align:center;
+        }
+        .container .details{
+            border-left:3px solid #ded4da;
+        }
+        .container .details p{
+            font-size:15px;
+            font-weight:bold;
+        }
+    </style>
+    <div class="container-fluid">
+        <br>
+        <div class="card text-center">
+            <div class="card-header">
+                <br>
+            </div>
+            <div class="container">
+                <div class="contact-image">
+                    <img src="{{ asset('Images/assoc.jpg') }}" alt="rocket_contact"/>
+                </div>
+                <form method="post">
+                    <h3>{{ 'creerassociation.titre'|trans  }}</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input readonly type="text" name="Dateassoc" class="form-control"  value="{{ "now"|date('d/m/Y') }}" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="nomassoc" class="form-control" placeholder="{{ 'creerassociation.nom'|trans  }} *" value="" />
+                            </div>
+                            <div class="form-group">
+                                <input type="file" name="photo" class="form-control"  />
+                            </div>
+                            <div class="form-group">
+                               <button type="submit" name="btnSubmit" class="btn btn-info" ><i class="fa fa-plus"></i> {{ 'creerassociation.btn'|trans  }} </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <textarea name="desc" class="form-control" placeholder="{{ 'creerassociation.desc'|trans  }} *" style="width: 100%; height: 150px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

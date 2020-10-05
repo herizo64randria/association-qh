@@ -1,0 +1,137 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}{{ 'demande_confirmation.titre'|trans }}{% endblock %}
+{% block body_container %}
+    {% set res="" %}
+    {% if versements.paiement=="virement" %}
+        {% set res ="Virement" %}
+    {% endif %}
+    {% if versements.paiement=="espece" %}
+        {% set res ="Espèce" %}
+    {%  endif %}
+    {% if versements.paiement=="cheque" %}
+        {% set res ="Chèque" %}
+    {%  endif %}
+<style type="text/css">
+    .btn{text-decoration: none}
+    #mc_embed_signup{background:#0000; clear:left; font:14px Helvetica,Arial,sans-serif; }
+    /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
+       We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+    .card{
+        width: 850px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+    }
+   img{ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);}
+</style>
+<div class="row" >
+    <div id="mc_embed_signup" class=" col-9">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-12" style="font-family: 'Courier New';">
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="text-info text-center">Information sur le demande de versement</h2>
+                            {% if(versements.etat == "En attente de confirmation")%}
+                                <div class="text-center">
+                                    <a href="{{ path('confirmationVersement',{'id':versements.id}) }}" class="btn btn-success btn-lg  center"  name="confirmer" id="confirme">Confirmer</a>
+
+                                    <br><br>
+                                    <a href="{{ path('versement_refuser',{'id':versements.id}) }}" class="btn btn-danger btn-lg  center"   >Refuser </a>
+
+
+                                </div>
+
+                            {% endif %}
+
+                             </div>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+
+                                <div class="col-9">
+                                    <h6 style=""><b>Propriétaire : </b><span>{{ versements.personne.nom~' '~ versements.personne.prenom}}</span> </h6>
+
+                                    <h6 style=""><b>Date de versement : </b><span>{{ versements.date|date('d/m/Y') }}</span> </h6>
+                                    <h6 style=""><b>Montant  : </b><span>{{ versements.montant|number_format('2',',',' ')}} Ar</span> </h6>
+                                    <h6 style=""><b>Etat  : </b><span>{{ versements.etat }} </span></h6>
+                                    <h6 style=""><b>Paiement  : </b><span>{{ versements.paiement }} </span></h6>
+
+                                    <h6 style=""><b>Créer par  : </b><span>{{ versements.userCreer }} </span></h6>
+                                    {% if versements.userCreer != versements.userConfirme %}
+                                        {% if (versements.userConfirme)%}
+                                            <h6 style=""><b>Accepter par  : </b><span>{{ versements.userConfirme.username }} </span></h6>
+                                        {% endif%}
+                                        {% if (versements.userRefuse)%}
+                                            <h6 style=""><b>Refuser par  : </b><span>{{ versements.userRefuse.username }} </span></h6>
+                                        {% endif%}
+
+                                        <br>
+                                    {% endif %}
+
+                                    {% if versements.borderauUrl %}
+                                        <h6><b>Scan du bordeau :</b></h6>
+                                        <div class="col-3">
+                                            {% for borderau in versements.borderauUrl %}
+                                                <a target="_blank" href="{{ asset('document/'~borderau.url ) }}">
+                                                    <img src="{{ asset('document/'~borderau.url) }}"  alt="" width="150" height="150">
+                                                </a><br><br>
+                                            {% endfor %}
+
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if versements.procuration %}
+                <br>
+                <div class="card" style="font-family: 'Courier New'">
+                    <div class="card-body">
+                        <h3 class="text-info"><b>Information sur le procureur</b></h3>
+                        <h6 style=""><b>N° ITS : </b><span>{{ versements.procuration.numeroits}}</span> </h6>
+                        <h6 style=""><b>Nom  : </b><span>{{ versements.procuration.nom}}</span> </h6>
+                        <h6 style=""><b>Lien parenté : </b><span>{{ versements.procuration.relation}}</span> </h6>
+                    </div>
+                </div>
+                <br>
+            {%  endif %}
+
+            {% if versements.chequeVersement  %}
+
+            <br>
+                <div class="card" style="font-family: 'Courier New';">
+                    <div class="card-body">
+                        <h3 class="text-info"><b>Information sur le chèque </b></h3>
+                        <h6 style=""><b>Banque : </b><span>{{ versements.chequeVersement.banque}}</span> </h6>
+                        <h6 style=""><b>N° chèque : </b><span>{{ versements.chequeVersement.numero }}</span> </h6>
+                        <h6 style=""><b>Libellé : </b><span>{{ versements.chequeVersement.libelle }}</span> </h6>
+                        <h6 style=""><b>Date de versement : </b><span>{{ versements.date|date('d/m/Y') }}</span> </h6>
+                        {% if versements.chequeVersement.scanUrl %}
+                            <h6 style=""><b>Scan du chèque:</b></h6>
+                            <div class="col-3" >
+                                <a href="" target="_blank">
+                                    <img src="{{ asset('document/'~ versements.chequeVersement.scanUrl) }}" class="img img-thumbnail" alt="" width="150" height="150">
+                                </a>
+                                <a href="{{ asset('document/'~ versements.chequeVersement.scanUrl) }}" target="_blank"><i class="fa fa-download"> Télécharger</i></a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <script>
+        $('#especeTocheque').click(function(){
+            $('#especeTochequer').modal({show:true})
+        });
+    </script>
+{% endblock %}

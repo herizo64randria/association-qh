@@ -1,0 +1,51 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+
+{% block body_container %}
+
+    <section class="info-section">
+        <div class="container">
+            <style>
+                 .container-fluid{ margin-top: 50px}
+            </style>
+            <div class="head-box text-center mb-5">
+                <h2>{{ 'listedmdsociete.titre'|trans }}</h2>
+                <h6 class="text-underline-primary"></h6>
+            </div>
+                    <table class="table table-striped" >
+                        <thead id="customers">
+                        <tr>
+                            <th scope="col">{{ 'listedmdsociete.numero'|trans }}</th>
+                            <th scope="col">{{ 'listedmdsociete.date'|trans }}</th>
+                            <th scope="col">{{ 'listedmdsociete.societe'|trans }}</th>
+                            <th scope="col">{{ 'listedmdsociete.montant'|trans }}</th>
+                            <th scope="col">{{ 'listedmdsociete.mois'|trans }}</th>
+                            <th scope="col">{{ 'listedmdsociete.garant'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for demandeQH in demandeQHs %}
+
+
+                            <tr>
+                                <td><a href="{{ path('detail_demandesociete',{ 'id' : demandeQH.id}) }}" >{{ demandeQH.numero }}</a></td>
+                                <td><a >{{ demandeQH.datedemande|date('d/m/Y')  }}</a></td>
+                                <td>{{ demandeQH.societe }}</td>
+                                <td class="text-right">{{ demandeQH.montant|number_format('2',',',' ')}}</td>
+                                <td>{{ demandeQH.nombreMois }}</td>
+                                <td><a href="{{ path('Garant-Societe',{id:demandeQH.id}) }}" class="btn btn-light"><i class="fa fa-plus fa-1x"></i></a></td>
+
+
+
+                            </tr>
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+        </div>
+    </section>
+    <script>
+
+    </script>
+{% endblock %}

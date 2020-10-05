@@ -1,0 +1,70 @@
+
+{% block sous_menu_titre %}{% endblock %}
+
+{% block body_container %}
+<body  onload="window.print()" style="font-family: 'Courier New'">
+<center><h2># Fiche de remboursement #</h2></center>
+
+<center>
+
+    <table style="font-style: italic;">
+        <h3>-------------------------------------------------------------</h3>
+
+        <td>
+            <h3 >A propos de vous :</h3>
+         <fieldset>
+
+             <table style="font-style: italic;">
+                 <tr><td><h3>Nom et Prénom :</h3></td><td><h3>{{ remboursement.personne.nom ~' '~ remboursement.personne.prenom  }} </h3></td></tr>
+                 <tr><td><h3>Numéro ITS :</h3></td><td><h3>{{ remboursement.personne.numeroIts  }} </h3></td></tr>
+                 <tr><td><h3>Contact :</h3></td><td><h3>{{ remboursement.personne.num1}} </h3></td></tr>
+
+                 <tr><td><h3>Votre compte :</h3></td><td><h3>
+                             {% set solde = 0 %}
+                             {% for historique in historique %}
+                                 {% if historique.type=="credit" %}
+
+                                     {% set solde = solde + historique.montant %}
+                                 {% endif %}
+
+                                 {% if historique.type=="debit" %}
+
+                                     {% set solde = solde - historique.montant %}
+
+                                 {% endif %}
+
+                             {% endfor %}
+                             {{ solde|number_format('2',',',' ')~" Ar" }}
+                         </h3></td></tr>
+             </table>
+         </fieldset>
+
+    <table style="font-style: italic;">
+        <h3>Date de remboursement :{{ remboursement.date|date('d/m/Y') }}</h3>
+        <td>
+            <fieldset>
+                <table style="font-style: italic;">
+                    <tr><td><h3>Nom du banque :</h3></td><td><h3>{{ remboursement.cheque.banque  }} </h3></td></tr>
+                    <tr><td><h3>Numéro du cheque :</h3></td><td><h3>{{ remboursement.cheque.numero}} </h3></td></tr>
+                    <tr><td><h3>Montant :</h3></td><td><h3>{{ remboursement.demandeReboursement.montant|number_format('2',',',' ') ~" Ar"  }} </h3></td></tr>
+                    <tr><td><h3>Libellé :</h3></td><td><h3>{{ remboursement.cheque.libelle}} </h3></td></tr>
+
+                </table>
+            </fieldset>
+
+
+
+
+        </td>
+                <tr> </tr>
+
+        <td>
+
+            <br>
+            <h3>-------------------------------------------------------------</h3>
+            <center><h2># Nous tenons à vous remercier #</h2></center>
+
+</center>
+
+</body>
+{% endblock %}

@@ -1,0 +1,217 @@
+{% extends "@Back/base_backend.html.twig" %}
+
+{% block sous_menu_titre %}
+    <style>
+        .col-4{margin: 1px;}
+        a{text-decoration: none;}
+        a:hover{text-decoration: none}
+
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+            background-color: #0088CC;
+        }
+        col-lg .groove {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,input,select,textarea,p {
+            text-shadow: 0.1px 0.1px 1px black;
+
+        }
+        td{white-space: nowrap}
+
+        .btn{ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);}
+        .card{ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);margin: 5px}
+        .card:hover{ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4)}
+    </style>
+    <h1>{{ caisse.nom }}</h1>
+{% endblock %}
+{% block body_container %}
+    <div class="card">
+        <div class="card-body">
+            <a class="btn btn-lg btn-success" href="{{ path('statistique') }}"><i class="fa fa-sort-numeric-asc"></i> Statistique</a><br><br>
+
+            <div class="row">
+                <div class="col-12">
+
+
+
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <th>date</th>
+                                    <th>libelle</th>
+                                    <th>Crédit (+)</th>
+                                    <th>Débit (-) </th>
+                                    <th>Paiement</th>
+                                    <th>Totale</th>
+
+                                </tr>
+                                <tbody>
+                                                {% set solde=0 %}
+                                                {% set color=" "%}
+
+                                                {% for historiquecaisse in  historique_caisses %}
+                                                    {% if historiquecaisse.paiement=="Espèce" %}
+                                                        {% set color="bg-info"%}
+
+                                                    {% endif %}
+                                                    {% if historiquecaisse.paiement=="Chèque" %}
+                                                        {% set color="bg-warning"%}
+
+                                                    {% endif %}
+                                                    <tr>
+                                                        <td>{{ historiquecaisse.date|date('d/m/yy')}}</td>
+                                                        <td>{{ historiquecaisse.libelle }}
+                                                            {% if historiquecaisse.lien %}
+                                                                <a target="_blank" href="{{ historiquecaisse.lien }}">lien</a>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if( historiquecaisse.type=='credit') %}
+                                                            {{ historiquecaisse.montant|number_format('2',',',' ') }}
+                                                           {% set solde=solde+historiquecaisse.montant %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% if( historiquecaisse.type=='debit') %}
+                                                                {{ historiquecaisse.montant|number_format('2',',',' ') }}
+                                                                {% set solde=solde-historiquecaisse.montant %}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td class="{{ color }}">{{ historiquecaisse.paiement }}
+                                                            {% if color=="bg-info"and historiquecaisse.modif != true %}
+                                                                <button data-id="{{ historiquecaisse.id }}" type="button" class="btn btn-danger" onclick="clickC({{ 'convertCheque'~historiquecaisse.id }})" id="{{ 'convertCheque'~historiquecaisse.id }}"> <i class="fa fa-arrow-right"></i>Chèque</button>
+                                                            {% endif %}
+                                                            {% if color=="bg-warning" and historiquecaisse.modif != true  %}
+                                                                <button data-id="{{ historiquecaisse.id }}" type="button" class="btn btn-success" onclick="clickE({{ 'convertEspece'~historiquecaisse.id }})" id="{{ 'convertEspece'~historiquecaisse.id }}"> <i class="fa fa-arrow-right"></i>Espèce</button>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td >{{ solde|number_format('2',',',' ') }} Ar</td>
+
+                                                    </tr>
+                                                {% endfor %}
+                                </tbody>
+                            </table>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    </div>
+    <form  id="myformconvert" action="{{ path('echangeCheque') }}" method="post" enctype="multipart/form-data">
+        <div id="convertModal" class="modal fade " tabindex="-1" role="dialog"  >
+            <div class="modal-dialog" style="width: 500px;" >
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <input id="id" type="hidden" name="id" >
+                        <table>
+
+                            <tr>
+                                <td >Banque: </td>
+                                <td>
+                                    <input list="listBanque" class="form-control" id="banque" style="height: 30px" name="banque">
+
+                                    <datalist id="listBanque">
+                                        <option value="BMOI"  >		BMOI Madagascar </option>
+                                        <option value="BNI" >		BNI Madagascar </option>
+                                        <option value="MCB" >		MCB Madagascar </option>
+                                        <option value="SBM" >		SBM Madagascar </option>
+                                        <option value="BFV-SG" >		BFV-SG </option>
+                                        <option value="BOA" >		BOA Madagascar </option>
+                                        <option value="ABM" >		ABM </option>
+                                        <option value="BGFIBank" >		BGFIBank Madagascar </option>
+                                        <option value="Microcred" >		Microcred Banque Madagascar </option>
+                                        <option value="BM Madagascar" >		BM Madagascar </option>
+                                        <option value="SIPEM" >		SIPEM </option>
+                                        <option value="CCP" >		CCP </option>
+                                        <option value="DGT" >		DGT </option>
+                                        <option value="BFM" >		BFM </option>
+                                        <option value="Autre"  >	Autre </option>
+                                    </datalist>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>N°  Chèque: </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-moyen only_phone_number" name="num_cheque" id="num_cheque"autocomplete="off">
+                                    <i id="p_num_cheque"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Libellé: </td>
+                                <td>
+                                    <textarea class="form-control form-control-moyen" name="libelle_cheque" id="libelle_cheque"autocomplete="off"  cols="10" rows="10"></textarea>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>Scan du chèque :</td>
+                                <td>
+                                    <input type="file" class="form-control" name="fichier_cheque">
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="form-group">
+                            <button type="submit"  class="btn btn-lg btn-success">valider</button>
+                        </div>
+                    </div>
+                </div></div></div>
+
+    </form>
+
+
+
+    <form  id="myformconvertE" action="{{ path('echangeEspece') }}" method="post" enctype="multipart/form-data">
+        <div id="convertEModal" class="modal fade " tabindex="-1" role="dialog"  >
+            <div class="modal-dialog" style="width: 500px;" >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        Information sur le chèque
+                    </div>
+
+                    <div class="modal-body">
+                        <div id="res">
+
+                        </div>
+                        <div class="form-group">
+                            <button type="submit"  class="btn btn-lg btn-success">Echanger en espèce</button>
+                        </div>
+                    </div>
+                </div></div></div>
+
+    </form>
+
+
+    <script>
+
+
+        function clickC(param) {
+            var x=$(param).attr('data-id')
+            $('#id').val(x)
+            $('#convertModal').modal({'show':true})
+        }
+        function clickE(param) {
+            var x=$(param).attr('data-id')
+            //alert($(param).attr('data-id'))
+            $("#res").html("");
+
+            $('#convertEModal').modal({'show':true})
+            $.ajax({
+                url : '{{ path('afficheajax_cheque') }}',
+                type: 'get',
+                data : {'id':x }
+            }).done(function(response){
+
+                $("#res").html(response);
+            });
+        }
+
+    </script>
+{% endblock %}

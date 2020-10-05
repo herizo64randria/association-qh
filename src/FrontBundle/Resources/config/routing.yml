@@ -1,0 +1,19 @@
+paie_route:
+    resource: "@FrontBundle/Controller/comptePaieController.php"
+    type:     annotation
+
+front_personne_route:
+  resource: "@FrontBundle/Controller/PersonneController.php"
+  type:     annotation
+
+versement_route:
+    resource: "@FrontBundle/Controller/versementController.php"
+    type:     annotation
+
+demandeRemboursement_route:
+    resource: "@FrontBundle/Controller/demandeRemboursementController.php"
+    type:     annotation
+
+procuration_route:
+  resource: "@FrontBundle/Controller/procurationController.php"
+  type:     annotation

@@ -1,0 +1,21 @@
+{% extends '@Personne/Inscription/base_inscription.html.twig' %}
+
+{% block titre %}{{ 'inscription.register'|trans }}{% endblock %}
+
+{% block body %}
+<div>
+    <a class="text-left" href="{{ path('homepage') }}">{{ 'inscription.retour_acceuil'|trans }}</a>
+</div>
+<br>
+<h1 class="form-heading">{{ 'inscription.confirmation'|trans }}</h1>
+<hr>
+<div class="login-form">
+    <br><br>
+    <h3 class="text-white">{{ 'inscription.ok'|trans }}</h3>
+    <br>
+
+    <br><br>
+    <h3 class="botto-text"> {{ appli_titre }}</h3>
+</div>
+{% endblock %}
+

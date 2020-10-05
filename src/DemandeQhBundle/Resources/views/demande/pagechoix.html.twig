@@ -1,0 +1,210 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+
+{% block body_container %}
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        input[type=datetime],.cal{
+            width: 90%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            height: 50px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .contenu {
+            border-radius: 0px;
+            background-color: #f2f2f2;
+            margin-top: 20px;
+            margin-left: 200px;
+            padding: 50px;
+            width: 850px;
+        }
+
+        .col-4 {
+            float: left;
+            width: 4%;
+            margin-top: 6px;
+        }
+
+        .col-8 {
+            float: left;
+            width: 8%;
+            margin-top: 6px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .col-4, .col-8, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+    </style>
+
+    <div class="contenu align-content-center">
+
+            <h2 class="text-primary text-center">{{ 'pagechoix.titre'|trans}}</h2>
+            <hr>
+        <div class="row">
+            <div class="col-6">
+                <a href="#" class="btn btn-lg btn-info" id = "choix" >
+                    <img src="{{ asset('Images/personne.jpg') }}" class="img img-fluid" alt="" width="50" height="50">
+                    {{ 'pagechoix.personne'|trans }}
+                </a>
+                <br><br>
+                {#MODALE choix montant#}
+
+                <form action="{{ path('versement_add') }}" method="post" enctype="multipart/form-data">
+                    <div id="modalchoix" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-body">
+
+                                    <div class="">
+
+
+                                        <div class="card">
+                                            <div class="card-header bg-primary text-white"><h2><i class="fa fa-list"></i> {{ 'pagechoix.montant'|trans }}</h2>
+                                            </div>
+                                            <div class="card-body">
+
+
+                                                <div class="form-group">
+
+                                                    <b>
+                                                        <input type="radio" name="montant1" id="montant1"> {{ 'pagechoix.valeur1'|trans }} <br>
+
+                                                    </b>
+                                                    <b>
+                                                        <input type="radio" name="montant1" id="montant1"> {{ 'pagechoix.valeur2'|trans }}  <br>
+
+                                                    </b>
+                                                    <b>
+                                                        <input type="radio" name="montant1" id="montant1"> {{ 'pagechoix.valeur3'|trans }}
+
+                                                    </b>
+                                                </div>
+
+                                                <div class="mx-auto">
+                                                    <button type="submit" class="btn btn-primary btn-block text-center"><b>{{ 'pagechoix.valider'|trans }}</b></button>
+                                                    <button  data-dismiss="modal" class="btn btn-light btn-block text-center"><b>{{ 'pagechoix.annuler'|trans }}</b></button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <script>
+                    $('#choix').click(function(){
+                        $('#modalchoix').modal({show:true})
+                    });
+                </script>
+            </div>
+            <div class="col-6">
+                <a href="#" class="btn btn-lg btn-info" id="societe">
+                    <img src="{{ asset('Images/societer.png') }}" class="img img-fluid" alt="" width="50" height="50">
+                    {{ 'pagechoix.societe'|trans }}
+                </a>
+            </div>
+            <form action="{{ path('versement_add') }}" method="post" enctype="multipart/form-data">
+                <div id="modalsociete" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-body">
+
+                                <div class="">
+
+
+                                    <div class="card">
+                                        <div class="card-header bg-success text-white"><h3><i class="fa fa-list"></i> {{ 'pagechoix.choix'|trans }}</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <b>{{ 'pagechoix.nomsociete'|trans }}</b>
+                                            <div class="row">
+
+                                                <div class="col-8">
+                                                    <div class="form-group">
+
+                                                        <select name="nom" id="nom">
+                                                            <option value="">société1</option>
+                                                            <option value="">société2</option>
+                                                            <option value="">société1</option>
+                                                            <option value="">société2</option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <a href="{{ path('_Mysociete') }} " class="btn btn-light">
+                                                        <img src="{{ asset('Images/ajout.jpg') }}" class="img img-fluid" alt="" width="70" height="70">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="mx-auto">
+                                                <button type="submit" class="btn btn-success btn-block text-center"><b>{{ 'pagechoix.valider'|trans }}</b></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <script>
+                $('#societe').click(function(){
+                    $('#modalsociete').modal({show:true})
+                });
+            </script>
+        </div>
+
+
+
+    </div>
+
+{% endblock %}

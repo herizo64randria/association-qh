@@ -1,0 +1,57 @@
+_wdt:
+  resource: '@WebProfilerBundle/Resources/config/routing/wdt.xml'
+  prefix: /_wdt
+
+_profiler:
+  resource: '@WebProfilerBundle/Resources/config/routing/profiler.xml'
+  prefix: /_profiler
+
+_errors:
+  resource: '@TwigBundle/Resources/config/routing/errors.xml'
+  prefix: /_error
+_testinscription:
+  path:     /test/
+  defaults: { _controller: DemandeQhBundle:Default:inscriptiontest }
+
+
+_Archivedemandeqh:
+  path:     /archive-demandeqh/
+  defaults: { _controller: DemandeQhBundle:Default:archive }
+_ListeArchivedemandeqh:
+  path:     /liste-archive-demandeqh/{id}
+  defaults: { _controller: DemandeQhBundle:Default:listeArchive }
+_DetailArchivedemandeqh:
+  path:     /detail-archive-demandeqh/{id}
+  defaults: { _controller: DemandeQhBundle:Default:detailArchive }
+
+
+_Mydetail:
+  path:     /detail-demandeqh/{id}
+  defaults: { _controller: DemandeQhBundle:Default:test }
+
+_Mymodification_garant1:
+  path:     /modification-garant1/{id}
+  defaults: { _controller: DemandeQhBundle:Default:modificationGarant1 }
+_Mymodification_garant2:
+  path:     /modification-garant2/{id}
+  defaults: { _controller: DemandeQhBundle:Default:modificationGarant2 }
+_Mymodification_dossier:
+  path:     /modification-dossier/{id}
+  defaults: { _controller: DemandeQhBundle:Default:modificationDossier }
+_Mymodification_demandeqh:
+  path:     /modification-demandeqh/{id}
+  defaults: { _controller: DemandeQhBundle:Default:modificationDemandeqh }
+_Mypagechoix:
+  path:     /choix/
+  defaults: { _controller: DemandeQhBundle:Default:choix }
+_Mysociete:
+  path:     /information-société/
+  defaults: { _controller: DemandeQhBundle:Default:societeQh }
+_Mymembresociete:
+    path:     /ajout-membres/
+    defaults: { _controller: DemandeQhBundle:Default:addmembresocieteQh }
+_main:
+  resource: routing.yml
+_Mydate:
+  path:     /test_date/
+  defaults: { _controller: DemandeQhBundle:Default:date }

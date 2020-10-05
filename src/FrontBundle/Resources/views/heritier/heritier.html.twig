@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+<HEAD>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <META http-equiv="X-UA-Compatible" content="IE=8">
+    <TITLE>Lettre de héritage</TITLE>
+    <META name="generator" content="BCL easyConverter SDK 5.0.140">
+    <STYLE type="text/css">
+
+        body {margin-top: 0px;margin-left: 0px;font-family: "Courier New"}
+
+
+
+    </STYLE>
+</HEAD>
+
+<body>
+<div style="display: block">
+    <div style="float:left;display: inline;line-height: 25px">
+        {{ personne.nom ~" "~personne.prenom }}<br>
+        {{ personne.adresse}}<br>
+        {{ personne.ville}}<br>
+        {{ personne.num1 ~"/"~personne.num2 }}<br>
+        {{ personne.email }}<br>
+
+    </div>
+
+    </div>
+</div>
+
+<div class="corps" style="line-height: 35px">
+    <br><br>
+    Madame,Monsieur,<br>
+    <p> Corps du lettre héritage Corps du lettre héritage Corps du lettre héritage
+        Corps du lettre héritage
+        Corps du lettre héritage
+        Corps du lettre héritage
+        Corps du lettre héritage</p>
+</div>
+<div style="margin-left: 400px ; line-height: 35px">
+        Faite à <br>
+        Le , {{ "now"|datelettre }}
+    <br>
+    Signature
+    <br>
+
+    {{ personne.nom ~" "~personne.prenom }}
+
+</div>
+</body>
+
+  </HTML>

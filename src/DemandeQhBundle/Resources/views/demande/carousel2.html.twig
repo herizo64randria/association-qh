@@ -1,0 +1,188 @@
+<style>
+    /* styles de base si JS est activé */
+    .js .input-file-container {
+        position: relative;
+        width: 225px;
+    }
+    .js .input-file-trigger {
+        display: block;
+        padding: 14px 45px;
+        background: #39D2B4;
+        color: #fff;
+        font-size: 1em;
+        transition: all .4s;
+        cursor: pointer;
+    }
+    .js .input-file {
+        position: absolute;
+        top: 0; left: 0;
+        width: 225px;
+        padding: 14px 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    /* quelques styles d'interactions */
+    .js .input-file:hover + .input-file-trigger,
+    .js .input-file:focus + .input-file-trigger,
+    .js .input-file-trigger:hover,
+    .js .input-file-trigger:focus {
+        background: #34495E;
+        color: #39D2B4;
+    }
+
+    /* styles du retour visuel */
+    .file-return {
+        margin: 0;
+    }
+    .file-return:not(:empty) {
+        margin: 1em 0;
+    }
+    .js .file-return {
+        font-style: italic;
+        font-size: .9em;
+        font-weight: bold;
+    }
+    /* on complète l'information d'un contenu textuel
+       uniquement lorsque le paragraphe n'est pas vide */
+    .js .file-return:not(:empty):before {
+        content: "Selected file: ";
+        font-style: normal;
+        font-weight: normal;
+    }
+</style>
+<div class="carousel-item">
+    <fieldset class="groove">
+        <div class="row container-fluid">
+            <div class="col-12">
+                <br>
+                <div>
+                    <fieldset class="groove container-fluid">
+                        <br>
+                        <legende><label for=""><h3 >{{ 'demandeqh_ajouter.nouvelle_demande'|trans }}</h3> <b class="text-danger" id="err_demande"></b></label><br></legende>
+                        <div class="form-group text-center">
+
+                            <div class="maxl">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label>{{ 'demandeqh_ajouter.monotant2'|trans }}</label>
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input name="montant"  type="text" class="form-control" id="montant"   required autocomplete="off">
+                                                <b class="text-danger" id="err_montant"></b>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label>{{ 'demandeqh_ajouter.mois'|trans }}</label>
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input name="mois" type="text" class="form-control" id="mois"   required autocomplete="off">
+                                                <b class="text-danger" id="err_mois"></b>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </fieldset>
+                    <br>
+                    <div class="row ">
+                        <div class="col-12">
+                            <br>
+                            <fieldset class="groove container-fluid">
+                                <br>
+                                <legende><label for=""><h3 >{{ 'demandeqh_ajouter.objet'|trans }}</h3> </label><br></legende>
+                                <div class="form-group text-center">
+
+                                    <div class="maxl">
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>{{ 'demandeqh_ajouter.motif'|trans }}</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <select class="form-control" name="motif" id="motif">
+                                                            <option value="Commercial"selected>Commercial</option>
+                                                            <option value="Educatif">Educatif</option>
+                                                            <option value="Voyage">Voyage</option>
+                                                            <option value="Santé">Santé</option>
+                                                            <option value="Religieux">Religieux</option>
+                                                            <option value="Autres">Autres</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>{{ 'demandeqh_ajouter.detail'|trans }}</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <textarea class="form-control" name="detail" id="detail" cols="30" rows="5"></textarea>
+                                                        <b class="text-danger" id="err_detail"></b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row ">
+                        <div class="col-12">
+                            <br>
+
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+                <button  type="button" class="btn-link btn btn-lg float-left " id="prev1" >{{ 'demandeqh_ajouter.precedent'|trans }}</button>
+                <button  type="button" class="btn-link btn btn-lg float-left " id="prev2" >{{ 'demandeqh_ajouter.precedent'|trans }}</button>
+                <button  type="button" class="btn-link btn btn-lg float-right " id="btn5" >{{ 'demandeqh_ajouter.suivant'|trans }}</button>
+
+            </div>
+
+        </div><br>
+
+    </fieldset>
+
+</div>
+<script>
+    Dropzone.options.fileUpload = {
+        url: 'blackHole.php',
+        addRemoveLinks: true,
+        accept: function(file) {
+            let fileReader = new FileReader();
+
+            fileReader.readAsDataURL(file);
+            fileReader.onloadend = function() {
+
+                let content = fileReader.result;
+                $('#file').val(content);
+                file.previewElement.classList.add("dz-success");
+            }
+            file.previewElement.classList.add("dz-complete");
+        }
+    }
+    $('#btn6').click(function () {
+        console.log($('#file')).files
+        return false
+    })
+</script>

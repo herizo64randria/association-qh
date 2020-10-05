@@ -1,0 +1,51 @@
+    <div class="container">
+        <br>
+        <h1 class="form-heading">{{ 'log.page'|trans }}</h1>
+        <hr>
+        <div class="login-form">
+
+            <div class="main-div">
+                <div class="panel">
+                    <h2>{{ 'log.connecter'|trans }}</h2>
+                    <p>{{ 'log.entrer'|trans }}</p>
+                </div>
+
+                {% set danger = '' %}
+                {% if error %}
+                    <div class="card bg-danger text-white">
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    </div>
+                    {% set danger = 'border-danger alert-danger' %}
+                {% endif %}
+
+
+                <form action="{{ path("fos_user_security_check") }}" method="post" id="Login">
+
+                    {% if csrf_token %}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    {% endif %}
+
+                    <div class="form-group">
+                        <input type="text" class="form-control {{ danger }}" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="Numero ITS" autocomplete="off" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control {{ danger }}" id="password" name="_password" required="required" autocomplete="current-password" placeholder="{{ 'password'|trans }}" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                    </div>
+
+                    <div class="forgot">
+                        <a href="{{ path('fos_user_resetting_request') }}">{{ 'log_oublier'|trans }}</a>
+                    </div>
+                    <input type="submit" class="btn-block btn btn-primary" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                </form>
+                <br>
+                <h5><a href="{{ path('personne_inscription') }}"><i class="fa fa-plus-circle"></i>{{ 'accueil.singin'|trans }}</a></h5>
+            </div>
+            <h3 class="botto-text"> {{ appli_titre }}</h3>
+        </div>
+    </div>

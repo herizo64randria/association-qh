@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ appli_titre }}</title>
+
+    <link href="{{ asset('assets/bootstrap-4.2.1/css/bootstrap.min.css') }}" rel="stylesheet" >
+    <link href="{{ asset('assets/FrontOffice/style-base.css') }}" rel="stylesheet" >
+    <script src="{{ asset('assets/bootstrap-4.2.1/js/jquery-3.3.1.slim.min.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>    <script src="{{ asset('assets/bootstrap-4.2.1/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap-4.2.1/datepicker/moment.js') }}"></script>
+
+    <script src="{{ asset('assets/bootstrap-4.2.1/datepicker/tempusdominus-bootstrap-4.min.js') }}"></script>
+
+    {#CONTRAINTE DE SAISIE#}
+    <script src="{{ asset('assets/bootstrap-4.2.1/js/input_constraint.js') }}"></script>
+
+    {#----------------NUMERAL JS----------------#}
+    <script src="{{ asset('assets/NumeralJs/numeral.js') }}"></script>
+    <script src="{{ asset('assets/NumeralJs/numeralByAllin.js') }}"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    {#DATE TIME PICKER#}
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap-4.2.1/datepicker/tempusdominus-bootstrap-4.min.css') }}">
+
+    {#----------------SELECT 2----------------#}
+    <link href="{{ asset('assets/select2/css/select2.css') }}" rel="stylesheet">
+    <script src="{{ asset('assets/select2/js/select2.js') }}"></script>
+
+
+    <style>
+        #sidebar .list-group-item {
+            border-radius: 0;
+            background-color: #333;
+            color: #ccc;
+            border-left: 0;clear
+            border-right: 0;
+            border-color: #2c2c2c;
+            white-space: nowrap;
+        }
+        #sidebar {
+            background-color: #333;
+        }
+        #customers {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+        #customers tr:hover {background-color: #ddd;}
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn{
+            border-radius: 0%;
+
+        }
+       .dec {
+
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+        }
+        .form-control{
+            border-radius: 0%;
+        }
+    .table{
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 1px;
+    }
+ .fa-bell:hover{text-decoration-color:#ffffff }
+ #listem{text-decoration: none;color:#0c0c0c }
+       #listem:hover{text-decoration-color:#ffffff }
+        a.dropdown-toggle{color:#000000;}
+
+    </style>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body style="font-family: 'Courier New'">
+<nav class= "navbar navbar-expand-lg navbar-dark bg-info">
+    <a class= "navbar-brand" href= "">Hussein scheme</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <ul class= "navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class= "nav-link" href=""></a>
+            </li>
+            <li class=" nav-item dropdown" >
+                <a style="text-decoration: none;" href="#" class="dropdown-toggle"  data-toggle="dropdown" >
+                    <span class="badge badge-pill bg-danger count" style="border-radius:10px;color: #ffffff"></span>
+                    <i class="fa fa-bell text-dark" style=""></i>
+                </a>
+                <ul class="dropdown-menu " id="dropdown-menu" style=";margin-left: -200px;width: 350px;padding: 10px;" >
+
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class= "nav-link" href=""></a>
+            </li>
+            <li  class="nav-item dec">
+                <a href="{{ path('fos_user_security_logout') }} " class= "nav-link" href=""><i class="fa fa-sign-out"></i> {{ 'menu_back.log'|trans }}</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 col-1 pl-0 pr-0 collapse fade show" id="sidebar">
+            <div class="list-group panel">
+                <h3 class="text-primary text-center">Hussain scheme</h3>
+                <a href="{{ path('paie_liste1') }}" class="list-group-item collapsed"  aria-expanded="false"><i class="fa fa-dashboard fa-fw"></i> <span class="ml-1 hidden-sm-down"> Liste des comptes H.S.</span> </a>
+                <div class="collapse" id="menu1">
+                    <a href="{{ path('paie_liste') }}" class="list-group-item" data-toggle="collapse" aria-expanded="false">Gestion de compte HS </a>
+                </div>
+
+                <a href="{{ path('demandeRemboursement_liste') }}" class="list-group-item collapsed" data-parent="#sidebar"><i class="fa fa-list fa-fw"></i> <span class="ml-1 hidden-sm-down">Demande de remboursement</span></a>
+                <a href="{{ path('Remboursement_liste') }}" class="list-group-item collapsed" data-parent="#sidebar"><i class="fa fa-upload"></i> <span class="ml-1 hidden-sm-down">Liste remboursement</span></a>
+                <a href="{{ path('dmdVersement_liste') }}" class="list-group-item collapsed" data-parent="#sidebar"><i class="fa fa-download"></i> <span class="ml-1 hidden-sm-down">Liste versement</span></a>
+                <a href="{{ path('listeCaisse') }}" class="list-group-item collapsed" data-parent="#sidebar"><i class="fa fa-download"></i> <span class="ml-1 hidden-sm-down">Caisse&Banque</span></a>
+
+                <h3 class="text-primary text-center">Demande QH</h3>
+                <a href="{{ path('listedemandeQH') }}" class="list-group-item collapsed" data-parent="#sidebar"><i class="fa fa-list fa-fw"></i> <span class="ml-1 hidden-sm-down">Liste demandeQH</span></a>
+                <a href="{{ path('dossierQh_liste') }}" class="list-group-item collapsed" data-parent="#sidebar"><i class="fa fa-list fa-fw"></i> <span class="ml-1 hidden-sm-down">dossierQH accepter</span></a>
+
+                <h3 class="text-primary text-center">Administration</h3>
+                <a href="{{ path('personne_admin_demande') }}" class="list-group-item collapsed" data-parent="#sidebar"><i class="fa fa-user"></i> <span class="ml-1 hidden-sm-down">Liste demande d'inscription</span></a>
+                <a href="{{ path('utilisateur_liste') }}" class="list-group-item collapsed" data-parent="#sidebar"><i class="fa fa-group"></i> <span class="ml-1 hidden-sm-down">Gestion des Utilisateurs</span></a>
+
+            </div>
+
+        </div>
+        <main class="col-md-9 col-11 pl-2 pt-2" id="mainbar">
+            <div class="col-12" >
+                <a href="#sidebar" data-toggle="collapse" class="m-2"><i class="fa fa-navicon fa-2x text-muted"></i></a>
+                <div class="page-header">
+                    <h1 class="text-primary">{% block sous_menu_titre %}Titre{% endblock %}</h1>
+                </div>
+
+                {% block body_container %}
+
+                {% endblock %}
+            </div>
+        </main>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+
+        $.ajax({
+            url:"{{ path('notif_affichagAjax') }}",
+            method:"GET",
+            dataType:"text",
+
+            success:function(data)
+            {
+                listes = JSON.parse(data);
+                console.log(listes);
+
+                $('#dropdown-menu').html(listes[0].notification);
+                if( listes[0].compte > 0)
+                {
+                    $('.count').html(listes[0].compte);
+                }
+
+
+            }
+        });
+    });
+    if ($('#mainbar').outerHeight() < 800)
+    {
+        $('#sidebar').css('height', 800 );
+    }
+    else
+    {
+        $('#sidebar').css('height', $('#mainbar').Height() );
+    }
+
+</script>
+</body>
+</html>

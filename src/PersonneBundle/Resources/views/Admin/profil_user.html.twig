@@ -1,0 +1,269 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}{{ 'demande_confirmation.titre'|trans }}{% endblock %}
+
+
+{% block stylecss %}
+    <style>
+        .emp-profile{
+            padding: 3%;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            border-radius: 0.5rem;
+            background: #fff;
+        }
+        .profile-img{
+            text-align: center;
+        }
+        .profile-img img{
+            width: 70%;
+            height: 100%;
+        }
+        .profile-img .file {
+            position: relative;
+            overflow: hidden;
+            margin-top: -20%;
+            width: 70%;
+            border: none;
+            border-radius: 0;
+            font-size: 15px;
+            background: #212529b8;
+        }
+        .profile-img .file input {
+            position: absolute;
+            opacity: 0;
+            right: 0;
+            top: 0;
+        }
+        .profile-head h5{
+            color: #333;
+        }
+        .profile-head h6{
+            color: #0062cc;
+        }
+        .profile-edit-btn{
+            border: none;
+            border-radius: 1.5rem;
+            width: 70%;
+            padding: 2%;
+            font-weight: 600;
+            color: #6c757d;
+            cursor: pointer;
+        }
+        .proile-rating{
+            font-size: 12px;
+            color: #818182;
+            margin-top: 5%;
+        }
+        .proile-rating span{
+            color: #495057;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .profile-head .nav-tabs{
+            margin-bottom:5%;
+        }
+        .profile-head .nav-tabs .nav-link{
+            font-weight:600;
+            border: none;
+        }
+        .profile-head .nav-tabs .nav-link.active{
+            border: none;
+            border-bottom:2px solid #0062cc;
+        }
+        .profile-work{
+            padding: 14%;
+            margin-top: -15%;
+        }
+        .profile-work p{
+            font-size: 12px;
+            color: #818182;
+            font-weight: 600;
+            margin-top: 10%;
+        }
+        .profile-work a{
+            text-decoration: none;
+            color: #495057;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .profile-work ul{
+            list-style: none;
+        }
+        .profile-tab label{
+            font-weight: 600;
+        }
+        .profile-tab p{
+            font-weight: 600;
+            color: #0062cc;
+        }
+    </style>
+
+{% endblock %}
+
+{% block sous_menu %} {% endblock %}
+
+{% block body_container %}
+<div class="emp-profile">
+    <br><br>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img  width="70%" height="100%" src="{{ asset('/document/'~personne.photo) }}" alt=""/>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="profile-head">
+                <h5>
+                    {{ personne.nom }} {{ personne.prenom }}
+                </h5>
+                <h6>
+                    <b>{{ 'liste_demande.numits '|trans }}</b> {{ personne.numeroIts }}
+                </h6>
+                <h6>
+                    <b>{{ 'liste_demande.cin'|trans }}</b> {{ personne.numerocin }}
+                </h6>
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ 'liste_demande.information'|trans }}</a>
+                    </li>
+                    {#<li class="nav-item">#}
+                    {#<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>#}
+                    {#</li>#}
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <div class="profile-work"><br>
+                <h5>{{ 'liste_demande.liste_benef'|trans }}</h5>
+                <a href="#" class="text-primary">N°- {{ 'liste_demande.numeroits'|trans }} - {{ 'liste_demande.nom'|trans }}- {{ 'liste_demande.relation'|trans }} </a><br/>
+                {% set i=0 %}
+                {% for procuration in procurations %}
+                    {% set i=i+1 %}
+                    <a href="#">{{ '#'~ i ~' - '~ procuration.numeroits ~' - '~ procuration.nom ~' -('~ procuration.relation ~')'}}</a><br/>
+                {% endfor %}
+                <br>
+                <p>{{ 'liste_demande.its'|trans }}</p>
+                <a href="{{ asset('/document/'~personne.scan) }}"><img src="{{ asset('/document/'~personne.scan) }}" width="150" height="106"></a>
+                <p>{{ 'liste_demande.cin'|trans }}</p>
+                {% for cin in cins  %}
+                    <a href="{{ asset('/document/'~ cin.url) }}"><img src="{{ asset('/document/'~ cin.url) }}" width="150" height="106"></a>
+                    <br><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>{{ 'inscription.its'|trans }}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.nomIts }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>{{ 'inscription.num_sabil'|trans }}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.numeroSabil }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>{{ 'inscription.moza'|trans }}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.moza }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Email</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.email }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>{{ 'inscription.num1'|trans }}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.num1 }}</p>
+                        </div>
+                    </div>
+                    {% if personne.num2 %}
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>{{ 'inscription.num2'|trans }}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ personne.num2 }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if personne.num3 %}
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>{{ 'inscription.num3'|trans }}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ personne.num3 }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>{{ 'inscription.adresse'|trans }}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.adresse }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Profession</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Web Developer and Designer</p>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>{{ 'inscription.ville'|trans }}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.ville }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>{{ 'inscription.Sexe'|trans }}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.sexe|trans }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    aaa
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+{% endblock %}
+
+

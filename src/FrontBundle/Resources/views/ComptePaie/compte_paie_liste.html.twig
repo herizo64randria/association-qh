@@ -1,0 +1,144 @@
+{% extends '@Front/base_front.html.twig' %}
+{% block sous_menu_titre1 %}
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="card" style="margin-top: 10px">
+                <div class="row card-body">
+                    <div class="col-4">
+                        <img style="width: 150px; height: 150px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);" src="{{ asset('document/'~ personne.photo ) }}" alt="">
+                    </div>
+                    <address class="col-8">
+
+                        <strong>{{ personne.nom~' '~personne.prenom }}</strong>
+                        <br>
+                        <strong>ITS : {{ personne.numeroIts }}</strong><br>
+                        {{ personne.adresse }}
+                        <br>
+                        {{ personne.ville }}
+                        <br>
+
+                        {{ personne.email }}
+                        <br>
+                        {{ personne.num1 }} {% if personne.num2 %}
+                            {{ '/ '~personne.num2 }}
+                        {% endif %}
+                    </address>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+            <p>
+                <em>Date :  {{ "now"|datelettre }}</em>
+            </p>
+            <p>
+                <h2 class="text-warning">{{ 'compte_liste.titre'|trans }} : <span id="somme"></span></h2>
+            </p>
+            <div >
+                <div class="col-12">
+                    <a id="btnA" href="{{ path('versement_ajouter') }}" class="btn-success btn-lg btn-block"><i class="fa fa-plus"></i> {{ 'compte_liste.credit_notif'|trans }}</a>
+
+                    <a id="btnA" href="{{ path('dmdRemboursement_ajouter') }}" class="btn-info btn-lg btn-block"><i class="fa fa-minus-circle"></i> {{ 'compte_liste.debit_remb'|trans }}</a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+{% block body_container %}
+    <style>
+        #btnA{
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        #btnA:hover{
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.8);
+            text-decoration: none;
+        }
+        .table{
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        }
+        .card{
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+        }
+        .card:hover{
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.8);
+        }
+    </style>
+    <div  class="col-12" style="font-family: 'Courier New';margin: 0px;">
+        <div class="row" >
+            <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead id="customers">
+                                <tr>
+                                    <th scope="col">{{ 'compte_liste.date'|trans }}</th>
+                                    <th scope="col" style="width: 250px;">{{ 'compte_liste.libelle'|trans }}</th>
+                                    <th scope="col">{{ 'compte_liste.credit'|trans }}</th>
+                                    <th scope="col">{{ 'compte_liste.debit'|trans }}</th>
+                                    <th scope="col" class="text-right">{{ 'compte_liste.solde'|trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% set solde = 0 %}
+                                {% set font = "font-style: italic" %}
+                                {% set color = "color: #696969" %}
+                                {% set i=0 %}
+                                {% set type1="" %}
+                                {% for historique in historique %}
+                                    {%  set i=i+1 %}
+                                    <tr>
+                                        <td style=" {% if historique.type=="0" %}{{ font ~ ';' ~ color  }} {% endif %}">{{ historique.date|date('d/m/Y') }}</td>
+                                        <td style=" {% if historique.type=="0" %}{{ font ~ ';' ~ color  }} {% endif %}">{{ historique.libelle }}</td>
+                                        <td class="text-right" style="white-space: nowrap">
+                                            {% if historique.type=="credit" %}
+                                                {{ historique.montant|number_format(2, ',', ' ') }}
+                                                {% set solde = solde + historique.montant %}
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-right" style="white-space: nowrap">
+                                            {% if historique.type=="debit" %}
+                                                {{ historique.montant|number_format(2, ',', ' ') }}
+                                                {% set solde = solde - historique.montant %}
+
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-right" style="white-space: nowrap">
+
+                                            <span id="{{ i }}" >
+                                              {% if historique.type !="0" %}
+                                                {{ solde|number_format(2, ',', ' ') }}
+                                              {% else %}
+                                                {% set type1=0  %}
+                                            {% endif %}
+                                            </span>
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>{{ 'compte_liste.totale'|trans }}</strong></td>
+                                    <td style="white-space: nowrap" class="text-right"><strong id="total">{{ solde|number_format(2, ',', ' ') }}</strong></td>
+                                </tr>
+                            </table>
+                        </div>
+            </div>
+    </div>
+    </div>
+    <script>
+        let x={{ i }};
+
+         $("#"+x).hide();
+        document.getElementById("somme").innerText=" "
+        document.getElementById("somme").innerText=document.getElementById("total").innerText+ " Ar"
+    </script>
+{% endblock %}

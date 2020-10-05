@@ -1,0 +1,101 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+
+<style>
+    /* Make the image fully responsive */
+    .carousel-inner img {
+        width: 100%;
+        height: 100%;
+        background-color: #0088CC;
+    }
+    fieldset.groove {
+        border: 1px outset #1b0b0e;
+        box-shadow: 4px 4px 0px black;
+    }
+    h1,h2,h3,label,button,b,input,select,textarea,p {
+        text-shadow: 0.5px 0.5px 2px black;
+
+    }
+
+</style>
+ <div class="col-12">
+ <br>
+ <div class="container mt-auto">
+        <h1 class="text-primary" id="ftitre">{{ 'demandeqh_ajouter.titre'|trans }}</h1><br>
+
+        <div id="titre">
+            <button type="button" class="btn btn-link text-danger text-center " id="etape1">Formulaire d'or</button>
+        </div>
+<div class="carousel-item active">
+    <form action="#" method="POST">
+    <fieldset class="groove" id="groove">
+
+        <div class="row container-fluid">
+
+
+                <div class="col-12">
+                    <br>
+
+                    <h3 class=" text-center">{{ 'demandeqh_ajouter.question1'|trans }}</h3>
+                    <br>
+                    <div class="form-group text-center">
+
+                        <div class="maxl">
+                            {% if (personne.numeroDemandeQHtemp) %}
+
+                                <a href="{{ path('formulaireQH') }}" id='pdf' class="d-none" target="_blank"></a>
+                                <button type="submit" id="retelecharger" class="btn btn-primary btn-lg" > <i class="fa fa-print"></i> {{ 'demandeqh_ajouter.retelecharger'|trans }}</button>
+                                <br> <br>
+                            {% else %}
+
+                                <button type="submit" id="telecharger" class="btn btn-primary btn-lg" > <i class="fa fa-print"></i> {{ 'demandeqh_ajouter.clikc'|trans }}</button>
+                                <a href="{{ path('formulaireQH') }}" id='pdf' class="d-none" target="_blank"></a>
+                                <br> <br>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+
+
+
+        </div>
+        <br>
+        {% if (personne.numeroDemandeQHtemp and nbr ==0 ) %}
+            <a  href="{{ path('FenetreQH') }}" class="btn-link btn btn-lg float-right "  >{{ 'demandeqh_ajouter.suivant'|trans }}</a>
+        {% endif %}
+        {% if (personne.numeroDemandeQHtemp and nbr >0  ) %}
+            <a  href="{{ path('attenteQH') }}" class="btn-link btn btn-lg float-right "  >{{ 'demandeqh_ajouter.suivant'|trans }}</a>
+        {% endif %}
+        <br>
+    </fieldset>
+    </form>
+
+    </div>
+
+</div>
+ </div>
+    <script>
+        $(document).ready(function() {
+
+            $("#telecharger").click( function () {
+              telecharger()
+            });
+
+
+            $("#retelecharger").click(function () {
+                document.getElementById('pdf').click();
+            })
+        })
+        function telecharger(){
+            document.getElementById('pdf').click();
+        }
+    </script>
+
+{% endblock %}

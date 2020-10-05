@@ -1,0 +1,39 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}{{ 'liste_demande.label1'|trans }}{% endblock %}
+{% block body_container %}
+
+    <br>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th></th>
+            <th>{{ 'liste_demande.date_inscription'|trans }}</th>
+            <th>{{ 'inscription.First Name'|trans }}</th>
+            <th>{{ 'inscription.Last Name'|trans }}</th>
+            <th>{{ 'inscription.num_its'|trans }}</th>
+            <th>{{ 'liste_demande.action'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for personne in personnes %}
+            <tr>
+                <td>
+                    <a href="{{ path('personne_admin_profil', { 'slug' : personne.slug }) }}"><img src="{{ '/document'~asset(personne.photo) }}" alt="" width="50" height="50"></a>
+                </td>
+                <td><a href="{{ path('personne_admin_profil', { 'slug' : personne.slug }) }}">{{ personne.dateInscription|date('d/m/Y') }}</a></td>
+                <td>{{ personne.nom }}</td>
+                <td>{{ personne.prenom }}</td>
+                <td>{{ personne.numeroIts }}</td>
+                <td>
+                    <a href="{{ path('personne_admin_profil', { 'slug' : personne.slug }) }}" class="btn btn-light"><i class="fa fa-eye"></i></a>
+                    <a href="#" class="btn btn-success"><i class="fa fa-check"></i></a>
+                    <a href="#" class="btn btn-danger"><i class="fa fa-warning"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

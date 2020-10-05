@@ -1,0 +1,96 @@
+{% extends '@CompteGroupe/BaseGroupe.html.twig' %}
+
+{% block body_container %}
+
+
+    <div class="container-fluid">
+        <br>
+        <div class="card text-center">
+            <div class="card-header">
+                <h3 class="text-info"><img src="{{ asset('Images/groupe.jpg') }}" class="img img-fluid" alt="" width="50" height="50">{{ 'membregroup.titre'|trans  }}</h3>
+            </div>
+            <div class="card-body">
+                <form class="container" id="formmembre" action="#" method="POST" enctype="multipart/form-data">
+
+                    {% include '@CompteGroupe/menugroupe/menugroupe.html.twig' %}
+
+                    <br>
+                    <div class="row">
+                        <div class="col-6" >
+
+
+                            <input type="text"readonly name="datemembre" class="form-control" id="datemembre" value="{{ "now"|date('d/m/Y') }}">
+                            <br>
+
+                            <select id="membre" name="membre" class="form-control" required>
+                                <option selected value="">{{ 'membregroup.select'|trans }}...</option>
+                                {% if personnes %}
+                                    {% for personne in personnes  %}
+                                        <option value="{{ personne.slug }}">{{ personne.nom ~' '~ personne.prenom }}</option>
+                                    {% endfor %}
+                                {% endif %}
+
+                            </select>
+                            <br>
+                            <button type="submit" class="btn btn-primary float-left">{{ 'membregroup.btn'|trans }}</button>
+
+                        </div>
+                        <div class="col-md-6 details">
+
+                            <table class="table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th>{{ 'membregroup.dateliste'|trans }}</th>
+                                    <th>{{ 'membregroup.nom'|trans }}</th>
+                                    <th>{{ 'membregroup.prenom'|trans }}</th>
+                                    <th>{{ 'membregroup.compte'|trans }}</th>
+                                    <th>{{ 'membregroup.action'|trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody id ="membregroupe">
+                                {% if membres %}
+                                    {% for membre in membres  %}
+                                        <tr>
+                                            <td>{{ membre.datemembre|date('d/m/Y') }}</td>
+                                            <td>{{ membre.personne.nom }}</td>
+                                            <td>{{ membre.personne.prenom }}</td>
+                                            <td><a href="{{ path('paie_listeg',{'id':membre.personne.id}) }}"><i class="fa fa-eye"></i></a></td>
+                                            <td>
+                                                {% if app.user == groupe.userCreer %}
+                                                    <a  href="{{ path('delete_membre',{'id':membre.id,'id1':groupe.id}) }}" class="btn btn-primary"><i class="fa fa-trash"></i></a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>Aucun membres</p>
+                                {% endif %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+                <style>
+
+                    .container .img{
+                        text-align:center;
+                    }
+                    .container .details{
+                        border-left:3px solid #ded4da;
+                    }
+                    .container .details p{
+                        font-size:15px;
+                        font-weight:bold;
+                    }
+                </style>
+
+
+
+
+            </div>
+
+         </div>
+    </div>
+
+{% endblock %}

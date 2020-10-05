@@ -1,0 +1,75 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}Relevée de compte Hussein Scheme{% endblock %}
+{% block body_container %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped nowrap" id="listeHS" style="width:100%">
+                <thead >
+                <tr>
+                    <th scope="col">{{ 'dmfRemboursement_liste.photo'|trans }}</th>
+                    <th scope="col">{{ 'dmfRemboursement_liste.nom'|trans }}</th>
+                    <th scope="col">{{ 'dmfRemboursement_liste.num1'|trans }}</th>
+                    <th scope="col">{{ 'dmfRemboursement_liste.numits'|trans }}</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for personne in personnes %}
+
+                    <tr>
+                        <td><a href="{{ path('paie_detail',{'slug':personne.comptePaie.slug}) }}"><img src="{{ asset('document/'~personne.photo) }}" class="img img-" alt="" width="50" height="50"></a></td>
+                        <td><a href="{{ path('paie_detail',{'slug':personne.comptePaie.slug}) }}">{{ personne.nom ~' '~ personne.prenom }}</a></td>
+                        <td>{{ personne.num1 }}</td>
+                        <td>{{ personne.numeroIts }}</td>
+                        <td>
+                            <a href="{{ path('paie_detail',{'slug':personne.comptePaie.slug}) }}" class="btn-light btn-lg center"   ><i class="fa fa-info-circle"></i> </a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    {#SORT DU TABLE#}
+    <link rel="stylesheet" href="{{ asset('assets/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.css') }}">
+    <script src="{{ asset('assets/DataTables/datatables.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#listeHS').DataTable({
+                info: false,
+                pageLength: 50,
+                order: [[ 1, "asc" ]],
+                language: {
+                    processing:     "Traitement en cours...",
+                    search:         "Rechercher&nbsp;:",
+                    lengthMenu:    "Afficher _MENU_ &eacute;l&eacute;ments",
+                    info:           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                    infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    infoPostFix:    "",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    emptyTable:     "Aucune donnée disponible dans le tableau",
+                    paginate: {
+                        first:      "Premier",
+                        previous:   "Pr&eacute;c&eacute;dent",
+                        next:       "Suivant",
+                        last:       "Dernier"
+                    },
+                    aria: {
+                        sortAscending:  ": activer pour trier la colonne par ordre croissant",
+                        sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                    }
+                }
+            });
+        });
+    </script>
+
+
+{% endblock %}

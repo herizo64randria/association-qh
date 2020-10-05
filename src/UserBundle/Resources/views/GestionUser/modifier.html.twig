@@ -1,0 +1,83 @@
+{% extends "@Back/base_backend.html.twig" %}
+
+
+{% block sous_menu_titre %}Modifier Information{% endblock %}
+
+{% block body_container %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <form action="#" method="post">
+
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur: <b class="text-danger" id="err_username"></b></label>
+                    <input required type="text" class="form-control" name="username" id="username" readonly  value="{{ user.username }}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="nom">Nom: <b class="text-danger" id="err_nom"></b></label>
+                    <input required type="text" class="form-control" name="nom" id="nom"  value="{{ user.nom }}"  />
+                </div>
+
+                <div class="form-group">
+                    <label for="prenom">Prénom: <b class="text-danger" id="err_prenom"></b></label>
+                    <input required type="text" class="form-control" name="prenom" id="prenom"  value="{{ user.prenom }}"  />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email <b class="text-danger" id="err_email"></b></label>
+                    <input required type="text" class="form-control" name="email" id="email" value="{{ user.email }}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="mdp1">Mot de passe: <b class="text-danger" id="err_mdp1"></b></label>
+                    <input type="password" class="form-control" name="mdp1" id="mdp1"  />
+                </div>
+
+                <div class="form-group">
+                    <label for="mdp2">Confirmation mot de passe <b class="text-danger" id="err_mdp2"></b></label>
+                    <input type="password" class="form-control" name="mdp2" id="mdp2"  />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <button id="enregistrer" class="btn btn-primary btn-lg btn-block"><i class="fa fa-save"></i> Enregistrer</button>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ path('utilisateur_liste') }}" class="btn btn-lg btn-light btn-block"><i class=""></i> Annuler</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    {#SCRIPT TEST MOT DE PASSE#}
+    <script>
+        function testMotDePasse(){
+            mdp1 = $('#mdp1').val();
+            mdp2 = $('#mdp2').val();
+
+            if(mdp1 != mdp2){
+                $('#mdp2').addClass('alert-danger');
+
+                $('#err_mdp2').text(' | {{ 'inscription.err_mdp'|trans }}');
+
+                return false;
+            }else {
+                $('#mdp2').removeClass('alert-danger');
+
+                $('#err_mdp2').text('');
+
+                return true;
+            }
+        }
+
+        $('#enregistrer').click(function () {
+            return testMotDePasse();
+        });
+    </script>
+
+
+{% endblock %}
+

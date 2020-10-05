@@ -1,0 +1,10 @@
+
+groupe_route:
+    resource: "@CompteGroupeBundle/Controller/GroupeController.php"
+    type: annotation
+grphusain_route:
+    resource: "@CompteGroupeBundle/Controller/HusainSchemeController.php"
+    type: annotation
+grpdemande_route:
+    resource: "@CompteGroupeBundle/Controller/DemandeQHController.php"
+    type: annotation

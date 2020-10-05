@@ -1,0 +1,112 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}{% endblock %}
+{% block body_container %}
+
+    <style type="text/css">
+        #mc_embed_signup{background:#0000; clear:left; font:14px Helvetica,Arial,sans-serif; }
+        /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
+           We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+        .card{
+            width: 850px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        }
+        .center:hover,.center{
+            text-decoration: none;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+        }    </style>
+    <div class="row" >
+    <div id="mc_embed_signup" class=" col-9" style="font-family: 'Courier New'">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <br>
+                    <h2 class="text-info text-center">Information sur le remboursement</h2>
+
+                    <hr class="text-dark">
+                    <br>
+                    <div style="float:left;">
+
+                        <a target="_blank" href="{{ path('Remboursement_imprimer',{'id': remboursement.id}) }}" class="btn-danger btn-lg  center"   ><i class="fa fa-print"></i> Imprimer </a>
+                    </div>
+
+                    <br>
+
+                    <hr class="border-white">
+                    <div class="row">
+                        <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 style=""><b>Nom et Prénom: </b><span>{{ remboursement.personne.nom ~' '~ remboursement.personne.prenom  }}</span> </h5>
+                                <h5 style=""><b>Numéro ITS: </b><span>{{ remboursement.personne.numeroIts  }}</span> </h5>
+                                <h5 style=""><b>Contact: </b><span>{{ remboursement.personne.num1  }}
+                                        {% if remboursement.personne.num2 %}
+                                            {{ '/ '~remboursement.personne.num2  }}
+                                        {% endif %}
+
+                                    </span> </h5>
+                                <h5 style=""><b>Paiement : </b><span>{{ remboursement.demandeReboursement.paiement }}</span> </h5>
+                                <h5 style=""><b>Créer par: </b> <span>{{ remboursement.demandeReboursement.userCreer }}</span> </h5>
+                                {% if  remboursement.demandeReboursement.userCreer !=  remboursement.demandeReboursement.userConfirme  %}
+                                    <h5 style=""><b>Acceptée par : </b><span>{{ remboursement.demandeReboursement.userConfirme}}</span> </h5>
+
+                                {% endif %}
+
+                                {#
+                                {% set solde = 0 %}
+                                {% for historique in historique %}
+                                    {% if historique.type=="credit" %}
+
+                                        {% set solde = solde + historique.montant %}
+                                    {% endif %}
+
+                                    {% if historique.type=="debit" %}
+
+                                        {% set solde = solde - historique.montant %}
+
+                                    {% endif %}
+
+                                {% endfor %}
+                                <h5 style=""><b>Votre compte : </b><span>{{ solde|number_format('2',',',' ') }} Ar</span> </h5>#}
+                            </div>
+                        </div>
+                            <br>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    {% if(remboursement.demandeReboursement.typeCheque==true) %}
+                                        {% set cheque="Barré" %}
+                                    {% else %}
+                                        {% set cheque="Non barré" %}
+                                    {% endif %}
+                                    <h5 style=""><b>Nom du banque : </b><span>{{ remboursement.cheque.banque }}</span> </h5>
+                                    <h5 style=""><b>Type de cheque : </b><span>{{ cheque }}</span> </h5>
+                                    <h5 style=""><b>Numéro du cheque : </b><span>{{ remboursement.cheque.numero }}</span> </h5>
+                                    <h5 style=""><b>Date de remboursement : </b><span>{{ remboursement.date|date('d/m/Y') }}</span> </h5>
+                                    <h5 style=""><b>Montant : </b> <span>{{ remboursement.demandeReboursement.montant|number_format('2',',',' ')~" Ar"}}</span> </h5>
+                                    <h5 style=""><b>Libellé: </b> <span>{{ remboursement.cheque.libelle }}</span> </h5>
+
+                                    {% if remboursement.cheque.scanUrl %}
+                                        <h5><b>Scan du chèque:</b></h5>
+                                        <div class="col-3" >
+                                            <a href="{{ asset('document/'~ remboursement.cheque.scanUrl) }}" target="_blank">
+                                                <img src="{{ asset('document/'~ remboursement.cheque.scanUrl) }}" class="img img-thumbnail" alt="" width="150" height="150">
+                                            </a>
+                                            <a download="{{ remboursement.cheque.scanUrl }}" href="{{ asset('document/'~ remboursement.cheque.scanUrl) }}" target="_blank"><i class="fa fa-download"> Télécharger</i></a>
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+                            <br> <br>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

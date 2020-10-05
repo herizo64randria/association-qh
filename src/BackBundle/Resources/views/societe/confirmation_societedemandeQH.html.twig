@@ -1,0 +1,263 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 50px;
+            height: 50px;
+            background-color: #0088CC;
+        }
+        col-lg .groove {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,input,select,textarea,p {
+            text-shadow: 0.1px 0.1px 1px black;
+
+        }
+        button {
+            border-radius: 0px;
+            box-shadow: 4px 4px 0px black;
+        }
+    </style>
+
+{% endblock %}
+{% block body_container %}
+
+    <div class="container-fluid">
+        <form action="#" method="post">
+            <hr class="border-white">
+
+
+            <div class="row">
+                <div class="col-7">
+                    <h4>
+                        {{ demandeQH.societe ~' '~' / Demande QH N° : '~ demandeQH.numero
+                        }}
+                    </h4>
+                    <p>Fait le : {{ demandeQH.datedemande|date('d/m/Y') }} par {{ demandeQH.personne.nom ~' '~demandeQH.personne.prenom }}</p>
+
+                </div>
+                <div class="col-5">
+
+                    <div class="text-center">
+                        {% if demandeQH.etat.nometat == 'En attente de confirmation' %}
+                        <h4 class="text-success">{{ demandeQH.etat.nometat }}</h4>
+                            <a href="{{ path('confirmation_manuelle',{ 'id' : demandeQH.id}) }}" class="btn btn-primary">
+                                <span class="badge badge-light"><i class="fa fa-check fa-2x"></i></span>
+                                Cliqué ici pour confirmation manuelle
+                            </a>
+                        {% else %}
+                            <h4 class="text-success">{{ demandeQH.etat.nometat }}</h4>
+                            <a href="{{ path('confirmation_manuelle',{ 'id' : demandeQH.id}) }}" class="btn btn-primary">
+                                <span class="badge badge-light"><i class="fa fa-check fa-2x"></i></span>
+                                Cliqué ici pour confirmation manuelle
+                            </a>
+                        {% endif %}
+                    </div>
+
+                    <br>
+
+                    <hr class="border-white">
+
+                </div>
+            </div>
+
+
+
+            {% if demandeQH %}
+            <hr class="groove">
+
+            {% if  demandeQH.etat.nometat == 'En attente de confirmation' and  confirmation == null  %}
+            <div class="text-center">
+
+
+                    <button class="btn- btn-lg btn-success">Envoyer</button>
+                    <hr class="groove">
+
+
+            </div>
+            <form>
+                <div class="form-row align-items-center">
+
+                    <div class="col-sm-4 my-1">
+
+                        <div class="input-group">
+                            <label class="form-check-label" for="autoSizingCheck2">
+                                Voulez vous confirmé la demande :
+                            </label>
+
+                        </div>
+                    </div>
+                    <div class="col-auto my-1">
+                        <br>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="customControlValidation2" name="reponse" value="oui" required>
+                            <label class="custom-control-label" for="customControlValidation2">Oui</label>
+                        </div>
+
+                        <div class="custom-control custom-radio mb-3">
+                            <input type="radio" class="custom-control-input" id="customControlValidation3" name="reponse" value="non" required>
+                            <label class="custom-control-label" for="customControlValidation3">Non</label>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2 my-1">
+
+
+                    </div>
+                    <div class="col-sm-3 my-1">
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Montant  </div>
+                            </div>
+                            <input type="text" class="form-control" id="inlineFormInputGroupUsername" name="montant"placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-auto my-1">
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                    </div>
+                </div>
+            </form>
+            <hr class="groove">
+            {% endif %}
+            <div class="row">
+                <div class="col-lg-4">
+                    <h4 class="text-primary ">Montant demandé</h4>
+
+                    <p >
+                        <i class="fa fa-star text-primary"></i>
+                        {{ demandeQH.montant|number_format('2',',',' ',' ') }} Ar
+                    </p>
+
+                </div>
+                <div class="col-lg-4">
+                    <h4 class="text-primary">Durée </h4>
+
+                    <p>
+                        <i class="fa fa-clock text-primary"></i>
+                        {{ demandeQH.nombreMois }} mois
+
+                    </p>
+
+                </div>
+
+                <div class="col-lg-4">
+                    <h4 class="text-primary">Motif pour la demande</h4>
+                    <p>
+
+                        <i class="fa fa-tags text-primary"></i>
+                        {{ demandeQH.motif }}
+
+                    </p>
+
+                </div>
+
+
+            </div>
+            <hr class="groove">
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <h4 class="text-primary">Liste garant </h4><br>
+                    {% for garant in garants  %}
+                        <i class="fa fa-star"></i>
+                        <a href="#" id="1" class="text-dark">{{ garant.nomcin ~''~garant.prenomcin }}  </a>
+                        <br><br>
+
+                    {% endfor %}
+
+                </div>
+                <div class="col-lg-3">
+                    <h4 class="text-primary">Action</h4>
+                    <br>
+                    {% for garant in garants  %}
+                        <a href="{{ path('modif_demandesociete',{ 'id' : garant.id}) }}" class="text-dark" >
+                            <i class="fa fa-eye"></i> Voir information</a>
+                        <br><br>
+
+                        {#<b class="collapse  {{ garant.id }}" id="{{ garant.id }}" ></b><br><br>#}
+
+                    {% endfor %}
+                </div>
+                <div class="col-lg-5">
+                    <div class=" card"   style="width: 22rem;">
+
+
+                       <img src="{{ asset('Images/info.jpg') }}" class="img img-fluid float-left" alt="" width="60" height="50">
+
+                        <div class="card-body">
+                            <p class="card-text">
+                                {% if day >= 0 %}
+                                    Temps restant pour la confirmation :<br><br>
+                                <span class="badge badge-success">{{ day }}</span> Jour(s)-
+                                <span class="badge badge-success">{{ h }}</span> Heure -
+                                <span class="badge badge-success">{{ min }}</span> Minute
+                                {% endif %}
+                            </p>
+                            <p class="card-text">
+                                Nombre de confirmation effectuer : <span class="badge badge-success">{{ oui+non }}</span>
+                                <span class="badge badge-primary"><i class="fa fa-eye" data-toggle="modal" data-target="#exampleModal"></i></span>
+                            </p>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="col-6">
+                                        <p class="card-text">
+                                            Accepté : <span class="badge badge-success">{{ oui }}</span>
+                                        </p>
+                                        <p class="card-text">
+                                            Refusé : <span class="badge badge-success">{{ non }}</span>
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br>
+                            <p class="card-text">
+                                Montant Moyenne : <span class="badge badge-success">{{ montant|number_format('2',',',' ',' ') }} Ar</span>
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success" id="exampleModalLabel">Listes confirmation par chaque administrateur</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    {%  for confirmation1 in confirmations  %}
+                        <h5 class="text-primary"><i class="fa fa-star"></i> {{ confirmation1.userConfirme }} : </h5>
+                        <p>Reponse : {{ confirmation1.reponse }}
+                            {% if confirmation1.montant == 0 %}
+                               <p></p>
+                             {% else %}
+                                 - Montant : {{ confirmation1.montant|number_format('2',',',' ',' ') }} Ar </p>
+                            {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    </div>
+    <script>
+
+    </script>
+{% endblock %}

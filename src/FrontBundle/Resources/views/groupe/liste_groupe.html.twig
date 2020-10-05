@@ -1,0 +1,49 @@
+{% extends '@Front/base_front.html.twig' %}
+{% block titre %}{% endblock %}
+{% block sous_menu %} {% endblock %}
+{% block stylecss %}
+    <style>
+
+        .container{
+
+            padding-top: 3px;
+
+        }
+        th,td{white-space: nowrap}
+    </style>
+
+{% endblock %}
+{% block body_container %}
+
+
+
+    <div class="container" style="font-family: 'Courier New'">
+        <div class="row">
+
+            <div class="col-5">
+                <div class="card">
+                    <div class="card-header bg-primary text-white"><i class="fa fa-list"></i> {{ 'versement_ajouter.soustitre'|trans }}
+                    </div>
+                    <div class="card-body">
+
+                </div>
+            </div>
+            <div class="col-7" style="width: 900px">
+                <div class="card" >
+                    <div class="card-body">
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <script>
+
+    </script>
+
+{% endblock %}

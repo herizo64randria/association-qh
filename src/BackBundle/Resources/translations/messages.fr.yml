@@ -1,0 +1,80 @@
+
+# --versement_ajuter.html.twig
+versement_ajouter:
+  titre: Versement
+  soustitre: Veuillez remplire tous les champs
+  adresse: Informations
+  date: Date
+  numero: Choisir le numéro de compte
+  montant: Montant
+  caisse: Caisse
+  valider: Valider
+# --versement_liste.html.twig
+versement_liste:
+  titre: Liste versement
+  date: Date
+  numero: Numéro du compte
+  montant: Montant
+  borderau: Scan bordereau
+  action : Action
+  etat: Etat
+  photo: Photo
+  nom: Nom
+# --compte_paie_liste.html.twig
+compte_liste:
+  titre: Compte
+  date: Date
+  libelle: Libéllé
+  montant: Montant
+  credit: Versement
+  debit: Remboursement
+  solde: Total
+  demande : Demande de remboursement
+  compte: Compte du personne :
+  nom: Nom :
+  prenom: Prénom :
+  numero : Numéro :
+  contact: Contact :
+  totale: Total :
+  suivie: Suivre
+
+# --dmdRemboursemnt_ajouter.html.twig
+dmdRemboursement_ajouter:
+  titre: Création du demande de remboursement
+  soustitre: Veuillez remplire tous les champs
+  adresse: Vos informations
+  date: Date
+  numero: Numéro de demande
+  montant: Montant
+  cheque: Type de chèque
+  valider: Valider
+  barrée : Barrée
+  nonbarrée : Non Barrée
+# --dmdRemboursemnt_liste.html.twig
+dmfRemboursement_liste:
+  titre: Liste de demande de remboursement
+  date: Date
+  numero: Numéro
+  montant: Montant
+  cheque: Type cheque
+  etat: Etat
+  cheque barree: Cheque barrées
+  cheque non barree: Cheque non barrées
+  photo: Photo
+  nom: Nom
+  # --menu_base
+menu_back:
+  log: Déconnecter
+# --ListeDemandeQh.html.twig
+listedemandeQH :
+  numero : Numéro
+  date: Date
+  photo : Photo
+  nom et prenom : Nom et Prénom
+  montant : Montant
+  mois : Mois
+  etat :  Etat
+  societe : Nom du société
+
+
+

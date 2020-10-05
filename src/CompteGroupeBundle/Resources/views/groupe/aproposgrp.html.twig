@@ -1,0 +1,56 @@
+{% extends '@CompteGroupe/BaseGroupe.html.twig' %}
+
+{% block body_container %}
+    <style>
+
+        .container .img{
+            text-align:center;
+        }
+        .container .details{
+            border-left:3px solid #ded4da;
+        }
+        .container .details p{
+            font-size:15px;
+            font-weight:bold;
+        }
+    </style>
+    <div class="container-fluid">
+        <br>
+        <div class="card text-center">
+            <div class="card-header">
+                <h3 class="text-info"><img src="{{ asset('/Images/groupe.jpg') }}" class="img img-fluid" alt="" width="50" height="50">
+                    {{ 'aproposgrp.titre'|trans  }}
+                </h3>
+            </div>
+            <div class="card-body">
+                <a href="{{ path('page-choix-groupe',{'id':groupe.id}) }}" class="btn btn-primary"><i class="fa fa-arrow-left float-left"></i> </a>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 img">
+                            <img style="width: 250px;height:250px"src="{{ asset('/document/'~groupe.photo) }}"class="img-rounded" alt="" >
+                        </div>
+                        <div class="col-md-6 details">
+
+                            <blockquote>
+                                <h5 class="text-info">{{ 'aproposgrp.nom'|trans  }} {{ groupe.nomgroup }}</h5>
+                                <small><cite title="Source Title">{{ 'aproposgrp.creer'|trans  }} {{ groupe.userCreer.nom ~' '~groupe.userCreer.prenom }}</cite></small>
+                            </blockquote>
+                            <blockquote>
+                                <h5 class="text-info">{{ 'aproposgrp.personne'|trans  }}</h5>
+
+                            </blockquote>
+                            <p>
+                                {% for membre in membres %}
+                                   <i class="fa fa-star text-info"></i> {{ membre.personne.nom ~' '~membre.personne.prenom }} <br>
+                                {% endfor %}<br>
+                                {{ 'aproposgrp.date'|trans  }}{{ groupe.datecreer|date('d/m/Y') }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

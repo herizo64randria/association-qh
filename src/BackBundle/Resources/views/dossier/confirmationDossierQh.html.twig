@@ -1,0 +1,3031 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+            background-color: #0088CC;
+        }
+        col-lg .groove {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,input,select,textarea,p {
+            text-shadow: 0.1px 0.1px 1px black;
+
+        }
+    </style>
+
+    Verification du dossier QH :<br>
+    <h3>
+        {{ demandeQH.demadeQH.personne.nom ~' '~ demandeQH.demadeQH.personne.prenom ~' / '~
+        demandeQH.demadeQH.personne.numeroIts ~' / '~
+        demandeQH.demadeQH.numero
+        }}
+    </h3>
+    <hr class="groove">
+    {% if(demandeQH.verification == "En attente de verification")%}
+        <div class="text-center">
+
+            <a href="{{ path('validerdossierQh',{ 'id' : demandeQH.id}) }}" class="btn-success btn-lg  center" id="confirme_demandeqh" >Valider</a>
+            <br>
+
+        </div>
+        <hr class="groove">
+    {% else %}
+        {% if(demandeQH.verification == "A verifier")%}
+        <div class="text-center">
+            <a href="{{ path('validerdossierQh',{ 'id' : demandeQH.id}) }}" class="btn-success btn-lg  center" id="confirme_demandeqh" >Valider</a>
+            <br><br>
+            <h4 class="text-danger">Informations à verifier </h4>
+
+        </div>
+
+        <br>
+        {% endif%}
+        {% if(demandeQH.verification == "Valider")%}
+        <div class="text-center">
+
+            <h4 class="text-success">Dossier valider</h4>
+            <b>Valider par : {{ app.user }}</b>
+        </div>
+
+        <br>
+        {% endif%}
+
+    {% endif%}
+
+{% endblock %}
+{% block body_container %}
+    {% set class_montant='d-none' %}
+    {% set msg_montant='d-none' %}
+    {% set check_montant='' %}
+    {% set edit_montant='' %}
+    {% set notif_montant='d-none' %}
+
+    {% set class_mois='d-none' %}
+    {% set msg_mois='d-none' %}
+    {% set check_mois='' %}
+    {% set edit_mois='' %}
+    {% set notif_mois='d-none' %}
+
+    {% set class_motif='d-none' %}
+    {% set msg_motif='d-none' %}
+    {% set check_motif='' %}
+    {% set edit_motif='' %}
+    {% set notif_motif='d-none' %}
+
+    {% set class_detail='d-none' %}
+    {% set msg_detail='d-none' %}
+    {% set check_detail='' %}
+    {% set edit_detail='' %}
+    {% set notif_detail='d-none' %}
+
+    {% set class_valeuror='d-none' %}
+    {% set msg_valeuror='d-none' %}
+    {% set check_valeuror='' %}
+    {% set edit_valeuror='' %}
+    {% set notif_valeuror='d-none' %}
+
+    {% set class_nomits='d-none' %}
+    {% set msg_nomits='d-none' %}
+    {% set check_nomits='' %}
+    {% set edit_nomits='' %}
+    {% set notif_nomits='d-none' %}
+
+
+    {% set class_gmoze='d-none' %}
+    {% set msg_gmoze='d-none' %}
+    {% set check_gmoze='' %}
+    {% set edit_gmoze='' %}
+    {% set notif_gmoze='d-none' %}
+
+    {% set class_nomits1='d-none' %}
+    {% set msg_nomits1='d-none' %}
+    {% set check_nomits1='' %}
+    {% set edit_nomits1='' %}
+    {% set notif_nomits1='d-none' %}
+
+
+    {% set class_gmoze1='d-none' %}
+    {% set msg_gmoze1='d-none' %}
+    {% set check_gmoze1='' %}
+    {% set edit_gmoze1='' %}
+    {% set notif_gmoze1='d-none' %}
+
+    {% set class_kalidas='d-none' %}
+    {% set msg_kalidas='d-none' %}
+    {% set check_kalidas='' %}
+    {% set edit_kalidas='' %}
+    {% set notif_kalidas='d-none' %}
+
+    {% set class_gnom='d-none' %}
+    {% set msg_gnom='d-none' %}
+    {% set check_gnom='' %}
+    {% set edit_gnom='' %}
+    {% set notif_gnom='d-none' %}
+
+    {% set class_gprenom='d-none' %}
+    {% set msg_gprenom='d-none' %}
+    {% set check_gprenom='' %}
+    {% set edit_gprenom='' %}
+    {% set notif_gprenom='d-none' %}
+
+    {% set class_gnumits='d-none' %}
+    {% set msg_gnumits='d-none' %}
+    {% set check_gnumits='' %}
+    {% set edit_gnumits='' %}
+    {% set notif_gnumits ='d-none' %}
+
+    {% set class_gnumits1='d-none' %}
+    {% set msg_gnumits1='d-none' %}
+    {% set check_gnumits1='' %}
+    {% set edit_gnumits1='' %}
+    {% set notif_gnumits1 ='d-none' %}
+
+    {% set class_gne='d-none' %}
+    {% set msg_gne='d-none' %}
+    {% set check_gne='' %}
+    {% set edit_gne='' %}
+    {% set notif_gne ='d-none' %}
+
+    {% set class_glieu='d-none' %}
+    {% set msg_glieu='d-none' %}
+    {% set check_glieu='' %}
+    {% set edit_glieu='' %}
+    {% set notif_glieu ='d-none' %}
+
+    {% set class_gadresse='d-none' %}
+    {% set msg_gadresse='d-none' %}
+    {% set check_gadresse='' %}
+    {% set edit_gadresse='' %}
+    {% set notif_gadresse ='d-none' %}
+
+    {% set class_gville='d-none' %}
+    {% set msg_gville='d-none' %}
+    {% set check_gville='' %}
+    {% set edit_gville='' %}
+    {% set notif_gville ='d-none' %}
+
+    {% set class_gnationalite='d-none' %}
+    {% set msg_gnationalite='d-none' %}
+    {% set check_gnationalite='' %}
+    {% set edit_gnationalite='' %}
+    {% set notif_gnationalite ='d-none' %}
+
+    {% set class_gsexe='d-none' %}
+    {% set msg_gsexe='d-none' %}
+    {% set check_gsexe='' %}
+    {% set edit_gsexe='' %}
+    {% set notif_gsexe ='d-none' %}
+
+    {% set class_gtype='d-none' %}
+    {% set msg_gtype='d-none' %}
+    {% set check_gtype='' %}
+    {% set edit_gtype='' %}
+    {% set notif_gtype ='d-none' %}
+
+    {% set class_gnumpiece='d-none' %}
+    {% set msg_gnumpiece='d-none' %}
+    {% set check_gnumpiece='' %}
+    {% set edit_gnumpiece='' %}
+    {% set notif_gnumpiece ='d-none' %}
+
+    {% set class_gdatepiece='d-none' %}
+    {% set msg_gdatepiece='d-none' %}
+    {% set check_gdatepiece='' %}
+    {% set edit_gdatepiece='' %}
+    {% set notif_gdatepiece ='d-none' %}
+
+    {% set class_gvillepiece='d-none' %}
+    {% set msg_gvillepiece='d-none' %}
+    {% set check_gvillepiece='' %}
+    {% set edit_gvillepiece='' %}
+    {% set notif_gvillepiece ='d-none' %}
+
+    {% set class_gpayspiece='d-none' %}
+    {% set msg_gpayspiece='d-none' %}
+    {% set check_gpayspiece='' %}
+    {% set edit_gpayspiece='' %}
+    {% set notif_gpayspiece ='d-none' %}
+
+    {% set class_gprofession='d-none' %}
+    {% set msg_gprofession='d-none' %}
+    {% set check_gprofession='' %}
+    {% set edit_gprofession='' %}
+    {% set notif_gprofession ='d-none' %}
+
+    {% set class_gtel1='d-none' %}
+    {% set msg_gtel1='d-none' %}
+    {% set check_gtel1='' %}
+    {% set edit_gtel1='' %}
+    {% set notif_gtel1 ='d-none' %}
+
+    {% set class_gtel2='d-none' %}
+    {% set msg_gtel2='d-none' %}
+    {% set check_gtel2='' %}
+    {% set edit_gtel2='' %}
+    {% set notif_gtel2 ='d-none' %}
+
+
+    {% set class_gemail='d-none' %}
+    {% set msg_gemail='d-none' %}
+    {% set check_gemail='' %}
+    {% set edit_gemail='' %}
+    {% set notif_gemail ='d-none' %}
+
+    {% set class_gnumcheque1='d-none' %}
+    {% set msg_gnumcheque1='d-none' %}
+    {% set check_gnumcheque1='' %}
+    {% set edit_gnumcheque1='' %}
+    {% set notif_gnumcheque1 ='d-none' %}
+
+    {% set class_gbanquecheque1='d-none' %}
+    {% set msg_gbanquecheque1='d-none' %}
+    {% set check_gbanquecheque1='' %}
+    {% set edit_gbanquecheque1='' %}
+    {% set notif_gbanquecheque1 ='d-none' %}
+
+
+    {% set class_gmontantcheque1='d-none' %}
+    {% set msg_gmontantcheque1='d-none' %}
+    {% set check_gmontantcheque1='' %}
+    {% set edit_gmontantcheque1='' %}
+    {% set notif_gmontantcheque1 ='d-none' %}
+
+    {% set class_gdatecheque1='d-none' %}
+    {% set msg_gdatecheque1='d-none' %}
+    {% set check_gdatecheque1='' %}
+    {% set edit_gdatecheque1='' %}
+    {% set notif_gdatecheque1 ='d-none' %}
+
+    {% set class_gnumcheque2='d-none' %}
+    {% set msg_gnumcheque2='d-none' %}
+    {% set check_gnumcheque2='' %}
+    {% set edit_gnumcheque2='' %}
+    {% set notif_gnumcheque2 ='d-none' %}
+
+    {% set class_gbanquecheque2='d-none' %}
+    {% set msg_gbanquecheque2='d-none' %}
+    {% set check_gbanquecheque2='' %}
+    {% set edit_gbanquecheque2='' %}
+    {% set notif_gbanquecheque2 ='d-none' %}
+
+
+    {% set class_gmontantcheque2='d-none' %}
+    {% set msg_gmontantcheque2='d-none' %}
+    {% set check_gmontantcheque2='' %}
+    {% set edit_gmontantcheque2='' %}
+    {% set notif_gmontantcheque2 ='d-none' %}
+
+    {% set class_gdatecheque2='d-none' %}
+    {% set msg_gdatecheque2='d-none' %}
+    {% set check_gdatecheque2='' %}
+    {% set edit_gdatecheque2='' %}
+    {% set notif_gdatecheque2 ='d-none' %}
+
+    {% set class_gnumcheque3='d-none' %}
+    {% set msg_gnumcheque3='d-none' %}
+    {% set check_gnumcheque3='' %}
+    {% set edit_gnumcheque3='' %}
+    {% set notif_gnumcheque3 ='d-none' %}
+
+    {% set class_gbanquecheque3='d-none' %}
+    {% set msg_gbanquecheque3='d-none' %}
+    {% set check_gbanquecheque3='' %}
+    {% set edit_gbanquecheque3='' %}
+    {% set notif_gbanquecheque3 ='d-none' %}
+
+
+    {% set class_gmontantcheque3='d-none' %}
+    {% set msg_gmontantcheque3='d-none' %}
+    {% set check_gmontantcheque3='' %}
+    {% set edit_gmontantcheque3='' %}
+    {% set notif_gmontantcheque3 ='d-none' %}
+
+    {% set class_gdatecheque3='d-none' %}
+    {% set msg_gdatecheque3='d-none' %}
+    {% set check_gdatecheque3='' %}
+    {% set edit_gdatecheque3='' %}
+    {% set notif_gdatecheque3 ='d-none' %}
+
+
+    {% set class_gnomheritier='d-none' %}
+    {% set msg_gnomheritier='d-none' %}
+    {% set check_gnomheritier='' %}
+    {% set edit_gnomheritier='' %}
+    {% set notif_gnomheritier ='d-none' %}
+
+    {% set class_gprenomheritier='d-none' %}
+    {% set msg_gprenomheritier='d-none' %}
+    {% set check_gprenomheritier='' %}
+    {% set edit_gprenomheritier='' %}
+    {% set notif_gprenomheritier ='d-none' %}
+
+
+    {% set class_g1nom='d-none' %}
+    {% set msg_g1nom='d-none' %}
+    {% set check_g1nom='' %}
+    {% set edit_g1nom='' %}
+    {% set notif_g1nom='d-none' %}
+
+    {% set class_g1prenom='d-none' %}
+    {% set msg_g1prenom='d-none' %}
+    {% set check_g1prenom='' %}
+    {% set edit_g1prenom='' %}
+    {% set notif_g1prenom='d-none' %}
+
+    {% set class_g1numits='d-none' %}
+    {% set msg_g1numits='d-none' %}
+    {% set check_g1numits='' %}
+    {% set edit_g1numits='' %}
+    {% set notif_g1numits ='d-none' %}
+
+    {% set class_g1numits1='d-none' %}
+    {% set msg_g1numits1='d-none' %}
+    {% set check_g1numits1='' %}
+    {% set edit_g1numits1='' %}
+    {% set notif_g1numits1 ='d-none' %}
+
+    {% set class_g1ne='d-none' %}
+    {% set msg_g1ne='d-none' %}
+    {% set check_g1ne='' %}
+    {% set edit_g1ne='' %}
+    {% set notif_g1ne ='d-none' %}
+
+    {% set class_g1lieu='d-none' %}
+    {% set msg_g1lieu='d-none' %}
+    {% set check_g1lieu='' %}
+    {% set edit_g1lieu='' %}
+    {% set notif_g1lieu ='d-none' %}
+
+    {% set class_g1adresse='d-none' %}
+    {% set msg_g1adresse='d-none' %}
+    {% set check_g1adresse='' %}
+    {% set edit_g1adresse='' %}
+    {% set notif_g1adresse ='d-none' %}
+
+    {% set class_g1ville='d-none' %}
+    {% set msg_g1ville='d-none' %}
+    {% set check_g1ville='' %}
+    {% set edit_g1ville='' %}
+    {% set notif_g1ville ='d-none' %}
+
+    {% set class_g1nationalite='d-none' %}
+    {% set msg_g1nationalite='d-none' %}
+    {% set check_g1nationalite='' %}
+    {% set edit_g1nationalite='' %}
+    {% set notif_g1nationalite ='d-none' %}
+
+    {% set class_g1sexe='d-none' %}
+    {% set msg_g1sexe='d-none' %}
+    {% set check_g1sexe='' %}
+    {% set edit_g1sexe='' %}
+    {% set notif_g1sexe ='d-none' %}
+
+    {% set class_g1type='d-none' %}
+    {% set msg_g1type='d-none' %}
+    {% set check_g1type='' %}
+    {% set edit_g1type='' %}
+    {% set notif_g1type ='d-none' %}
+
+    {% set class_g1numpiece='d-none' %}
+    {% set msg_g1numpiece='d-none' %}
+    {% set check_g1numpiece='' %}
+    {% set edit_g1numpiece='' %}
+    {% set notif_g1numpiece ='d-none' %}
+
+    {% set class_g1datepiece='d-none' %}
+    {% set msg_g1datepiece='d-none' %}
+    {% set check_g1datepiece='' %}
+    {% set edit_g1datepiece='' %}
+    {% set notif_g1datepiece ='d-none' %}
+
+    {% set class_g1villepiece='d-none' %}
+    {% set msg_g1villepiece='d-none' %}
+    {% set check_g1villepiece='' %}
+    {% set edit_g1villepiece='' %}
+    {% set notif_g1villepiece ='d-none' %}
+
+    {% set class_g1payspiece='d-none' %}
+    {% set msg_g1payspiece='d-none' %}
+    {% set check_g1payspiece='' %}
+    {% set edit_g1payspiece='' %}
+    {% set notif_g1payspiece ='d-none' %}
+
+    {% set class_g1profession='d-none' %}
+    {% set msg_g1profession='d-none' %}
+    {% set check_g1profession='' %}
+    {% set edit_g1profession='' %}
+    {% set notif_g1profession ='d-none' %}
+
+    {% set class_g1tel1='d-none' %}
+    {% set msg_g1tel1='d-none' %}
+    {% set check_g1tel1='' %}
+    {% set edit_g1tel1='' %}
+    {% set notif_g1tel1 ='d-none' %}
+
+    {% set class_g1tel2='d-none' %}
+    {% set msg_g1tel2='d-none' %}
+    {% set check_g1tel2='' %}
+    {% set edit_g1tel2='' %}
+    {% set notif_g1tel2 ='d-none' %}
+
+
+    {% set class_g1email='d-none' %}
+    {% set msg_g1email='d-none' %}
+    {% set check_g1email='' %}
+    {% set edit_g1email='' %}
+    {% set notif_g1email ='d-none' %}
+
+    {% set class_g1numcheque1='d-none' %}
+    {% set msg_g1numcheque1='d-none' %}
+    {% set check_g1numcheque1='' %}
+    {% set edit_g1numcheque1='' %}
+    {% set notif_gnumcheque1 ='d-none' %}
+
+    {% set class_g1banquecheque1='d-none' %}
+    {% set msg_g1banquecheque1='d-none' %}
+    {% set check_g1banquecheque1='' %}
+    {% set edit_g1banquecheque1='' %}
+    {% set notif_g1banquecheque1 ='d-none' %}
+
+
+    {% set class_g1montantcheque1='d-none' %}
+    {% set msg_g1montantcheque1='d-none' %}
+    {% set check_g1montantcheque1='' %}
+    {% set edit_g1montantcheque1='' %}
+    {% set notif_g1montantcheque1 ='d-none' %}
+
+    {% set class_g1datecheque1='d-none' %}
+    {% set msg_g1datecheque1='d-none' %}
+    {% set check_g1datecheque1='' %}
+    {% set edit_g1datecheque1='' %}
+    {% set notif_g1datecheque1 ='d-none' %}
+
+    {% set class_g1numcheque2='d-none' %}
+    {% set msg_g1numcheque2='d-none' %}
+    {% set check_g1numcheque2='' %}
+    {% set edit_g1numcheque2='' %}
+    {% set notif_g1numcheque2 ='d-none' %}
+
+    {% set class_g1banquecheque2='d-none' %}
+    {% set msg_g1banquecheque2='d-none' %}
+    {% set check_g1banquecheque2='' %}
+    {% set edit_g1banquecheque2='' %}
+    {% set notif_g1banquecheque2 ='d-none' %}
+
+
+    {% set class_g1montantcheque2='d-none' %}
+    {% set msg_g1montantcheque2='d-none' %}
+    {% set check_g1montantcheque2='' %}
+    {% set edit_g1montantcheque2='' %}
+    {% set notif_g1montantcheque2 ='d-none' %}
+
+    {% set class_g1datecheque2='d-none' %}
+    {% set msg_g1datecheque2='d-none' %}
+    {% set check_g1datecheque2='' %}
+    {% set edit_g1datecheque2='' %}
+    {% set notif_g1datecheque2 ='d-none' %}
+
+    {% set class_g1numcheque3='d-none' %}
+    {% set msg_g1numcheque3='d-none' %}
+    {% set check_g1numcheque3='' %}
+    {% set edit_g1numcheque3='' %}
+    {% set notif_g1numcheque3 ='d-none' %}
+
+    {% set class_g1banquecheque3='d-none' %}
+    {% set msg_g1banquecheque3='d-none' %}
+    {% set check_g1banquecheque3='' %}
+    {% set edit_g1banquecheque3='' %}
+    {% set notif_g1banquecheque3 ='d-none' %}
+
+
+    {% set class_g1montantcheque3='d-none' %}
+    {% set msg_g1montantcheque3='d-none' %}
+    {% set check_g1montantcheque3='' %}
+    {% set edit_g1montantcheque3='' %}
+    {% set notif_g1montantcheque3 ='d-none' %}
+
+    {% set class_g1datecheque3='d-none' %}
+    {% set msg_g1datecheque3='d-none' %}
+    {% set check_g1datecheque3='' %}
+    {% set edit_g1datecheque3='' %}
+    {% set notif_g1datecheque3 ='d-none' %}
+
+
+    {% set class_g1nomheritier='d-none' %}
+    {% set msg_g1nomheritier='d-none' %}
+    {% set check_g1nomheritier='' %}
+    {% set edit_g1nomheritier='' %}
+    {% set notif_g1nomheritier ='d-none' %}
+
+    {% set class_g1prenomheritier='d-none' %}
+    {% set msg_g1prenomheritier='d-none' %}
+    {% set check_g1prenomheritier='' %}
+    {% set edit_g1prenomheritier='' %}
+    {% set notif_g1prenomheritier ='d-none' %}
+
+
+    {% set class_safahi='d-none' %}
+    {% set msg_safahi='d-none' %}
+    {% set check_safahi='' %}
+    {% set edit_safahi='' %}
+    {% set notif_safahi ='d-none' %}
+
+    {% set class_solde='d-none' %}
+    {% set msg_solde='d-none' %}
+    {% set check_solde='' %}
+    {% set edit_solde='' %}
+    {% set notif_solde ='d-none' %}
+
+    {% set class_attestation='d-none' %}
+    {% set msg_attestation='d-none' %}
+    {% set check_attestation='' %}
+    {% set edit_attestation='' %}
+    {% set notif_attestation ='d-none' %}
+
+    {% set class_formgarant='d-none' %}
+    {% set msg_formgarant='d-none' %}
+    {% set check_formgarant='' %}
+    {% set edit_formgarant='' %}
+    {% set notif_formgarant ='d-none' %}
+
+    {% set class_formgarant1='d-none' %}
+    {% set msg_formgarant1='d-none' %}
+    {% set check_formgarant1='' %}
+    {% set edit_formgarant1='' %}
+    {% set notif_formgarant1 ='d-none' %}
+
+    {% set class_chequebarre='d-none' %}
+    {% set msg_chequebarre='d-none' %}
+    {% set check_chequebarre='' %}
+    {% set edit_chequebarre='' %}
+    {% set notif_chequebarre ='d-none' %}
+
+    {% set class_chequebarre1='d-none' %}
+    {% set msg_chequebarre1='d-none' %}
+    {% set check_chequebarre1='' %}
+    {% set edit_chequebarre1='' %}
+    {% set notif_chequebarre1 ='d-none' %}
+
+    {% for modifier in modifiers %}
+        {% if (modifier.formulaire == "Nmontant") %}
+            {% set class_montant='d-none' %}
+            {% set msg_montant='d-block' %}
+            {% set check_montant='d-none' %}
+            {% set edit_montant='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nmois") %}
+            {% set class_mois='d-none' %}
+            {% set msg_mois='d-block' %}
+            {% set check_mois='d-none' %}
+            {% set edit_mois='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nmotif") %}
+            {% set class_motif ='d-none' %}
+            {% set msg_motif ='d-block' %}
+            {% set check_motif='d-none' %}
+            {% set edit_motif='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ndetail") %}
+            {% set class_detail ='d-none' %}
+            {% set msg_detail ='d-block' %}
+            {% set check_detail='d-none' %}
+            {% set edit_detail='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nvaleuror") %}
+            {% set class_valeuror ='d-none' %}
+            {% set msg_valeuror ='d-block' %}
+            {% set check_valeuror='d-none' %}
+            {% set edit_valeuror='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nnomits") %}
+            {% set class_nomits ='d-none' %}
+            {% set msg_nomits='d-block' %}
+            {% set check_nomits='d-none' %}
+            {% set edit_nomits='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnumits") %}
+            {% set class_gnumits ='d-none' %}
+            {% set msg_gnumits ='d-block' %}
+            {% set check_gnumits='d-none' %}
+            {% set edit_gnumits='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngmoze") %}
+            {% set class_gmoze ='d-none' %}
+            {% set msg_gmoze ='d-block' %}
+            {% set check_gmoze='d-none' %}
+            {% set edit_gmoze='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nnomits1") %}
+            {% set class_nomits1 ='d-none' %}
+            {% set msg_nomits1 ='d-block' %}
+            {% set check_nomits1='d-none' %}
+            {% set edit_nomits1='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnumits1") %}
+            {% set class_gnumits1 ='d-none' %}
+            {% set msg_gnumits1 ='d-block' %}
+            {% set check_gnumits1='d-none' %}
+            {% set edit_gnumits1='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngmoze1") %}
+            {% set class_gmoze1 ='d-none' %}
+            {% set msg_gmoze1 ='d-block' %}
+            {% set check_gmoze1='d-none' %}
+            {% set edit_gmoze1='d-none' %}
+        {% endif %}
+
+        {% if (modifier.formulaire == "Nkalidas") %}
+            {% set class_kalidas ='d-none' %}
+            {% set msg_kalidas ='d-block' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnom") %}
+            {% set class_gnom ='d-none' %}
+            {% set msg_gnom ='d-block' %}
+            {% set check_gnom='d-none' %}
+            {% set edit_gnom='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngprenom") %}
+            {% set class_gprenom ='d-none' %}
+            {% set msg_gprenom ='d-block' %}
+            {% set check_gprenom='d-none' %}
+            {% set edit_gprenom='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngne") %}
+            {% set class_gne ='d-none' %}
+            {% set msg_gne ='d-block' %}
+            {% set check_gne='d-none' %}
+            {% set edit_gne='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nglieu") %}
+            {% set class_glieu ='d-none' %}
+            {% set msg_glieu ='d-block' %}
+            {% set check_glieu='d-none' %}
+            {% set edit_glieu='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngadresse") %}
+            {% set class_gadresse ='d-none' %}
+            {% set msg_gadresse ='d-block' %}
+            {% set check_gadresse='d-none' %}
+            {% set edit_gadresse='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngville") %}
+            {% set class_gville ='d-none' %}
+            {% set msg_gville ='d-block' %}
+            {% set check_gville='d-none' %}
+            {% set edit_gville='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnationalite") %}
+            {% set class_gnationalite ='d-none' %}
+            {% set msg_gnationalite ='d-block' %}
+            {% set check_gnationalite='d-none' %}
+            {% set edit_gnationalite='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngsexe") %}
+            {% set class_gsexe ='d-none' %}
+            {% set msg_gsexe ='d-block' %}
+            {% set check_gsexe='d-none' %}
+            {% set edit_gsexe='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngtype") %}
+            {% set class_gtype ='d-none' %}
+            {% set msg_gtype ='d-block' %}
+            {% set check_gtype='d-none' %}
+            {% set edit_gtype='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnumpiece") %}
+            {% set class_gnumpiece ='d-none' %}
+            {% set msg_gnumpiece ='d-block' %}
+            {% set check_gnumpiece='d-none' %}
+            {% set edit_gnumpiece='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngdatepiece") %}
+            {% set class_gdatepiece ='d-none' %}
+            {% set msg_gdatepiece ='d-block' %}
+            {% set check_gdatepiece='d-none' %}
+            {% set edit_gdatepiece='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngvillepiece") %}
+            {% set class_gvillepiece ='d-none' %}
+            {% set msg_gvillepiece ='d-block' %}
+            {% set check_gvillepiece='d-none' %}
+            {% set edit_gvillepiece='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngpayspiece") %}
+            {% set class_gpayspiece ='d-none' %}
+            {% set msg_gpayspiece ='d-block' %}
+            {% set check_gpayspiece='d-none' %}
+            {% set edit_gpayspiece='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngprofession") %}
+            {% set class_gprofession ='d-none' %}
+            {% set msg_gprofession ='d-block' %}
+            {% set check_gprofession='d-none' %}
+            {% set edit_gprofession='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngtel1") %}
+            {% set class_gtel1 ='d-none' %}
+            {% set msg_gtel1 ='d-block' %}
+            {% set check_gtel1='d-none' %}
+            {% set edit_gtel1='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngtel2") %}
+            {% set class_gtel2 ='d-none' %}
+            {% set msg_gtel2 ='d-block' %}
+            {% set check_gtel2='d-none' %}
+            {% set edit_gtel2='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngemail") %}
+            {% set class_gemail ='d-none' %}
+            {% set msg_gemail ='d-block' %}
+            {% set check_gemail='d-none' %}
+            {% set edit_gemail='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnumcheque1") %}
+            {% set class_gnumcheque1 ='d-none' %}
+            {% set msg_gnumcheque1 ='d-block' %}
+            {% set check_gnumcheque1='d-none' %}
+            {% set edit_gnumcheque1='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngbanquecheque1") %}
+            {% set class_gbanquecheque1 ='d-none' %}
+            {% set msg_gbanquecheque1 ='d-block' %}
+            {% set check_gbanquecheque1='d-none' %}
+            {% set edit_gbanquecheque1='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngmontantcheque1") %}
+            {% set class_gmontantcheque1 ='d-none' %}
+            {% set msg_gmontantcheque1 ='d-block' %}
+            {% set check_gmontantcheque1='d-none' %}
+            {% set edit_gmontantcheque1='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngdatecheque1") %}
+            {% set class_gdatecheque1 ='d-none' %}
+            {% set msg_gdatecheque1 ='d-block' %}
+            {% set check_gdatecheque1='d-none' %}
+            {% set edit_gdatecheque1='d-none' %}
+        {% endif %}
+
+        {% if (modifier.formulaire == "Ngnumcheque2") %}
+            {% set class_gnumcheque2 ='d-none' %}
+            {% set msg_gnumcheque2 ='d-block' %}
+            {% set check_gnumcheque2='d-none' %}
+            {% set edit_gnumcheque2='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngbanquecheque2") %}
+            {% set class_gbanquecheque2 ='d-none' %}
+            {% set msg_gbanquecheque2 ='d-block' %}
+            {% set check_gbanquecheque2='d-none' %}
+            {% set edit_gbanquecheque2='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngmontantcheque2") %}
+            {% set class_gmontantcheque2 ='d-none' %}
+            {% set msg_gmontantcheque2 ='d-block' %}
+            {% set check_gmontantcheque2='d-none' %}
+            {% set edit_gmontantcheque2='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngdatecheque2") %}
+            {% set class_gdatecheque2 ='d-none' %}
+            {% set msg_gdatecheque2 ='d-block' %}
+            {% set check_gdatecheque2='d-none' %}
+            {% set edit_gdatecheque2='d-none' %}
+        {% endif %}
+
+        {% if (modifier.formulaire == "Ngnumcheque3") %}
+            {% set class_gnumcheque3 ='d-none' %}
+            {% set msg_gnumcheque3 ='d-block' %}
+            {% set check_gnumcheque3='d-none' %}
+            {% set edit_gnumcheque3='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngbanquecheque3") %}
+            {% set class_gbanquecheque3 ='d-none' %}
+            {% set msg_gbanquecheque3 ='d-block' %}
+            {% set check_gbanquecheque3='d-none' %}
+            {% set edit_gbanquecheque3='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngmontantcheque3") %}
+            {% set class_gmontantcheque3 ='d-none' %}
+            {% set msg_gmontantcheque3 ='d-block' %}
+            {% set check_gmontantcheque3='d-none' %}
+            {% set edit_gmontantcheque3='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngdatecheque3") %}
+            {% set class_gdatecheque3 ='d-none' %}
+            {% set msg_gdatecheque3 ='d-block' %}
+            {% set check_gdatecheque3='d-none' %}
+            {% set edit_gdatecheque3='d-none' %}
+        {% endif %}
+
+        {% if (modifier.formulaire == "Ngnomheritier") %}
+            {% set class_gnomheritier ='d-none' %}
+            {% set msg_gnomheritier ='d-block' %}
+            {% set check_gnomheritier='d-none' %}
+            {% set edit_gnomheritier='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngprenomheritier") %}
+            {% set class_gprenomheritier ='d-none' %}
+            {% set msg_gprenomheritier ='d-block' %}
+            {% set check_gprenomheritier='d-none' %}
+            {% set edit_gprenomheritier='d-none' %}
+        {% endif %}
+
+
+        {% if (modifier.formulaire == "Ng1nom") %}
+            {% set class_g1nom ='d-none' %}
+            {% set msg_g1nom ='d-block' %}
+            {% set check_g1nom='d-none' %}
+            {% set edit_g1nom='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1prenom") %}
+            {% set class_g1prenom ='d-none' %}
+            {% set msg_g1prenom ='d-block' %}
+            {% set check_g1prenom='d-none' %}
+            {% set edit_g1prenom='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1ne") %}
+            {% set class_g1ne ='d-none' %}
+            {% set msg_g1ne ='d-block' %}
+            {% set check_g1ne='d-none' %}
+            {% set edit_g1ne='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1lieu") %}
+            {% set class_g1lieu ='d-none' %}
+            {% set msg_g1lieu ='d-block' %}
+            {% set check_g1lieu='d-none' %}
+            {% set edit_g1lieu='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1adresse") %}
+            {% set class_g1adresse ='d-none' %}
+            {% set msg_g1adresse ='d-block' %}
+            {% set check_g1adresse='d-none' %}
+            {% set edit_g1adresse='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1ville") %}
+            {% set class_g1ville ='d-none' %}
+            {% set msg_g1ville ='d-block' %}
+            {% set check_g1ville='d-none' %}
+            {% set edit_g1ville='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1nationalite") %}
+            {% set class_g1nationalite ='d-none' %}
+            {% set msg_g1nationalite ='d-block' %}
+            {% set check_g1nationalite='d-none' %}
+            {% set edit_g1nationalite='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1sexe") %}
+            {% set class_g1sexe ='d-none' %}
+            {% set msg_g1sexe ='d-block' %}
+            {% set check_g1sexe='d-none' %}
+            {% set edit_g1sexe='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1type") %}
+            {% set class_g1type ='d-none' %}
+            {% set msg_g1type ='d-block' %}
+            {% set check_g1type='d-none' %}
+            {% set edit_g1type='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1numpiece") %}
+            {% set class_g1numpiece ='d-none' %}
+            {% set msg_g1numpiece ='d-block' %}
+            {% set check_g1numpiece='d-none' %}
+            {% set edit_g1numpiece='d-none' %}
+        {% endif %}
+
+        {% if (modifier.formulaire == "Ng1villepiece") %}
+            {% set class_g1villepiece ='d-none' %}
+            {% set msg_g1villepiece ='d-block' %}
+            {% set check_g1villepiece='d-none' %}
+            {% set edit_g1villepiece='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1payspiece") %}
+            {% set class_g1payspiece ='d-none' %}
+            {% set msg_g1payspiece ='d-block' %}
+            {% set check_g1payspiece='d-none' %}
+            {% set edit_g1payspiece='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1profession") %}
+            {% set class_g1profession ='d-none' %}
+            {% set msg_g1profession ='d-block' %}
+            {% set check_g1profession='d-none' %}
+            {% set edit_g1profession='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1tel1") %}
+            {% set class_g1tel1 ='d-none' %}
+            {% set msg_g1tel1 ='d-block' %}
+            {% set check_g1tel1='d-none' %}
+            {% set edit_g1tel1='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1tel2") %}
+            {% set class_g1tel2 ='d-none' %}
+            {% set msg_g1tel2 ='d-block' %}
+            {% set check_g1tel2='d-none' %}
+            {% set edit_g1tel2='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1email") %}
+            {% set class_g1email ='d-none' %}
+            {% set msg_g1email ='d-block' %}
+            {% set check_g1email='d-none' %}
+            {% set edit_g1email='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1numcheque1") %}
+            {% set class_g1numcheque1 ='d-none' %}
+            {% set msg_g1numcheque1 ='d-block' %}
+            {% set check_g1numcheque1='d-none' %}
+            {% set edit_g1numcheque1='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1banquecheque1") %}
+            {% set class_g1banquecheque1 ='d-none' %}
+            {% set msg_g1banquecheque1 ='d-block' %}
+            {% set check_g1banquecheque1='d-none' %}
+            {% set edit_g1banquecheque1='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1montantcheque1") %}
+            {% set class_g1montantcheque1 ='d-none' %}
+            {% set msg_g1montantcheque1 ='d-block' %}
+            {% set check_g1montantcheque1='d-none' %}
+            {% set edit_g1montantcheque1='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1datecheque1") %}
+            {% set class_g1datecheque1 ='d-none' %}
+            {% set msg_g1datecheque1 ='d-block' %}
+            {% set check_g1datecheque1='d-none' %}
+            {% set edit_g1datecheque1='d-none' %}
+        {% endif %}
+
+        {% if (modifier.formulaire == "Ng1numcheque2") %}
+            {% set class_g1numcheque2 ='d-none' %}
+            {% set msg_g1numcheque2 ='d-block' %}
+            {% set check_g1numcheque2='d-none' %}
+            {% set edit_g1numcheque2='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1banquecheque2") %}
+            {% set class_g1banquecheque2 ='d-none' %}
+            {% set msg_g1banquecheque2 ='d-block' %}
+            {% set check_g1banquecheque2='d-none' %}
+            {% set edit_g1banquecheque2='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1montantcheque2") %}
+            {% set class_g1montantcheque2 ='d-none' %}
+            {% set msg_g1montantcheque2 ='d-block' %}
+            {% set check_g1montantcheque2='d-none' %}
+            {% set edit_g1montantcheque2='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1datecheque2") %}
+            {% set class_g1datecheque2 ='d-none' %}
+            {% set msg_g1datecheque2 ='d-block' %}
+            {% set check_g1datecheque2='d-none' %}
+            {% set edit_g1datecheque2='d-none' %}
+        {% endif %}
+
+        {% if (modifier.formulaire == "Ng1numcheque3") %}
+            {% set class_g1numcheque3 ='d-none' %}
+            {% set msg_g1numcheque3 ='d-block' %}
+            {% set check_g1numcheque3='d-none' %}
+            {% set edit_g1numcheque3='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1banquecheque3") %}
+            {% set class_g1banquecheque3 ='d-none' %}
+            {% set msg_g1banquecheque3 ='d-block' %}
+            {% set check_g1banquecheque3='d-none' %}
+            {% set edit_g1banquecheque3='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1montantcheque3") %}
+            {% set class_g1montantcheque3 ='d-none' %}
+            {% set msg_g1montantcheque3 ='d-block' %}
+            {% set check_g1montantcheque3='d-none' %}
+            {% set edit_g1montantcheque3='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1datecheque3") %}
+            {% set class_g1datecheque3 ='d-none' %}
+            {% set msg_g1datecheque3 ='d-block' %}
+            {% set check_g1datecheque3='d-none' %}
+            {% set edit_g1datecheque3='d-none' %}
+        {% endif %}
+
+        {% if (modifier.formulaire == "Ng1nomheritier") %}
+            {% set class_g1nomheritier ='d-none' %}
+            {% set msg_g1nomheritier ='d-block' %}
+            {% set check_g1nomheritier='d-none' %}
+            {% set edit_g1nomheritier='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1prenomheritier") %}
+            {% set class_g1prenomheritier ='d-none' %}
+            {% set msg_g1prenomheritier ='d-block' %}
+            {% set check_g1prenomheritier='d-none' %}
+            {% set edit_g1prenomheritier='d-none' %}
+        {% endif %}
+
+
+        {% if (modifier.formulaire == "Nsafahi") %}
+            {% set class_safahi ='d-none' %}
+            {% set msg_safahi ='d-block' %}
+            {% set check_safahi='d-none' %}
+            {% set edit_safahi='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nsolde") %}
+            {% set class_solde ='d-none' %}
+            {% set msg_solde ='d-block' %}
+            {% set check_solde='d-none' %}
+            {% set edit_solde='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nattestation") %}
+            {% set class_attestation ='d-none' %}
+            {% set msg_attestation ='d-block' %}
+            {% set check_attestation='d-none' %}
+            {% set edit_attestation='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nchequebarre") %}
+            {% set class_chequebarre ='d-none' %}
+            {% set msg_chequebarre ='d-block' %}
+            {% set check_chequebarre='d-none' %}
+            {% set edit_chequebarre='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nchequebarre1") %}
+            {% set class_chequebarre1 ='d-none' %}
+            {% set msg_chequebarre1 ='d-block' %}
+            {% set check_chequebarre1='d-none' %}
+            {% set edit_chequebarre1='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nformgarant") %}
+            {% set class_formgarant ='d-none' %}
+            {% set msg_formgarant ='d-block' %}
+            {% set check_formgarant='d-none' %}
+            {% set edit_formgarant='d-none' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nformgarant1") %}
+            {% set class_formgarant1 ='d-none' %}
+            {% set msg_formgarant1 ='d-block' %}
+            {% set check_formgarant1='d-none' %}
+            {% set edit_formgarant1='d-none' %}
+        {% endif %}
+    {% endfor %}
+    {#code test#}
+
+    <div class="container-fluid">
+
+
+        <h1 class="text-primary text-center"> Information sur le Demande QH</h1>
+        <br>
+
+  {#      <div class="row">
+
+            <div class="col-lg-6">
+                <h4 class="text-primary">Antécédent</h4>
+                Dejà efectuer une demande QH auparavant :
+                    {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
+                        {% set x='oui' %}
+                    {% else %}
+                        {% set x='non' %}
+                    {% endif %}
+                    {{ x }}
+                <i class="fa fa-edit btn btn-danger btn-md" id="anciendemande"></i>
+                <i class="fa fa-comment btn btn-danger btn-md" id="notif_anciendemande"></i>
+                </p>
+                <input class="form-control d-none" value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="osiAncienDemande" id="osiAncienDemande" >
+                <br>
+                <input  class="form-control d-none" placeholder="saisir quelque chose ici" type="text" name="nsiAncienDemande" id="nsiAncienDemande" >
+                {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
+                    {% if (demandeQH.demadeQH.siAncienDemandeEtat=='oui') %}
+                        {% set y='oui' %}
+
+                    {% else %}
+                        {% set y='non' %}
+
+                    {% endif %}
+                    <p>Elle a été acceptée : {{ y }}
+
+                    </p>
+                {% endif %}
+
+            </div>
+
+            {% if (x=='oui' and y=='oui') %}
+                <div class="col-lg-6">
+                    <h4 class="text-primary">les trois dernier montant demandés
+                        <i class="fa fa-edit btn btn-danger btn-md" id="anciendemande"></i>
+                        <i class="fa fa-comment btn btn-danger btn-md" id="notif_anciendemande"></i>
+                        </p>
+                        <input class="form-control d-none" value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="osiAncienDemande" id="osiAncienDemande" >
+                        <br>
+                        <input  class="form-control d-none" placeholder="saisir quelque chose ici" type="text" name="nsiAncienDemande" id="nsiAncienDemande" ></h4>
+                    <table class="table table-striped">
+                        <thead><th><label >{{ 'demandeqh_ajouter.annee'|trans }}</label></th>
+                        <th></th>
+                        <th><label >{{ 'demandeqh_ajouter.montant'|trans }}</label></th>
+                        </thead>
+                        <tr><td>
+
+                                <p >{{ demandeQH.demadeQH.annee1 }}</p>
+                            </td>
+                            <td> </td>
+                            <td>
+
+                                <p class="text-right" >{{ demandeQH.demadeQH.montant1|number_format('2',',',' ') }}</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+
+                                <p >{{ demandeQH.demadeQH.annee2 }}</p>
+                            </td>
+                            <td>
+                            <td>
+
+                                <p class="text-right" >{{ demandeQH.demadeQH.montant2|number_format('2',',',' ') }}</p>
+                            </td>
+                        </tr>
+                        <tr><td>
+
+                                <p >{{ demandeQH.demadeQH.annee3 }}</p>
+                            </td>
+                            <td> </td>
+                            <td>
+                                <p class="text-right" >{{ demandeQH.demadeQH.montant3|number_format('2',',',' ') }}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            {% endif %}
+
+        </div>#}
+        <div class="row">
+
+            <input type="hidden" id="id_dossier" value="{{ demandeQH.id }}" >
+            <input type="hidden" name="id_demandeqh"  id="id_demandeqh" value="{{ demandeQH.demadeQH.id }}" >
+            <input type="hidden" id="id_garant1" value="{{ demandeQH.demadeQH.garant1.id }}" >
+            <input type="hidden" id="id_garant2" value="{{ demandeQH.demadeQH.garant2.id }}" >
+
+            <div class="col-lg-6"><h4 class="text-primary">Nouvelle demande</h4>
+                <p >
+                    Montant demandée en Ariary : {{ demandeQH.demadeQH.montant|number_format('2',',',' ') }}
+                    <input  onclick="affiche_check('check_montant','#notif_montant')" class="{{ check_montant }} etatDossier" type="checkbox" id="check_montant" value="Nmontant" name="check_montant">
+                    <button onclick="affiche('#edit_montant','#modif_montant')" class="{{ 'btn btn-light ' ~ edit_montant }} etatDossier" id="edit_montant">
+                        <i  class="{{ 'fa  fa-edit ' }}  text-danger "></i>
+                    </button>
+                </p>
+
+                <span class="{{ 'text-success '~ msg_montant }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none"   type="text" name="modif_montant" id="modif_montant">
+
+                <input onkeypress="pressEntermontant(event)" class="{{ 'form-control '~ class_montant }}" placeholder="saisir quelque chose ici" type="text"  id="notif_montant" >
+
+                <p>
+                    Pour combien de mois : {{ demandeQH.demadeQH.nombreMois }}
+                    <input  onclick="affiche_check('check_mois','#notif_mois')" class="{{ check_mois }} etatDossier" type="checkbox" id="check_mois" value="Nmois" name="check_mois">
+                   <button onclick="affiche('#edit_mois','#modif_mois')" class="{{ 'btn btn-light ' ~ edit_mois }} etatDossier" id="edit_mois">
+                       <i  class="{{ 'fa fa-edit '}} text-danger "  ></i>
+                   </button>
+
+                </p>
+                <input onkeypress="modifEnter(event)" class="form-control d-none"  type="text" name="modif_mois" id="modif_mois">
+
+                <span class="{{ 'text-success '~ msg_mois }}">Notification envoyée</span>
+                <input  onkeypress="pressEntermois(event)" class="{{ 'form-control '~ class_mois }} " placeholder="saisir quelque chose ici" type="text" name="notif_mois" id="notif_mois" >
+
+             </div>
+
+            <div class="col-lg-6"><h4 class="text-primary">Objet de la demande</h4>
+                <p>Motif : {{ demandeQH.demadeQH.typeMotif }}
+                    <input onclick="affiche_check('check_motif','#notif_motif')" class="{{ check_motif }} etatDossier" type="checkbox" id="check_motif" value="Nmotif" name="check_motif">
+                   <button onclick="affiche('#edit_motif','#modif_motif')"  class="{{ 'btn btn-light '~ edit_motif }} etatDossier" id="edit_motif">
+                       <i   class="fa fa-edit text-danger " ></i>
+                   </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_motif }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none"  type="text" name="modif_motif" id="modif_motif" >
+
+                <input  onkeypress="pressEntermotif(event)" class="{{ 'form-control '~ class_motif }} " placeholder="saisir quelque chose ici" type="text" name="notif_motif" id="notif_motif" >
+
+               <p>Détail : {{ demandeQH.demadeQH.detailMotif }}
+                    <input  onclick="affiche_check('check_detail','#notif_detail')" class="{{ check_detail }} etatDossier" type="checkbox" id="check_detail" value="Ndetail" name="check_detail">
+                   <button onclick="affiche('#check_detail','#modif_detail')" class="{{ 'btn btn-light '~ edit_detail }} text-danger etatDossier" id="edit_detail">
+                       <i  class="fa fa-edit  text-danger " ></i>
+                   </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_detail }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)"  class="form-control d-none" type="text" name="modif_detail" id="modif_detail" >
+
+                <input  onkeypress="pressEnterdetail(event)" class="{{ 'form-control '~ class_detail }}" placeholder="saisir quelque chose ici" type="text" name="notif_detail" id="notif_detail" >
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6"><h4 class="text-primary">Garantie</h4>
+                <p>Valeur de l'or en Ariary : {{ demandeQH.demadeQH.garantieOR.valeurAr|number_format('2',',',' ')}}
+                    <input onclick="affiche_check('check_valeuror','#notif_valeuror')" class="{{ check_valeuror }} etatDossier" type="checkbox" id="check_valeuror" value="Nvaleuror" name="check_valeuror">
+                    <button onclick="affiche('#check_valeuror','#modif_valeuror')" class="{{ 'btn btn-light'~ edit_valeuror }}  etatDossier " id="edit_valeuror">
+                        <i class="fa fa-edit  text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_valeuror }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_valeuror" id="modif_valeuror" >
+
+                <input  onkeypress="pressEntervaleuror(event)" class="{{ 'form-control '~ class_valeuror }}"  class="form-control " placeholder="saisir quelque chose ici" type="text" name="notif_valeuror" id="notif_valeuror" >
+                </p>
+
+                <p>Scan du formulaire(remplir par kalidas):<br><b class="d-none" id="id_kalidas">{{  demandeQH.demadeQH.garantieOR.scanKalidas }}</b>
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.garantieOR.scanKalidas) }}">
+                        <img src="{{ asset('document/'~ demandeQH.demadeQH.garantieOR.scanKalidas) }}" class="img img-fluid" alt="" width="50" height="50">
+                    </a>
+                    <input  onclick="affiche_check('check_kalidas','#notif_kalidas')" class="{{ check_kalidas }} etatDossier" type="checkbox" id="check_kalidas" value="Nkalidas" name="check_kalidas">
+                   <button onclick="affiche('#edit_kalidas','#modif_kalidas')" class="{{ 'btn btn-light'~ edit_kalidas }} text-danger etatDossier" id="edit_kalidas">
+                       <i class="fa fa-edit  text-danger" ></i>
+                   </button>
+                </p>
+                    <span class="{{ 'text-success '~ msg_kalidas }}">Notification envoyée</span>
+                    <input onkeypress="modifEnter(event)" class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="file" name="modif_kalidas" id="modif_kalidas" >
+
+                    <input  onkeypress="pressEnterkalidas(event)" class="{{ 'form-control '~ class_kalidas }}"  class="form-control " placeholder="saisir quelque chose ici" type="text" name="notif_kalidas" id="notif_kalidas" >
+
+
+                <p>Photo du paquet scellé par kallidas:(Possibilité de mettre plusieurs photos):<br>
+                    {% for photoor in photoor %}
+                        <a target="_blank" id="lien" href="{{ asset('document/'~ photoor.url) }}"><img src="{{ asset('document/'~ photoor.url) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                    {% endfor %}
+
+                </p>
+            </div>
+            <div class="col-lg-6"><h4 class="text-primary">Garant numéro 1 </h4>
+                <p>Nom complet inscrit sur its : {{ demandeQH.demadeQH.garant1.nomIts }}
+                    <input onclick="affiche_check('check_nomits','#notif_nomits')" class="{{ check_nomits }} etatDossier" type="checkbox" id="check_nomits" value="Nnomits" name="check_nomits">
+                    <button onclick="affiche('#edit_nomits','#modif_nomits')" class="{{ 'btn btn-light'~ edit_nomits }} etatDossier" id="edit_nomits">
+                        <i class="fa fa-edit text-danger" ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_nomits }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_nomits" id="modif_nomits" >
+
+                <input  onkeypress="pressEnternomits(event)" class="{{ 'form-control '~ class_nomits }}" placeholder="saisir quelque chose ici" type="text" name="notif_nomits" id="notif_nomits" >
+
+
+                <p> Numéro its : {{ demandeQH.demadeQH.garant1.numeroIts }}
+
+                    <input  onclick="affiche_check('check_gnumits','#notif_gnumits')" class="{{ check_gnumits }} etatDossier" type="checkbox" id="check_gnumits" value="Ngnumits" name="check_gnumits">
+                   <button   onclick="affiche('#edit_gnumits','#modif_gnumits')" class="{{ 'btn btn-light '~ edit_nomits }}  etatDossier" id="edit_gnumits">
+                       <i  class="fa fa-edit  text-danger " ></i>
+                   </button>
+
+                </p>
+
+                <span class="{{ 'text-success '~ msg_gnumits }}">Notification envoyée</span>
+
+                <input onkeypress="modifEnter(event)" class="form-control d-none"  type="text" name="modif_gnumits" id="modif_gnumits" >
+
+                <input  onkeypress="pressEntergnumits(event)" class="{{ 'form-control '~ class_gnumits }}" placeholder="saisir quelque chose ici" type="text" name="notif_gnumits" id="notif_gnumits" >
+
+
+                <p>Moze : {{  demandeQH.demadeQH.garant1.moze }}
+
+                    <input onclick="affiche_check('check_gmoze','#notif_gmoze')" class="{{ check_gmoze }} etatDossier" type="checkbox" id="check_gmoze" value="Ngmoze" name="check_gmoze">
+                   <button  onclick="affiche('#edit_gmoze','#modif_gmoze')"   class="{{ 'btn btn-light'~ edit_gmoze }} text-danger etatDossier" id="edit_gmoze" >
+                       <i   class="fa fa-edit  text-danger" ></i>
+                   </button>
+                </p>
+
+                <span class="{{ 'text-success '~ msg_gmoze }}">Notification envoyée</span>
+
+                <input  onkeypress="modifEnter(event)" class="form-control d-none"  class="{{ 'fa fa-edit fa-2x '~ edit_gmoze }} text-danger etatDossier" type="text" name="modif_gmoze" id="modif_gmoze" >
+
+                <input  onkeypress="pressEntergmoze(event)" class="{{ 'form-control '~ class_gmoze }}" placeholder="saisir quelque chose ici" type="text" name="notif_gmoze" id="notif_gmoze" >
+
+            </div>
+            <div class="col-lg-6">
+                <h4 class="text-primary">Garant numéro 2 </h4>
+                <p>Nom complet inscrit sur its : {{ demandeQH.demadeQH.garant2.nomIts }}
+                    <input onclick="affiche_check('check_nomits1','#notif_nomits1')" class="{{ check_nomits1 }} etatDossier" type="checkbox" id="check_nomits1" value="Nnomits1" name="check_nomits1">
+                    <button onclick="affiche('#edit_nomits1','#modif_nomits1')" class="{{ 'btn btn-light'~ edit_nomits1 }}  etatDossier"  id="edit_nomits1">
+                        <i class="fa fa-edit text-danger" ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_nomits1 }}">Notification envoyée</span>
+                <input  onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_nomits1" id="modif_nomits1" >
+
+                <input  onkeypress="pressEnternomits1(event)" class="{{ 'form-control '~ class_nomits1}}" placeholder="saisir quelque chose ici" type="text" name="notif_nomits1" id="notif_nomits1" >
+
+
+                <p> Numéro its : {{ demandeQH.demadeQH.garant2.numeroIts }}
+
+                    <input  onclick="affiche_check('check_gnumits1','#notif_gnumits1')" class="{{ check_gnumits1 }} etatDossier" type="checkbox" id="check_gnumits1" value="Ngnumits1" name="check_gnumits1">
+                   <button onclick="affiche('#edit_gnumits1','#modif_gnumits1')" class="{{ 'btn btn-light '~ edit_gnumits1 }} etatDossier" id="edit_gnumits1">
+                       <i class="fa fa-edit text-danger" ></i>
+                   </button>
+
+                </p>
+
+                <span class="{{ 'text-success '~ msg_gnumits1 }}">Notification envoyée</span>
+
+                <input  onkeypress="modifEnter(event)" class="form-control d-none" type="text" name="modif_gnumits1" id="modif_gnumits1" >
+
+                <input  onkeypress="pressEntergnumits1(event)" class="{{ 'form-control '~ class_gnumits1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gnumits1" id="notif_gnumits1" >
+
+
+                <p>Moze : {{  demandeQH.demadeQH.garant2.moze }}
+
+                    <input onclick="affiche_check('check_gmoze1','#notif_gmoze1')" class="{{ check_gmoze1 }} etatDossier" type="checkbox" id="check_gmoze1" value="Ngmoze1" name="check_gmoze1">
+                   <button  onclick="affiche('#edit_gmoze1','#modif_gmoze1')" class="{{ 'btn btn-light '~ edit_gmoze1 }} etatDossier" id="edit_gmoze1">
+                       <i  class="fa fa-edit text-danger " ></i>
+                   </button>
+
+                </p>
+
+                <span class="{{ 'text-success '~ msg_gmoze1 }}">Notification envoyée</span>
+
+                <input  onkeypress="modifEnter(event)"  class="form-control d-none"  type="text" name="modif_gmoze1" id="modif_gmoze1" >
+
+                <input  onkeypress="pressEntergmoze1(event)" class="{{ 'form-control '~ class_gmoze1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gmoze1" id="notif_gmoze1" >
+
+            </div>
+
+        </div>
+
+    {% if  demandeQH.demadeQH.personne.dossierEncours %}
+        <hr class="groove">
+        <div class="col-lg-12"><h1 class="text-primary text-center">Inormation sur le garant1</h1></div>
+        <br>
+
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.nom'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.nomcin }}
+                    <input onclick="affiche_check('check_gnom','#notif_gnom')"  class="{{ check_gnom }} etatDossier" type="checkbox" id="check_gnom" value="Ngnom" name="check_gnom">
+                    <button onclick="affiche('#edit_gnom','#modif_gnom')" class="{{ 'btn btn-light '~ edit_gnom }} etatDossier" id="edit_gnom">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_gnom }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none" type="text" name="modif_gnom" id="modif_gnom" >
+
+                <input  onkeypress="pressEntergnom(event)" class="{{ 'form-control '~ class_gnom }}" placeholder="saisir quelque chose ici" type="text" name="notif_gnom" id="notif_gnom" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.prenom'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.prenomcin }}
+                    <input onclick="affiche_check('check_gprenom','#notif_gprenom')" type="checkbox" class="{{ check_gprenom }} etatDossier" value="Ngprenom" id="check_gprenom" name="check_gprenom">
+                    <button onclick="affiche('#edit_gprenom','#modif_gprenom')" class="{{ 'btn btn-light '~ edit_gprenom }} etatDossier" id="edit_gprenom">
+                        <i  class="fa fa-edit  text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_gprenom }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)"  class="form-control d-none"  type="text" name="modif_gprenom" id="modif_gprenom" >
+
+                <input  onkeypress="pressEntergprenom(event)" class="{{ 'form-control '~ class_gprenom }}" placeholder="saisir quelque chose ici" type="text" name="notif_gprenom" id="notif_gprenom" >
+
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.né'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.dateNaissance|date('d/m/Y') }}
+                    <input onclick="affiche_check('check_gne','#notif_gne')" class="{{ check_gne }} etatDossier" type="checkbox" id="check_gne" value="Ngne" name="check_gne">
+                    <button onclick="affiche('#edit_gne','#modif_gne')" class="{{ 'btn btn-light '~ edit_gne }} etatDossier" id="edit_gne">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_gne }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_gne" id="modif_gne" >
+
+                <input  onkeypress="pressEntergne(event)" class="{{ 'form-control '~ class_gne }}" placeholder="saisir quelque chose ici" type="text" name="notif_gne" id="notif_gne" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.lieu'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.lieu }}
+                    <input onclick="affiche_check('check_glieu','#notif_glieu')" class="{{ check_glieu }} etatDossier" type="checkbox" id="check_glieu" value="Nglieu" name="check_glieu">
+                    <button onclick="affiche('#edit_glieu','#modif_glieu')"  class="{{ 'btn btn-light '~ edit_glieu }} etatDossier" id="edit_glieu">
+                        <i  class="fa fa-edit  text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_glieu }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)"  class="form-control d-none "  type="text" name="modif_glieu" id="modif_glieu" >
+                <input  onkeypress="pressEnterglieu(event)" class="{{ 'form-control '~ class_glieu }}" placeholder="saisir quelque chose ici" type="text" name="notif_glieu" id="notif_glieu" >
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.adresse'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.adresse }}
+                    <input onclick="affiche_check('check_gadresse','#notif_gadresse')" class="{{ check_gadresse }} etatDossier" type="checkbox" id="check_gadresse" value="Ngadresse" name="check_gadresse">
+                    <button onclick="affiche('#edit_gadresse','#modif_gadresse')" class="{{ 'btn btn-light'~ edit_gadresse }} etatDossier"id="edit_gadresse">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_gadresse }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none"  type="text" name="modif_gadresse" id="modif_gadresse" >
+                <input  onkeypress="pressEntergadresse(event)" class="{{ 'form-control '~ class_gadresse}}" placeholder="saisir quelque chose ici" type="text" name="notif_gadresse" id="notif_gadresse" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.ville'|trans }}:
+                    {{ demandeQH.demadeQH.garant1.ville }}
+                    <input onclick="affiche_check('check_gville','#notif_gville')" class="{{ check_gville }} etatDossier" type="checkbox" id="check_gville" value="Ngville" name="check_gville">
+                    <button onclick="affiche('#edit_gville','#modif_gville')" class="{{ 'btn btn-light '~ edit_gville }} etatDossier" id="edit_gville">
+                        <i  class="fa fa-edit  text-danger " ></i>
+                    </button>
+                </p>
+                <span class="{{ 'text-success '~ msg_gville }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_gville" id="modif_gville" >
+                <input  onkeypress="pressEntergville(event)" class="{{ 'form-control '~ class_gville}}" placeholder="saisir quelque chose ici" type="text" name="notif_gville" id="notif_gville" >
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.nationalite'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.nationalite }}
+                    <input onclick="affiche_check('check_gnationalite','#notif_gnationalite')" class="{{ check_gnationalite }} etatDossier" type="checkbox" id="check_gnationalite" value="Ngnationalite" name="check_gnationalite">
+                    <button onclick="affiche('#edit_gnationalite','#modif_gnationalite')" class="{{ 'btn btn-light'~ edit_gnationalite }} etatDossier" id="edit_gnationalite">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_gnationalite }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_gnationalite" id="modif_gnationalite" >
+
+                <input  onkeypress="pressEntergnationalite(event)" class="{{ 'form-control '~ class_gnationalite }}" placeholder="saisir quelque chose ici" type="text" name="notif_gnationalite" id="notif_gnationalite" >
+            </div>
+            <div class="col-lg-6">
+                {% if(demandeQH.demadeQH.garant1.sexe=='H') %}{% set sexe='Homme' %} {% else %}{% set sexe='Femme' %}{%  endif %}
+                <p>{{ 'garant.sexe'|trans }} :
+                    {{ sexe }}
+                    <input onclick="affiche_check('check_gsexe','#notif_gsexe')" class="{{ check_gsexe }} etatDossier" type="checkbox" id="check_gsexe" value="Ngsexe" name="check_gsexe">
+                    <button onclick="affiche('#edit_gsexe','#modif_gsexe')" class="{{ 'btn btn-light '~ edit_gsexe }}  etatDossier" id="edit_gsexe">
+                        <i  class="fa fa-edit  text-danger " ></i>
+                    </button>
+                </p>
+                <span class="{{ 'text-success '~ msg_gsexe }}">Notification envoyée</span>
+                <input class="form-control d-none "  type="text" name="modif_gsexe" id="modif_gsexe" >
+                <input  onkeypress="pressEntergsexe(event)" class="{{ 'form-control '~ class_gsexe }}" placeholder="saisir quelque chose ici" type="text" name="notif_gsexe" id="notif_gsexe" >
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.type'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.typePiece }}
+                    <input onclick="affiche_check('check_gtype','#notif_gtype')" class="{{ check_gtype }} etatDossier" type="checkbox" id="check_gtype" value="Ngtype" name="check_gtype">
+                    <button onclick="affiche('#edit_gtype','#modif_gtype')"  class="{{ 'btn btn-light'~ edit_gtype }} etatDossier" id="edit_gtype">
+                        <i  class="fa fa-edit  text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_gtype }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_gtype" id="modif_gtype" >
+                <input  onkeypress="pressEntergtype(event)" class="{{ 'form-control '~ class_gtype }}" placeholder="saisir quelque chose ici" type="text" name="notif_gtype" id="notif_gtype" >
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.numero'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.numeroPiece }}
+                    <input onclick="affiche_check('check_gnumpiece','#notif_gnumpiece')" class="{{ check_gnumpiece }} etatDossier" type="checkbox" id="check_gnumpiece" value="Ngnumpiece" name="check_gnumpiece">
+                    <button onclick="affiche('#edit_gnumpiece','#modif_gnumpiece')"  class="{{ 'btn btn-light '~ edit_gnumpiece }}  etatDossier" id="edit_gnumpiece">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+                </p>
+                <span class="{{ 'text-success '~ msg_gnumpiece }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_gnumpiece" id="modif_gnumpiece" >
+                <input  onkeypress="pressEntergnumpiece(event)" class="{{ 'form-control '~ class_gnumpiece }}" placeholder="saisir quelque chose ici" type="text" name="notif_gnumpiece" id="notif_gnumpiece" >
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.date'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.datePiece|date('d/m/Y') }}
+                    <input  onclick="affiche_check('check_gdatepiece','#notif_gdatepiece')" class="{{ check_gdatepiece }} etatDossier" type="checkbox" id="check_gdatepiece" value="Ngdatepiece" name="check_gdatepiece">
+                    <button  onclick="affiche('#edit_gdatepiece','#modif_gdatepiece')" class="{{ 'btn btn-light'~ edit_gdatepiece }} text-danger etatDossier" id="edit_gdatepiece">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_gdatepiece }}">Notification envoyée</span>
+                <input class="form-control d-none "  type="text" name="modif_gdatepiece" id="modif_gdatepiece" >
+                <input  onkeypress="pressEntergdatepiece(event)" class="{{ 'form-control '~ class_gdatepiece }}" placeholder="saisir quelque chose ici" type="text" name="notif_gdatepiece" id="notif_gdatepiece" >
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.villepiece'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.villePiece }}
+                    <input  onclick="affiche_check('check_gvillepiece','#notif_gvillepiece')" class="{{ check_gvillepiece }} etatDossier" type="checkbox" id="check_gvillepiece" value="Ngvillepiece" name="check_gvillepiece">
+                    <button onclick="affiche('#edit_gvillepiece','#modif_gvillepiece')" class="{{ 'btn btn-light'~ edit_gvillepiece }} etatDossier" id="edit_gvillepiece">
+                        <i  class="fa fa-edit  text-danger" ></i>
+                    </button>
+                </p>
+                <span class="{{ 'text-success '~ msg_gvillepiece }}">Notification envoyée</span>
+                <input  onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_gvillepiece" id="modif_gvillepiece" >
+                <input  onkeypress="pressEntergvillepiece(event)" class="{{ 'form-control '~ class_gvillepiece }}" placeholder="saisir quelque chose ici" type="text" name="notif_gvillepiece" id="notif_gvillepiece" >
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.pays'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.paysPiece }}
+                    <input onclick="affiche_check('check_gpayspiece','#notif_gpayspiece')" class="{{ check_gpayspiece }} etatDossier" type="checkbox" id="check_gpayspiece" value="Ngpayspiece" name="check_gpayspiece">
+                    <button onclick="affiche('#edit_gpayspiece','#modif_gpayspiece')" class="{{ 'btn btn-light'~ edit_gpayspiece }} text-danger etatDossier" id="edit_gpayspiece">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+                </p>
+                <span class="{{ 'text-success '~ msg_gpayspiece }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_gpayspiece" id="modif_gpayspiece" >
+                <input  onkeypress="pressEntergpayspiece(event)" class="{{ 'form-control '~ class_gpayspiece }}" placeholder="saisir quelque chose ici" type="text" name="notif_gpayspiece" id="notif_gpayspiece" >
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.profession'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.profession }}
+                    <input onclick="affiche_check('check_gprofession','#notif_gprofession')" class="{{ check_gprofession }} etatDossier" type="checkbox" id="check_gprofession" value="Ngprofession" name="check_gprofession">
+                    <button onclick="affiche('#edit_gprofession','#modif_gprofession')" class="{{ 'btn btn-light'~ edit_gprofession }} etatDossier" id="edit_gprofession">
+                        <i class="fa fa-edit text-danger "></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_gprofession }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none"  type="text" name="modif_gprofession" id="modif_gprofession" >
+                <input  onkeypress="pressEntergprofession(event)" class="{{ 'form-control '~ class_gprofession }}" placeholder="saisir quelque chose ici" type="text" name="notif_gprofession" id="notif_gprofession" >
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.tel1'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.tel1 }}
+                    <input onclick="affiche_check('check_gtel1','#notif_gtel1')" class="{{ check_gtel1 }} etatDossier" type="checkbox" id="check_gtel1" value="Ngtel1" name="check_gtel1">
+                    <button onclick="affiche('#edit_gtel1','#modif_gtel1')" class="{{ 'btn btn-light'~ edit_gtel1 }}  etatDossier" id="edit_gtel1">
+                        <i class="fa fa-edit  text-danger" ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_gtel1 }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_gtel1" id="modif_gtel1" >
+
+                <input  onkeypress="pressEntergtel1(event)" class="{{ 'form-control '~ class_gtel1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gtel1" id="notif_gtel1" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.tel2'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.tel2 }}
+                    <input onclick="affiche_check('check_gtel2','#notif_gtel2')"  class="{{ check_gtel2 }} etatDossier" type="checkbox" id="check_gtel2" value="Ngtel2" name="check_gtel2">
+                    <button onclick="affiche('#edit_gtel2','#modif_gtel2')" class="{{ 'btn btn-light'~ edit_gtel2 }} etatDossier" id="edit_gtel2">
+                        <i class="fa fa-edit text-danger " ></i>
+                    </button>
+                </p>
+                <span class="{{ 'text-success '~ msg_gtel2 }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_gtel2" id="modif_gtel2" >
+                <input  onkeypress="pressEntergtel2(event)" class="{{ 'form-control '~ class_gtel2 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gtel2" id="notif_gtel2" >
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.email'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.email }}
+                    <input onclick="affiche_check('check_gemail','#notif_gemail')" class="{{ check_gemail }} etatDossier" type="checkbox" id="check_gemail" value="Ngemail" name="check_gemail">
+                    <button  onclick="affiche('#edit_gemail','#modif_gemail')" class="{{ 'btn btn-light'~ edit_gemail }} etatDossier" id="edit_gemail ">
+                        <i class="fa fa-edit text-danger " ></i>
+                    </button>
+                </p>
+                <span class="{{ 'text-success '~ msg_gemail }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)"  class="form-control d-none" type="text" name="modif_gemail" id="modif_gemail" >
+
+                <input  onkeypress="pressEntergemail(event)" class="{{ 'form-control '~ class_gemail }}" placeholder="saisir quelque chose ici" type="text" name="notif_gemail" id="notif_gemail" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.numerocheque'|trans }}1 :
+                    {{ demandeQH.demadeQH.garant1.numerocheque1 }}
+                    <input onclick="affiche('check_gnumcheque1','#notif_gnumcheque1')" class="{{ check_gnumcheque1 }} etatDossier" type="checkbox" id="check_gnumcheque1" value="Ngnumcheque1" name="check_gnumcheque1">
+                    <button onclick="affiche('#edit_gnumcheque1','#modif_gnumcheque1')"  class="{{ 'btn btn-light'~ edit_gnumcheque1 }} etatDossier" id="edit_gnumcheque1">
+                        <i  class="fa fa-edit  text-danger " ></i>
+                    </button>
+                </p>
+                <span class="{{ 'text-success '~ msg_gnumcheque1 }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gnumcheque1" id="modif_gnumcheque1" >
+
+                <input  onkeypress="pressEntergnumcheque1(event)" class="{{ 'form-control '~ class_gnumcheque1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gnumcheque1" id="notif_gnumcheque1" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.banquecheque'|trans }}1 :
+                    {{ demandeQH.demadeQH.garant1.banquecheque1 }}
+                    <input  onclick="affiche_check('check_gbanquecheque1','#notif_gbanquecheque1')" class="{{ check_gbanquecheque1 }} etatDossier" type="checkbox" id="check_gbanquecheque1" value="Ngbanquecheque1" name="check_gbanquecheque1">
+                    <button onclick="affiche('#edit_gbanquecheque1','#modif_gbanquecheque1')" class="{{ 'btn btn-light'~ edit_gbanquecheque1 }} etatDossier"  id="edit_gbanquecheque1">
+                        <i  class="fa fa-edit  text-danger " ></i>
+                    </button>
+                </p>
+                <span class="{{ 'text-success '~ msg_gbanquecheque1 }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gbanquecheque1" id="modif_gbanquecheque1" >
+                <input  onkeypress="pressEntergbanquecheque1(event)" class="{{ 'form-control '~ class_gbanquecheque1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gbanquecheque1" id="notif_gbanquecheque1" >
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.montantcheque'|trans }}1 :
+                    {{ demandeQH.demadeQH.garant1.montantcheque1|number_format('2',',',' ') }}
+                    <input  onclick="affiche_check('check_gmontantcheque1','#notif_gmontantcheque1')" class="{{ check_gmontantcheque1 }} etatDossier" type="checkbox" id="check_gmontantcheque1" value="Ngmontantcheque1" name="check_gmontantcheque1">
+                    <button onclick="affiche('#edit_gmontantcheque1','#modif_gmontantcheque1')" class="{{ 'btn btn-light'~ edit_gmontantcheque1 }} etatDossier" id="edit_gmontantcheque1">
+                        <i  class="fa fa-edit text-danger" ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_gmontantcheque1 }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gmontantcheque1" id="modif_gmontantcheque1" >
+                <input  onkeypress="pressEntergmontantcheque1(event)" class="{{ 'form-control '~ class_gmontantcheque1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gmontantcheque1" id="notif_gmontantcheque1" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.datecheque'|trans }}1 :
+                    {{ demandeQH.demadeQH.garant1.datetcheque1|date('d/m/Y') }}
+                    <input  onclick="affiche_check('check_gdatecheque1','#notif_gdatecheque1')" class="{{ check_gdatecheque1 }} etatDossier" type="checkbox" id="check_gdatecheque1" value="Ngdatecheque1" name="check_gdatecheque1">
+                    <i onclick="affiche('#edit_gdatecheque1','#modif_gdatecheque1')" class="{{ 'fa fa-edit fa-2x d-none '~ edit_gdatecheque1 }} text-danger etatDossier" id="edit_gdatecheque1"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_gdatecheque1 }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gdatecheque1" id="modif_gdatecheque1" >
+
+                <input  onkeypress="pressEntergdatecheque1(event)" class="{{ 'form-control '~ class_gdatecheque1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gdatecheque1" id="notif_gdatecheque1" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.numerocheque'|trans }}2 :
+                    {{ demandeQH.demadeQH.garant1.numerocheque2 }}
+                    <input onclick="affiche_check('check_gnumcheque2','#notif_gnumcheque2')" class="{{ check_gnumcheque2 }} etatDossier" type="checkbox" id="check_gnumcheque2" value="Ngnumcheque2" name="check_gnumcheque2">
+                    <i onclick="affiche('#edit_gnumcheque2','#modif_gnumcheque2')" class="{{ 'fa fa-edit fa-2x d-none '~ edit_gnumcheque2 }} text-danger etatDossier" id="edit_gnumcheque2"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_gnumcheque2 }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gnumcheque2" id="modif_gnumcheque2" >
+
+                <input  onkeypress="pressEntergnumcheque2(event)" class="{{ 'form-control '~ class_gnumcheque2 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gnumcheque2" id="notif_gnumcheque2" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.banquecheque'|trans }}2 :
+                    {{ demandeQH.demadeQH.garant1.banquecheque2 }}
+                    <input  onclick="affiche_check('check_gbanquecheque2','#notif_gbanquecheque2')" class="{{ check_gbanquecheque2 }} etatDossier" type="checkbox" id="check_gbanquecheque2" value="Ngbanquecheque2" name="check_gbanquecheque2">
+                    <i onclick="affiche('#edit_gbanquecheque2','#modif_gbanquecheque2')" class="{{ 'fa fa-edit fa-2x d-none '~ edit_gbanquecheque2 }} text-danger etatDossier" id="edit_gbanquecheque2"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_gbanquecheque2 }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gbanquecheque2" id="modif_gbanquecheque2" >
+
+                <input  onkeypress="pressEntergbanquecheque2(event)" class="{{ 'form-control '~ class_gbanquecheque2 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gbanquecheque2" id="notif_gbanquecheque2" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.montantcheque'|trans }}2 :
+                    {{ demandeQH.demadeQH.garant1.montantcheque2|number_format('2',',',' ') }}
+                    <input  onclick="affiche_check('check_gmontantcheque2','#notif_gmontantcheque2')" class="{{ check_gmontantcheque2 }} etatDossier" type="checkbox" id="check_gmontantcheque2" value="Ngmontantcheque2" name="check_gmontantcheque2">
+                    <i onclick="affiche('#edit_gmontantcheque2','#modif_gmontantcheque2')" class="{{ 'fa fa-edit fa-2x d-none '~ edit_gmontantcheque2 }} text-danger etatDossier" id="edit_gmontantcheque2"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_gmontantcheque2 }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gmontantcheque2" id="modif_gmontantcheque2" >
+
+                <input  onkeypress="pressEntergmontantcheque2(event)" class="{{ 'form-control '~ class_gmontantcheque2 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gmontantcheque2" id="notif_gmontantcheque2" >
+
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.datecheque'|trans }}2 :
+                    {{ demandeQH.demadeQH.garant1.datetcheque1|date('d/m/Y') }}
+                    <input  onclick="affiche_check('check_gdatecheque2','#notif_gdatecheque2')" class="{{ check_gdatecheque2 }} etatDossier" type="checkbox" id="check_gdatecheque2" value="Ngdatecheque2" name="check_gdatecheque2">
+                    <i onclick="affiche('#edit_gdatecheque2','#modif_gdatecheque2')" class="{{ 'fa fa-edit fa-2x d-none '~ edit_gdatecheque2 }} text-danger etatDossier" id="edit_gdatecheque2"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_gdatecheque2 }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gdatecheque2" id="modif_gdatecheque2" >
+
+                <input  onkeypress="pressEntergdatecheque2(event)" class="{{ 'form-control '~ class_gdatecheque2 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gdatecheque2" id="notif_gdatecheque2" >
+
+            </div>
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.numerocheque'|trans }}3 :
+                    {{ demandeQH.demadeQH.garant1.numerocheque3 }}
+                    <input onclick="affiche_check('check_gnumcheque3','#notif_gnumcheque3')" class="{{ check_gnumcheque3 }} etatDossier" type="checkbox" id="check_gnumcheque3" value="Ngnumcheque3" name="check_gnumcheque3">
+                    <i onclick="affiche('#edit_gnumcheque3','#modif_gnumcheque3')" class="{{ 'fa fa-edit fa-2x d-none '~ edit_gnumcheque3 }} text-danger etatDossier" id="edit_gnumcheque1"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_gnumcheque3 }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gnumcheque3" id="modif_gnumcheque3" >
+
+                <input  onkeypress="pressEntergnumcheque3(event)" class="{{ 'form-control '~ class_gnumcheque3 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gnumcheque3" id="notif_gnumcheque3" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.banquecheque'|trans }}3 :
+                    {{ demandeQH.demadeQH.garant1.banquecheque3 }}
+                    <input  onclick="affiche_check('check_gbanquecheque3','#notif_gbanquecheque3')" class="{{ check_gbanquecheque3 }} etatDossier" type="checkbox" id="check_gbanquecheque3" value="Ngbanquecheque3" name="check_gbanquecheque3">
+                    <i onclick="affiche('#edit_gbanquecheque3','#modif_gbanquecheque3')" class="{{ 'fa fa-edit fa-2x d-none '~ edit_gbanquecheque3 }} text-danger etatDossier" id="edit_gbanquecheque3"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_gbanquecheque3 }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gbanquecheque3" id="modif_gbanquecheque3" >
+                <input  onkeypress="pressEntergbanquecheque3(event)" class="{{ 'form-control '~ class_gbanquecheque3 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gbanquecheque3" id="notif_gbanquecheque3" >
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.montantcheque'|trans }}3 :
+                    {{ demandeQH.demadeQH.garant1.montantcheque3|number_format('2',',',' ') }}
+                    <input  onclick="affiche_check('check_gmontantcheque3','#notif_gmontantcheque3')" class="{{ check_gmontantcheque3 }} etatDossier" type="checkbox" id="check_gmontantcheque3" value="Ngmontantcheque3" name="check_gmontantcheque3">
+                    <i onclick="affiche('#edit_gmontantcheque3','#modif_gmontantcheque3')" class="{{ 'fa fa-edit fa-2x d-none '~ edit_gmontantcheque3 }} text-danger etatDossier" id="edit_gmontantcheque3"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_gmontantcheque3 }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gmontantcheque3" id="modif_gmontantcheque3" >
+                <input  onkeypress="pressEntergmontantcheque3(event)" class="{{ 'form-control '~ class_gmontantcheque3 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gmontantcheque3" id="notif_gmontantcheque3" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.datecheque'|trans }}3 :
+                    {{ demandeQH.demadeQH.garant1.datetcheque1|date('d/m/Y') }}
+                    <input  onclick="affiche_check('check_gdatecheque3','#notif_gdatecheque3')" class="{{ check_gdatecheque3 }} etatDossier" type="checkbox" id="check_gdatecheque3" value="Ngdatecheque3" name="check_gdatecheque3">
+                    <i onclick="affiche('#edit_gdatecheque3','#modif_gdatecheque3')" class="{{ 'fa fa-edit fa-2x d-none '~ edit_gdatecheque3 }} text-danger etatDossier" id="edit_gdatecheque3"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_gdatecheque3 }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gdatecheque3" id="modif_gdatecheque3" >
+
+                <input  onkeypress="pressEntergdatecheque3(event)" class="{{ 'form-control '~ class_gdatecheque3 }}" placeholder="saisir quelque chose ici" type="text" name="notif_gdatecheque3" id="notif_gdatecheque3" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.nomheritier'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.nomheritier1 }}
+                    <input onclick="affiche_check('check_gnomheritier','#notif_gnomheritier')" class="{{ check_gnomheritier }} etatDossier" type="checkbox" id="check_gnomheritier" value="Ngnomheritier" name="check_gnomheritier">
+                    <i  onclick="affiche('#edit_gnomheritier','#modif_gnomheritier')" class="{{ 'fa fa-edit fa-2x d-none '~ edit_gnomheritier }} text-danger etatDossier" id="edit_gnomheritier"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_gnomheritier }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gnomheritier" id="modif_gnomheritier" >
+
+                <input  onkeypress="pressEntergnomheritier(event)" class="{{ 'form-control '~ class_gnomheritier }}" placeholder="saisir quelque chose ici" type="text" name="notif_gnomheritier" id="notif_gnomheritier">
+
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.prenomheritier'|trans }} :
+                    {{ demandeQH.demadeQH.garant1.prenomheritier1}}
+                    <input  onclick="affiche_check('check_gprenomheritier','#notif_gprenomheritier')" class="{{ check_gprenomheritier }} etatDossier" type="checkbox" id="check_gprenomheritier" value="Ngprenomheritier" name="check_gprenomheritier">
+                    <i onclick="affiche('#edit_gprenomheritier','#modif_gprenomheritier')" class="{{ 'fa fa-edit fa-2x d-none '~ edit_gprenomheritier }} text-danger etatDossier" id="edit_gprenomheritier"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_gprenomheritier }}">Notification envoyée</span>
+                <input class="form-control d-none " value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="modif_gprenomheritier" id="modif_gprenomheritier" >
+
+                <input  onkeypress=" pressEntergprenomheritier(event)" class="{{ 'form-control '~ class_gprenomheritier }}" placeholder="saisir quelque chose ici" type="text" name="notif_gprenomheritier" id="notif_gprenomheritier" >
+
+            </div>
+
+
+        </div>
+        <hr class="groove">
+        <div class="col-lg-12"><h1 class="text-primary text-center">Inormation sur le garant2</h1></div>
+        <br>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.nom'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.nomcin }}
+                    <input onclick="affiche_check('check_g1nom','#notif_g1nom')"  class="{{ check_g1nom }} etatDossier" type="checkbox" id="check_g1nom" value="Ng1nom" name="check_g1nom">
+                    <button  onclick="affiche('#edit_g1nom','#modif_g1nom')"  class="{{ 'btn btn-light' ~ edit_g1nom }} etatDossier" id="edit_g1nom">
+                        <i class="fa fa-edit text-danger " ></i>
+                    </button>
+                </p>
+                <span class="{{ 'text-success '~ msg_g1nom }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none" type="text" name="modif_g1nom" id="modif_g1nom" >
+                <input  onkeypress="pressEnterg1nom(event)" class="{{ 'form-control '~ class_g1nom }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1nom" id="notif_g1nom" >
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.prenom'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.prenomcin }}
+                    <input onclick="affiche_check('check_g1prenom','#notif_g1prenom')" type="checkbox" class="{{ check_g1prenom }} etatDossier" value="Ng1prenom" id="check_g1prenom" name="check_g1prenom">
+                    <button onclick="affiche('#edit_g1prenom','#modif_g1prenom')"  class="{{ 'btn bnt-light'~ edit_g1prenom }} etatDossier" id="edit_g1prenom">
+                        <i  class="fa fa-edit  text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1prenom }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)"  class="form-control d-none"  type="text" name="modif_g1prenom" id="modif_g1prenom" >
+                <input  onkeypress="pressEnterg1prenom(event)" class="{{ 'form-control '~ class_g1prenom }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1prenom" id="notif_g1prenom" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.né'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.dateNaissance|date('d/m/Y') }}
+                    <input onclick="affiche_check('check_g1ne','#notif_g1ne')" class="{{ check_g1ne }} etatDossier" type="checkbox" id="check_g1ne" value="Ng1ne" name="check_g1ne">
+                    <button onclick="affiche('#edit_g1ne','#modif_g1ne')" class="{{ 'btn btn-light'~ edit_g1ne }}  etatDossier" id="edit_g1ne">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1ne }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_g1ne" id="modif_g1ne" >
+
+                <input  onkeypress="pressEnterg1ne(event)" class="{{ 'form-control '~ class_g1ne}}" placeholder="saisir quelque chose ici" type="text" name="notif_g1ne" id="notif_g1ne" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.lieu'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.lieu }}
+                    <input onclick="affiche_check('check_g1lieu','#notif_g1lieu')" class="{{ check_g1lieu }} etatDossier" type="checkbox" id="check_g1lieu" value="Ng1lieu" name="check_g1lieu">
+                    <button onclick="affiche('#edit_g1lieu','#modif_g1lieu')" class="{{ 'btn btn-light'~ edit_g1lieu }} etatDossier" id="edit_g1lieu" >
+                        <i class="fa fa-edit text-danger" ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1lieu }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)"  class="form-control d-none "  type="text" name="modif_g1lieu" id="modif_g1lieu" >
+
+                <input  onkeypress="pressEnterg1lieu(event)" class="{{ 'form-control '~ class_g1lieu}}" placeholder="saisir quelque chose ici" type="text" name="notif_g1lieu" id="notif_g1lieu" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.adresse'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.adresse }}
+                    <input onclick="affiche_check('check_g1adresse','#notif_g1adresse')" class="{{ check_g1adresse }} etatDossier" type="checkbox" id="check_g1adresse" value="Ng1adresse" name="check_g1adresse">
+                    <button onclick="affiche('#edit_g1adresse','#modif_g1adresse')" class="{{ 'btn btn-light'~ edit_g1adresse }} text-danger etatDossier" id="edit_gadresse">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1adresse }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none"  type="text" name="modif_g1adresse" id="modif_g1adresse" >
+                <input  onkeypress="pressEnterg1adresse(event)" class="{{ 'form-control '~ class_g1adresse}}" placeholder="saisir quelque chose ici" type="text" name="notif_g1adresse" id="notif_g1adresse" >
+
+            </div>
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.ville'|trans }}:
+                    {{ demandeQH.demadeQH.garant2.ville }}
+                    <input onclick="affiche_check('check_g1ville','#notif_g1ville')" class="{{ check_g1ville }} etatDossier" type="checkbox" id="check_g1ville" value="Ng1ville" name="check_g1ville">
+                    <button onclick="affiche('#edit_g1ville','#modif_g1ville')" class="{{ 'btn btn-light'~ edit_g1ville }} etatDossier" id="edit_g1ville">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1ville }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_g1ville" id="modif_g1ville" >
+                <input  onkeypress="pressEnterg1ville(event)" class="{{ 'form-control '~ class_g1ville}}" placeholder="saisir quelque chose ici" type="text" name="notif_g1ville" id="notif_g1ville" >
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.nationalite'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.nationalite }}
+                    <input onclick="affiche_check('check_g1nationalite','#notif_g1nationalite')" class="{{ check_g1nationalite }} etatDossier" type="checkbox" id="check_g1nationalite" value="Ng1nationalite" name="check_g1nationalite">
+                    <button onclick="affiche('#edit_g1nationalite','#modif_g1nationalite')" class="{{ 'btn btn-light'~ edit_g1nationalite }} etatDossier" id="edit_g1nationalite">
+                        <i class="fa fa-edit  text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1nationalite }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_g1nationalite" id="modif_g1nationalite" >
+                <input  onkeypress="pressEnterg1nationalite(event)" class="{{ 'form-control '~ class_g1nationalite }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1nationalite" id="notif_g1nationalite" >
+            </div>
+            <div class="col-lg-6">
+                {% if(demandeQH.demadeQH.garant2.sexe=='H') %}{% set sexe='Homme' %} {% else %}{% set sexe='Femme' %}{%  endif %}
+                <p>{{ 'garant.sexe'|trans }} :
+                    {{ sexe }}
+                    <input onclick="affiche_check('check_g1sexe','#notif_g1sexe')" class="{{ check_g1sexe }} etatDossier" type="checkbox" id="check_g1sexe" value="Ng1sexe" name="check_g1sexe">
+                    <button onclick="affiche('#edit_g1sexe','#modif_g1sexe')" class="{{ 'btn btn-light'~ edit_g1sexe }} etatDossier" id="edit_g1sexe" >
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1sexe }}">Notification envoyée</span>
+                <input class="form-control d-none "  type="text" name="modif_g1sexe" id="modif_g1sexe" >
+                <input  onkeypress="pressEnterg1sexe(event)" class="{{ 'form-control '~ class_g1sexe }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1sexe" id="notif_g1sexe" >
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.type'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.typePiece }}
+                    <input onclick="affiche_check('check_g1type','#notif_g1type')" class="{{ check_g1type }} etatDossier" type="checkbox" id="check_g1type" value="Ng1type" name="check_g1type">
+                    <button onclick="affiche('#edit_g1type','#modif_g1type')" class="{{ 'btn btn-light'~ edit_g1type }} etatDossier" id="edit_g1type">
+                        <i  class="fa fa-edit  text-danger" ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1type }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_g1type" id="modif_g1type" >
+
+                <input  onkeypress="pressEnterg1type(event)" class="{{ 'form-control '~ class_g1type }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1type" id="notif_g1type" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.numero'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.numeroPiece }}
+                    <input onclick="affiche_check('check_g1numpiece','#notif_g1numpiece')" class="{{ check_g1numpiece }} etatDossier" type="checkbox" id="check_g1numpiece" value="Ng1numpiece" name="check_g1numpiece">
+                    <button onclick="affiche('#edit_g1numpiece','#modif_g1numpiece')" class="{{ 'btn btn-light'~ edit_g1numpiece }}  etatDossier" id="edit_g1numpiece">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1numpiece }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_g1numpiece" id="modif_g1numpiece" >
+
+                <input  onkeypress="pressEnterg1numpiece(event)" class="{{ 'form-control '~ class_g1numpiece }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1numpiece" id="notif_g1numpiece" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.date'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.datePiece|date('d/m/Y') }}
+                    <input  onclick="affiche_check('check_g1datepiece','#notif_g1datepiece')" class="{{ check_g1datepiece }} etatDossier" type="checkbox" id="check_g1datepiece" value="Ng1datepiece" name="check_g1datepiece">
+                    <button onclick="affiche('#edit_g1datepiece','#modif_g1datepiece')" class="{{ 'btn btn-light'~ edit_g1datepiece }} etatDossier" id="edit_g1datepiece">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1datepiece }}">Notification envoyée</span>
+                <input class="form-control d-none "  type="text" name="modif_g1datepiece" id="modif_g1datepiece" >
+
+                <input  onkeypress="pressEnterg1datepiece(event)" class="{{ 'form-control '~ class_g1datepiece }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1datepiece" id="notif_g1datepiece" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.villepiece'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.villePiece }}
+                    <input  onclick="affiche_check('check_g1villepiece','#notif_g1villepiece')" class="{{ check_g1villepiece }} etatDossier" type="checkbox" id="check_g1villepiece" value="Ng1villepiece" name="check_g1villepiece">
+                    <button onclick="affiche('#edit_g1villepiece','#modif_g1villepiece')" class="{{ 'btn btn-light'~ edit_g1villepiece }}  etatDossier" id="edit_g1villepiece" >
+                        <i  class="fa fa-edit  text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1villepiece }}">Notification envoyée</span>
+                <input  onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_g1villepiece" id="modif_g1villepiece" >
+
+                <input  onkeypress="pressEnterg1villepiece(event)" class="{{ 'form-control '~ class_g1villepiece }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1villepiece" id="notif_g1villepiece" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.pays'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.paysPiece }}
+                    <input onclick="affiche_check('check_g1payspiece','#notif_g1payspiece')" class="{{ check_g1payspiece }} etatDossier" type="checkbox" id="check_g1payspiece" value="Ng1payspiece" name="check_g1payspiece">
+                    <button onclick="affiche('#edit_g1payspiece','#modif_g1payspiece')" class="{{ 'btn btn-light '~ edit_g1payspiece }}  etatDossier"  id="edit_g1payspiece">
+                        <i  class="fa fa-edit  text-danger"  ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1payspiece }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_g1payspiece" id="modif_g1payspiece" >
+
+                <input  onkeypress="pressEnterg1payspiece(event)" class="{{ 'form-control '~ class_g1payspiece }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1payspiece" id="notif_g1payspiece" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.profession'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.profession }}
+                    <input onclick="affiche_check('check_g1profession','#notif_g1profession')" class="{{ check_g1profession }} etatDossier" type="checkbox" id="check_g1profession" value="Ng1profession" name="check_g1profession">
+                    <button onclick="affiche('#edit_g1profession','#modif_g1profession')" class="{{ 'btn btn-light'~ edit_g1profession }}  etatDossier"  id="edit_g1profession">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1profession }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none"  type="text" name="modif_g1profession" id="modif_g1profession" >
+
+                <input  onkeypress="pressEnterg1profession(event)" class="{{ 'form-control '~ class_g1profession }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1profession" id="notif_g1profession" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.tel1'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.tel1 }}
+                    <input onclick="affiche_check('check_g1tel1','#notif_g1tel1')" class="{{ check_g1tel1 }} etatDossier" type="checkbox" id="check_g1tel1" value="Ng1tel1" name="check_g1tel1">
+                    <button onclick="affiche('#edit_g1tel1','#modif_g1tel1')" class="{{ 'btn btn-light'~ edit_g1tel1 }}  etatDossier" id="edit_g1tel1">
+                        <i  class="fa fa-edit text-danger " ></i>
+                    </button>
+                </p>
+                <span class="{{ 'text-success '~ msg_g1tel1 }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_g1tel1" id="modif_g1tel1" >
+
+                <input  onkeypress="pressEnterg1tel1(event)" class="{{ 'form-control '~ class_g1tel1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1tel1" id="notif_g1tel1" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.tel2'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.tel2 }}
+                    <input onclick="affiche_check('check_g1tel2','#notif_g1tel2')"  class="{{ check_g1tel2 }} etatDossier" type="checkbox" id="check_g1tel2" value="Ng1tel2" name="check_g1tel2">
+                    <button onclick="affiche('#edit_g1tel2','#modif_g1tel2')"  class="{{ 'btn btn-light'~ edit_g1tel2 }}  etatDossier" id="edit_g1tel2">
+                        <i  class="fa fa-edit  text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1tel2 }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)" class="form-control d-none "  type="text" name="modif_g1tel2" id="modif_g1tel2" >
+
+                <input  onkeypress="pressEnterg1tel2(event)" class="{{ 'form-control '~ class_g1tel2 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1tel2" id="notif_g1tel2" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.email'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.email }}
+                    <input onclick="affiche_check('check_g1email','#notif_g1email')" class="{{ check_g1email }} etatDossier" type="checkbox" id="check_g1email" value="Ng1email" name="check_g1email">
+                    <button onclick="affiche('#edit_g1email','#modif_g1email')" class="{{ 'btn btn-light'~ edit_g1email }}  etatDossier" id="edit_g1email ">
+                        <i  class="fa fa-edit  text-danger " ></i>
+                    </button>
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1email }}">Notification envoyée</span>
+                <input onkeypress="modifEnter(event)"  class="form-control d-none" type="text" name="modif_g1email" id="modif_g1email" >
+
+                <input  onkeypress="pressEnterg1email(event)" class="{{ 'form-control '~ class_g1email }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1email" id="notif_g1email" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.numerocheque'|trans }}1 :
+                    {{ demandeQH.demadeQH.garant2.numerocheque1 }}
+                    <input onclick="affiche('check_g1numcheque1','#notif_g1numcheque1')" class="{{ check_g1numcheque1 }} etatDossier" type="checkbox" id="check_g1numcheque1" value="Ng1numcheque1" name="check_g1numcheque1">
+                </p>
+                <span class="{{ 'text-success '~ msg_g1numcheque1 }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterg1numcheque1(event)" class="{{ 'form-control '~ class_g1numcheque1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1numcheque1" id="notif_g1numcheque1" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.banquecheque'|trans }}1 :
+                    {{ demandeQH.demadeQH.garant2.banquecheque1 }}
+                    <input  onclick="affiche_check('check_g1banquecheque1','#notif_g1banquecheque1')" class="{{ check_g1banquecheque1 }} etatDossier" type="checkbox" id="check_g1banquecheque1" value="Ng1banquecheque1" name="check_g1banquecheque1">
+                </p>
+                <span class="{{ 'text-success '~ msg_g1banquecheque1 }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterg1banquecheque1(event)" class="{{ 'form-control '~ class_g1banquecheque1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1banquecheque1" id="notif_g1banquecheque1" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.montantcheque'|trans }}1 :
+                    {{ demandeQH.demadeQH.garant2.montantcheque1 }}
+                    <input  onclick="affiche_check('check_g1montantcheque1','#notif_g1montantcheque1')" class="{{ check_g1montantcheque1 }} etatDossier" type="checkbox" id="check_g1montantcheque1" value="Ng1montantcheque1" name="check_g1montantcheque1">
+                </p>
+                <span class="{{ 'text-success '~ msg_g1montantcheque1|number_format('2',',',' ') }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterg1montantcheque1(event)" class="{{ 'form-control '~ class_g1montantcheque1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1montantcheque1" id="notif_g1montantcheque1" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.datecheque'|trans }}1 :
+                    {{ demandeQH.demadeQH.garant2.datetcheque1|date('d/m/Y') }}
+                    <input  onclick="affiche_check('check_g1datecheque1','#notif_g1datecheque1')" class="{{ check_g1datecheque1 }} etatDossier" type="checkbox" id="check_g1datecheque1" value="Ng1datecheque1" name="check_g1datecheque1">
+                </p>
+                <span class="{{ 'text-success '~ msg_g1datecheque1 }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterg1datecheque1(event)" class="{{ 'form-control '~ class_g1datecheque1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1datecheque1" id="notif_g1datecheque1" >
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.numerocheque'|trans }}2 :
+                    {{ demandeQH.demadeQH.garant2.numerocheque2 }}
+                    <input onclick="affiche_check('check_g1numcheque2','#notif_g1numcheque2')" class="{{ check_g1numcheque2 }} etatDossier" type="checkbox" id="check_g1numcheque2" value="Ng1numcheque2" name="check_g1numcheque2">
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1numcheque2 }}">Notification envoyée</span>
+                <input  onkeypress="pressEnter(event)" class="{{ 'form-control '~ class_g1numcheque2 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1numcheque2" id="notif_g1numcheque2" >
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.banquecheque'|trans }}2 :
+                    {{ demandeQH.demadeQH.garant2.banquecheque2 }}
+                    <input  onclick="affiche_check('check_g1banquecheque2','#notif_g1banquecheque2')" class="{{ check_g1banquecheque2 }} etatDossier" type="checkbox" id="check_g1banquecheque2" value="Ng1banquecheque2" name="check_g1banquecheque2">
+
+                </p>
+                <span class="{{ 'text-success '~ msg_g1banquecheque2 }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterg1banquecheque2(event)" class="{{ 'form-control '~ class_g1banquecheque2 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1banquecheque2" id="notif_g1banquecheque2" >
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.montantcheque'|trans }}2 :
+                    {{ demandeQH.demadeQH.garant2.montantcheque2|number_format('2',',',' ') }}
+                    <input  onclick="affiche_check('check_g1montantcheque2','#notif_g1montantcheque2')" class="{{ check_g1montantcheque2 }} etatDossier" type="checkbox" id="check_g1montantcheque2" value="Ng1montantcheque2" name="check_g1montantcheque2">
+                </p>
+                <span class="{{ 'text-success '~ msg_g1montantcheque2 }}">Notification envoyée</span>
+                <input  onkeypress="pressEnterg1montantcheque2(event)" class="{{ 'form-control '~ class_g1montantcheque2 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1montantcheque2" id="notif_g1montantcheque2" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.datecheque'|trans }}2 :
+                    {{ demandeQH.demadeQH.garant2.datetcheque2|date('d/m/Y') }}
+                    <input  onclick="affiche_check('check_g1datecheque2','#notif_g1datecheque2')" class="{{ check_g1datecheque2 }} etatDossier" type="checkbox" id="check_g1datecheque2" value="Ng1datecheque2" name="check_gdatecheque2">
+                </p>
+                <span class="{{ 'text-success '~ msg_g1datecheque2 }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterg1datecheque2(event)" class="{{ 'form-control '~ class_g1datecheque2 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1datecheque2" id="notif_g1datecheque2" >
+
+            </div>
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.numerocheque'|trans }}3 :
+                    {{ demandeQH.demadeQH.garant2.numerocheque3 }}
+                    <input onclick="affiche_check('check_g1numcheque3','#notif_g1numcheque3')" class="{{ check_g1numcheque3 }} etatDossier" type="checkbox" id="check_g1numcheque3" value="Ng1numcheque3" name="check_g1numcheque3">
+                </p>
+                <span class="{{ 'text-success '~ msg_g1numcheque3 }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterg1numcheque3(event)" class="{{ 'form-control '~ class_g1numcheque3 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1numcheque3" id="notif_g1numcheque3" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.banquecheque'|trans }}3 :
+                    {{ demandeQH.demadeQH.garant2.banquecheque3 }}
+                    <input  onclick="affiche_check('check_g1banquecheque3','#notif_g1banquecheque3')" class="{{ check_g1banquecheque3 }} etatDossier" type="checkbox" id="check_g1banquecheque3" value="Ng1banquecheque3" name="check_g1banquecheque3">
+                </p>
+                <span class="{{ 'text-success '~ msg_g1banquecheque3 }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterg1banquecheque3(event)" class="{{ 'form-control '~ class_g1banquecheque3 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1banquecheque3" id="notif_g1banquecheque3" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.montantcheque'|trans }}3 :
+                    {{ demandeQH.demadeQH.garant2.montantcheque3|number_format('2',',',' ') }}
+                    <input  onclick="affiche_check('check_g1montantcheque3','#notif_g1montantcheque3')" class="{{ check_g1montantcheque3 }} etatDossier" type="checkbox" id="check_g1montantcheque3" value="Ng1montantcheque3" name="check_g1montantcheque3">
+                </p>
+                <span class="{{ 'text-success '~ msg_g1montantcheque3 }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnter(event)" class="{{ 'form-control '~ class_g1montantcheque3 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1montantcheque3" id="notif_g1montantcheque3" >
+
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.datecheque'|trans }}3 :
+                    {{ demandeQH.demadeQH.garant2.datetcheque3|date('d/m/Y') }}
+                    <input  onclick="affiche_check('check_g1datecheque3','#notif_g1datecheque3')" class="{{ check_g1datecheque3 }} etatDossier" type="checkbox" id="check_g1datecheque3" value="Ng1datecheque3" name="check_g1datecheque3">
+                </p>
+                <span class="{{ 'text-success '~ msg_g1datecheque3 }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterg1datecheque3(event)" class="{{ 'form-control '~ class_g1datecheque3 }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1datecheque3" id="notif_g1datecheque3" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'garant.nomheritier'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.nomheritier1 }}
+                    <input onclick="affiche_check('check_g1nomheritier','#notif_g1nomheritier')" class="{{ check_g1nomheritier }} etatDossier" type="checkbox" id="check_g1nomheritier" value="Ng1nomheritier" name="check_g1nomheritier">
+                </p>
+                <span class="{{ 'text-success '~ msg_g1nomheritier }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterg1nomheritier(event)" class="{{ 'form-control '~ class_g1nomheritier }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1nomheritier" id="notif_g1nomheritier">
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'garant.prenomheritier'|trans }} :
+                    {{ demandeQH.demadeQH.garant2.prenomheritier1}}
+                    <input  onclick="affiche_check('check_g1prenomheritier','#notif_g1prenomheritier')" class="{{ check_g1prenomheritier }} etatDossier" type="checkbox" id="check_g1prenomheritier" value="Ng1prenomheritier" name="check_g1prenomheritier">
+                    <i onclick="affiche('#edit_g1prenomheritier','#modif_g1prenomheritier')" class="{{ 'fa fa-edit fa-2x d-none '~ edit_g1prenomheritier }} text-danger etatDossier" id="edit_g1prenomheritier"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_g1prenomheritier }}">Notification envoyée</span>
+                <input class="form-control d-none "  type="text" name="modif_g1prenomheritier" id="modif_g1prenomheritier" >
+
+                <input  onkeypress=" pressEnterg1prenomheritier(event)" class="{{ 'form-control '~ class_g1prenomheritier }}" placeholder="saisir quelque chose ici" type="text" name="notif_g1prenomheritier" id="notif_g1prenomheritier" >
+
+            </div>
+
+
+        </div>
+        <hr class="groove">
+        <div class="col-lg-12"><h1 class="text-primary text-center">les formulaires </h1></div>
+        <br>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'importationdossierQH.safahi'|trans }} :
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.safahi) }}">
+                        <img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.safahi) }}" class="img img-fluid" alt="" width="50" height="50">
+                    </a>
+                    <input onclick="affiche_check('check_safahi','#notif_safahi')" class="{{ check_safahi }} etatDossier" type="checkbox" id="check_safahi" value="Nsafahi" name="check_safahi">
+                </p>
+                <span class="{{ 'text-success '~ msg_safahi }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEntersafahi(event)" class="{{ 'form-control '~ class_safahi }}" placeholder="saisir quelque chose ici" type="text" name="notif_safahi" id="notif_safahi" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'importationdossierQH.attestation_solde_compte'|trans }} :
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.attestationSoldeCompte) }}"><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.attestationSoldeCompte) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                    <i onclick="affiche('#edit_solde','#modif_solde')"  class="{{ 'fa fa-edit fa-2x d-none '~ edit_solde }} text-danger etatDossier" id="edit_solde"></i>
+                </p>
+                <span class="{{ 'text-success '~ msg_solde }}">Notification envoyée</span>
+                <input  onkeypress="pressEntersolde(event)" class="{{ 'form-control '~ class_solde }}" placeholder="saisir quelque chose ici" type="text" name="notif_solde" id="notif_solde" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'importationdossierQH.attestation_bon_fonctionnement'|trans }} :
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.attestationCopmteBank) }}"><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.attestationCopmteBank) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                    <input  onclick="affiche_check('check_attestation','#notif_attestation')"  class="{{ check_attestation }} etatDossier" type="checkbox" id="check_attestation" value="Nattestation" name="check_attestation">
+                </p>
+                <span class="{{ 'text-success '~ msg_attestation }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterattestation(event)" class="{{ 'form-control '~ class_attestation }}" placeholder="saisir quelque chose ici" type="text" name="notif_attestation" id="notif_attestation" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'importationdossierQH.formulaire_garant'|trans }} :
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.formulaireGarantie) }}"><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.formulaireGarantie) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                    <input onclick="affiche_check('check_formgarant','#notif_formgarant')" class="{{ check_formgarant }} etatDossier" type="checkbox" id="check_formgarant" value="Nformgarant" name="check_formgarant">
+                </p>
+                <span class="{{ 'text-success '~ msg_formgarant }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterformgarant(event)" class="{{ 'form-control '~ class_formgarant }}" placeholder="saisir quelque chose ici" type="text" name="notif_formgarant" id="notif_formgarant" >
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <p>{{ 'importationdossierQH.chequebarre'|trans }} :
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.chequeBare) }}"><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.chequeBare) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                    <input onclick="affiche_check('check_chequebarre','#notif_chequebarre')" class="{{ check_chequebarre }} etatDossier" type="checkbox" id="check_chequebarre" value="Nchequebarre" name="check_chequebarre">
+                </p>
+                <span class="{{ 'text-success '~ msg_chequebarre }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterchequebarre(event)" class="{{ 'form-control '~ class_chequebarre }}" placeholder="saisir quelque chose ici" type="text" name="notif_chequebarre" id="notif_chequebarre" >
+
+            </div>
+            <div class="col-lg-6">
+                <p>{{ 'importationdossierQH.formulaire_garant1'|trans }} :
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.formulaireGarantie) }}"><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.formulaireGarantie) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                    <input onclick="affiche_check('check_formgarant1','#notif_formgarant1')" class="{{ check_formgarant1 }} etatDossier" type="checkbox" id="check_formgarant1" value="Nformgarant1" name="check_formgarant1">
+                </p>
+                <span class="{{ 'text-success '~ msg_formgarant }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterformgarant1(event)" class="{{ 'form-control '~ class_formgarant1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_formgarant1" id="notif_formgarant1" >
+
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-6">
+                <p>{{ 'importationdossierQH.chequebarre1'|trans }} :
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.chequeBare1) }}"><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.chequeBare1) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                    <input onclick="affiche_check('check_chequebarre1','#notif_chequebarre1')" class="{{ check_chequebarre1 }} etatDossier" type="checkbox" id="check_chequebarre1" value="Nchequebarre1" name="check_chequebarre1">
+                </p>
+                <span class="{{ 'text-success '~ msg_chequebarre1 }}">Notification envoyée</span>
+
+                <input  onkeypress="pressEnterchequebarre1(event)" class="{{ 'form-control '~ class_chequebarre1 }}" placeholder="saisir quelque chose ici" type="text" name="notif_chequebarre1" id="notif_chequebarre1" >
+
+            </div>
+
+
+        </div>
+    {% endif %}
+
+
+
+    <script>
+        function pressEnterprenom(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gprenomheritier","#notif_gprenomheritier");
+            }
+        }
+        function pressEntermontant(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_montant","#notif_montant");
+            }
+        }
+        function pressEntermois(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_mois","#notif_mois");
+            }
+        }
+        function pressEntermotif(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_motif","#notif_motif");
+            }
+        }
+        function pressEnterdetail(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_detail","#notif_detail");
+            }
+        }
+        function pressEntervaleuror(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_valeuror","#notif_valeuror");
+            }
+        }
+        function pressEnternomits(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_nomits","#notif_nomits");
+            }
+        }
+        function pressEntergnumits(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gnumits","#notif_gnumits");
+            }
+        }
+        function pressEntergmoze(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gmoze","#notif_gmoze");
+            }
+        }
+        function pressEnternomits1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_nomits1 ","#notif_nomits1");
+            }
+        }
+        function pressEntergnumits1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gnumits1","#notif_gnumits1");
+            }
+        }
+        function pressEntergmoze1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gmoze1","#notif_gmoze1");
+            }
+        }
+        function pressEnterkalidas(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_kalidas","#notif_kalidas");
+            }
+        }
+        function pressEntergnom(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gnom","#notif_gnom");
+            }
+        }
+        function pressEntergprenom(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gprenom","#notif_gprenom");
+            }
+        }
+        function pressEntergadresse(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gadresse","#notif_gadresse");
+            }
+        }
+        function pressEnterglieu(event) {
+        var code = event.which || event.keyCode;
+        if (code == 13) { //code  touche Enter
+            notification("#id_dossier","#check_glieu","#notif_glieu");
+             }
+        }
+        function pressEntergville(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gville","#notif_gville");
+            }
+        }
+        function pressEntergne(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gne","#notif_gne");
+            }
+        }
+        function pressEntergnationalite(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gnationalite","#notif_gnationalite");
+            }
+        }
+        function pressEntergtype(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gtype","#notif_gtype");
+            }
+        }
+        function pressEntergnumpiece(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gnumpiece","#notif_gnumpiece");
+            }
+        }
+        function pressEntergdatepiece(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gdatepiece","#notif_gdatepiece");
+            }
+        }
+        function pressEntergvillepiece(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gvillepiece","#notif_gvillepiece");
+            }
+        }
+        function pressEntergpayspiece(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gpayspiece","#notif_gpayspiece");
+            }
+        }
+        function pressEntergprofession(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gprofession","#notif_gprofession");
+            }
+        }
+
+        function pressEntergtel1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gtel1","#notif_gtel1");
+            }
+        }
+        function pressEntergtel2(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gtel2","#notif_gtel2");
+            }
+        }
+        function pressEntergnumcheque1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gnumcheque1","#notif_gnumcheque1");
+            }
+        }
+        function pressEntergbanquecheque1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gbanquecheque1","#notif_gbanquecheque1");
+            }
+        }
+        function pressEntergmontantcheque1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gmontantcheque1","#notif_gmontantcheque1");
+            }
+        }
+        function pressEntergdatecheque1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gdatecheque1","#notif_gdatecheque1");
+            }
+        }
+        function pressEntergnumcheque2(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gnumcheque2","#notif_gnumcheque2");
+            }
+        }
+        function pressEntergbanquecheque2(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gbanquecheque2","#notif_gbanquecheque2");
+            }
+        }
+        function pressEntergmontantcheque2(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gmontantcheque2","#notif_gmontantcheque2");
+            }
+        }
+        function pressEntergdatecheque2(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gdatecheque2","#notif_gdatecheque2");
+            }
+        }
+        function pressEntergnumcheque3(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gnumcheque3","#notif_gnumcheque3");
+            }
+        }
+        function pressEntergbanquecheque3(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gbanquecheque2","#notif_gbanquecheque3");
+            }
+        }
+        function pressEntergmontantcheque3(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gmontantcheque2","#notif_gmontantcheque3");
+            }
+        }
+        function pressEntergdatecheque3(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gdatecheque2","#notif_gdatecheque3");
+            }
+        }
+        function pressEntergnomheritier(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_gnomheritier","#notif_gnomheritier");
+            }
+        }
+
+
+
+
+        function pressEnterg1nom(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1nom","#notif_g1nom");
+            }
+        }
+        function pressEnterg1prenom(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1prenom","#notif_g1prenom");
+            }
+        }
+        function pressEnterg1adresse(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1adresse","#notif_g1adresse");
+            }
+        }
+        function pressEnterg1lieu(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1lieu","#notif_g1lieu");
+            }
+        }
+        function pressEnterg1ville(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1ville","#notif_g1ville");
+            }
+        }
+        function pressEnterg1ne(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1ne","#notif_g1ne");
+            }
+        }
+        function pressEnterg1nationalite(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1nationalite","#notif_g1nationalite");
+            }
+        }
+        function pressEnterg1type(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1type","#notif_g1type");
+            }
+        }
+        function pressEnterg1numpiece(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1numpiece","#notif_g1numpiece");
+            }
+        }
+        function pressEnterg1datepiece(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1datepiece","#notif_g1datepiece");
+            }
+        }
+        function pressEnterg1villepiece(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1villepiece","#notif_g1villepiece");
+            }
+        }
+        function pressEnterg1payspiece(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1payspiece","#notif_g1payspiece");
+            }
+        }
+        function pressEnterg1profession(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1profession","#notif_g1profession");
+            }
+        }
+
+        function pressEnterg1tel1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1tel1","#notif_g1tel1");
+            }
+        }
+        function pressEnterg1tel2(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1tel2","#notif_g1tel2");
+            }
+        }
+        function pressEnterg1numcheque1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1numcheque1","#notif_g1numcheque1");
+            }
+        }
+        function pressEnterg1banquecheque1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1banquecheque1","#notif_g1banquecheque1");
+            }
+        }
+        function pressEnterg1montantcheque1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1montantcheque1","#notif_g1montantcheque1");
+            }
+        }
+        function pressEnterg1datecheque1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1datecheque1","#notif_g1datecheque1");
+            }
+        }
+        function pressEnterg1numcheque2(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1numcheque2","#notif_g1numcheque2");
+            }
+        }
+        function pressEnterg1banquecheque2(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1banquecheque2","#notif_g1banquecheque2");
+            }
+        }
+        function pressEnterg1montantcheque2(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1montantcheque2","#notif_g1montantcheque2");
+            }
+        }
+        function pressEnterg1datecheque2(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1datecheque2","#notif_g1datecheque2");
+            }
+        }
+        function pressEnterg1numcheque3(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1numcheque3","#notif_g1numcheque3");
+            }
+        }
+        function pressEnterg1banquecheque3(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1banquecheque2","#notif_g1banquecheque3");
+            }
+        }
+        function pressEnterg1montantcheque3(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1montantcheque2","#notif_g1montantcheque3");
+            }
+        }
+        function pressEnterg1datecheque3(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1datecheque2","#notif_g1datecheque3");
+            }
+        }
+        function pressEnterg1nomheritier(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1nomheritier","#notif_g1nomheritier");
+            }
+        }
+        function pressEnterg1prenomheritier(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_g1prenomheritier","#notif_g1prenomheritier");
+            }
+        }
+        function pressEntersafahi(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_safahi","#notif_safahi");
+            }
+        }
+        function pressEntersolde(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_solde","#notif_solde");
+            }
+        }
+        function pressEnterattestation(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_attestation","#notif_attestation");
+            }
+        }
+        function pressEnterchequebarre(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_chequebarre","#notif_chequebarre");
+            }
+        }
+        function pressEnterformgarant(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_formgarant","#notif_formgarant");
+            }
+        }
+        function pressEnterchequebarre1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_chequebarre1","#notif_chequebarre1");
+            }
+        }
+        function pressEnterchequebarre1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_formgarant1","#notif_formgarant1");
+            }
+        }
+        function pressEntersafahi(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_safahi","#notif_safahi");
+            }
+        }
+        function pressEntersolde(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_solde","#notif_solde");
+            }
+        }
+        function pressEnterattestation(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_attestation","#notif_attestation");
+            }
+        }
+        function pressEnterformgarant(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_formgarant","#notif_formgarant");
+            }
+        }
+        function pressEnterformgarant1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_formgarant1","#notif_formgarant1");
+            }
+        }
+        function pressEnterchequebarre(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_chequebarre","#notif_chequebarre");
+            }
+        }
+        function pressEnterchequebarre1(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification("#id_dossier","#check_chequebarre1","#notif_chequebarre1");
+            }
+        }
+
+        //Function pour notifier les informations
+
+        function notification(dossier,formulaire,notif){
+            var id_demandeqh = $(dossier).val();
+            var check_montant = $(formulaire).val();
+            var notif_montant = $(notif).val();
+           var formData = {id_demandeqh: id_demandeqh,check_montant: check_montant,notif_montant: notif_montant};
+
+            $.post("{{ path('notificationQh') }}",formData,
+                function (data, status) {
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    $("span").html(data);
+                });
+            $(notif).val('');
+            /*$(notif).addClass('d-none');
+            $(formulaire).addClass('d-none');*/
+
+
+        }
+
+        function modifEnter(event){
+
+            var code = event.which || event.keyCode;
+            if (code==13) { //code  touche Enter
+
+                modification("#id_demandeqh","#modif_montant","#modif_mois","#modif_motif",
+                    "#modif_detail","#modif_valeuror","#modif_nomits","#modif_gnumits",
+                    "#modif_gmoze","#modif_nomits1","#modif_gnumits1","#modif_gmoze1",
+                    "#modif_gnom","#modif_gprenom","#modif_gne","#modif_glieu","#modif_gadresse",
+                    "#modif_gville","#modif_gnationalite","#modif_gtype","#modif_gnumpiece",
+                    "#modif_gvillepiece","#modif_gpayspiece","#modif_gprofession","#modif_gtel1",
+                    "#modif_gtel2","#modif_gemail","#modif_g1nom","#modif_g1prenom","#modif_g1ne",
+                    "#modif_g1lieu","#modif_g1adresse", "#modif_g1ville","#modif_g1nationalite",
+                    "#modif_g1type","#modif_g1numpiece", "#modif_g1villepiece","#modif_g1payspiece",
+                    "#modif_g1profession","#modif_g1tel1", "#modif_g1tel2","#modif_g1email"
+                );
+
+            }}
+        function modification(id,montant,mois,motif,detail,valeuror,nomits,its,moze,nomits1,its1,moze1,gnom,gprenom,gne,glieu,gadresse,gville,gnationalite,gtype,gnumpiece,gvillepiece,gpayspiece,gprofession,gtel1,gtel2,gemail,g1nom,g1prenom,g1ne,g1lieu,g1adresse,g1ville,g1nationalite,g1type,g1numpiece,g1villepiece,g1payspiece,g1profession,g1tel1,g1tel2,g1email)
+        {
+
+            var id_demandeqh = $(id).val();
+            var montant = $(montant).val();
+            var mois = $(mois).val();
+            var motif = $(motif).val();
+            var detail = $(detail).val();
+            var valeuror = $(valeuror).val();
+            var nomits = $(nomits).val();
+            var its = $(its).val();
+            var moze = $(moze).val();
+            var nomits1 = $(nomits1).val();
+            var its1 = $(its1).val();
+            var moze1 = $(moze1).val();
+            var gnom = $(gnom).val();
+            var gprenom = $(gprenom).val();
+            var gne= $(gne).val();
+            var glieu= $(glieu).val();
+            var gadresse= $(gadresse).val();
+            var gville= $(gville).val();
+            var gnationalite= $(gnationalite).val();
+            var gtype= $(gtype).val();
+            var gnumpiece= $(gnumpiece).val();
+            var gvillepiece= $(gvillepiece).val();
+            var gpayspiece= $(gpayspiece).val();
+            var gprofession= $(gprofession).val();
+            var gtel1= $(gtel1).val();
+            var gtel2= $(gtel2).val();
+            var gemail= $(gemail).val();
+
+            var g1nom = $(g1nom).val();
+            var g1prenom = $(g1prenom).val();
+            var g1ne= $(g1ne).val();
+            var g1lieu= $(g1lieu).val();
+            var g1adresse= $(g1adresse).val();
+            var g1ville= $(g1ville).val();
+            var g1nationalite= $(g1nationalite).val();
+            var g1type= $(g1type).val();
+            var g1numpiece= $(g1numpiece).val();
+            var g1villepiece= $(g1villepiece).val();
+            var g1payspiece= $(g1payspiece).val();
+            var g1profession= $(g1profession).val();
+            var g1tel1= $(g1tel1).val();
+            var g1tel2= $(g1tel2).val();
+            var g1email= $(g1email).val();
+            var formData = {id_demandeqh: id_demandeqh,montant: montant,
+                mois: mois,motif: motif,detail: detail,valeuror: valeuror,
+                nomits : nomits,its : its,moze  : moze,nomits1 : nomits1,its1 : its1,moze1 : moze1,
+                gnom : gnom,gprenom : gprenom,gne : gne,glieu : glieu,gadresse : gadresse,gville : gville,
+                gnationalite: gnationalite,gtype : gtype,gnumpiece : gnumpiece,gvillepiece : gvillepiece,gpayspiece : gpayspiece,
+                gprofession : gprofession,gtel1 : gtel1,gtel2 : gtel2,gemail : gemail,g1nom : g1nom,g1prenom : g1prenom,g1ne : g1ne,g1lieu : g1lieu,g1adresse : g1adresse,g1ville : g1ville,
+                g1nationalite: g1nationalite,g1type : g1type,g1numpiece : g1numpiece,g1villepiece : g1villepiece,g1payspiece : g1payspiece,
+                g1profession : g1profession,g1tel1 : g1tel1,g1tel2 : g1tel2,g1email : g1email,
+
+            };
+            console.log(formData);
+
+            $.post("{{ path('modificationbackQh') }}",formData, function (data, status) {
+                    //alert("Data: " + data + "\nStatus: " + status);
+                   // $("span").html(data);
+                    alert(data);
+                });
+
+
+
+        }
+
+
+       var a=true;
+        function affiche(param1,param2){
+
+            if(a){
+
+                    $(param2).removeClass('d-none');
+                    $(param2).addClass('d-block');
+
+                a=false;
+            }else {
+
+                    $(param2).removeClass('d-block');
+                    $(param2).addClass('d-none');
+
+                a=true;
+            }
+
+        }
+
+
+        function affiche_check(param1,param2){
+
+            if(document.getElementById(param1).checked == true){
+
+                $(param2).removeClass('d-none');
+                $(param2).addClass('d-block');
+
+            }else {
+
+                $(param2).removeClass('d-block');
+                $(param2).addClass('d-none');
+
+            }
+
+        }
+
+    </script>
+
+    {% if demandeQH.verification == 'Valider'%}
+        <script>
+            $('.etatDossier').addClass('d-none');
+        </script>
+    {% endif %}
+
+{% endblock %}

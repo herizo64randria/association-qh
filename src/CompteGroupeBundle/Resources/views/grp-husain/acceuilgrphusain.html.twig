@@ -1,0 +1,127 @@
+{% extends '@CompteGroupe/BaseGroupe.html.twig' %}
+
+{% block body_container %}
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 50px;
+            height: 50px;
+            background-color: #0088CC;
+        }
+        col-lg .groove {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,input,select,textarea,p {
+            text-shadow: 0.1px 0.1px 1px black;
+
+        }
+        button {
+            border-radius: 0px;
+            box-shadow: 4px 4px 0px black;
+        }
+
+    </style>
+
+    <div class="container-fluid">
+        <br>
+        <div class="card text-center">
+            <div class="card-header">
+                <h3 class="text-info"><img src="{{ asset('/document/'~groupe.photo) }}" class="img img-fluid" alt="" width="50" height="50">
+                    {{ 'grphussain.titre'|trans  }} {{ groupe.nomgroup }}
+                </h3>
+            </div>
+            <div class="card-body">
+                <form class="container" id="formmembre" action="#" method="POST" enctype="multipart/form-data">
+
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-3">
+                              
+                                <div class="float-right">
+                                    <a class="float-left" href="{{ path('page-choix-groupe',{'id': groupe.id}) }}"><i class="fa fa-home">   </i> {{ 'grphussain.acceuil'|trans }}</a>
+                                    <br>
+                                    <div class="dropdown-divider"></div>
+
+                                    <a class="float-left" href="{{ path('grp-versement_ajouter',{'id': groupe.id}) }}"><i class="fa fa-plus">   </i> {{ 'grphussain.versement'|trans }}</a>
+                                    <br>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="float-left" href="{{ path('grp-dmdremboursement_ajouter',{'id': groupe.id}) }}"><i class="fa fa-minus">   </i> {{ 'grphussain.remboursement'|trans }}</a>
+                                    <br>
+                                    <div class="dropdown-divider"></div>
+
+                                    <a class="float-left" href="{{ path('Liste-grp-versement',{'id': groupe.id}) }}"><i class="fa fa-list">   </i> {{ 'grphussain.listevers'|trans }}</a>
+                                    <br>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="float-left" href="{{ path('Liste-grp-dmdremboursement',{'id': groupe.id}) }}"><i class="fa fa-list">   </i> {{ 'grphussain.listeremb'|trans }}</a>
+                                </div>
+
+                            </div>
+                            <div class="col-9">
+
+                                    <table class="table table-striped">
+                                        <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">{{ 'grphussain.date'|trans }}</th>
+                                            <th scope="col" style="width: 250px;">{{ 'grphussain.libelle'|trans }}</th>
+                                            <th scope="col">{{ 'grphussain.credit'|trans }}</th>
+                                            <th scope="col">{{ 'grphussain.debit'|trans }}</th>
+                                            <th scope="col" class="text-right">{{ 'grphussain.solde'|trans }}</th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% set solde = 0 %}
+                                        {% set font = "font-style: italic" %}
+                                        {% set color = "color: #696969" %}
+                                        {% for historique in historique %}
+
+                                            <tr>
+
+                                                <td style=" {% if historique.type=="0" %}{{ font ~ ';' ~ color  }} {% endif %}">{{ historique.date|date('d/m/Y') }}</td>
+                                                <td style=" {% if historique.type=="0" %}{{ font ~ ';' ~ color  }} {% endif %}">{{ historique.libelle }}</td>
+                                                <td class="text-right" >
+                                                    {% if historique.type=="credit" %}
+                                                        {{ historique.montant|number_format(2, ',', ' ') }}
+                                                        {% set solde = solde + historique.montant %}
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-right">
+                                                    {% if historique.type=="debit" %}
+                                                        {{ historique.montant|number_format(2, ',', ' ') }}
+                                                        {% set solde = solde - historique.montant %}
+
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-right">
+                                                    {{ solde|number_format(2, ',', ' ') }}
+                                                </td>
+
+
+                                            </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><strong>{{ 'grphussain.totale'|trans }}</strong></td>
+                                            <td class="text-right"><strong>{{ solde|number_format(2, ',', ' ') }}</strong></td>
+
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

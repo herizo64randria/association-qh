@@ -1,0 +1,14 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+    <div class="col-12">
+        <br>
+        <div class="container mt-auto">
+    <form method='post' action='#' enctype='multipart/form-data'>
+        <input type="file" name="photos[]" id="file" multiple>
+
+        <input type='submit'  value='telecharger'>
+
+    </form>
+ </div></div>
+{% endblock %}

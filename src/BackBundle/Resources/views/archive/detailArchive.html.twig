@@ -1,0 +1,1310 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}Détail sur le demande QH :{% endblock %}
+
+{% block body_container %}
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 50px;
+            height: 50px;
+            background-color: #0088CC;
+        }
+        col-lg .groove {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,input,select,textarea,p {
+            text-shadow: 0.1px 0.1px 1px black;
+
+        }
+    </style>
+    <hr class="groove">
+    <div class="container-fluid">
+
+        <hr class="border-white">
+
+
+        <div class="row">
+            <div class="col-8">
+                <h5>
+                    {{ demandeQH.demadeQH.personne.nom ~' '~ demandeQH.demadeQH.personne.prenom ~' / N° ITS : '~
+                    demandeQH.demadeQH.personne.numeroIts ~' / Dossier N° : '~ demandeQH.demadeQH.numero
+                    }}
+                </h5>
+            </div>
+            <div class="col-4">
+                {% if(demandeQH.verification == "En attente de verification")%}
+                    <div class="text-center">
+
+                        <a href="{{ path('validerdossierQh',{ 'id' : demandeQH.id}) }}" class="btn-success btn-lg  center" id="confirme_demandeqh" >Valider</a>
+                        <br>
+
+                    </div>
+                    <hr class="border-white">
+                {% else %}
+                    {% if(demandeQH.verification == "A verifier")%}
+                        <div class="text-center">
+                            <a href="{{ path('validerdossierQh',{ 'id' : demandeQH.id}) }}" class="btn-success btn-lg  center" id="confirme_demandeqh" >Valider</a>
+                            <br>
+                            <h4 class="text-danger">Informations à verifier </h4>
+
+                        </div>
+
+                        <br>
+                    {% endif%}
+                    {% if(demandeQH.verification == "Valider")%}
+                        <div class="text-center">
+
+                            <h4 class="text-success">Dossier valider</h4>
+                        </div>
+
+                        <br>
+                    {% endif%}
+                    <hr class="border-white">
+                {% endif%}
+            </div>
+        </div>
+
+
+
+        {% if demandeQH.demadeQH %}
+            <hr class="groove">
+
+            <div class="col-12">
+                <h1 class="text-primary text-center"> Information sur le Demande QH</h1>
+            </div>
+
+
+            {#      <div class="row">
+
+                      <div class="col-lg-6">
+                          <h4 class="text-primary">Antécédent</h4>
+                          Dejà efectuer une demande QH auparavant :
+                              {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
+                                  {% set x='oui' %}
+                              {% else %}
+                                  {% set x='non' %}
+                              {% endif %}
+                              {{ x }}
+                          <i class="fa fa-edit btn btn-danger btn-md" id="anciendemande"></i>
+                          <i class="fa fa-comment btn btn-danger btn-md" id="notif_anciendemande"></i>
+                          </p>
+                          <input class="form-control d-none" value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="osiAncienDemande" id="osiAncienDemande" >
+                          <br>
+                          <input  class="form-control d-none" placeholder="saisir quelque chose ici" type="text" name="nsiAncienDemande" id="nsiAncienDemande" >
+                          {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
+                              {% if (demandeQH.demadeQH.siAncienDemandeEtat=='oui') %}
+                                  {% set y='oui' %}
+
+                              {% else %}
+                                  {% set y='non' %}
+
+                              {% endif %}
+                              <p>Elle a été acceptée : {{ y }}
+
+                              </p>
+                          {% endif %}
+
+                      </div>
+
+                      {% if (x=='oui' and y=='oui') %}
+                          <div class="col-lg-6">
+                              <h4 class="text-primary">les trois dernier montant demandés
+                                  <i class="fa fa-edit btn btn-danger btn-md" id="anciendemande"></i>
+                                  <i class="fa fa-comment btn btn-danger btn-md" id="notif_anciendemande"></i>
+                                  </p>
+                                  <input class="form-control d-none" value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="osiAncienDemande" id="osiAncienDemande" >
+                                  <br>
+                                  <input  class="form-control d-none" placeholder="saisir quelque chose ici" type="text" name="nsiAncienDemande" id="nsiAncienDemande" ></h4>
+                              <table class="table table-striped">
+                                  <thead><th><label >{{ 'demandeqh_ajouter.annee'|trans }}</label></th>
+                                  <th></th>
+                                  <th><label >{{ 'demandeqh_ajouter.montant'|trans }}</label></th>
+                                  </thead>
+                                  <tr><td>
+
+                                          <p >{{ demandeQH.demadeQH.annee1 }}</p>
+                                      </td>
+                                      <td> </td>
+                                      <td>
+
+                                          <p class="text-right" >{{ demandeQH.demadeQH.montant1|number_format('2',',',' ') }}</p>
+                                      </td>
+                                  </tr>
+
+                                  <tr>
+                                      <td>
+
+                                          <p >{{ demandeQH.demadeQH.annee2 }}</p>
+                                      </td>
+                                      <td>
+                                      <td>
+
+                                          <p class="text-right" >{{ demandeQH.demadeQH.montant2|number_format('2',',',' ') }}</p>
+                                      </td>
+                                  </tr>
+                                  <tr><td>
+
+                                          <p >{{ demandeQH.demadeQH.annee3 }}</p>
+                                      </td>
+                                      <td> </td>
+                                      <td>
+                                          <p class="text-right" >{{ demandeQH.demadeQH.montant3|number_format('2',',',' ') }}</p>
+                                      </td>
+                                  </tr>
+                              </table>
+                          </div>
+                      {% endif %}
+
+                  </div>#}
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <h4 class="text-primary">Nouvelle demande</h4>
+
+                    <p >
+                        Montant demandée en Ariary :
+                        {% if demandeQH.demadeQH.montant %}
+                            {{ demandeQH.demadeQH.montant|number_format('2',',',' ',' ') }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+
+                    <p>
+                        Pour combien de mois :
+                        {% if demandeQH.demadeQH.nombreMois %}
+                            {{ demandeQH.demadeQH.nombreMois }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+
+                </div>
+
+                <div class="col-lg-6">
+                    <h4 class="text-primary">Objet de la demande</h4>
+                    <p>
+                        Motif :
+                        {% if demandeQH.demadeQH.typeMotif %}
+                            {{ demandeQH.demadeQH.typeMotif }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+
+                    <p>
+                        Détail :
+                        {% if demandeQH.demadeQH.detailMotif %}
+                            {{ demandeQH.demadeQH.detailMotif }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-lg-6"><h4 class="text-primary">Garantie</h4>
+
+                    <p>
+                        Valeur de l'or en Ariary :
+                        {% if  demandeQH.demadeQH.garantieOR.valeurAr %}
+                            {{ demandeQH.demadeQH.garantieOR.valeurAr|number_format('2',',',' ',' ') }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+                    <p>
+                        Scan du formulaire(remplir par kalidas):<br>
+                        {% if  demandeQH.demadeQH.garantieOR.scanKalidas %}
+                            <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.garantieOR.scanKalidas) }}">
+                                <img src="{{ asset('document/'~ demandeQH.demadeQH.garantieOR.scanKalidas) }}" class="img img-fluid" alt="" width="50" height="50">
+                            </a>
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+                    <p>
+                        Photo du paquet scellé par kallidas:(Possibilité de mettre plusieurs photos):<br>
+                        {% if  photoor %}
+                            {% for photoor in photoor %}
+                                <a target="_blank" id="lien" href="{{ asset('document/'~ photoor.url) }}"><img src="{{ asset('document/'~ photoor.url) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                            {% endfor %}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if demandeQH.demadeQH.garant1 %}
+            <hr class="groove">
+            <div class="col-lg-12"><h1 class="text-primary text-center">Inormation sur le garant1</h1></div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.nom'|trans }} :
+                        {% if  demandeQH.demadeQH.garant1.nomcin %}
+                            {{ demandeQH.demadeQH.garant1.nomcin }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.prenom'|trans }} :
+                        {% if  demandeQH.demadeQH.garant1.prenomcin %}
+                            {{ demandeQH.demadeQH.garant1.prenomcin }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <p>{{ 'garant.né'|trans }} :
+                        {% if demandeQH.demadeQH.garant1.dateNaissance %}
+                            {{ demandeQH.demadeQH.garant1.dateNaissance|date('d/m/Y') }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+
+                    </p>
+
+                </div>
+                <div class="col-lg-6">
+                    <p>{{ 'garant.lieu'|trans }} :
+                        {% if demandeQH.demadeQH.garant1.lieu %}
+                            {{ demandeQH.demadeQH.garant1.lieu }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.adresse'|trans }} :
+                        {% if demandeQH.demadeQH.garant1.adresse %}
+                            {{ demandeQH.demadeQH.garant1.adresse }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.ville'|trans }}:
+                        {% if demandeQH.demadeQH.garant1.ville %}
+                            {{ demandeQH.demadeQH.garant1.ville }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.nationalite'|trans }} :
+                        {% if demandeQH.demadeQH.garant1.nationalite %}
+                            {{ demandeQH.demadeQH.garant1.nationalite }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <p>{{ 'garant.sexe'|trans }} :
+                        {% if demandeQH.demadeQH.garant1.sexe %}
+                            {% if(demandeQH.demadeQH.garant1.sexe=='H') %}{% set sexe='Homme' %} {% else %}{% set sexe='Femme' %}{%  endif %}
+                            {{ sexe }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.type'|trans }} :
+                            {% if demandeQH.demadeQH.garant1.typePiece %}
+                                {{ demandeQH.demadeQH.garant1.typePiece }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+
+                        </p>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <p>{{ 'garant.numero'|trans }} :
+
+                            {% if demandeQH.demadeQH.garant1.numeroPiece %}
+                                {{ demandeQH.demadeQH.garant1.numeroPiece }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+
+                        </p>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.date'|trans }} :
+
+                            {% if demandeQH.demadeQH.garant1.datePiece %}
+                                {{ demandeQH.demadeQH.garant1.datePiece|date('d/m/Y') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+                        </p>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+
+                            {{ 'garant.villepiece'|trans }} :
+
+                            {% if  demandeQH.demadeQH.garant1.villePiece %}
+                                {{ demandeQH.demadeQH.garant1.villePiece }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.pays'|trans }} :
+                            {% if  demandeQH.demadeQH.garant1.paysPiece %}
+                                {{ demandeQH.demadeQH.garant1.paysPiece }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+                        </p>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.profession'|trans }} :
+
+                            {% if  demandeQH.demadeQH.garant1.profession %}
+                                {{ demandeQH.demadeQH.garant1.profession }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.tel1'|trans }} :
+                            {% if  demandeQH.demadeQH.garant1.tel1 %}
+                                {{ demandeQH.demadeQH.garant1.tel1 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.tel2'|trans }} :
+                            {% if  demandeQH.demadeQH.garant1.tel2 %}
+                                {{ demandeQH.demadeQH.garant1.tel2 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.email'|trans }} :
+                            {% if  demandeQH.demadeQH.garant1.email %}
+                                {{ demandeQH.demadeQH.garant1.email }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.numerocheque'|trans }}1 :
+                            {% if  demandeQH.demadeQH.garant1.numerocheque1 %}
+                                {{ demandeQH.demadeQH.garant1.numerocheque1 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.banquecheque'|trans }}1 :
+                            {% if  demandeQH.demadeQH.garant1.banquecheque1 %}
+                                {{ demandeQH.demadeQH.garant1.banquecheque1 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.montantcheque'|trans }}1 :
+                            {% if  demandeQH.demadeQH.garant1.montantcheque1 %}
+                                {{ demandeQH.demadeQH.garant1.montantcheque1|number_format('2',',',' ',' ') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.datecheque'|trans }}1 :
+                            {% if  demandeQH.demadeQH.garant1.datetcheque1 %}
+                                {{ demandeQH.demadeQH.garant1.datetcheque1|date('d/m/Y') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.numerocheque'|trans }}2 :
+                            {% if  demandeQH.demadeQH.garant1.numerocheque2 %}
+                                {{ demandeQH.demadeQH.garant1.numerocheque2 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.banquecheque'|trans }}2 :
+                            {% if  demandeQH.demadeQH.garant1.banquecheque2 %}
+                                {{ demandeQH.demadeQH.garant1.banquecheque2 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.montantcheque'|trans }}2 :
+                            {% if  demandeQH.demadeQH.garant1.montantcheque2 %}
+                                {{ demandeQH.demadeQH.garant1.montantcheque2|number_format('2',',',' ',' ') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.datecheque'|trans }}2 :
+                            {% if demandeQH.demadeQH.garant1.datetcheque2 %}
+                                {{ demandeQH.demadeQH.garant1.datetcheque2|date('d/m/Y') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.numerocheque'|trans }}3 :
+                            {% if demandeQH.demadeQH.garant1.numerocheque3 %}
+                                {{ demandeQH.demadeQH.garant1.numerocheque3 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+                        </p>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.banquecheque'|trans }}3 :
+                            {% if demandeQH.demadeQH.garant1.banquecheque3 %}
+                                {{ demandeQH.demadeQH.garant1.banquecheque3 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.montantcheque'|trans }}3 :
+                            {% if demandeQH.demadeQH.garant1.montantcheque3 %}
+                                {{ demandeQH.demadeQH.garant1.montantcheque3|number_format('2',',',' ' ,' ') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+                        </p>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.datecheque'|trans }}3 :
+                            {% if demandeQH.demadeQH.garant1.datetcheque3 %}
+                                {{ demandeQH.demadeQH.garant1.datetcheque3|date('d/m/Y') }}}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.nomheritier'|trans }} :
+                            {% if  demandeQH.demadeQH.garant1.nomheritier1 %}
+                                {{ demandeQH.demadeQH.garant1.nomheritier1 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.prenomheritier'|trans }} :
+                            {% if demandeQH.demadeQH.garant1.prenomheritier1 %}
+                                {{ demandeQH.demadeQH.garant1.prenomheritier1 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.nomits'|trans }}:
+                            {% if demandeQH.demadeQH.garant1.nomIts %}
+                                {{ demandeQH.demadeQH.garant1.nomIts }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <p>
+                            N° ITS :
+                            {% if demandeQH.demadeQH.garant1.numeroIts %}
+                                {{ demandeQH.demadeQH.garant1.numeroIts }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            Moze :
+                            {% if  demandeQH.demadeQH.garant1.moze %}
+                                {{  demandeQH.demadeQH.garant1.moze }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+
+
+        {% endif %}
+
+
+        {% if demandeQH.demadeQH.garant2 %}
+            <hr class="groove">
+            <div class="col-lg-12"><h1 class="text-primary text-center">Inormation sur le garant2</h1></div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.nom'|trans }} :
+                        {% if  demandeQH.demadeQH.garant2.nomcin %}
+                            {{ demandeQH.demadeQH.garant2.nomcin }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.prenom'|trans }} :
+                        {% if demandeQH.demadeQH.garant2.prenomcin  %}
+                            {{ demandeQH.demadeQH.garant2.prenomcin }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.né'|trans }} :
+                        {% if demandeQH.demadeQH.garant2.dateNaissance  %}
+                            {{ demandeQH.demadeQH.garant2.dateNaissance|date('d/m/Y') }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.lieu'|trans }} :
+                        {% if demandeQH.demadeQH.garant2.lieu  %}
+                            {{ demandeQH.demadeQH.garant2.lieu }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.adresse'|trans }} :
+                        {% if demandeQH.demadeQH.garant2.adresse  %}
+                            {{ demandeQH.demadeQH.garant2.adresse }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+
+                </div>
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.ville'|trans }}:
+
+                        {% if demandeQH.demadeQH.garant2.ville  %}
+                            {{ demandeQH.demadeQH.garant2.ville }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.nationalite'|trans }} :
+
+                        {% if demandeQH.demadeQH.garant2.nationalite  %}
+                            {{ demandeQH.demadeQH.garant2.nationalite }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'garant.sexe'|trans }} :
+                        {% if demandeQH.demadeQH.garant2.sexe  %}
+                            {% if(demandeQH.demadeQH.garant2.sexe=='H') %}{% set sexe='Homme' %} {% else %}{% set sexe='Femme' %}{%  endif %}
+                            {{ sexe }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+                </div>
+
+            </div>
+
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>{{ 'garant.type'|trans }} :
+
+                            {% if demandeQH.demadeQH.garant2.typePiece  %}
+                                {{ demandeQH.demadeQH.garant2.typePiece }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.numero'|trans }} :
+                            {% if demandeQH.demadeQH.garant2.numeroPiece  %}
+                                {{ demandeQH.demadeQH.garant2.numeroPiece }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.date'|trans }} :
+                            {% if demandeQH.demadeQH.garant2.datePiece  %}
+                                {{ demandeQH.demadeQH.garant2.datePiece|date('d/m/Y') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.villepiece'|trans }} :
+                            {% if demandeQH.demadeQH.garant2.villePiece  %}
+                                {{ demandeQH.demadeQH.garant2.villePiece }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.pays'|trans }} :
+                            {% if demandeQH.demadeQH.garant2.paysPiece  %}
+                                {{ demandeQH.demadeQH.garant2.paysPiece }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.profession'|trans }} :
+                            {% if demandeQH.demadeQH.garant2.profession  %}
+                                {{ demandeQH.demadeQH.garant2.profession }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.tel1'|trans }} :
+                            {% if demandeQH.demadeQH.garant2.tel1  %}
+                                {{ demandeQH.demadeQH.garant2.tel1 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.tel2'|trans }} :
+                            {% if demandeQH.demadeQH.garant2.tel2  %}
+                                {{ demandeQH.demadeQH.garant2.tel2 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.email'|trans }} :
+
+                            {% if demandeQH.demadeQH.garant2.email  %}
+                                {{ demandeQH.demadeQH.garant2.email }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.numerocheque'|trans }}1 :
+
+                            {% if demandeQH.demadeQH.garant2.email  %}
+                                {{ demandeQH.demadeQH.garant2.email }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+                        </p>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.banquecheque'|trans }}1 :
+                            {% if demandeQH.demadeQH.garant2.banquecheque1  %}
+                                {{ demandeQH.demadeQH.garant2.banquecheque1 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.montantcheque'|trans }}1 :
+
+                            {% if demandeQH.demadeQH.garant2.montantcheque1  %}
+                                {{ demandeQH.demadeQH.garant2.montantcheque1|number_format('2',',',' ',' ') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+                        </p>
+
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.datecheque'|trans }}1 :
+                            {% if demandeQH.demadeQH.garant2.datetcheque1  %}
+                                {{ demandeQH.demadeQH.garant2.datetcheque1|date('d/m/Y') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.numerocheque'|trans }}2 :
+                            {% if demandeQH.demadeQH.garant2.numerocheque2  %}
+                                {{ demandeQH.demadeQH.garant2.numerocheque2 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.banquecheque'|trans }}2 :
+                            {% if demandeQH.demadeQH.garant2.banquecheque2  %}
+                                {{ demandeQH.demadeQH.garant2.banquecheque2 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.montantcheque'|trans }}2 :
+
+                            {% if demandeQH.demadeQH.garant2.montantcheque2  %}
+                                {{ demandeQH.demadeQH.garant2.montantcheque2|number_format('2',',',' ',' ') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.datecheque'|trans }}2 :
+                            {% if demandeQH.demadeQH.garant2.datetcheque2  %}
+                                {{ demandeQH.demadeQH.garant2.datetcheque2|date('d/m/Y') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.numerocheque'|trans }}3 :
+                            {% if demandeQH.demadeQH.garant2.numerocheque3  %}
+                                {{ demandeQH.demadeQH.garant2.numerocheque3 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.banquecheque'|trans }}3 :
+                            {% if demandeQH.demadeQH.garant2.banquecheque3  %}
+                                {{ demandeQH.demadeQH.garant2.banquecheque3 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.montantcheque'|trans }}3 :
+                            {% if demandeQH.demadeQH.garant2.montantcheque3  %}
+                                {{ demandeQH.demadeQH.garant2.montantcheque3|number_format('2',',',' ',' ') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.datecheque'|trans }}3 :
+                            {% if demandeQH.demadeQH.garant2.datetcheque3  %}
+                                {{ demandeQH.demadeQH.garant2.datetcheque3|date('d/m/Y') }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.nomheritier'|trans }} :
+                            {% if demandeQH.demadeQH.garant2.nomheritier1  %}
+                                {{ demandeQH.demadeQH.garant2.nomheritier1 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+
+                        </p>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.prenomheritier'|trans }} :
+                            {% if demandeQH.demadeQH.garant2.nomheritier1  %}
+                                {{ demandeQH.demadeQH.garant2.prenomheritier1 }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            {{ 'garant.nomits'|trans }} :
+                            {% if demandeQH.demadeQH.garant2.nomIts  %}
+                                {{ demandeQH.demadeQH.garant2.nomIts }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+
+                        </p>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <p>
+                            N° ITS :
+                            {% if demandeQH.demadeQH.garant2.numeroIts  %}
+                                {{ demandeQH.demadeQH.garant2.numeroIts }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <p>
+                            Moze :
+                            {% if demandeQH.demadeQH.garant2.moze  %}
+                                {{  demandeQH.demadeQH.garant2.moze }}
+                            {% else %}
+                                {{ 'garant.msg'|trans }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if dossier %}
+            <hr class="groove">
+            <div class="col-lg-12"><h1 class="text-primary text-center">les formulaires </h1></div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'importationdossierQH.safahi'|trans }} :
+
+                        {% if dossier.safahi  %}
+                            <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.safahi) }}">
+                                <img src="{{ asset('document/'~ dossier.safahi) }}" class="img img-fluid" alt="" width="50" height="50">
+                            </a>
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+
+
+                </div>
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'importationdossierQH.attestation_solde_compte'|trans }} :
+
+                        {% if dossier.attestationSoldeCompte  %}
+                            <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.attestationSoldeCompte) }}">
+                                <img src="{{ asset('document/'~ dossier.attestationSoldeCompte) }}" class="img img-fluid" alt="" width="50" height="50">
+                            </a>
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'importationdossierQH.attestation_bon_fonctionnement'|trans }} :
+                        {% if dossier.attestationCopmteBank  %}
+                            <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.attestationCopmteBank) }}">
+                                <img src="{{ asset('document/'~ dossier.attestationCopmteBank) }}" class="img img-fluid" alt="" width="50" height="50">
+                            </a>
+
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+
+                </div>
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'importationdossierQH.formulaire_garant'|trans }} :
+                        {% if dossier.formulaireGarantie  %}
+                            <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.formulaireGarantie) }}">
+                                <img src="{{ asset('document/'~ dossier.formulaireGarantie) }}" class="img img-fluid" alt="" width="50" height="50">
+                            </a>
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p class="text-success">{{ 'importationdossierQH.cheque'|trans }} </p>
+                    <p>
+                        {{ 'importationdossierQH.chequebarre'|trans }}1 :
+                        <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.chequeBare) }}"><img src="{{ asset('document/'~ dossier.chequeBare) }}" class="img img-fluid" alt="" width="50" height="50" ></a>
+
+                    </p>
+
+                    <p>
+                        {{ 'importationdossierQH.chequebarre'|trans }}2 :
+                        <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.cheque1Bare) }}">
+                            <img src="{{ asset('document/'~ dossier.cheque1Bare) }}" class="img img-fluid" alt="" width="50" height="50" >
+                        </a>
+
+                    </p>
+
+                    <p>
+                        {{ 'importationdossierQH.chequebarre'|trans }}3 :
+                        <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.cheque2Bare) }}">
+                            <img src="{{ asset('document/'~ dossier.cheque2Bare) }}" class="img img-fluid" alt="" width="50" height="50">
+                        </a>
+
+                    </p>
+
+                </div>
+
+                <div class="col-lg-6">
+                    <p>
+                        {{ 'importationdossierQH.formulaire_garant1'|trans }} :
+                        <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.formulaireGarantie1) }}"><img src="{{ asset('document/'~ dossier.formulaireGarantie1) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+
+                    </p>
+
+
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <p class="text-success">{{ 'importationdossierQH.cheque1'|trans }} </p>
+                    <p>
+                        {{ 'importationdossierQH.chequebarre1'|trans }}1  :
+                        <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.chequeBare1) }}"><img src="{{ asset('document/'~ dossier.chequeBare1) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+
+                    </p>
+                    <p>
+                        {{ 'importationdossierQH.chequebarre1'|trans }}2 :
+                        <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.cheque1Bare1) }}">
+                            <img src="{{ asset('document/'~ dossier.cheque1Bare1) }}" class="img img-fluid" alt="" width="50" height="50">
+                        </a>
+
+                    </p>
+
+                    <p>
+                        {{ 'importationdossierQH.chequebarre1'|trans }}3 :
+                        <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.cheque2Bare1) }}"><img src="{{ asset('document/'~ dossier.cheque2Bare1) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+
+                    </p>
+
+
+                </div>
+
+
+
+            </div>
+
+        {% endif %}
+    </div>
+
+
+{% endblock %}

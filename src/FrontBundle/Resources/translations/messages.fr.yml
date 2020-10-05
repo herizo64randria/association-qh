@@ -1,0 +1,85 @@
+
+# --versement_ajuter.html.twig
+versement_ajouter:
+  titre: Versement
+  soustitre: Veuillez remplire tous les champs
+  soutitreInvite: Veuillez saisir l'its du personne à suivre
+  condition: Veuillez lire les conditions jusqu'à la fin
+  fermer: Fermer
+  adresse: Informations
+  date: Date
+  paiement: Mode paiement
+  numero: Choisir le numéro de compte
+  montant: Montant
+  caisse: Caisse
+
+  valider: Valider
+  procuration: Coché ici pour voir les procurations
+  cheque : Transformez en chèque
+# --versement_liste.html.twig
+versement_liste:
+  titre: Liste versement de vos versements
+  date: Date
+  numero: Numéro du compte
+  montant: Montant
+# --compte_paie_liste.html.twig
+compte_liste:
+  titre: Compte
+
+  date: Date
+  libelle: Libéllé
+  montant: Montant
+  credit_notif: Versement notifier
+  debit_remb: Demande  remboursement
+  solde: Tatal
+  demande : Demande de remboursement
+# --dmdRemboursemnt_ajouter.html.twig
+dmdRemboursement_ajouter:
+  titre: Formulaire de Demande de remboursement
+  soustitre: Veuillez remplire tous les champs
+  adresse: Informations
+  date: Date
+  numero: Numéro de demande
+  montant: Montant
+  cheque: Type de cheque
+  valider: Valider
+  barrée : Barrée
+  nonbarrée : Non Barrée
+# --dmdRemboursemnt_liste.html.twig
+dmfRemboursement_liste:
+  titre: Liste de vos demandes de remboursement
+  date: Date
+  numero: Numéro
+  numeroremboursement: Numéro de demande
+  montant: Montant
+  cheque: Type cheque
+  etat: Etat
+  cheque barree: Cheque barrées
+  cheque non barree: Cheque non barrées
+  photo: Photo
+  nom: Nom
+  num1: Contact
+  numits: Numéro ITS
+  numerocheque: Cheque
+  motif: Motif
+  scan_cheque: Scan cheque
+  action: Action
+ # --dmdRemboursemnt_liste.html.twig
+demande_confirmation:
+  titre: Confirmation du demande
+# --menu
+menu:
+  versementliste: Liste versement
+  paieliste: Compte Hussein Schene
+  dmdremboursementajouter: Demande remboursement
+  dmdremboursementliste: Liste demande remboursement
+  versementajout: Versement
+  accueil: Accueil
+  profil: Profil
+  logout: Déconnecter
+  modification : Modification du dossier QH
+  demandeqheffectuer : Liste demande QH
+  # --Remboursemnt_liste.html.twig
+
+
+

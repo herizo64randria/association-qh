@@ -1,0 +1,149 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+
+{% block body_container %}
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        input[type=datetime],.cal{
+            width: 90%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            height: 50px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .contenu {
+            border-radius: 0px;
+            background-color: #f2f2f2;
+            margin-top: 20px;
+            margin-left: 200px;
+            padding: 50px;
+            width: 850px;
+        }
+
+        .col-4 {
+            float: left;
+            width: 4%;
+            margin-top: 6px;
+        }
+
+        .col-8 {
+            float: left;
+            width: 8%;
+            margin-top: 6px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .col-4, .col-8, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+    </style>
+    <form action="#" method="post" autocomplete="off" name="telephone" enctype="multipart/form-data">
+    <div class="contenu align-content-center">
+
+        <h2 class="text-primary">
+            <img src="{{ asset('Images/societer.png') }}" class="img img-fluid" alt="" width="50" height="50">
+            {{ 'societe.titre'|trans}}
+        </h2>
+        <hr>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3">
+                    <label for="nom">{{ 'societe.nom'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input   type="text" id="nom" name="nom"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <label for="siege">{{ 'societe.siege'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input   type="text" id="siege" name="siege"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <label for="contact">{{ 'societe.contact'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input id="contact" name="contact" type="text"  class="only_phone_number"  onsubmit="return false;" list="defaultTels" >
+
+                    <datalist id="defaultTels">
+                        <option value="+261 32 ">
+                        <option value="+261 33 ">
+                        <option value="+261 34 ">
+
+                    </datalist>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <label for="email">{{ 'societe.email'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input   type="text" id="email" name="email"  >
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <label for="desc">{{ 'societe.desc'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <textarea rows="4" cols="50" id ="desc" name="desc"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+
+                </div>
+                <div class="col-8">
+                    <input type="submit" class="btn btn-lg btn-info float-right" value="{{ 'societe.record'|trans }}">
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+    <script>
+        $(document).ready(function() {
+            document.telephone.reset();
+            oStringMask = new Mask("+### ## ## ### ##");
+            oStringMask.attach(document.telephone.contact);
+        })
+    </script>
+{% endblock %}

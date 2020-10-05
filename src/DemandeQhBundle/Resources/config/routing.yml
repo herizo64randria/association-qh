@@ -1,0 +1,21 @@
+
+demandeQH_route:
+    resource: "@DemandeQhBundle/Controller/demandeQHController.php"
+    type:     annotation
+
+demandeQH_pdf_route:
+    resource: "@DemandeQhBundle/Controller/demandeQHGeneratePDFController.php"
+    type:     annotation
+
+dossier_route:
+    resource: "@DemandeQhBundle/Controller/dossierController.php"
+    type:     annotation
+garant_route:
+    resource: "@DemandeQhBundle/Controller/garantController.php"
+    type:     annotation
+pageqh_route:
+    resource: "@DemandeQhBundle/Controller/pageQHController.php"
+    type:     annotation
+societeDemandeQh_route:
+    resource: "@DemandeQhBundle/Controller/SocieteDemandeQHController.php"
+    type:     annotation

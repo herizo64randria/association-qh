@@ -1,0 +1,54 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+
+<style>
+    /* Make the image fully responsive */
+    .carousel-inner img {
+        width: 100%;
+        height: 100%;
+        background-color: #0088CC;
+    }
+    fieldset.groove {
+        border: 1px outset #1b0b0e;
+        box-shadow: 4px 4px 0px black;
+    }
+    h1,h2,h3,label,button,b,input,select,textarea,p {
+        text-shadow: 0.5px 0.5px 2px black;
+
+    }
+
+</style>
+<div class="col-12">
+    <br>
+    <div class="container mt-auto">
+        <h1 class="text-danger" >{{ 'refuserDemandeQH.refuser'|trans }}</h1><br>
+
+    </div>
+    <fieldset class="groove">
+
+        <div class="row container-fluid">
+
+            <div class="col-12">
+                <br>
+                <h3 class=" text-center">
+
+                </h3>
+                <br>
+                <div class="form-group text-center">
+
+                    <div class="maxl">
+                        <h4>{{ 'refuserDemandeQH.raison'|trans }}</h4>
+                        <h4>" {{ etat.motifFrontRefuser}} "</h4>
+
+                    </div>
+                </div>
+
+            </div>
+            <a href="{{ path('retourQH') }}"  class="btn-link btn btn-lg text-center float-right " id="btn9" >{{ 'refuserDemandeQH.retour'|trans }}</a>
+
+        </div><br>
+
+    </fieldset>
+</div>
+{% endblock %}

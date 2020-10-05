@@ -1,0 +1,20 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}Liste  dossier QH de {{ personne.nom ~' '~ personne.prenom  }} :{% endblock %}
+{% block body_container %}
+
+    <hr class="groove">
+    <div class="col-12">
+
+                {% for demandeQH in demandeQHs %}
+                    <i class="fa fa-folder-open fa-5x text-success" ></i><br>
+                            <a href="{{ path('_DetailArchivedemandeqh',{ 'id' : demandeQH.id}) }}" >
+
+                                ☆ {{ demandeQH.numero }}
+                            </a>
+
+                {% endfor %}
+
+    </div>
+
+
+{% endblock %}

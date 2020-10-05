@@ -1,0 +1,145 @@
+{% extends "@Back/base_backend.html.twig" %}
+
+{% block sous_menu_titre %}
+    <style>
+        .col-4{margin: 1px;}
+        a{text-decoration: none;}
+        .item{text-align: center}
+        a:hover{text-decoration: none}
+
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+            background-color: #0088CC;
+        }
+        col-lg .groove {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,input,select,textarea,p {
+            text-shadow: 0.1px 0.1px 1px black;
+
+        }
+
+        .btn{ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);}
+        .card{ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);margin: 5px}
+        .card:hover{ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4)}
+    </style>
+    <h1>Banque & Caisse</h1>
+{% endblock %}
+{% block body_container %}
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6">
+                    <a href="#" onclick="modale('banque')" class="btn btn-lg btn-success"><i></i> Ajouter</a><br> <br>
+                    <div class="card">
+
+                        <div class="card-header">
+                           <h2 class="text-info">Banque(s)</h2>
+                        </div>
+
+                        <div class="card-body">
+                    <br>
+                            {#{% for caisse in caisses  %}
+                                <a class="item" href="{{ path('detailCaisse',{'id':caisse.id}) }}">
+                                    <div class="card">
+
+                                        <div class="card-body">
+                                            <img style="width: 350px;height: 150px;" src="{{ asset('document/'~caisse.logo) }}" alt="">
+
+                                            <h4>
+                                                {{ caisse.nom }}
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </a>
+                                <br>
+                            {% endfor %}#}
+                     </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <a  onclick="modale('caisse')" href="#" class="btn btn-lg btn-warning"><i></i> Ajouter</a><br><br>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-info">Caisse(s)</h2>
+                        </div>
+
+                    <div class="card-body">
+                    <br>
+                    {% for caisse in caisses  %}
+                        <a class="item" href="{{ path('detailCaisse',{'id':caisse.id}) }}">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img style="width: 350px;height: 150px;" src="{{ asset('document/'~caisse.logo) }}" alt="">
+
+                                    <h4>
+                                        {{ caisse.nom }}
+                                    </h4>
+                                </div>
+                            </div>
+                        </a>
+                        <br>
+                    {% endfor %}
+                </div>
+                </div>
+                </div>
+
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {#MODALE suivi#}
+    <form  id="myform" action="" method="post" enctype="multipart/form-data">
+        <div id="type" class="modal fade " tabindex="-1" role="dialog"  >
+            <div class="modal-dialog" style="width: 500px;" >
+                <div class="modal-content">
+
+                    <div class="modal-body">
+
+                            <div class="form-group">
+                                <label >Nom </label>
+                                <b class="text-danger" id="err_num_its"></b>
+                                <input id="nom"  name="nom"  type="text" class="form-control" id="nom"   required autocomplete="off">
+
+                            </div>
+                        <div class="form-group">
+                            <label >Détail </label><br>
+
+                            <textarea name="detail" id="detail" cols="44" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label >Logo  </label>
+
+                            <input id="logo"  name="logo"  type="file" class="form-control" id="logo"   required autocomplete="off">
+
+                        </div>
+
+                        <div class="form-group">
+                                <button type="submit"  class="btn btn-lg btn-success">valider</button>
+                        </div>
+                    </div></div></div></div>
+
+    </form>
+    <script>
+
+
+        function modale(param ) {
+            if(param=='caisse'){
+                $("#myform").attr('action','{{ path('addCaisse') }}')
+            }
+            if(param=='banque'){
+                $("#myform").attr('action','{{ path('addBanque') }}')
+            }
+            $('#type').modal({show:true});
+
+        }
+    </script>
+{% endblock %}

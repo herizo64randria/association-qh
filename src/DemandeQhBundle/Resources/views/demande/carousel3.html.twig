@@ -1,0 +1,64 @@
+<div class="carousel-item ">
+    <fieldset class="groove container-fluid">
+        <br>
+        <legende><label for=""><h3 >{{ 'demandeqh_ajouter.garentie'|trans }}</h3> </label><br></legende>
+        <div class="form-group text-center">
+
+            <div class="maxl">
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>{{ 'demandeqh_ajouter.or'|trans }}</label>
+                            </div>
+
+                            <div class="col-md-6">
+                                <input name="or" type="text" class="form-control" id="or"   required autocomplete="off">
+                                <b class="text-danger" id="err_or"></b>
+                            </div>
+
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label> {{ 'demandeqh_ajouter.scan_couleur'|trans }}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input  type="file" name="scan_kalidas" class="form-control" id="scan"   >
+                                <b class="text-danger" id="err_scan"></b>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>{{ 'demandeqh_ajouter.photo_paquet'|trans }}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input name="photos[]" type="file" class="form-control" id="photo" multiple>
+                                <b class="text-danger" id="err_photo"></b>
+
+                                <!-- You can add extra form fields here -->
+
+                                {#<input hidden id="file" name="photos[]"/>#}
+
+                                <!-- You can add extra form fields here -->
+
+
+                                <!-- You can add extra form fields here -->
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <button  type="button" class="btn-link btn btn-lg float-left " id="prev3" >{{ 'demandeqh_ajouter.precedent'|trans }}</button>
+                <button  type="button"  class="btn-link btn btn-lg float-right " id="btn6" >{{ 'demandeqh_ajouter.suivant'|trans }}</button>
+            </div>
+        </div>
+    </fieldset>
+</div>

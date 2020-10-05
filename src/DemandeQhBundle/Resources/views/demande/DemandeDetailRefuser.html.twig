@@ -1,0 +1,224 @@
+{% extends '@DemandeQh/dossier/Base1DemandeQH.html.twig' %}
+
+{% block body_container %}
+
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 50px;
+            height: 50px;
+            background-color: #0088CC;
+        }
+        col-lg .groove {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,input,select,textarea,p {
+            text-shadow: 0.1px 0.1px 1px black;
+
+        }
+    </style>
+<div class="container-fluid">
+
+    <hr class="border-white">
+
+
+<div class="row">
+    <div class="col-8">
+        <h4>
+            {{ demandeQH.demadeQH.personne.nom ~' '~ demandeQH.demadeQH.personne.prenom ~' / N° ITS : '~
+            demandeQH.demadeQH.personne.numeroIts ~' / Dossier N° : '~ demandeQH.demadeQH.numero
+            }}
+        </h4>
+    </div>
+    <div class="col-4">
+
+                <div class="text-center">
+
+                    <h4 class="text-success">Demande QH refusé</h4>
+                </div>
+
+                <br>
+
+            <hr class="border-white">
+
+    </div>
+</div>
+
+
+
+    {% if demandeQH.demadeQH %}
+        <hr class="groove">
+
+            <div class="col-12">
+                <h1 class="text-primary text-center"> Information sur le Demande QH</h1>
+            </div>
+
+                <br>
+                   <div class="row">
+
+                          <div class="col-lg-6">
+                              <h4 class="text-primary">Antécédent</h4>
+                              <p>
+                                  Dejà efectuer une demande QH auparavant :
+                                  {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
+                                      {% set x='oui' %}
+                                  {% else %}
+                                      {% set x='non' %}
+                                  {% endif %}
+                                 {{ x }}
+                              </p>
+
+                              {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
+                                  {% if (demandeQH.demadeQH.siAncienDemandeEtat=='oui') %}
+                                      {% set y='oui' %}
+
+                                  {% else %}
+                                      {% set y='non' %}
+
+                                  {% endif %}
+                                  <p>Elle a été acceptée : {{ y }}
+
+                                  </p>
+                              {% endif %}
+
+                          </div>
+
+                          {% if (x=='oui' and y=='oui') %}
+                              <div class="col-lg-6">
+                                  <h4 class="text-primary">les trois dernier montant demandés
+                                      <i class="fa fa-edit btn btn-danger btn-md" id="anciendemande"></i>
+                                      <i class="fa fa-comment btn btn-danger btn-md" id="notif_anciendemande"></i>
+                                      </p>
+                                      <input class="form-control d-none" value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="osiAncienDemande" id="osiAncienDemande" >
+                                      <br>
+                                      <input  class="form-control d-none" placeholder="saisir quelque chose ici" type="text" name="nsiAncienDemande" id="nsiAncienDemande" ></h4>
+                                  <table class="table table-striped">
+                                      <thead><th><label >{{ 'demandeqh_ajouter.annee'|trans }}</label></th>
+                                      <th></th>
+                                      <th><label >{{ 'demandeqh_ajouter.montant'|trans }}</label></th>
+                                      </thead>
+                                      <tr><td>
+
+                                              <p >{{ demandeQH.demadeQH.annee1 }}</p>
+                                          </td>
+                                          <td> </td>
+                                          <td>
+
+                                              <p class="text-right" >{{ demandeQH.demadeQH.montant1|number_format('2',',',' ') }}</p>
+                                          </td>
+                                      </tr>
+
+                                      <tr>
+                                          <td>
+
+                                              <p >{{ demandeQH.demadeQH.annee2 }}</p>
+                                          </td>
+                                          <td>
+                                          <td>
+
+                                              <p class="text-right" >{{ demandeQH.demadeQH.montant2|number_format('2',',',' ') }}</p>
+                                          </td>
+                                      </tr>
+                                      <tr><td>
+
+                                              <p >{{ demandeQH.demadeQH.annee3 }}</p>
+                                          </td>
+                                          <td> </td>
+                                          <td>
+                                              <p class="text-right" >{{ demandeQH.demadeQH.montant3|number_format('2',',',' ') }}</p>
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </div>
+                          {% endif %}
+
+                      </div>
+
+        <div class="row">
+                <div class="col-lg-6">
+                    <h4 class="text-primary">Nouvelle demande</h4>
+
+                    <p >
+                        Montant demandée en Ariary :
+                        {% if demandeQH.demadeQH.montant %}
+                            {{ demandeQH.demadeQH.montant|number_format('2',',',' ',' ') }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+
+                    </p>
+
+                    <p>
+                        Pour combien de mois :
+                        {% if demandeQH.demadeQH.nombreMois %}
+                            {{ demandeQH.demadeQH.nombreMois }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+
+                </div>
+
+                <div class="col-lg-6">
+                    <h4 class="text-primary">Objet de la demande</h4>
+                    <p>
+                        Motif :
+                        {% if demandeQH.demadeQH.typeMotif %}
+                            {{ demandeQH.demadeQH.typeMotif }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+
+                    <p>
+                        Détail :
+                        {% if demandeQH.demadeQH.detailMotif %}
+                            {{ demandeQH.demadeQH.detailMotif }}
+                        {% else %}
+                            {{ 'garant.msg'|trans }}
+                        {% endif %}
+                    </p>
+                </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-lg-6"><h4 class="text-primary">Garantie</h4>
+
+                <p>
+                    Valeur de l'or en Ariary :
+                    {% if  demandeQH.demadeQH.garantieOR.valeurAr %}
+                        {{ demandeQH.demadeQH.garantieOR.valeurAr|number_format('2',',',' ',' ') }}
+                    {% else %}
+                        {{ 'garant.msg'|trans }}
+                    {% endif %}
+                </p>
+                <p>
+                    Scan du formulaire(remplir par kalidas):<br>
+                    {% if  demandeQH.demadeQH.garantieOR.scanKalidas %}
+                        <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.garantieOR.scanKalidas) }}">
+                            <img src="{{ asset('document/'~ demandeQH.demadeQH.garantieOR.scanKalidas) }}" class="img img-fluid" alt="" width="50" height="50">
+                        </a>
+                    {% else %}
+                        {{ 'garant.msg'|trans }}
+                    {% endif %}
+
+                </p>
+                <p>
+                    Photo du paquet scellé par kallidas:(Possibilité de mettre plusieurs photos):<br>
+                    {% if  photoor %}
+                        {% for photoor in photoor %}
+                            <a target="_blank" id="lien" href="{{ asset('document/'~ photoor.url) }}"><img src="{{ asset('document/'~ photoor.url) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                        {% endfor %}
+                    {% else %}
+                        {{ 'garant.msg'|trans }}
+                    {% endif %}
+
+
+                </p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+page_accueil:
+    path:     /
+    defaults: { _controller: PersonneBundle:Accueil:index }
+
+page_accueil_local:
+    path:     /accueil/{_locale}
+    defaults: { _controller: PersonneBundle:Accueil:index }
+
+inscription_route:
+    resource: "@PersonneBundle/Controller/InscriptionController.php"
+    type:     annotation
+
+admin_iscription_route:
+    resource: "@PersonneBundle/Controller/AdminInscriptionController.php"
+    type:     annotation
+
+modification_controlleur_route:
+    resource: "@PersonneBundle/Controller/ModificationController.php"
+    type:     annotation

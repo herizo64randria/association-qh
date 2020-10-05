@@ -1,0 +1,387 @@
+# --garant1
+garant:
+   titre: Entrer les informations sur le garant1
+   titre1: Entrer les informations sur le garant2
+   sexe: Sexe
+   nompiece: Nom dans la pièce d'identité
+   prenompiece: Prénom dans la pièce d'identité
+   né: Date de naissance
+   lieu: Lieu de naissance
+   nom : Nom
+   prenom : Prénom
+   adresse: Adresse de physique
+   ville: Ville de résidence
+   nationalite: Nationalité
+   type: Type pièce d'identité
+   numero: Numéro du pièce d'identité
+   date: Date de délivrance du pièce d'identité
+   villepiece: Ville de délivrance du pièce d'identité
+   pays: Pays de délivrance du pièce d'identité
+   paysits: Pays de délivrance du carte ITS
+   profession: Profession
+   numerocheque: N° Chèque
+   banquecheque: Nom du banque chèque
+   montantcheque: Montant du chèque
+   datecheque: Date du cheque
+   tel1: Numéro téléphone 1
+   tel2: Numéro téléphone 2
+   email : Adresse E-mail
+   nomheritier : Nom héritier
+   prenomheritier : Prénom héritier
+   info : Téléchargement du formulaire de l'acte d'engagement de caution à scanné
+   garant1 : Cliquer ici pour le garant1
+   garant2 : Cliquer ici pour le garant2
+# --pagetestgarant
+page:
+  info: Veuillez compléter les informations sur les garants
+  choix: Choix du garant :
+# --pagetestgarant
+pagedossier:
+  info: 'Veuillez télécharger tous les formulaires :'
+  choix: Choix du pages :
+
+# --contratQH
+contrat:
+  info : Téléchargement du formulaire de contrat de prêt
+  btn : Cliquer ici pour avoir le contrat de prêt
+# --DossierAttente
+dossierattente:
+  info : Votre dossier est en cours de verification
+  titre : Dossier Qh N°
+
+# --DossierValider
+dossiervalider:
+  info : Votre dossier est validé(e), veuillez passer à l'étape suivante
+  titre : Dossier Qh N°
+  btn: Suivant
+# --attenteDemandeQH
+attenteDemandeQH:
+  attente : 'Etat du demande QH : En attente'
+# --importationdssierQH
+importationdossierQH :
+  titre : Importation des documents à fournir
+  titre1 : Importation des documents à fournir pour le garant1
+  titre2 : Importation des documents à fournir pour garant2
+  safahi : Votre Safahi Chithi
+  voir : Voir
+  attestation_bon_fonctionnement : Attestation de bon fonctionnement de compte bancaire
+  attestation_solde_compte : Attestation de tout solde de compte et de solvabilité (Fait par le secrétaire de QH de votre Moze) ,si c’est pas à Tana.
+  formulaire_garant : Formulaire de Garantie rempli par le Garant1 de 50% du montant attribué
+  cin : Copie couleur de la pièce d’identité du Garant1
+  its : Copie couleur de la Carte ITS du Garant1
+  cheque : '3 Chèques Barré & Non endossable à l’ordre de :Faiz E Mohammedi – Qardan Hasana (garant1) :'
+  chequebarre : Chèque Barré
+  formulaire_garant1: Formulaire de Garantie rempli par le Garant2 de 50% du montant attribué
+  cin1: Copie couleur de la pièce d’identité du Garant2
+  its1: Copie couleur de la Carte ITS du Garant2
+  cheque1: '3 Chèques Barré & Non endossable à l’ordre de :Faiz E Mohammedi – Qardan Hasana (garant2) :'
+
+# --accepterDemandeQH
+accepterDemandeQH:
+  accepter : 'Etat du demande QH N°'
+  suite : ' : acceptée'
+  info : Un email de confirmation a été envoyé à votre email , pour continuer veuillez cliquez sur le bouton suivant
+
+# --refuserDemandeQH
+refuserDemandeQH :
+  refuser : 'Etat du demande QH : Resfuser'
+  raison : 'Votre demande a été réfusé pour la raison suivante :'
+  retour : Cliquez ici pour un nouveau demande QH
+# --caresoul0
+demandeqh_ajouter:
+  titre: Formulaire de demande QH
+
+  question1 : Formulaire d'OR à remplir chez Kalidas
+  reponse1 : Choisir votre réponse
+  clikc : Cliquer ici pour Télécharger les formulaires
+  retelecharger : Cliquer ici si vous besoin de rétélécharger votre formulaires à nouveau
+  oui : Oui
+  non : Non
+  suivant : Suivant >>
+  precedent : << Précédent
+  retour : << Précédent
+  # --caresoul1
+  antecedent : Antécédents
+  question2 : Avez vous déjà fait une demande QH auparavant ?
+  question3 : A-t-elle été acceptée ?
+  info: Veuillez compléter les trois derniers montants demandés
+  resume_info : Les trois derniers montants demandés
+  annee : Année
+  montant : Montant
+  notif : Notification envoyée
+  # --caresoul2
+  nouvelle_demande : Nouvelle demande
+  monotant2 : Montant demandé en Ariary
+  mois: Pour combien de mois
+  objet : Objet de la demande
+  motif : Motif
+  detail : Détail
+  garentie : Garentie
+  or : Valeur de l'or en Ariary ( voir l'examination de scellage ces kalidas  )
+  scan_couleur : Scan du Formulaire en couleur :(rempli par Kalidas)
+  photo_paquet : Photo du paquet scellé par kallidas:(Possibilité de mettre plusieurs photos)
+
+  # --caresoul3
+  garant1 : Garant N°1
+  garant2 : Garant N°2
+  nomits : Nom complet inscrit sur ITS :
+  its : Numéro ITS:
+  moze : Moze
+  date_naissance : Date de naissance
+  nomcin : Nom et Prénom
+  # --caresoul3
+  valider : Valider
+  info2 :  Votre demande va etre soumise au comité.Si votre demande est acceptée vous devrez fournir tous les documents ci-après à l'étape suivant:
+  # --caresoul6
+  resume_question : Vous avez dejà effectuer une demande QH auparavant :
+  resume_etat : Elle a été acceptée :
+
+# --pagechoix
+pagechoix :
+  titre : Effectuer une demande QH
+  personne : Pour une personne
+  societe : Pour une société
+  montant : Veuillez choisir le montant
+  valider : Valider
+  annuler : Annuler
+  nomsociete : Nom du société :
+  choix : Veuillez choisir une société
+  valeur1 : Montant inferieur ou égale à 2 000 000 Ar
+  valeur2 : Montant inferieur ou égale à 6 000 000 Ar
+  valeur3 : Montant plus de 6 000 000 Ar
+# --societe
+societe :
+  titre : Demande QH du société
+  nom : Nom du société
+  siege : Siège
+  contact : Contact
+  email : Email
+  desc : Description
+  record : Enregister
+
+# --membre
+membre :
+  nom : Nom et prenom
+  nom1 : Nom
+  prenom : Prénom
+  its : Numéro its
+  titre : Ajouter les membres du sociétés
+  liste : Les membres du société
+  action : Action
+  retour : Retour
+  record : Enregistrer
+# --societeDemandeQH
+sdemandeQH:
+  titre : Nouveau demande QH d'un société
+  date : Date d'aujourd'hui
+  montant : Montant
+  mois : Nombre du mois
+  motif : Motif
+  societe : Nom du societe
+  btn : Enregistrer
+  numero : Numéro
+# --garant_societe
+garantsociete:
+  titre: Entrer les informations sur le garant du société
+  sexe: Sexe
+  Male : Homme
+  Female : Femme
+  nompiece: Nom dans la pièce d'identité
+  prenompiece: Prénom dans la pièce d'identité
+  né: Date de naissance
+  lieu: Lieu de naissance
+  nom : Nom
+  prenom : Prénom
+  nomits : Nom sur la carte Its
+  its: Numéro sur la carte Its
+  adresse: Adresse de physique
+  ville: Ville de résidence
+  nationalite: Nationalité
+  type: Type pièce d'identité
+  numero: Numéro du pièce d'identité
+  date: Date de délivrance du pièce d'identité
+  villepiece: Ville de délivrance du pièce d'identité
+  pays: Pays de délivrance du pièce d'identité
+  paysits: Pays de délivrance du carte ITS
+  profession: Profession
+  numerocheque: N° Chèque
+  banquecheque: Nom du banque chèque
+  montantcheque: Montant du chèque
+  datecheque: Date du cheque
+  tel1: Numéro téléphone 1
+  tel2: Numéro téléphone 2
+  email : Adresse E-mail
+  nomheritier : Nom héritier
+  prenomheritier : Prénom héritier
+  info : Téléchargement du formulaire de l'acte d'engagement de caution à scanné
+  garant1 : Cliquer ici pour le garant1
+  garant2 : Cliquer ici pour le garant2
+  cin : Scan pièce d'identité recto & verso
+  scanits : Scan du carte its
+  btn : Enregistrer
+# --accueil_societe
+accueilsociete:
+  titre : Demande QH Société
+  stitre: Nous vous souhaitons la bienvenue
+  demande: Nouvelle demande
+  garant: Ajouter garant
+  liste: Listes demandes
+# --liste_demande_societe
+listedmdsociete:
+  titre: Liste des demandes QH du société
+  numero: Numéro
+  date: Date du demande
+  societe: Nom du société
+  montant : Montant
+  mois : Durée en mois
+  action : Action
+  garant: Garant
+# --edit_demande_societe
+editdmdsociete:
+  titre: Entrer les informations sur le garant
+  sexe: Sexe
+  nompiece: Nom dans la pièce d'identité
+  prenompiece: Prénom dans la pièce d'identité
+  né: Date de naissance
+  lieu: Lieu de naissance
+  nom : Nom
+  prenom : Prénom
+  adresse: Adresse de physique
+  ville: Ville de résidence
+  nationalite: Nationalité
+  type: Type pièce d'identité
+  numero: Numéro du pièce d'identité
+  date: Date de délivrance du pièce d'identité
+  villepiece: Ville de délivrance du pièce d'identité
+  pays: Pays de délivrance du pièce d'identité
+  paysits: Pays de délivrance du carte ITS
+  profession: Profession
+  numerocheque: N° Chèque
+  banquecheque: Nom du banque chèque
+  montantcheque: Montant du chèque
+  datecheque: Date du cheque
+  tel1: Numéro téléphone 1
+  tel2: Numéro téléphone 2
+  email : Adresse E-mail
+  nomheritier : Nom héritier
+  prenomheritier : Prénom héritier
+  info : Téléchargement du formulaire de l'acte d'engagement de caution à scanné
+  garant1 : Cliquer ici pour le garant1
+  garant2 : Cliquer ici pour le garant2
+# --Creergroup
+creergroup:
+  datecreat: Date de création du groupe
+  add: Ajouter
+  titre: Nouveau groupe
+  nomgrp: Tapez le nom du groupe ...
+# --Membregroup
+membregroup:
+  titre: Nouveau membre
+  date: Date où la personne est devenue membre :
+  choix: Choisir la personne :
+  select: Choisir
+  btn: Ajouter
+  nom: Nom
+  msg: Déja membre
+  dateliste: Date membre
+  action: Action
+  prenom: Prénom
+  compte: Voir compte
+  its: Numéro ITS
+  liste: Listes des membres
+  group: Choisir le groupe
+# --Listegroupe
+listegroupe:
+  titre: Listes groupes dont vous êtes membres
+  date: Date de création
+  user: L'utilisateur qui l' a crée
+  nom: Nom du groupe
+  action : Action
+# --pagegrp
+pagegrp:
+  titre: Bienvenue sur votre groupe
+  btn1: Husain scheme
+  btn2: Demande QH
+  apropos: Apropos
+  addmembre: Membre
+  home: Accueil
+# --accueilgrphussain
+grphussain:
+  titre : Information sur le groupe
+  date: Date
+  libelle: Libéllé
+  montant: Montant
+  credit: Versement
+  debit: Remboursement
+  solde: Solde
+  demande : Demande de remboursement
+  compte: Compte du personne :
+  nom: Nom :
+  prenom: Prénom :
+  numero : Numéro :
+  contact: Contact :
+  totale: Total :
+  acceuil: Accueil
+  versement: Versement notifier
+  remboursement: Demande de remboursement
+  listevers: Liste versement notifier
+  listeremb: Liste demande remboursement
+# --grp-versementnotifier.html.twig
+grp-versement:
+
+  soustitre: Veuillez remplire tous les champs
+  condition: Veuillez lire les conditions jusqu'à la fin
+  fermer: Fermer
+  adresse: Informations
+  date: Date
+  numero: Choisir le numéro de compte
+  montant: Montant
+  valider: Valider
+  info: Veuillez insérer ici un scan recto & verso du borderau
+  titre:  Versement notifier
+# --grp-dmdRemboursemnt_ajouter.html.twig
+grp-dmdRemboursement:
+  titre: Demande de remboursement
+  soustitre: Veuillez remplire tous les champs
+  adresse: Informations
+  date: Date
+  numero: Numéro de demande
+  montant: Montant
+  cheque: Type de cheque
+  valider: Valider
+  barrée : Barrée
+  nonbarrée : Non Barrée
+# --grp-listeversementnotifier.html.twig
+grp-listeversement:
+  titre: Liste versement notifier de
+
+  date: Date
+  user: Crée par
+  montant: Montant en Ariary
+  etat: Etat
+# --grp-listedmdremboursement.html.twig
+grp-listdmdremboursement:
+  titre: Liste demande remboursement de
+  date: Date
+  montant: Montant en Ariary
+  etat: Etat
+# --aproposgrp.html.twig
+aproposgrp:
+  titre: Apropos du groupe
+  nom: 'Nom du groupe :'
+  personne: 'Les personnes membres :'
+  date : Fait le ,
+  creer : Créer par
+# --CreerAssociation.html.twig
+creerassociation:
+  titre: Créer une association
+  nom: 'Nom de l''association :'
+  personne: 'Les personnes membres '
+  date : Date de création
+  desc: Description
+  btn: Ajouter
+# --AccueilAssociation.html.twig
+accueilassociation:
+
+  btn: Husain scheme
+  btn1: Demande QH

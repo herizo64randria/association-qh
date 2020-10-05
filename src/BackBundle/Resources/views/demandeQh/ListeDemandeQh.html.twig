@@ -1,0 +1,82 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}Listes des demandes QH{% endblock %}
+{% block body_container %}
+    <style>
+
+    </style>
+    {% set cheque = " " %}
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-striped" >
+                <thead id="customers">
+                <tr>
+                    <th scope="col">{{ 'listedemandeQH.numero'|trans }}</th>
+                    <th scope="col">{{ 'listedemandeQH.date'|trans }}</th>
+                    <th scope="col">{{ 'listedemandeQH.photo'|trans }}</th>
+                    <th scope="col">{{ 'listedemandeQH.nom et prenom'|trans }}</th>
+                    <th scope="col">{{ 'listedemandeQH.societe'|trans }}</th>
+                    <th scope="col">{{ 'listedemandeQH.montant'|trans }}</th>
+                    <th scope="col">{{ 'listedemandeQH.mois'|trans }}</th>
+                    <th scope="col">{{ 'listedemandeQH.etat'|trans }}</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for demandeQH in demandeQHs  %}
+
+                    {% if demandeQH.nomEtat == 'confirmer' or demandeQH.nomEtat == 'En attente de confirmation' %}
+                        {% set couleur = 'alert-primary' %}
+                    {% endif %}
+
+                    {% if demandeQH.nomEtat == 'okok' or demandeQH.nomEtat == 'Acceptée' %}
+                        {% set couleur = 'alert-success' %}
+                    {% endif %}
+
+                    {% if  demandeQH.nomEtat == 'Refusée' %}
+                        {% set couleur = 'alert-danger' %}
+                    {% endif %}
+                    <tr>
+                        <td><a href="{{ path('confirmationdemandeQH',{ 'id' : demandeQH.id}) }}" >{{ demandeQH.demadeQH.numero }}</a></td>
+                        <td><a >{{ demandeQH.demadeQH.numero }}</a></td>
+                        <td><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.photo) }}" class="img img-fluid" alt="" width="50" height="50"></td>
+                        <td>{{ demandeQH.demadeQH.personne.nom ~' '~ demandeQH.demadeQH.personne.prenom }}</td>
+                        <td></td>
+                        <td class="text-right">{{ demandeQH.demadeQH.montant|number_format('2',',',' ')}}</td>
+                        <td>{{ demandeQH.demadeQH.nombreMois }}</td>
+                        <td class="text-center" style=" background-color:{{ couleur }} ;text-align: center; ">
+                            {{ demandeQH.nomEtat }}
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                {% for societe in societedemandeQH  %}
+                    {% if societe.dateenvoie %}
+                        <tr>
+                            <td><a href="{{ path('detail_societedemandeQhback',{'id':societe.id}) }}" >{{ societe.numero }}</a></td>
+                            <td><a >{{societe.datedemande|date('d/m/Y') }}</a></td>
+                            <td><img src="{{ asset('document/'~ societe.personne.photo) }}" class="img img-fluid" alt="" width="50" height="50"></td>
+                            <td>{{ societe.personne.nom ~' '~ societe.personne.prenom }}</td>
+                            <td>{{  societe.societe }}</td>
+                            <td class="text-right">{{ societe.montant|number_format('2',',',' ')}}</td>
+                            <td>{{ societe.nombreMois }}</td>
+                            <td class="text-center" >
+
+                            </td>
+                        </tr>
+                    {% endif %}
+
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends '@Front/base_front.html.twig' %}
+{% block sous_menu_titre %}{{ 'versement_liste.titre'|trans }}{% endblock %}
+{% block body_container %}
+{% set solde=0%}
+    <style>
+        .card{ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        }
+        .card:hover{ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.9);
+        }
+    </style>
+            <div class="col-12" style="font-family: 'Courier New'">
+                <div class="card">
+                    <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead id="customers">
+                        <tr>
+                            <th scope="col">{{ 'versement_liste.date'|trans }}</th>
+                            <th scope="col">{{ 'versement_liste.numero'|trans }}</th>
+                            <th scope="col"class="text-right">{{ 'versement_liste.montant'|trans }}</th>
+                            <th scope="col"class="text-right">{{ 'versement_liste.borderau'|trans }}</th>
+                            <th scope="col" class="text-center">{{ 'versement_liste.etat'|trans }}</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for versements in versements %}
+                            {% set couleur1 = ' ' %}
+
+                            {% if  versements.etat == 'Demande acceptée' %}
+                                {% set couleur1 = 'alert-success' %}
+                            {% endif %}
+
+                            {% if versements.etat == 'Remboursement effectuer' %}
+                                {% set couleur1 = 'alert-warning' %}
+                            {% endif %}
+
+                            {% if  versements.etat == 'Demande refusée' %}
+                                {% set couleur1 = 'alert-warning' %}
+                            {% endif %}
+                            <tr>
+
+                                <td>{{ versements.date|date('d/m/Y') }}</td>
+                                <td >
+                                    {% if versements.compteHussen %}
+                                        {{ versements.compteHussen.numeroCompte}}
+                                    {% endif %}
+                                 </td>
+                                <td class="text-right">{{ versements.montant|number_format('2',',',' ')}} </td>
+                                {% set solde=solde+versements.montant %}
+
+                                <td class="text-center">
+                                        {% for borderau in  versements.borderauUrl   %}
+                                            <a href="{{ asset('document/'~ borderau.url) }}" target="_blank"><i class="fa fa-paperclip"></i>
+                                            </a>
+
+                                        {% endfor %}
+                                </td>
+
+                                <td class="couleur1" style=" background-color:{{ couleur1 }};text-align: center;">
+                                    {{ versements.etat }}
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+
+
+                        </tbody>
+                        <th></th><th class="text-right"><span>TOTAL :</span></th><th class="text-right">{{ solde|number_format('2',',',' ')}} </th>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

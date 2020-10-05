@@ -1,0 +1,48 @@
+<div class="carousel-item active">
+    <fieldset class="groove">
+
+        <div class="row container-fluid">
+
+            <div class="col-12">
+                <br>
+                <h3 class="text-primary text-center">{{ 'demandeqh_ajouter.antecedent'|trans }}</h3>
+                <br>
+                <div class="form-group text-center">
+
+                    <div class="maxl">
+                        <label for=""><h3 >{{ 'demandeqh_ajouter.question2'|trans }}</h3> <b class="text-danger" id="err_rep_antecedent"></b></label><br>
+                        <label for=""><h3>{{ 'demandeqh_ajouter.reponse1'|trans }}</h3> <b class="text-danger" id="err_reponse_antecedent"></b></label><br>
+                        <label class="radio inline">
+                            <input required type="radio"  name="rep_antecedent" id="oui_antecedent" value="oui" >
+                            <span> {{ 'demandeqh_ajouter.oui'|trans }} </span>
+                        </label>
+                        <label class="radio inline">
+                            <input required type="radio"  name="rep_antecedent" id="non_antecedent" value="non" checked>
+                            <span>{{ 'demandeqh_ajouter.non'|trans }}</span>
+                        </label>
+
+                        <div id="rep_attente" class="d-none">
+                            <label for=""><h3>{{ 'demandeqh_ajouter.question3'|trans }}</h3> <b class="text-danger" id="err_etat"></b></label><br>
+                            <label class="radio inline">
+                                <input required type="radio"  name="etat" id="accepter" value="oui" >
+                                <span> {{ 'demandeqh_ajouter.oui'|trans }} </span>
+                            </label>
+                            <label class="radio inline">
+                                <input required type="radio"  name="etat" id="refuser" value="non" checked>
+                                <span>{{ 'demandeqh_ajouter.non'|trans }}</span>
+                            </label>
+                        </div>
+
+
+                    </div>
+                </div>
+                <button  type="button" class="btn-link btn btn-lg float-left " id="prev" >{{ 'demandeqh_ajouter.precedent'|trans }}</button>
+                <button  type="button" class="btn-link btn btn-lg float-right " id="btn2" >{{ 'demandeqh_ajouter.suivant'|trans }}</button>
+                {#btn saute interface#}
+                <button  type="button"  class="btn-link btn btn-lg float-right " id="btn3" >{{ 'demandeqh_ajouter.suivant'|trans }}</button>
+            </div>
+
+        </div><br>
+
+    </fieldset>
+</div>

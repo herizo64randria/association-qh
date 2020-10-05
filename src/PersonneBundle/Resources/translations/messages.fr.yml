@@ -1,0 +1,106 @@
+H: Homme
+F: Femme
+#----inscription.html.twig
+inscription:
+    welcome: Bienvenue
+    welcome_phrase: Bienvenue sur notre Plarteforme. Pour vous inscrire veuillez remplir les champs suivants et cliquez sur S'inscrire
+    inscription: Inscription
+    modification1: Modification
+    information: Information sur Vous
+    First Name: Nom
+    First: Nom inscrit sur votre pièce d'identité
+    Last: Prénom inscrit sur votre pièce d'identité
+    Last Name: Prénom
+    moza: Moze
+    date_naissance: Date de naissance
+    lieu_naissance : Lieu de naissance
+    profession: Profession
+    pays_piece: Pays de délivrance du pièce d'identité
+    scan_cin: Scan recto verso de votre pièce d'identité
+    piece_identite: Sélectionnez votre pièce d'identité
+    piece: Pièce d'identité
+    numero_cin: N° de votre pièce d'identité
+    Password: Mot de passe
+    Confirm Password: Confirmation du mot de passe
+    delivrer : Lieu de délivrance du pièce d'identité
+    date_cin : Date délivrance du pièce d'identité
+    Sexe: Sexe
+    Male: Homme
+    msg: Coller est interdit sur cette wone de text
+    msg_its: Entrer un nombre de 8 chiffres et qui ne commence pas par zéro
+    Female: Femme
+    email: Votre Email
+    email2: Confirmation de l'Email
+    phone1: N° Télphone portable 1
+    phone2: N° Télphone portable 2 (Facultatif)
+    phone3: N° Télphone portable 3 (Facultatif)
+    num1: N° Télphone
+    num2: N° Télphone 2
+    num3: N° Télphone 3
+    num_its: N° ITS du demandeur
+    nom_its: Nom complet inscrit sur ITS
+    its: Nom sur la carte
+    adresse: Votre adresse postale
+    ville: Ville actuel
+    num_sabil: Numero Sabil
+    nationalite : Nationalité
+    register: S'inscrire
+    valider: Valider
+    photo: Photo d'identité ( avec Topi ou Rida)
+    scan_its: Scan verso de votre carte ITS
+    modification: Formulaire de modification
+    err_email: "Email non-identique"
+    err_mdp: "Mot de passe non-identique"
+    titre: Formulaire de modification de votre profil
+
+    ok: Votre demande d'inscription a été envoyer. L'adimistrateur va examiner votre demande et vous seriez notifier par email.
+
+    confirmation: Confirmation d'inscription
+    retour_acceuil: Revenir à la page d'accueil
+
+#-----liste-demande-admin---
+liste_demande:
+    label1: Liste des demandes d'inscription
+    action: Action
+    date_inscription: Date d'inscription
+    information: A porpos
+    liste_benef: Liste des procurations
+    liste_benef1: Liste des héritiers
+    its: "Carte ITS :"
+    modifier: Modifier profil
+    procuration: Procuration&Héritier
+    prioriter: Saisir le numero de prioriter
+    numeroits: Numéro ITS
+    type: Type
+    nom: Nom et Prénom
+    relation: Lien de parenté
+    document: Document
+    ajouter: Ajouter procuration
+    compte: Qui peut voir mon compte
+    cin: "Numéro CIN :"
+    cin1: "CIN :"
+    profil: Veuillez compléter votre profil
+    invite : Suivre une personne
+    listinvite: Personnes suivie
+#----PROFIL---------
+profil:
+    confirmer: Confimer
+    refuser: Refuser
+
+
+#---email REFUSER---
+email:
+    salutation:
+        Monsieur: Chèr Monsieur
+        Madame: Chère Madame
+        suite: Suite à votre demande d'inscription au plateforme
+        refuser: votre demande à  été refusé.
+        essaye: Merci de vouloir réessayer.
+        accepter: votre demande à été accepter.
+
+    login: Veulliez vous connecter avec votre numero ITS
+    comme_login: comme login
+    merci: L'association vous remercie.
+
+
+

@@ -1,0 +1,779 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+            background-color: #0088CC;
+        }
+        fieldset.groove {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,b,input,select,textarea,p {
+            text-shadow: 0.5px 0.5px 2px black;
+
+        }
+
+    </style>
+    <div class="col-12">
+        <br>
+        <div class="container mt-auto">
+
+            <h1 class="text-primary" id="ftitre">{{ 'demandeqh_ajouter.titre'|trans }}</h1><br>
+
+                <div id="titre">
+                    <button type="button" class="btn btn-link text-danger text-center " id="etape2" > Antécédents</button>
+                    <button type="button" class="btn btn-link text-danger text-center d-none" id="etape3"> </button>
+                    <button type="button" class="btn btn-link text-danger text-center d-none" id="etape4" > </button>
+                    <button type="button" class="btn btn-link text-danger text-center d-none" id="etape5" > </button>
+                    <button type="button" class="btn btn-link text-danger text-center d-none" id="etape6" > </button>
+                    <button type="button" class="btn btn-link text-danger text-center d-none" id="etape7" > </button>
+                </div>
+
+            <div id="myCarousel" class="carousel slide " data-interval="false">
+
+                <form action="#" method="post" id="formulaire" enctype="multipart/form-data">
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+
+                    {#CAROUSEL 0#}
+                    {% include '@DemandeQh/demande/carousel0.html.twig' %}
+
+                    {#CAROUSEL 1#}
+                    {% include '@DemandeQh/demande/carousel1.html.twig' %}
+
+                    {#CAROUSEL 2#}
+                    {% include '@DemandeQh/demande/carousel2.html.twig' %}
+
+                    {#CAROUSEL 3#}
+                    {% include '@DemandeQh/demande/carousel3.html.twig' %}
+
+                    {#CAROUSEL 4#}
+                    {% include '@DemandeQh/demande/carousel4.html.twig' %}
+
+                    {#CAROUSEL 5#}
+                    {% include '@DemandeQh/demande/carousel5.html.twig' %}
+                    {#CAROUSEL 6#}
+                    {#{% include '@DemandeQh/demande/carousel6.html.twig' %}#}
+                </div>
+
+              </form>
+
+            </div>
+
+        </div>
+
+        <script>
+
+            $(document).ready(function(){
+
+
+                // Activate Carousel
+                $("#myCarousel").carousel();
+
+                // Enable Carousel Indicators
+                $("#etape1").click(function(){
+                    $("#myCarousel").carousel(0);
+                });
+                $("#etape2").click(function(){
+                    $("#myCarousel").carousel(1);
+                });
+                $("#etape3").click(function(){
+                    $("#myCarousel").carousel(2);
+                });
+                $("#etape4").click(function(){
+                    $("#myCarousel").carousel(3);
+                });
+                $("#etape5").click(function(){
+                    $("#myCarousel").carousel(4);
+                });
+                $("#etape6").click(function(){
+                    $("#myCarousel").carousel(5);
+                });
+                $("#etape7").click(function(){
+                    $("#myCarousel").carousel(6);
+                });
+                // Enable Carousel Controls
+                $("#prev").click(function(){
+                    $("#myCarousel").carousel("prev");
+                });
+                $("#btn1").click(function(){
+                    $("#myCarousel").carousel("next");
+                });
+                $("#prev2").click(function(){
+
+                        $("#myCarousel").carousel(0);
+
+                });
+                $("#prev1").click(function(){
+
+                    $("#myCarousel").carousel(1);
+
+                });
+                $("#prev0").click(function(){
+
+                    $("#myCarousel").carousel(0);
+
+                });
+                $("#prev3").click(function(){
+
+                    $("#myCarousel").carousel(2);
+
+                });
+                $("#prev4").click(function(){
+
+                    $("#myCarousel").carousel(3);
+
+                });
+                $("#prev5").click(function(){
+
+                    $("#myCarousel").carousel(4);
+
+                });
+                $("#prev6").click(function(){
+
+                    $("#myCarousel").carousel(5);
+
+                });
+                // interface2
+                if(document.getElementById('non_antecedent').checked)
+                {
+
+                    // cacher le boutton vers interface3
+                    $("#btn2").addClass('d-none');
+                    $("#btn2").removeClass('d-block');
+                    $("#prev2").addClass('d-block');
+                    $("#prev1").addClass('d-none');
+
+                };
+
+                $("input[type=radio][name=rep_antecedent]").change(function() {
+                    if($(this).val() == 'oui') {
+                        //Traitement si première case cochée
+
+                        $("#rep_attente").addClass('d-block');
+                        $("#rep_attente").removeClass('d-none');
+                        document.getElementById('refuser').checked=true;
+
+
+                    }else if($(this).val() == 'non') {
+                        // Traitement si deuxième case cochée
+                        $("#rep_attente").addClass('d-none');
+                        $("#rep_attente").removeClass('d-block');
+                        $("#btn2").removeClass('d-block');
+                        $("#btn2").addClass('d-none');
+                        $("#btn3").addClass('d-block');
+                        $("#btn3").removeClass('d-none');
+                        $("#prev2").addClass('d-block');
+                        $("#prev1").addClass('d-none');
+                    }
+                });
+                // interface2_etat_reponse
+               var temp=false;
+                if(document.getElementById('refuser').checked)
+                {
+                    // cacher le boutton vers interface3
+                    $("#btn2").addClass('d-none');
+                    $("#btn2").removeClass('d-block');
+                    $("#prev2").addClass('d-block');
+                    $("#prev1").addClass('d-none');
+
+
+                };
+
+                $("input[type=radio][name=etat]").change(function() {
+                    if($(this).val() == 'oui') {
+                        // cacher le boutton vers interface4
+                        $("#btn2").removeClass('d-none');
+                        $("#btn2").addClass('d-block');
+                        $("#btn3").addClass('d-none');
+                        $("#btn3").removeClass('d-block');
+                        $("#prev2").removeClass('d-block');
+                        $("#prev2").addClass('d-none');
+                        $("#prev1").removeClass('d-none');
+                        $("#prev1").addClass('d-block');
+
+
+                    }
+
+                    else if($(this).val() == 'non') {
+                        // cacher le boutton vers interface3
+                        $("#btn3").removeClass('d-none');
+                        $("#btn3").addClass('d-block');
+                        $("#btn2").removeClass('d-block');
+                        $("#btn2").addClass('d-none');
+                        $("#prev2").addClass('d-block');
+                        $("#prev1").addClass('d-none');
+                    }
+                });
+
+                $("#btn2").click(function(){
+                    $("#etape2").removeClass('d-none');
+                 $("#etape2").text('>>Nouvelle demande');
+                    if(document.getElementById('oui_antecedent').checked){
+                        $("#resume_quest").text('Oui')
+                    }
+                    if(document.getElementById('accepter').checked){
+                        $("#resume_etat").text('Oui')
+                    }
+
+                    $("#myCarousel").carousel(1);
+
+                });
+                $("#btn3").click(function(){
+                    $("#etape3").removeClass('d-none');
+                    // $("#etape3").text('>>Etape 3');
+                    if(document.getElementById('oui_antecedent').checked){
+                        $("#resume_quest").text('Oui')
+                    }
+                    if(document.getElementById('non_antecedent').checked){
+                        $("#resume_quest").text('non');
+                        $("#resume_label").addClass('d-none')
+                        $("#resume_etat").addClass('d-none')
+                        $("#cacher").addClass('d-none')
+
+                    }
+                    if(document.getElementById('refuser').checked){
+                        $("#resume_etat").text('non')
+                        $("#cacher").addClass('d-none')
+                    }
+                    $("#myCarousel").carousel(2);
+
+                });
+                $("#btn4").click(function(){
+                    $("#etape3").removeClass('d-none');
+                    $("#etape3").text('>>Nouvelle demande');
+                    if(mycarousel2()){
+                        $("#rannee1").text($("#annee1").val());
+                        $("#rmontant1").text($("#montant1").val());
+                        $("#rannee2").text($("#annee2").val());
+                        $("#rmontant2").text($("#montant2").val());
+                        $("#rannee3").text($("#annee3").val());
+                        $("#rmontant3").text($("#montant3").val());
+                        $("#myCarousel").carousel(2);
+                    }
+
+
+                });
+
+                $("#btn5").click(function() {
+                    $("#etape4").removeClass('d-none');
+                    $("#etape4").text('>>Garantie');
+                    if(mycarousel3()){
+
+                        if($("#montant").val() <= 150000000 && $("#mois").val() <= 12 && $("#montant").val() != '' && $("#mois").val() != '' ) {
+
+                            $("#rmontant").text($("#montant").val());
+                            $("#rmois").text($("#mois").val());
+                            $("#rmotif").text($("#motif").val());
+                            $("#rdetail").text($("#detail").val());
+                            $("#ror").text($("#or").val());
+
+                            $("#myCarousel").carousel(3);
+
+                        }
+                    }
+
+                });
+                $("#btn6").click(function() {
+                    $("#etape5").removeClass('d-none');
+                    $("#etape5").text('>>Ajouter garants');
+
+
+                    if(mycarousegarantieor()){
+
+                        $("#ror").text($("#or").val());
+
+                        $("#myCarousel").carousel(4);
+                    }
+
+
+
+
+                });
+                $("#btn7").click(function() {
+                    $("#etape6").removeClass('d-none');
+                    $("#etape6").text('>>Verfication des information');
+                    if(mycarousel4()){
+                        $("#ftitre").text('Formulaire de verification du demande QH');
+                        $("#rnomits").text($("#nomits").val());
+                        $("#rits").text($("#its").val());
+                        $("#rmoza").text($("#moza").val());
+                        $("#rcin").text($("#cin").val());
+                        $("#rnomits1").text($("#nomits1").val());
+                        $("#rits1").text($("#its1").val());
+                        $("#rmoza1").text($("#moza1").val());
+                        $("#rcin1").text($("#cin1").val());
+                        $("#myCarousel").carousel(5);
+                    }
+
+
+                });
+                $("#btn8").click(function() {
+                    $("#etape7").removeClass('d-none');
+                    $("#etape7").text('>>garant1');
+                    // $("#ftitre").text('Formulaire de verification du demande QH');
+
+                        $("#myCarousel").carousel(6);
+
+
+
+                });
+                $("#1").click(function(){
+                    $("#myCarousel").carousel(1);
+                });
+                $("#2").click(function(){
+                    $("#myCarousel").carousel(2);
+                });
+                $("#3").click(function(){
+                    $("#myCarousel").carousel(3);
+                });
+                $("#4").click(function(){
+                    $("#myCarousel").carousel(4);
+                });
+
+
+
+            });
+
+            function test_its(x,y) {
+                var str = document.getElementById(x).value;
+                var patt1 = /^[1-9]/g;
+                var res = str.match(patt1);
+                var taille = str.length;
+                if(res && taille==8){
+                    $(y).text('');
+                    return true;
+                }
+                else
+                {
+                    $(y).text('Entrer un nombre de 8 chiffres et qui ne commence pas par zéro');
+                    return false;
+                }
+            }
+
+
+                // function de requirement de carousel2
+            function mycarousel2(){
+                if($("#annee1").val()=='' || $("#montant1").val()=='' || $("#annee2").val()=='' || $("#montant2").val()==''|| $("#annee3").val()=='' || $("#montant3").val()==''){
+                    if($("#annee1").val()==''){
+                        $("#annee1").addClass('alert-danger');
+                        $("#err_annee1").text('Veuillez remplire cette zone de texte');
+                        $("#montant1").removeClass('alert-danger');
+                        $("#err_montant1").text('');
+                        $("#montant2").removeClass('alert-danger');
+                        $("#err_montant2").text('');
+                        $("#montant3").removeClass('alert-danger');
+                        $("#err_montant3").text('');
+                        $("#annee3").removeClass('alert-danger');
+                        $("#err_annee3").text('');
+                        $("#annee2").removeClass('alert-danger');
+                        $("#err_annee2").text('');
+                        $("#annee1").focus();
+                        return false;
+
+                    }else{ $("#annee1").removeClass('alert-danger');
+                        $("#err_annee1").text(''); }
+
+                    if($("#montant1").val()==''){
+                        $("#montant1").addClass('alert-danger');
+                        $("#err_montant1").text('Veuillez remplire cette zone de texte');
+                        $("#annee1").removeClass('alert-danger');
+                        $("#err_annee1").text('');
+                        $("#montant2").removeClass('alert-danger');
+                        $("#err_montant2").text('');
+                        $("#montant3").removeClass('alert-danger');
+                        $("#err_montant3").text('');
+                        $("#annee3").removeClass('alert-danger');
+                        $("#err_annee3").text('');
+                        $("#annee2").removeClass('alert-danger');
+                        $("#err_annee2").text('');
+                        $("#montant1").focus();
+                        return false;
+
+                    }else{ $("#montant1").removeClass('alert-danger');
+                        $("#err_montant1").text('');}
+
+
+                    if($("#annee2").val()==''){
+                        $("#annee2").addClass('alert-danger');
+                        $("#err_annee2").text('Veuillez remplire cette zone de texte');
+                        $("#annee1").removeClass('alert-danger');
+                        $("#err_annee1").text('');
+                        $("#montant2").removeClass('alert-danger');
+                        $("#err_montant2").text('');
+                        $("#montant3").removeClass('alert-danger');
+                        $("#err_montant3").text('');
+                        $("#annee3").removeClass('alert-danger');
+                        $("#err_annee3").text('');
+                        $("#annee2").focus();
+                        return false;
+
+                    }else{ $("#annee2").removeClass('alert-danger');
+                        $("#err_annee2").text(''); }
+                    if($("#montant2").val()==''){
+                        $("#montant2").addClass('alert-danger');
+                        $("#err_montant2").text('Veuillez remplire cette zone de texte');
+                        $("#annee1").removeClass('alert-danger');
+                        $("#err_annee1").text('');
+                        $("#annee2").removeClass('alert-danger');
+                        $("#err_annee2").text('');
+                        $("#montant3").removeClass('alert-danger');
+                        $("#err_montant3").text('');
+                        $("#annee3").removeClass('alert-danger');
+                        $("#err_annee3").text('');
+                        $("#montant2").focus();
+                        return false;
+
+                    }else{ $("#montant2").removeClass('alert-danger');
+                        $("#err_montant2").text('');}
+
+
+                    if($("#annee3").val()==''){
+                        $("#annee3").addClass('alert-danger');
+                        $("#err_annee3").text('Veuillez remplire cette zone de texte');
+                        $("#annee1").removeClass('alert-danger');
+                        $("#err_annee1").text('');
+                        $("#montant2").removeClass('alert-danger');
+                        $("#err_montant2").text('');
+                        $("#montant3").removeClass('alert-danger');
+                        $("#err_montant3").text('');
+                        $("#montant1").removeClass('alert-danger');
+                        $("#err_montant1").text('');
+                        $("#annee2").removeClass('alert-danger');
+                        $("#err_annee2").text('');
+                        $("#annee3").focus();
+                        return false;
+
+                    }else{ $("#annee3").removeClass('alert-danger');
+                        $("#err_annee3").text(''); }
+
+                    if($("#montant3").val()==''){
+                        $("#montant3").addClass('alert-danger');
+                        $("#err_montant3").text('Veuillez remplire cette zone de texte');
+                        $("#annee1").removeClass('alert-danger');
+                        $("#err_annee1").text('');
+                        $("#montant2").removeClass('alert-danger');
+                        $("#err_montant2").text('');
+
+                        $("#annee3").removeClass('alert-danger');
+                        $("#err_annee3").text('');
+                        $("#annee2").removeClass('alert-danger');
+                        $("#err_annee2").text('');
+
+                        $("#or").removeClass('alert-danger');
+                        $("#err_or").text('');
+
+                        $("#montant3").focus();
+                        return false;
+
+                    }else{ $("#montant3").removeClass('alert-danger');
+                        $("#err_montant3").text('');}
+                }
+                else{return true}
+
+
+            }
+            // function de requirement de carousel3
+            function  mycarousel3() {
+
+                if($("#montant").val()==''||$("#mois").val()==''||$("#detail").val()==''){
+                    if($("#montant").val()==''){
+                        $("#montant").addClass('alert-danger');
+                        $("#err_montant").text('Veuillez remplire cette zone de texte');
+                        $("#mois").removeClass('alert-danger');
+                        $("#err_mois").text('');
+                        $("#detail").removeClass('alert-danger');
+                        $("#err_detail").text('');
+                      /*  $("#or").removeClass('alert-danger');
+                        $("#err_or").text('');
+                        $("#photo").removeClass('alert-danger');
+                        $("#err_photo").text('');
+                        $("#scan").removeClass('alert-danger');
+                        $("#err_scan").text('');*/
+                        $("#montant").focus();
+                        return false;
+                    }else{$("#montant").removeClass('alert-danger');
+                        $("#err_montant").text('')
+                        if($("#montant").val() >150000000) {
+
+                            $("#err_montant").text('Montant trop élevé');
+                            return false
+
+                        }
+                        else{
+                            $("#err_montant").text('');
+
+
+                        };}
+
+                    if($("#mois").val()==''){
+                        $("#mois").addClass('alert-danger');
+                        $("#err_mois").text('Veuillez remplire cette zone de texte');
+                        $("#monatant").removeClass('alert-danger');
+                        $("#err_monatant").text('');
+                        $("#detail").removeClass('alert-danger');
+                        $("#err_detail").text('');
+                        /*$("#or").removeClass('alert-danger');
+                        $("#err_or").text('');
+                        $("#photo").removeClass('alert-danger');
+                        $("#err_photo").text('');
+                        $("#scan").removeClass('alert-danger');
+                        $("#err_scan").text('');*/
+                        $("#mois").focus();
+                        return false;
+                    }else{$("#mois").removeClass('alert-danger');
+                        $("#err_mois").text('');
+                        if($("#mois").val() >12) {
+
+                            $("#err_mois").text('Le mois doit infiérieur ou égale 12');
+                            return false;
+
+                        }
+                        else{
+                            $("#err_mois").text('');
+
+
+
+                        }}
+
+                    if($("#detail").val()==''){
+                        $("#detail").addClass('alert-danger');
+                        $("#err_detail").text('Veuillez remplire cette zone de texte');
+                        $("#monatant").removeClass('alert-danger');
+                        $("#err_monatant").text('');
+                        $("#mois").removeClass('alert-danger');
+                        $("#err_mois").text('');
+                       /* $("#or").removeClass('alert-danger');
+                        $("#err_or").text('');
+                        $("#photo").removeClass('alert-danger');
+                        $("#err_photo").text('');
+                        $("#scan").removeClass('alert-danger');
+                        $("#err_scan").text('');*/
+                        $("#detail").focus();
+                        return false;
+                    }else{$("#detail").removeClass('alert-danger');
+                        $("#err_detail").text('');}
+
+/*
+                    if($("#or").val()==''){
+                        $("#or").addClass('alert-danger');
+                        $("#err_or").text('Veuillez remplire cette zone de texte');
+                        $("#monatant").removeClass('alert-danger');
+                        $("#err_monatant").text('');
+                        $("#mois").removeClass('alert-danger');
+                        $("#err_mois").text('');
+                        $("#detail").removeClass('alert-danger');
+                        $("#err_detail").text('');
+                        $("#photo").removeClass('alert-danger');
+                        $("#err_photo").text('');
+                        $("#scan").removeClass('alert-danger');
+                        $("#err_scan").text('');
+                        $("#or").focus();
+                        return false;
+                    }else{$("#or").removeClass('alert-danger');
+                        $("#err_or").text('');}
+
+                    if($("#scan").val()==''){
+                        $("#scan").addClass('alert-danger');
+                        $("#err_scan").text('Veuillez remplire cette zone de texte');
+                        $("#monatant").removeClass('alert-danger');
+                        $("#err_monatant").text('');
+                        $("#mois").removeClass('alert-danger');
+                        $("#err_mois").text('');
+                        $("#detail").removeClass('alert-danger');
+                        $("#err_detail").text('');
+                        $("#photo").removeClass('alert-danger');
+                        $("#err_photo").text('');
+                        $("#or").removeClass('alert-danger');
+                        $("#err_or").text('');
+                        $("#scan").focus();
+
+                        return false;
+                    }else{$("#scan").removeClass('alert-danger');
+                        $("#err_scan").text('');}
+
+                    if($("#photo").val()==''){
+                        $("#photo").addClass('alert-danger');
+                        $("#err_photo").text('Veuillez remplire cette zone de texte');
+                        $("#monatant").removeClass('alert-danger');
+                        $("#err_monatant").text('');
+                        $("#mois").removeClass('alert-danger');
+                        $("#err_mois").text('');
+                        $("#detail").removeClass('alert-danger');
+                        $("#err_detail").text('');
+                        $("#scan").removeClass('alert-danger');
+                        $("#err_scan").text('');
+                        $("#or").removeClass('alert-danger');
+                        $("#err_or").text('');
+                        $("#photo").focus();
+                        return false;
+                    }else{$("#photo").removeClass('alert-danger');
+                        $("#err_photo").text('');}*/
+
+                }
+                else{
+                    return true;
+                }
+
+            }
+            // function de requirement de garantieor
+            function  mycarousegarantieor() {
+
+                if($("#or").val()==''||$("#photo").val()==''||$("#scan").val()==''){
+
+                                        if($("#or").val()==''){
+                                            $("#or").addClass('alert-danger');
+                                            $("#err_or").text('Veuillez remplire cette zone de texte');
+
+                                            $("#photo").removeClass('alert-danger');
+                                            $("#err_photo").text('');
+                                            $("#scan").removeClass('alert-danger');
+                                            $("#err_scan").text('');
+                                            $("#or").focus();
+                                            return false;
+                                        }else{$("#or").removeClass('alert-danger');
+                                            $("#err_or").text('');}
+
+                                        if($("#scan").val()==''){
+                                            $("#scan").addClass('alert-danger');
+                                            $("#err_scan").text('Veuillez remplire cette zone de texte');
+
+                                            $("#photo").removeClass('alert-danger');
+                                            $("#err_photo").text('');
+                                            $("#or").removeClass('alert-danger');
+                                            $("#err_or").text('');
+                                            $("#scan").focus();
+
+                                            return false;
+                                        }else{$("#scan").removeClass('alert-danger');
+                                            $("#err_scan").text('');}
+
+                                        if($("#photo").val()==''){
+                                            $("#photo").addClass('alert-danger');
+                                            $("#err_photo").text('Veuillez remplire cette zone de texte');
+
+                                            $("#scan").removeClass('alert-danger');
+                                            $("#err_scan").text('');
+                                            $("#or").removeClass('alert-danger');
+                                            $("#err_or").text('');
+                                            $("#photo").focus();
+                                            return false;
+                                        }else{$("#photo").removeClass('alert-danger');
+                                            $("#err_photo").text('');}
+
+                }
+                else{
+                    return true;
+                }
+
+
+
+            }
+            // function de requirement de carousel4
+            function mycarousel4(){
+                if($("#nomits").val()==''||$("#its").val()==''||$("#cin").val()==''||
+                    $("#nomits1").val()==''||$("#its1").val()==''||$("#cin1").val()==''){
+
+                    if($("#nomits").val()==''){
+                    $("#nomits").addClass('alert-danger');
+                    $("#err_nomits").text('Veuillez remplire cette zone de texte');
+                        $("#its").removeClass('alert-danger');
+                        $("#err_its").text('');
+                        $("#cin").removeClass('alert-danger');
+                        $("#err_cin").text('');
+                        $("#nomits").focus();
+
+                    return false;
+                      }
+                    else{
+                        $("#nomits").removeClass('alert-danger');
+                        $("#err_nomits").text('');}
+
+                if($("#its").val()==''){
+                    $("#its").addClass('alert-danger');
+                    $("#err_its").text('Veuillez remplire cette zone de texte');
+                    $("#nomits").removeClass('alert-danger');
+                    $("#err_nomits").text('');
+                    $("#cin").removeClass('alert-danger');
+                    $("#err_cin").text('');
+                    $("#its").focus();
+
+                    return false;
+                }
+                else{
+                    $("#its").removeClass('alert-danger');
+                    $("#err_its").text('');
+                    if(test_its('its','#err_its')==false){return false }}
+
+                if($("#cin").val()==''){
+                    $("#cin").addClass('alert-danger');
+                    $("#err_cin").text('Veuillez remplire cette zone de texte');
+                    $("#nomits").removeClass('alert-danger');
+                    $("#err_nomits").text('');
+                    $("#its").removeClass('alert-danger');
+                    $("#err_its").text('');
+                    $("#cin").focus();
+                    return false;
+                }
+                else{
+                    $("#cin").removeClass('alert-danger');
+                    $("#err_cin").text('');}
+
+
+                     if($("#nomits1").val()==''){
+                        $("#nomits1").addClass('alert-danger');
+                        $("#err_nomits1").text('Veuillez remplire cette zone de texte');
+                        $("#its1").removeClass('alert-danger');
+                        $("#err_its1").text('');
+                        $("#cin1").removeClass('alert-danger');
+                        $("#err_cin1").text('');
+                         $("#nomits1").focus();
+                        return false;
+                    }
+                    else{
+                        $("#nomits1").removeClass('alert-danger');
+                        $("#err_nomits1").text('');}
+
+                    if($("#its1").val()==''){
+                        $("#its1").addClass('alert-danger');
+                        $("#err_its1").text('Veuillez remplire cette zone de texte');
+                        $("#nomits1").removeClass('alert-danger');
+                        $("#err_nomits1").text('');
+                        $("#cin1").removeClass('alert-danger');
+                        $("#err_cin1").text('');
+                        $("#its1").focus();
+
+                        return false;
+                    }
+                    else{
+                        $("#its1").removeClass('alert-danger');
+                        $("#err_its1").text('');
+                        if(test_its('its1','#err_its1')==false){return false }}
+
+                    if($("#cin1").val()==''){
+                        $("#cin1").addClass('alert-danger');
+                        $("#err_cin1").text('Veuillez remplire cette zone de texte');
+                        $("#nomits1").removeClass('alert-danger');
+                        $("#err_nomits1").text('');
+                        $("#its1").removeClass('alert-danger');
+                        $("#err_its1").text('');
+                        $("#cin1").focus();
+                        return false;
+                    }
+                    else{
+                        $("#cin1").removeClass('alert-danger');
+                        $("#err_cin1").text('');}
+            }
+            else {return true }
+            }
+
+        </script>
+
+    </div>
+
+{% endblock %}

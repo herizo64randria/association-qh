@@ -1,0 +1,430 @@
+{% extends '@Personne/Inscription/base_inscription.html.twig' %}
+
+{% block titre %}{{ 'inscription.register'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <h1><i class="fa fa-star"></i></h1>
+            <h3>{{ 'inscription.welcome'|trans }}</h3>
+            <p>{{ 'inscription.welcome_phrase'|trans }}</p>
+            <a href="{{ path('fos_user_security_login') }}" id="loginBtn" class="btnRegister"> {{ 'login'|trans }} </a>
+        </div>
+        <div class="col-md-9 register-right">
+            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ 'inscription.inscription'|trans }}</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h3 class="register-heading">{{ 'inscription.information'|trans }}</h3>
+                    <form action="#" method="post" name="telephone" autocomplete="off" enctype="multipart/form-data">
+                        <div class="row register-form">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="nom">{{ 'inscription.First'|trans }} <b class="text-danger" id="err_nom"></b></label>
+                                    <input required type="text" class="form-control" name="nom" id="nom"   />
+                                </div>
+                                <div class="form-group">
+                                    <label for="prenom">{{ 'inscription.Last'|trans }} <b class="text-danger" id="err_prenom"></b></label>
+                                    <input required type="text" class="form-control" name="prenom" id="prenom" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="nom_its">{{ 'inscription.nom_its'|trans }} <b class="text-danger" id="err_nom_its"></b></label>
+                                    <input required type="text" class="form-control" name="nom_its" id="nom_its"  />
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ 'inscription.date_naissance'|trans }} <b class="text-danger" id="err_date_naissance"></b></label>
+                                    <div class="input-group date"  data-target-input="nearest">
+                                        <input type="datetime" id="date_naissance" name="date_naissance"  class="form-control datetimepicker-input" />
+                                        <div class="input-group-append" data-target="#date_naissance" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        $('#date_naissance').datetimepicker({
+                                            format: 'DD/MM/YYYY',
+                                        });
+                                    </script>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ 'inscription.lieu_naissance'|trans }} <b class="text-danger" id="err_lieu_naissance"></b></label>
+                                    <div class="input-group date"  data-target-input="nearest">
+                                        <input type="text" id="lieu_naissance" name="lieu_naissance"  class="form-control " />
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="piece_identite">{{ 'inscription.piece_identite'|trans }} <b class="text-danger" id="err_piece_identite"></b></label>
+                                    <select name="piece_identite" id="piece_identite" class="form-control">
+                                        <option value="Passeport">Passeport</option>
+                                        <option value="CIN">CIN</option>
+                                        <option value="Carte de Résidence">Carte de Résidence</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="numero_cin">{{ 'inscription.numero_cin'|trans }} <b class="text-danger" id="err_numero_cin"></b></label>
+                                    <input required type="text" class="form-control" name="numero_cin" id="numero_cin" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="delivrer">{{ 'inscription.delivrer'|trans }} <b class="text-danger" id="err_delivrer"></b></label>
+                                    <input required type="text" name="delivrer" id="delivrer" class="form-control"   />
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ 'inscription.pays_piece'|trans }} <b class="text-danger" id="err_pays_piece"></b></label>
+                                    <div class="input-group date"  data-target-input="nearest">
+                                        <input type="text" id="pays_piece" name="pays_piece"  class="form-control " />
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="date_cin">{{ 'inscription.date_cin'|trans }} <b class="text-danger" id="err_date_cin"></b></label>
+                                    <div class="input-group date"  data-target-input="nearest">
+                                        <input type="datetime" id="date_cin" name="date_cin"  class="form-control datetimepicker-input" />
+                                        <div class="input-group-append" data-target="#date_cin" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        $('#date_cin').datetimepicker({
+                                            format: 'DD/MM/YYYY',
+                                        });
+                                    </script>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ 'inscription.scan_cin'|trans }} <b class="text-danger" id="err_scan_cin"></b></label>
+                                    <input required type="file" name="scancin[]" id="scancin" class="form-control"  multiple="multiple" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="adresse">{{ 'inscription.adresse'|trans }} <b class="text-danger" id="err_adresse"></b></label>
+                                    <input required type="text" class="form-control" name="adresse" id="adresse"   />
+                                </div>
+                                <div class="form-group">
+                                    <label for="ville">{{ 'inscription.ville'|trans }} <b class="text-danger" id="err_ville"></b></label>
+                                    <input required type="text" class="form-control" name="ville" id="ville"   />
+                                </div>
+                                <div class="form-group">
+                                    <label for="num_sabil">{{ 'inscription.num_sabil'|trans }} <b class="text-danger" id="err_num_sabil"></b></label>
+                                    <input required type="text" class="form-control" name="num_sabil" id="num_sabil"   />
+                                </div>
+                                <div class="form-group">
+                                    <label for="num_sabil">{{ 'inscription.nationalite'|trans }} <b class="text-danger" id="err_nationalite"></b></label>
+                                    <input required type="text" class="form-control" name="nationalite" id="nationalite"   />
+                                </div>
+                                <div class="form-group">
+                                    <div class="maxl">
+                                        <label for="">{{ 'inscription.Sexe'|trans }} <b class="text-danger" id="err_sexe"></b></label><br>
+                                        <label class="radio inline">
+                                            <input required type="radio" name="sexe" id="sexeH" value="H" checked>
+                                            <span> {{ 'inscription.Male'|trans }} </span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input required type="radio" name="sexe" id="sexeF" value="F">
+                                            <span>{{ 'inscription.Female'|trans }} </span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{ 'inscription.profession'|trans }} <b class="text-danger" id="err_ville_piece"></b></label>
+                                    <div class="input-group date"  data-target-input="nearest">
+                                        <input type="text" id="profession" name="profession"  class="form-control " />
+
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="num_its">{{ 'inscription.num_its'|trans }} <b class="text-danger" id="err_num_its"></b></label>
+                                    <input required type="number" name="num_its" id="num_its" class="form-control"   />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">{{ 'inscription.Password'|trans }} <b class="text-danger" id="err_mdp1"></b></label>
+                                    <div class="input-group">
+                                        <input  required type="password" name="mdp1" id="mdp1" class="form-control "   />
+                                        <div class="input-group-append" data-target="#mdp1" onmousedown="afficher_pwd1()" onmouseup="afficher_pwd1()" >
+                                            <div id="btn1" class="input-group-text"><i class="fa fa-eye"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ 'inscription.Confirm Password'|trans }} <b class="text-danger" id="err_mdp2"></b></label>
+
+                                    <div class="input-group">
+                                        <input required type="password" name="mdp2" id="mdp2" class="form-control"   />
+                                        <div class="input-group-append" data-target="#mdp2" onmousedown="afficher_pwd2()" onmouseup="afficher_pwd2()" >
+                                            <div id="btn2" class="input-group-text"><i class="fa fa-eye"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="moze">{{ 'inscription.moza'|trans }} <b class="text-danger" id="err_moze"></b></label>
+                                    <select name="moze" id="moze" class="form-control">
+                                        {% for moze in mozes %}
+                                            <option value="{{ moze.id }}">{{ moze.moze }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">{{ 'inscription.email'|trans }} <b class="text-danger" id="err_email1"></b></label>
+                                    <input required type="email" name="email1" id="email1" class="form-control"   />
+                                </div>
+                                <div class="form-group">
+                                    <label for="">{{ 'inscription.email2'|trans }} <b class="text-danger" id="err_email2"></b></label>
+                                    <input required type="email" name="email2" id="email2" class="form-control"  />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ 'inscription.phone1'|trans }} <b class="text-danger" id="err_phone1"></b></label>
+                                    <input id="phone1" name="phone1" type="text"  class="form-control only_phone_number"  onsubmit="return false;" list="defaultTels" >
+
+                                    <datalist id="defaultTels">
+                                        <option value="+261 32 ">
+                                        <option value="+261 33 ">
+                                        <option value="+261 34 ">
+
+                                    </datalist>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ 'inscription.phone2'|trans }} <b class="text-danger" id="err_phone2"></b></label>
+                                    <input id="phone2" name="phone2" type="text"  class="form-control only_phone_number"  onsubmit="return false;" list="defaultTels" >
+
+                                    <datalist id="defaultTels">
+                                        <option value="+261 32 ">
+                                        <option value="+261 33 ">
+                                        <option value="+261 34 ">
+
+                                    </datalist>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ 'inscription.phone3'|trans }} <b class="text-danger" id="err_phone2"></b></label>
+                                    <input id="phone3" name="phone3" type="text"  class="form-control only_phone_number"  onsubmit="return false;" list="defaultTels" >
+
+                                    <datalist id="defaultTels">
+                                        <option value="+261 32 ">
+                                        <option value="+261 33 ">
+                                        <option value="+261 34 ">
+
+                                    </datalist>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ 'inscription.photo'|trans }} <b class="text-danger" id="err_photo"></b></label>
+                                    <input required type="file" name="photo" id="photo" class="form-control"   />
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ 'inscription.scan_its'|trans }} <b class="text-danger" id="err_scan_its"></b></label>
+                                    <input required type="file" name="scan_its" id="scan_its" class="form-control"   />
+                                </div>
+                                <input type="checkbox" name="check" id="check" required> En cliquant sur cette case,j'accepte les conditions générales  <button class="btn btn-link" id="lire" type="button"> Cliquez ici pour lire les conditions </button>
+                                <input  type="submit" class="btnRegister" id="btnInscrire"  value="{{ 'inscription.register'|trans }}"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+{#MODALE VERSEMENT#}
+
+    <form  method="post" > <div id="condition" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+
+                    <div class="modal-body">
+
+                        <div class="">
+
+
+
+                                <div class="card-header bg-primary text-white"> {{ 'versement_ajouter.condition'|trans }}
+                                </div>
+                                <hr>
+                                <div class="card-body">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti error facere labore praesentium provident quasi sunt! Debitis deleniti esse ex excepturi, explicabo, fugiat minus necessitatibus possimus quae, qui repellat ullam!
+                                    </p>
+                                </div>
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                          <div class="float-right">
+
+                            <button  data-dismiss="modal" class="btn btn-light btn-block text-center">{{ 'versement_ajouter.fermer'|trans }}</button>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        $('#lire').click(function(){
+            $('#condition').modal({show:true})
+        });
+    </script>
+{#SCRIPT DE VALIDATION#}
+<script>
+
+    function testEmailIdentique(){
+        email1 = $('#email1').val();
+        email2 = $('#email2').val();
+
+        if(email1 != email2){
+            $('#email2').addClass('alert-danger');
+
+            $('#err_email2').text(' | {{ 'inscription.err_email'|trans }}');
+
+            return false;
+        }else {
+            $('#email2').removeClass('alert-danger');
+
+            $('#err_email2').text('');
+
+            return true;
+        }
+    }
+
+    function testMotDePasse(){
+        mdp1 = $('#mdp1').val();
+        mdp2 = $('#mdp2').val();
+
+        if(mdp1 != mdp2){
+            $('#mdp2').addClass('alert-danger');
+
+            $('#err_mdp2').text(' | {{ 'inscription.err_mdp'|trans }}');
+
+            return false;
+        }else {
+            $('#mdp2').removeClass('alert-danger');
+
+            $('#err_mdp2').text('');
+
+            return true;
+        }
+    }
+
+    $('#btnInscrire').click(function () {
+        return testEmailIdentique();
+    });
+
+    $('#btnInscrire').click(function () {
+        return testMotDePasse();
+    });
+     $('#btnInscrire').click(function () {
+        return test_its();
+    });
+
+
+
+    function afficher_pwd1() {
+
+
+             if ( document.getElementById("mdp1").type =='password'){
+            document.getElementById("mdp1").type ='text';
+            document.getElementById("btn1").innerHTML="<i class=\"fa fa-eye-slash\"></i>";
+        }
+
+        else{
+            document.getElementById("mdp1").type ='password';
+            document.getElementById("btn1").innerHTML="<i class=\"fa fa-eye\"></i>";
+        }
+
+    }
+
+      function afficher_pwd2() {
+
+        if ( document.getElementById("mdp2").type =='password'){
+            document.getElementById("mdp2").type ='text';
+            document.getElementById("btn2").innerHTML="<i class=\"fa fa-eye-slash\"></i>";
+        }
+        else{
+            document.getElementById("mdp2").type ='password';
+            document.getElementById("btn2").innerHTML="<i class=\"fa fa-eye\"></i>";
+        }
+    }
+
+     document.getElementById('email2').addEventListener('keydown',
+        function (foo)
+        {
+            if (foo.keyCode == 86 )
+            {
+              $('#err_email2').text('Coller est interdit sur cette zone de text');
+              foo.preventDefault();
+            }
+         });
+
+        document.getElementById('email2').addEventListener('keydown',
+        function (foo)
+        {
+            if (foo.keyCode == 86 )
+            {
+              $('#err_email2').text('Coller est interdit sur cette zone de text');
+              foo.preventDefault();
+            }
+         });
+
+        $('#email2').bind('paste', null, function() {
+          $('#err_email2').text('Coller est interdit sur cette zone de text');
+          return false
+        });
+
+     document.getElementById('mdp2').addEventListener('keydown',
+        function (foo)
+        {
+            if (foo.keyCode == 86  ) // Code clé du copier/coller
+            {
+              $('#err_mdp2').text('Coller est interdit sur cette zone de text');
+              foo.preventDefault();
+            }
+         });
+
+          $('#mdp2').bind('paste', null, function() {
+          $('#err_mdp2').text('Coller est interdit sur cette zone de text');
+          return false
+        });
+
+    function test_its() {
+        var str = document.getElementById("num_its").value;
+        var patt1 = /^[1-9]/g;
+        var res = str.match(patt1);
+        var taille = str.length;
+        if(res && taille==8){
+            $('#err_num_its').text('');
+            return true;
+        }
+        else
+        {
+             $('#err_num_its').text('Entrer un nombre de 8 chiffres et qui ne commence pas par zéro');
+            return false;
+        }
+    }
+     $(document).ready(function() {
+            document.telephone.reset();
+            oStringMask = new Mask("+### ## ## ### ##");
+            oStringMask.attach(document.telephone.phone1);
+            oStringMask.attach(document.telephone.phone2);
+             oStringMask.attach(document.telephone.phone3);
+
+        })
+
+</script>
+
+{% endblock %}

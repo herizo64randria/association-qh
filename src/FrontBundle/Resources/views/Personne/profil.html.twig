@@ -1,0 +1,748 @@
+{% extends '@Front/base_front.html.twig' %}
+{% block titre %}{{ personne.nomIts }}{% endblock %}
+{% block stylecss %}
+    <style>
+        img{
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+        }
+        #card_profil{
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            width: 100%;
+            border-radius: 0px;
+        }
+        .btn{
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+        }
+        .table{
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        }
+        #card_profil:hover {
+            box-shadow: 0 8px 35px 0 rgba(0,0,0,0.2);
+        }
+
+        .container {
+            padding: 2px 16px;
+        }
+         .card{
+             border-radius: 0px;
+             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+             width:900px;
+         }
+         .card:hover{
+             box-shadow: 0 8px 35px 0 rgba(0,0,0,0.2);
+         }
+        .left{ margin-left: 25px}
+
+        .emp-profile{
+
+        }
+        .profile-img{
+            text-align: center;
+        }
+        .profile-img img{
+            width: 70%;
+            height: 100%;
+        }
+        .profile-img .file {
+            position: relative;
+            overflow: hidden;
+            margin-top: -20%;
+            width: 70%;
+            border: none;
+            border-radius: 0;
+            font-size: 15px;
+            background: #212529b8;
+        }
+        .profile-img .file input {
+            position: absolute;
+            opacity: 0;
+            right: 0;
+            top: 0;
+        }
+        .profile-head h5{
+            color: #333;
+        }
+        .profile-head h6{
+            color: #0062cc;
+        }
+        .profile-edit-btn{
+            border: none;
+            border-radius: 1.5rem;
+            width: 70%;
+            padding: 2%;
+            font-weight: 600;
+            color: #6c757d;
+            cursor: pointer;
+        }
+        .proile-rating{
+            font-size: 12px;
+            color: #818182;
+            margin-top: 5%;
+        }
+        .proile-rating span{
+            color: #495057;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .profile-head .nav-tabs{
+            margin-bottom:5%;
+        }
+        .profile-head .nav-tabs .nav-link{
+            font-weight:600;
+            border: none;
+        }
+        .profile-head .nav-tabs .nav-link.active{
+            border: none;
+            border-bottom:2px solid #0062cc;
+        }
+        .profile-work{
+            padding: 14%;
+            margin-top: -15%;
+        }
+        .profile-work p{
+            font-size: 12px;
+            color: #818182;
+            font-weight: 600;
+            margin-top: 10%;
+        }
+        .profile-work a{
+            text-decoration: none;
+            color: #495057;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .profile-work ul{
+            list-style: none;
+        }
+        .profile-tab b{
+            font-weight: 600;
+        }
+        .profile-tab p{
+            font-weight: 600;
+            color: #0062cc;
+        }
+
+
+        #myProgress {
+            width: 100%;
+            background-color: #ffff;
+        }
+
+        #myBar {
+            width: 0%;
+            height: 30px;
+            background-color: #f0a3a3;
+            background-image: linear-gradient(to bottom, #f0a3a3, #f42323);
+
+        }
+        .meter {
+            height: 20px;  /* Can be anything */
+            position: relative;
+            background: #555;
+            -moz-border-radius: 25px;
+            -webkit-border-radius: 25px;
+            border-radius: 8px;
+            padding:0px;
+            padding-bottom:30px;
+            box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+        }
+        .meter > span {
+            display: block;
+            height: 100%;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            background-color: rgb(43,194,83);
+            background-image: linear-gradient(
+                    center bottom,
+                    rgb(43,194,83) 37%,
+                    rgb(84,240,84) 69%
+            );
+            box-shadow:
+                    inset 0 2px 9px  rgba(255,255,255,0.3),
+                    inset 0 -2px 6px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+
+        }
+    </style>
+
+{% endblock %}
+
+{% block sous_menu %} {% endblock %}
+
+{% block body_container %}
+
+    <div class="emp-profile"  >
+
+        <br><br>
+            <div class="row" style="font-family: 'Courier New';float: left;margin-left: -100px" >
+
+                <div class="col-md-4" >
+                    <div class="card" id="card_profil"  >
+                        <img style="width: 75% ;align-content: center;margin: 40px" src="{{ asset('/document/'~personne.photo) }}" alt="Avatar" class="img-fluid">
+                        <div class="container">
+                            <hr>
+                            <h4 class="text-info"><b> {{ personne.nom }} {{ personne.prenom }}</b></h4>
+                            <p>
+                                <b><i class="fa fa-id-card"></i> {{ 'liste_demande.numeroits'|trans }}</b> : {{ personne.numeroIts }}
+                                <br>
+                                <b><i class="fa fa-id-card"></i> {{ 'liste_demande.cin'|trans }}</b>  {{ personne.numerocin }}
+                                <br>
+                                <b><i class="fa fa-envelope"></i> Email :</b>{{ personne.email }}
+                                <br>
+                                <b><i class="fa fa-phone"></i> {{ 'inscription.num1'|trans }} : </b>
+                                 <ul>
+                                    <li>{{ personne.num1 }}</li>
+                                {% if personne.num2 %}
+                                     <li>{{ personne.num2 }}</li>
+                                {% endif %}
+                                {% if personne.num3 %}
+                                    <li>{{ personne.num3 }}</li>
+                                {% endif %}
+                                </ul>
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="profile-head">
+
+                                <ul class="nav nav-pills" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="pill" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ 'liste_demande.information'|trans }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profile-tab" data-toggle="pill" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{ 'liste_demande.procuration'|trans }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="doc-tab" data-toggle="pill" href="#doc" role="tab" aria-controls="profile" aria-selected="false">{{ 'liste_demande.document'|trans }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="invite-tab" data-toggle="pill" href="#invite" role="tab" aria-controls="profile" aria-selected="false" style="text-decoration: none;" >
+                                            <span class="badge badge-pill bg-danger count" style="border-radius:10px;color: #ffffff"></span>
+                                            <i class="fa fa-bell text-dark" style=""></i> Demande de suivie
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="personnesuivie-tab" data-toggle="pill" href="#suivie" role="tab" aria-controls="profile" aria-selected="false" style="text-decoration: none;" >
+                                            Personnes suivie
+                                        </a>
+
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <br>
+                            <div class="">
+                                <a id="modify" href="{{ path('modification_profil') }}"  class="btn btn-lg btn-success"><i class="fa fa-edit"></i> {{ 'liste_demande.modifier'|trans }}</a>
+                                {# <a href="#" id="btnproc" class="btn btn-lg btn-primary"><i class="fa fa-plus"></i> {{ 'liste_demande.ajouter'|trans }} </a>#}
+                                <a href="{{ path('procuration_ajouter') }}"  class="btn btn-lg btn-warning"><i class="fa fa-plus"></i> {{ 'liste_demande.ajouter'|trans }} </a>
+{#
+                                <a href="{{ path('liste-groupe') }}"  class="btn btn-lg btn-info"><i class="fa fa-eye"></i> {{ 'liste_demande.compte'|trans }} </a>
+#}
+                                <a href="{{ path('add_invite',{'id':personne.id}) }}"  class="btn btn-lg btn-info"><i class="fa fa-plus-circle"></i> {{ 'liste_demande.invite'|trans }} </a>
+
+                            </div>
+                            <br>
+                            <div>
+                                {% if purcentage!=100 %}
+                                    <div class="alert alert-danger" role="alert">
+                                        <h1>{{ 'liste_demande.profil'|trans }}:</h1>
+                                        <hr>
+                                        <div style="width: 620px;">
+                                            <label id="valeur" style="font-weight:bold;"></label>
+                                            <div id="myProgress" class="meter">
+                                                <span id="myBar"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script>
+
+                                        let i = 0;
+                                        let purcentage= {{ purcentage }}
+                                            function move() {
+                                                if (i == 0) {
+                                                    i = 1;
+                                                    let elem = document.getElementById("myBar");
+                                                    let width = 0;
+                                                    let id = setInterval(frame, 80);
+                                                    function frame() {
+                                                        if (width >= purcentage) {
+                                                            clearInterval(id);
+                                                            i = 0;
+                                                            setInterval(clignote,80);
+                                                            let modify=document.getElementById("modify");
+                                                            modify.innerHTML="<i class=\"fa fa-plus\"></i> Cliquez ici";
+                                                        } else {
+                                                            width++;
+                                                            elem.style.width = width + "%";
+                                                            document.getElementById("valeur").innerText=width+"%";
+                                                            document.getElementById("valeur").style.marginLeft=width+"%";
+                                                        }
+                                                    }
+                                                    function clignote() {
+                                                        let modify=document.getElementById("modify");
+                                                        let valeur=modify.getAttribute("class");
+
+
+
+                                                        if (valeur=="btn btn-lg btn-success"){
+                                                            modify.setAttribute("class","btn btn-lg btn-default")
+                                                        }
+                                                        else{
+                                                            modify.setAttribute("class","btn btn-lg btn-success")
+                                                        }
+
+
+
+
+                                                    }
+                                                }
+                                            }
+                                    </script>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+
+                        <div class="col-md-8">
+
+                            <div class="tab-content">
+
+                                <div class=" tab-pane fade show active" id="home">
+                                    <div class="card container" style="width:900px;">
+                                        <div class="card-body ">
+                                            <div class="row ">
+                                                <div class="col-md-6">
+
+                                                    <div  role="tabpanel" aria-bledby="home-tab">
+
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>{{ 'inscription.date_naissance'|trans }} :</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.dateNaissance|date('d/m/Y') }} </p>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>{{ 'inscription.lieu_naissance'|trans }} :</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.lieu }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>{{ 'inscription.adresse'|trans }}:</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.adresse }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>{{ 'inscription.Sexe'|trans }}:</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.sexe|trans }}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>{{ 'inscription.ville'|trans }}:</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.ville }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>Profession :</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.profession }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>{{ 'inscription.piece'|trans }}:</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.typePiece }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="tab-pane " >
+
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>{{ 'inscription.date_cin'|trans }}:</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.dateCin|date('d/m/Y') }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>{{ 'inscription.delivrer'|trans }}:</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.delivrer }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>{{ 'inscription.its'|trans }}:</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.nomIts }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>{{ 'inscription.moza'|trans }}:</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.moze.moze }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>{{ 'inscription.num_sabil'|trans }}:</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.numeroSabil }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-bledby="profile-tab">
+                                    <div class="row">
+                                        <div class="col-12 " style="width: 900px;">
+
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5>{{ 'liste_demande.liste_benef'|trans }}</h5>
+                                                    <table class="table table-striped" >
+                                                        <thead>
+                                                        <th>N°</th><th>{{ 'liste_demande.numeroits'|trans }}</th>  <th>{{ 'liste_demande.nom'|trans }}</th>  <th>{{ 'liste_demande.relation'|trans }} </th>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% set v=0 %}
+                                                        {% for procuration in procurations %}
+
+                                                            {% if procuration.type=="procuration" %}
+                                                                {% set v=v+1 %}
+                                                                <tr><td>{{ v }}</td><td>{{ procuration.numeroits }}</td><td>{{ procuration.nom }}</td><td>{{ procuration.relation }}</td></tr>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div> <br> <br>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5>{{ 'liste_demande.liste_benef1'|trans }}</h5>
+                                                    <a href="{{ path('lettre_heritage',{'id':personne.id}) }}" target="_blank" class="btn btn-danger"><i class="fa fa-file-pdf-o"></i> Généré une lettre de héritage</a>
+                                                    <br><br>
+                                                    <table class="table table-striped" >
+                                                        <thead>
+                                                        <th>N°</th><th>{{ 'liste_demande.numeroits'|trans }}</th>  <th>{{ 'liste_demande.nom'|trans }}</th>  <th>{{ 'liste_demande.relation'|trans }} </th>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% set j=0 %}
+                                                        {% for procuration in procurations %}
+
+                                                            {% if procuration.type=="heritier" %}
+                                                                {% set j=j+1 %}
+                                                                <tr><td>{{ j }}</td><td>{{ procuration.numeroits }}</td><td>{{ procuration.nom }}</td><td>{{ procuration.relation }}</td></tr>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-pane fade" id="doc" role="tabpanel" aria-bledby="doc-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row" >
+                                                <div class="col-12 ">
+                                                    <div class="profile-work">
+                                                        <p>{{ 'liste_demande.its'|trans }}</p>
+                                                        <a target="_blank" href="{{ asset('/document/'~personne.scan) }}"><img src="{{ asset('/document/'~personne.scan) }}" width="150" height="106"></a>
+                                                        <hr>
+                                                        <p>{{ 'liste_demande.cin1'|trans }}</p>
+
+                                                        {% for cin in cins  %}
+
+                                                            <a style="margin:10px;display: inline-block" target="_blank" href="{{ asset('/document/'~ cin.url) }}"><img src="{{ asset('/document/'~cin.url) }}" width="150" height="106"></a>
+
+
+                                                        {% endfor %}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="invite" role="tabpanel" aria-bledby="doc-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row" >
+                                                <div class="col-12 ">
+                                                    <div id="dropdown-menu">
+
+                                                    </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="tab-pane fade" id="suivie" role="tabpanel" aria-bledby="doc-tab">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row" >
+                                                <div class="col-12 ">
+
+                                                    <table class="table table-bordered table-inbox table-hover">
+                                                        <tr><th>Nméro ITS</th><th>Nom & Prénom</th><th>Action </th></tr>
+                                                        <tbody>
+                                                        {% for personne in personne.inviter1 %}
+                                                        <tr class="unread">
+
+                                                            <td class="view-message  dont-show">{{ personne.numeroIts }}</td>
+                                                            <td class="view-message ">{{ personne.nom~' '~personne.prenom }}</td>
+                                                            <td class="inbox-small-cells">
+                                                                <a style="text-decoration: none"
+                                                                   href="{{ path('paie_suprimerInvite',{'id':personne.id}) }}"><i class="fa fa-trash"></i> Suprimer</a>
+                                                                <a style="text-decoration: none"
+                                                                   href="{{ path('paie_listeInvite',{'id':personne.id}) }}"><i class="fa fa-eye"></i> voir compte</a>
+                                                            </td>
+
+                                                        </tr>
+
+                                                        </tbody>
+                                                        {% endfor %}
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 {#MODALE Procuration#}
+
+                <form action="{{ path('procuration_add') }}" method="post" autocomplete="off">
+                    <div id="proc" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-body">
+                                        <input type="hidden" name="textid" value="{{ personne.id}}">
+
+                                        <div class="card">
+                                            <div class="card-header bg-primary text-white"><i class="fa fa-list"></i> {{ 'versement_ajouter.soustitre'|trans }}
+                                            </div>
+                                            <div class="card-body">
+                                                <form action="#" method="post" >
+                                                    <div class="form-group">
+                                                        <b for="email">{{ 'liste_demande.numeroits'|trans }} :</b>
+                                                        <input readonly name="numero_id" value=" " type="hidden" class="form-control" id="numero_id"   required autocomplete="off">
+                                                        <input  name="numero_its" value="" type="number" class="form-control" id="numero_its"   required autocomplete="off">
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <b for="message">{{ 'liste_demande.nom'|trans }}</b>
+                                                        <input  name="nom" type="text" class="form-control" id="nom"   required autocomplete="off">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <b for="message">{{ 'liste_demande.relation'|trans }}</b>
+                                                        <input  name="relation" type="text" class="form-control" id="relation"   required autocomplete="off">
+                                                    </div>
+                                                    <div class="mx-auto">
+                                                        <button type="submit" class="btn btn-primary btn-block text-center">{{ 'versement_ajouter.valider'|trans }}</button>
+                                                        <button  data-dismiss="modal" class="btn btn-light btn-block text-center">Annuler</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+                <script>
+                    $('#btnproc').click(function(){
+                        alert('op')
+                        $('#proc').modal({show:true})
+                    });
+                    function confirmer(param){
+                        let id=$(param).attr('data-id')
+
+                        $.ajax({
+                            type: 'POST',
+                            data: {id :id},
+                            url: '{{ path('confirme_invite') }}',
+                            dataType: 'text',
+                            success: function(data) {
+                                $.ajax({
+                                    url:"{{ path('notifInvite_affichagAjax') }}",
+                                    method:"GET",
+                                    dataType:"text",
+
+                                    success:function(data)
+                                    {
+                                        listes = JSON.parse(data);
+                                        console.log(listes);
+
+                                        $('#dropdown-menu').html(listes[0].notification);
+                                        if( listes[0].compte > 0)
+                                        {
+                                            $('.count').html(listes[0].compte);
+                                        }
+
+
+                                    }
+                                });
+                            },
+                            error: function() {
+                                alert('La requête n\'a pas abouti');
+                            }
+
+                        });
+
+
+                    }
+                    function refuser(param){
+                        let id=$(param).attr('data-id')
+
+                        $.ajax({
+                            type: 'POST',
+                            data: {id :id},
+                            url: '{{ path('refuser_invite') }}',
+                            dataType: 'text',
+                            success: function(data) {
+                                alert('demande de suivie  refuser !')
+
+                                $.ajax({
+                                    url:"{{ path('notifInvite_affichagAjax') }}",
+                                    method:"GET",
+                                    dataType:"text",
+
+                                    success:function(data)
+                                    {
+                                        listes = JSON.parse(data);
+                                        console.log(listes);
+
+                                        $('#dropdown-menu').html(listes[0].notification);
+                                        if( listes[0].compte > 0)
+                                        {
+                                            $('.count').html(listes[0].compte);
+                                        }
+
+
+                                    }
+                                });
+                            },
+                            error: function() {
+                                alert('La requête n\'a pas abouti');
+                            }
+
+                        });
+
+
+                    }
+
+                </script>
+
+            </div>
+
+    </div>
+
+    </div>
+    <script>
+        $(document).ready(function(){
+
+            $.ajax({
+                url:"{{ path('notifInvite_affichagAjax') }}",
+                method:"GET",
+                dataType:"text",
+
+                success:function(data)
+                {
+                    listes = JSON.parse(data);
+                    console.log(listes);
+
+                    $('#dropdown-menu').html(listes[0].notification);
+                    if( listes[0].compte > 0)
+                    {
+                        $('.count').html(listes[0].compte);
+                    }
+
+
+                }
+            });
+        });
+    </script>
+{% endblock %}
+

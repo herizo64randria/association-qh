@@ -1,0 +1,57 @@
+<?php
+
+namespace CompteGroupeBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Membre
+ *
+ * @ORM\Table(name="membre")
+ * @ORM\Entity(repositoryClass="CompteGroupeBundle\Repository\MembreRepository")
+ */
+class Membre
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="datemembre", type="datetime")
+     */
+    private $datemembre;
+
+//    ---------------//////RELATION//////---------------
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CompteGroupeBundle\Entity\Groupe",
+    cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $groupe;
+    /**
+     * @ORM\ManyToOne(targetEntity="PersonneBundle\Entity\Personne",
+    cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $personne;
+
+//    ---------------//////RELATION//////---------------
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+

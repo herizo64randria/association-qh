@@ -1,0 +1,43 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+    <style>
+
+    </style>
+    <div class="container-fluid">
+
+    <div class="table-responsive">
+        <table class="table table-striped" >
+
+            <thead id="customers">
+            <tr>
+                <th scope="col">{{ 'listedemandeQH.numero'|trans }}</th>
+                <th scope="col">{{ 'listedemandeQH.date'|trans }}</th>
+                <th scope="col">{{ 'listedemandeQH.photo'|trans }}</th>
+                <th scope="col">{{ 'listedemandeQH.nom et prenom'|trans }}</th>
+                <th scope="col">{{ 'listedemandeQH.montant'|trans }}</th>
+                <th scope="col">{{ 'listedemandeQH.mois'|trans }}</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for demandeQH in demandeQHs %}
+
+
+                <tr>
+                    <td><a href="{{ path('etatQH',{ 'id' : demandeQH.id}) }}" >{{ demandeQH.numero }}</a></td>
+                    <td><a >11/12/2019</a></td>
+                    <td><img src="{{ asset('document/'~ demandeQH.personne.photo) }}" class="img img-fluid" alt="" width="50" height="50"></td>
+                    <td>{{ demandeQH.personne.nom ~' '~ demandeQH.personne.prenom }}</td>
+                    <td class="text-right">{{ demandeQH.montant|number_format('2',',',' ')}}</td>
+                    <td>{{ demandeQH.nombreMois }}</td>
+                    <td><a href="{{ path('_Mydetail',{id:demandeQH.id}) }}" class="btn btn-info"><i class="fa fa-eye fa-1x"></i></a></td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+{% endblock %}

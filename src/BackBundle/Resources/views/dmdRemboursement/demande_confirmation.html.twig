@@ -1,0 +1,196 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}{{ 'demande_confirmation.titre'|trans }}{% endblock %}
+{% block body_container %}
+
+    <style type="text/css">
+        ul{box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+        }
+        #mc_embed_signup{box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);color: #000000 }
+        /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
+           We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+
+    </style>
+<div class="row">
+    <div id="mc_embed_signup" class=" col-12">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-12">
+                    <br>
+                    <h2 class="text-dark text-center">Information sur le demande</h2>
+                    <hr class="border-white">
+                    {% if(demandes.etat == "En attente de confirmation")%}
+                        <div class="text-center">
+
+                            <a   class="btn-success btn-lg  center"  name="confirmer" id="confirme">Confirmer</a>
+                            <br><br>
+                            <a href="{{ path('demande_refuser',{'id':demandes.id}) }}" class="btn-danger btn-lg  center"   >Refuser </a>
+                        </div>
+                        <br>
+                        <hr class="border-white">
+                    {% endif%}
+                    <div class="row">
+                        <div class="col-4">
+                            <ul style="list-style:none ;"class="container">
+                                <br>
+                                <li class="align-content-center"><img src="{{ asset('document/'~demandes.personne.photo) }}" class="img img-thumbnail" alt="" width="250" height="150">
+                                    <hr></li>
+                                <li>
+                               <span style="text-decoration: underline">{{ demandes.personne.nom~' '~ demandes.personne.prenom}}</span> </h4>
+
+                                </li>
+                                <li>
+                                   <b>Contact :</b> <span>{{ demandes.personne.num1 ~"/"~demandes.personne.num2}}</span> </h4>
+
+                                </li>
+                                <li>
+                                    <b>N° ITS :</b> <span>{{ demandes.personne.numeroIts}}</span> </h4>
+
+                                </li>
+                                <br>
+                            </ul>
+
+                        </div>
+                        <div class="col-7">
+                            {% set color = '' %}
+                            {% if (demandes.userConfirme)%}
+                                {% set color = 'text-success' %}
+                            {% endif%}
+                            {% if (demandes.userRefuser)%}
+                                {% set color = 'text-danger' %}
+                            {% endif%}
+                            <h4 ><b>Etat: </b><span class="{{ color }}">{{ demandes.etat}} </span></h4>
+                            {% if (demandes.userConfirme)%}
+                                <h4 ><b>Accepter par: </b><span >{{ demandes.userConfirme.username }} </span></h4>
+                            {% endif%}
+                            {% if (demandes.userRefuser)%}
+                                <h4 ><b>Refuser par: </b><span >{{ demandes.userRefuser.username}}</span> </h4>
+                            {% endif%}
+
+                            <hr>
+                            <h4  > <b>Numéro de demande: </b><span>{{ demandes.numero }} </span></h4>
+                            <h4 ><b>Date de demande: </b><span>{{ demandes.date|date('d/m/Y') }}</span> </h4>
+                            <h4 ><b>Montant: </b><span>{{ demandes.montant|number_format('2',',',' ') ~" Ar"}}</span> </h4>
+                            <h4 ><b>Type de chèque: </b>
+                                {% if demandes.typeCheque==1 %}
+                                    <span>Barrée</span>
+
+                                {% else %}
+                                    <span>Non barrée</span>
+
+                                {% endif %}
+
+                            </h4>
+
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+    <form action="#" method="post" enctype="multipart/form-data">
+        <div id="confirmer" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="text-center text-primary" >Confirmation du demande de Remboursement</h5>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="">
+                            <input type="hidden" name="formulaire" value="formulaire">
+                            <table>
+                                <tr>
+                                    <td >Banque: </td>
+                                    <td>
+                                        <input list="listBanque" class="form-control" id="banque" style="height: 30px" name="banque">
+
+                                        <datalist id="listBanque">
+                                            <option value="BMOI"  >		BMOI Madagascar </option>
+                                            <option value="BNI" >		BNI Madagascar </option>
+                                            <option value="MCB" >		MCB Madagascar </option>
+                                            <option value="SBM" >		SBM Madagascar </option>
+                                            <option value="BFV-SG" >		BFV-SG </option>
+                                            <option value="BOA" >		BOA Madagascar </option>
+                                            <option value="ABM" >		ABM </option>
+                                            <option value="BGFIBank" >		BGFIBank Madagascar </option>
+                                            <option value="Microcred" >		Microcred Banque Madagascar </option>
+                                            <option value="BM Madagascar" >		BM Madagascar </option>
+                                            <option value="SIPEM" >		SIPEM </option>
+                                            <option value="CCP" >		CCP </option>
+                                            <option value="DGT" >		DGT </option>
+                                            <option value="BFM" >		BFM </option>
+                                            <option value="Autre"  >	Autre </option>
+                                        </datalist>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>N°  Chèque: </td>
+                                    <td>
+                                        <input type="text" class="form-control form-control-moyen only_phone_number" name="num_cheque" id="num_cheque"autocomplete="off">
+                                        <i id="p_num_cheque"></i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Libellé: </td>
+                                    <td>
+                                        <textarea class="form-control form-control-moyen" name="libelle_cheque" id="libelle_cheque"autocomplete="off"  cols="10" rows="10"></textarea>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>Fichier</td>
+                                    <td>
+                                        <input type="file" class="form-control" name="fichier_cheque">
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-primary" name="confirmer" type="submit">Valider</button>
+                        <button class="btn" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        $('#confirme').click(function(){
+            $('#confirmer').modal({show:true})
+        });
+    </script>
+    <form action="#" method="post" >
+        <div id="refuser" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="text-center text-primary" >Confirmation du demande de Remboursement</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>My modal content here…</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn-primary btn-lg" data-dismiss="modal" type="submit" value="Valider">
+                        <button class="btn-primary btn-lg" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        $('#Refuser').click(function(){
+            $('#refuser').modal({show:true})
+        });
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,479 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+
+{% block body_container %}
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        input[type=datetime],.cal{
+            width: 90%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            height: 50px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .contenu {
+            border-radius: 0px;
+            background-color: #f2f2f2;
+            margin-top: 20px;
+            margin-left: 200px;
+            padding: 50px;
+            width: 850px;
+        }
+
+        .col-4 {
+            float: left;
+            width: 4%;
+            margin-top: 6px;
+        }
+
+        .col-8 {
+            float: left;
+            width: 8%;
+            margin-top: 6px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .col-4, .col-8, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+    </style>
+
+    <div class="contenu align-content-center">
+        <h3 class="text-primary ">
+            <img src="{{ asset('Images/societer.png') }}" class="img img-fluid" alt="" width="60" height="60">
+            {{ 'editdmdsociete.titre'|trans}}
+        </h3>
+        <hr><br>
+        <form action="#" method="post" autocomplete="off" name="telephone" enctype="multipart/form-data">
+            <div class="row">
+
+                <div class="col-4">
+                    <label for="lieu">{{ 'editdmdsociete.nom'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.nomcin }}"  type="text" id="nom" name="nom"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="adresse">{{ 'editdmdsociete.prenom'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.prenomcin }}" type="text" id="prenom" name="prenom"  >
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-4">
+                    <label for="ne">{{ 'editdmdsociete.né'|trans }}</label>
+                </div>
+
+                <div class="input-group date col-8">
+                    <input  value="{% if garant.dateNaissance %}{{ garant.dateNaissance|date('d/m/Y') }}{% endif %}"  type="datetime" id="ne" name="ne"  >
+                    <div class="input-group-append" data-target="#ne" data-toggle="datetimepicker">
+                        <div class="input-group-text cal"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+
+                <script>
+                    $('#ne').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                </script>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="lieu">{{ 'editdmdsociete.lieu'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.lieu }}" type="text" id="lieu" name="lieu"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="adresse">{{ 'editdmdsociete.adresse'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input  value="{{ garant.adresse }}" type="text" id="adresse" name="adresse"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="ville">{{ 'editdmdsociete.ville'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input   value="{{ garant.ville }}" type="text" id="ville" name="ville"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="nationalite">{{ 'editdmdsociete.nationalite'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input  value="{{ garant.nationalite}}"  type="text" id="nationalite" name="nationalite"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="sexe">{{ 'editdmdsociete.sexe'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <label class="radio inline">
+                        <input  type="radio" name="sexe" id="sexeH" value="H" checked>
+                        <span> {{ 'editdmdsociete.Male'|trans }} </span>
+                    </label>
+                    <label class="radio inline">
+                        <input  type="radio" name="sexe" id="sexeF" value="F">
+                        <span>{{ 'editdmdsociete.Female'|trans }} </span>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="type">{{ 'editdmdsociete.type'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    {% if (garant.typePiece)%}
+                        <input  value="{{ garant.typePiece  }}" type="text" id="type" name="type"  >
+                    {% else %}
+                        <select id="type" name="type">
+                            <option value="Passesport">Passesport</option>
+                            <option value="CIN">CIN</option>
+                            <option value="Carte de résidence">Carte de résidence</option>
+                        </select>
+                    {% endif%}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="numero">{{ 'editdmdsociete.numero'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.numeroPiece }}" type="text" id="numero" name="numero"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="date">{{ 'editdmdsociete.date'|trans }}</label>
+                </div>
+                <div class="input-group date col-8">
+                    <input value="{% if garant.datePiece %}{{ garant.datePiece|date('d/m/Y') }}{% endif %}" type="datetime" id="date" name="date"  >
+                    <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
+                        <div class="input-group-text cal"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+
+                <script>
+                    $('#date').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                </script>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="villepiece">{{ 'editdmdsociete.villepiece'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.villePiece }}" type="text" id="villepiece" name="villepiece"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="pays">{{ 'editdmdsociete.pays'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.paysPiece }}"type="text" id="pays" name="pays"  >
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="profession">{{ 'editdmdsociete.profession'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.profession }}" type="text" id="profession" name="profession"  >
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="tel1">{{ 'editdmdsociete.tel1'|trans }}</label>
+                </div>
+
+                <div class="col-8">
+                    {% if(garant.tel1) %}
+                        <input value="{{ garant.tel1 }}" id="tel1" name="tel1" type="text"  autocomplete="off">
+                    {% else %}
+                        <input id="tel1" name="tel1" type="text"  onsubmit="return false;" list="defaultTels" autocomplete="off">
+
+                        <datalist id="defaultTels">
+                            <option value="+261 32 ">
+                            <option value="+261 33 ">
+                            <option value="+261 34 ">
+
+                        </datalist>
+                    {% endif %}
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="tel2">{{ 'editdmdsociete.tel2'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    {% if(garant.tel2) %}
+                        <input value="{{ garant.tel2 }}" id="tel2" name="tel2" type="text"  autocomplete="off">
+                    {% else %}
+                        <input id="tel2" name="tel2" type="text"  onsubmit="return false;" list="defaultTels" autocomplete="off">
+
+                        <datalist id="defaultTels">
+                            <option value="+261 32 ">
+                            <option value="+261 33 ">
+                            <option value="+261 34 ">
+
+                        </datalist>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="email">{{ 'editdmdsociete.email'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.email }}" type="text" id="email" name="email"  >
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="numerocheque1">{{ 'editdmdsociete.numerocheque'|trans }}1</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.numerocheque1 }}" type="text" id="numerocheque1" name="numerocheque1"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="banquecheque1">{{ 'editdmdsociete.banquecheque'|trans }}1</label>
+                </div>
+                <div class="col-8">
+                    <input  value="{{ garant.banquecheque1 }}"type="text" id="banquecheque1" name="banquecheque1"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="montantcheque1">{{ 'editdmdsociete.montantcheque'|trans }}1 (Ariary)</label>
+                </div>
+                <div class="col-8">
+                    <input readonly type="text" value="{{ garant.montantcheque1 }}" id="montantcheque1" name="montantcheque1"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="datecheque1">{{ 'editdmdsociete.datecheque'|trans }}1</label>
+                </div>
+                <div class="input-group date col-8">
+                    <input value="{% if garant.datetcheque1 %}{{ garant.datetcheque1|date('d/m/Y') }}{% endif %}"type="datetime" id="datecheque1" name="datecheque1"  >
+                    <div class="input-group-append" data-target="#datecheque1" data-toggle="datetimepicker">
+                        <div class="input-group-text cal"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+
+                <script>
+                    $('#datecheque1').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                </script>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="numerocheque2">{{ 'editdmdsociete.numerocheque'|trans }}2</label>
+                </div>
+                <div class="col-8">
+                    <input  value="{{ garant.numerocheque2 }}"type="text" id="numerocheque2" name="numerocheque2"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="banquecheque2">{{ 'editdmdsociete.banquecheque'|trans }}2</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.banquecheque2 }}"type="text" id="banquecheque2" name="banquecheque2"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="montantcheque2">{{ 'editdmdsociete.montantcheque'|trans }}2 (Ariary)</label>
+                </div>
+                <div class="col-8">
+                    <input readonly type="text" value="{{ garant.montantcheque2 }} " id="montantcheque2" name="montantcheque2"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="datecheque2">{{ 'editdmdsociete.datecheque'|trans }}2</label>
+                </div>
+                <div class="input-group date col-8">
+                    <input value="{% if garant.datetcheque2 %}{{ garant.datetcheque2|date('d/m/Y') }}{% endif %}" type="datetime" id="datecheque2" name="datecheque2"  >
+                    <div class="input-group-append" data-target="#datecheque2" data-toggle="datetimepicker">
+                        <div class="input-group-text cal"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+
+                <script>
+                    $('#datecheque2').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                </script>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="numerocheque3">{{ 'editdmdsociete.numerocheque'|trans }}3</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.numerocheque3 }}" type="text" id="numerocheque3" name="numerocheque3"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="banquecheque3">{{ 'editdmdsociete.banquecheque'|trans }}3</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.banquecheque3 }}" type="text" id="banquecheque3" name="banquecheque3"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="montantcheque3">{{ 'editdmdsociete.montantcheque'|trans }}3 (Ariary) </label>
+                </div>
+                <div class="col-8">
+                    <input readonly type="text" value="{{ garant.montantcheque3 }}" id="montantcheque3" name="montantcheque3"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="datecheque3">{{ 'editdmdsociete.datecheque'|trans }}3</label>
+                </div>
+                <div class="input-group date col-8">
+                    <input value="{% if garant.datetcheque3 %}{{ garant.datetcheque3|date('d/m/Y') }}{% endif %}" type="datetime" id="datecheque3" name="datecheque3"  >
+                    <div class="input-group-append" data-target="#datecheque3" data-toggle="datetimepicker">
+                        <div class="input-group-text cal"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+
+                <script>
+                    $('#datecheque3').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                </script>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="nomheritier">{{ 'editdmdsociete.nomheritier'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.nomheritier1 }}"  type="text" id="nomheritier" name="nomheritier"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="prenomheritier">{{ 'editdmdsociete.prenomheritier'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input value="{{ garant.prenomheritier1 }}"  type="text" id="prenomheritier" name="prenomheritier"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="piece">{{ 'editdmdsociete.piece'|trans }} :</label>
+                </div>
+                <div class="col-8">
+                    {% for cin in garant.cin  %}
+
+                    <a href="{{ asset('/document/'~ cin.url) }}" target="_blank">
+                        <img src="{{ asset('/document/'~ cin.url) }}" width="150" height="106">
+                    </a>
+
+                    {% endfor %}<br>
+                    <input  type="file"  id="cin" name="cin[]"  multiple  >
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="scanits">{{ 'editdmdsociete.its'|trans }} :</label>
+                </div>
+                <br>
+                <div class="col-8">
+
+                    <a href="{{ asset('/document/'~ garant.scanits) }}" target="_blank">
+                        <img src="{{ asset('/document/'~ garant.scanits) }}" width="150" height="106">
+                    </a><br>
+                    <input  type="file"  id="scanits" name="scanits"  multiple  >
+                </div>
+
+            </div>
+            <br>
+            <div class="float-right">
+                <input type="submit" class="btn btn-success btn-lg float-right" value="valider">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            document.telephone.reset();
+            oStringMask = new Mask("+### ## ## ### ##");
+            oStringMask.attach(document.telephone.tel1);
+            oStringMask.attach(document.telephone.tel2);
+
+
+        })
+        /* function text(id){
+             if($(id).val()!=''){$(id).addClass('alert-success');
+                 $(id).removeClass('alert-danger');
+             }
+             else{$(id).addClass('alert-danger');
+                 $(id).removeClass('alert-success');
+             }
+         }*/
+
+    </script>
+{% endblock %}

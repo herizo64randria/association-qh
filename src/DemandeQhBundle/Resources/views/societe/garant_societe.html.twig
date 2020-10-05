@@ -1,0 +1,487 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+
+{% block body_container %}
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 0px;
+            resize: vertical;
+        }
+        input[type=file]{
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 0px;
+            resize: vertical;
+        }
+        input[type=datetime],.cal{
+            width: 90%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 0px;
+            height: 50px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .contenu {
+            border-radius: 0px;
+            background-color: #f2f2f2;
+            margin-top: 20px;
+            margin-left: 200px;
+            padding: 50px;
+            width: 850px;
+        }
+
+        .col-4 {
+            float: left;
+            width: 4%;
+            margin-top: 6px;
+        }
+
+        .col-8 {
+            float: left;
+            width: 8%;
+            margin-top: 6px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .col-4, .col-8, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+    </style>
+
+    <div class="contenu align-content-center">
+        <h3 class="text-primary ">
+            <img src="{{ asset('Images/societer.png') }}" class="img img-fluid" alt="" width="60" height="60">
+            {{ 'garantsociete.titre'|trans}}
+        </h3>
+        <hr><br>
+        <form action="#" method="POST"  autocomplete="off" name="telephone" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-4">
+                    <label for="lieu">{{ 'garantsociete.nom'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input   type="text" id="nom" name="nom" >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="prenom">{{ 'garantsociete.prenom'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="prenom" name="prenom"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="nomits">{{ 'garantsociete.nomits'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="nomits" name="nomits"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="num_its">{{ 'garantsociete.its'|trans }} <b class="text-danger" id="err_num_its"></b></label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="num_its" name="num_its"  >
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-4">
+                    <label for="ne">{{ 'garantsociete.né'|trans }}</label>
+                </div>
+
+                <div class="input-group date col-8">
+
+                    <input   type="datetime" id="ne" name="ne"  >
+
+                    <div class="input-group-append" data-target="#ne" data-toggle="datetimepicker" >
+                        <div class="input-group-text cal"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+                <script>
+                    $('#ne').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                </script>
+
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="lieu">{{ 'garantsociete.lieu'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="lieu" name="lieu"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="adresse">{{ 'garantsociete.adresse'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input   type="text" id="adresse" name="adresse"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="ville">{{ 'garantsociete.ville'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input    type="text" id="ville" name="ville"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="nationalite">{{ 'garantsociete.nationalite'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input   type="text" id="nationalite" name="nationalite"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="sexe">{{ 'garantsociete.sexe'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <label class="radio inline">
+                        <input  type="radio" name="sexe" id="sexeH" value="H" checked>
+                        <span> {{ 'garantsociete.Male'|trans }} </span>
+                    </label>
+                    <label class="radio inline">
+                        <input  type="radio" name="sexe" id="sexeF" value="F">
+                        <span>{{ 'garantsociete.Female'|trans }} </span>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="type">{{ 'garantsociete.type'|trans }}</label>
+                </div>
+                <div class="col-8">
+
+                        <select id="type" name="type">
+                            <option value="Passesport">Passesport</option>
+                            <option value="CIN">CIN</option>
+                            <option value="Carte de résidence">Carte de résidence</option>
+                        </select>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="numero">{{ 'garantsociete.numero'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="numero" name="numero"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="date">{{ 'garantsociete.date'|trans }}</label>
+                </div>
+                <div class="input-group date col-8">
+                    <input  type="datetime" id="date" name="date"  >
+                    <div class="input-group-append" data-target="#date" data-toggle="datetimepicker" >
+                        <div class="input-group-text cal"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+                <script>
+                    $('#date').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                </script>
+
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="villepiece">{{ 'garantsociete.villepiece'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="villepiece" name="villepiece"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="pays">{{ 'garantsociete.pays'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" id="pays" name="pays"  >
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="profession">{{ 'garantsociete.profession'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="profession" name="profession"  >
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="tel1">{{ 'garantsociete.tel1'|trans }}</label>
+                </div>
+
+                <div class="col-8">
+
+                        <input id="tel1" name="tel1" type="text"  onsubmit="return false;" list="defaultTels" autocomplete="off">
+
+                        <datalist id="defaultTels">
+                            <option value="+261 32 ">
+                            <option value="+261 33 ">
+                            <option value="+261 34 ">
+
+                        </datalist>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="tel2">{{ 'garantsociete.tel2'|trans }}</label>
+                </div>
+                <div class="col-8">
+
+                        <input id="tel2" name="tel2" type="text"  onsubmit="return false;" list="defaultTels" autocomplete="off">
+
+                        <datalist id="defaultTels">
+                            <option value="+261 32 ">
+                            <option value="+261 33 ">
+                            <option value="+261 34 ">
+
+                        </datalist>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="email">{{ 'garantsociete.email'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="email" name="email"  >
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="numerocheque1">{{ 'garantsociete.numerocheque'|trans }}1</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="numerocheque1" name="numerocheque1"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="banquecheque1">{{ 'garantsociete.banquecheque'|trans }}1</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="banquecheque1" name="banquecheque1"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="montantcheque1">{{ 'garantsociete.montantcheque'|trans }}1 (Ariary)</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="montantcheque1" name="montantcheque1"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="datecheque1">{{ 'garantsociete.datecheque'|trans }}1</label>
+                </div>
+                <div class="input-group date col-8">
+                    <input type="datetime" id="datecheque1" name="datecheque1"  >
+                    <div class="input-group-append" data-target="#datecheque1" data-toggle="datetimepicker">
+                        <div class="input-group-text cal"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+                <script>
+                    $('#datecheque1').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                </script>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="numerocheque2">{{ 'garantsociete.numerocheque'|trans }}2</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="numerocheque2" name="numerocheque2"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="banquecheque2">{{ 'garantsociete.banquecheque'|trans }}2</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" id="banquecheque2" name="banquecheque2"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="montantcheque2">{{ 'garantsociete.montantcheque'|trans }}2 (Ariary)</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" id="montantcheque2" name="montantcheque2"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="datecheque2">{{ 'garantsociete.datecheque'|trans }}2</label>
+                </div>
+                <div class="input-group date col-8">
+                    <input type="datetime" id="datecheque2" name="datecheque2"  >
+                    <div class="input-group-append" data-target="#datecheque2" data-toggle="datetimepicker">
+                        <div class="input-group-text cal"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+                <script>
+                    $('#datecheque2').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                </script>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="numerocheque3">{{ 'garantsociete.numerocheque'|trans }}3</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="numerocheque3" name="numerocheque3"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="banquecheque3">{{ 'garantsociete.banquecheque'|trans }}3</label>
+                </div>
+                <div class="col-8">
+                    <input  type="text" id="banquecheque3" name="banquecheque3"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="montantcheque3">{{ 'garantsociete.montantcheque'|trans }}3 (Ariary) </label>
+                </div>
+                <div class="col-8">
+                    <input  type="text"  id="montantcheque3" name="montantcheque3"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="datecheque3">{{ 'garantsociete.datecheque'|trans }}3</label>
+                </div>
+                <div class="input-group date col-8">
+                    <input  type="datetime" id="datecheque3" name="datecheque3"  >
+                    <div class="input-group-append" data-target="#datecheque3" data-toggle="datetimepicker" >
+                        <div class="input-group-text cal"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+                <script>
+                    $('#datecheque3').datetimepicker({
+                        format: 'DD/MM/YYYY',
+                    });
+                </script>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="cin">{{ 'garantsociete.cin'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input  type="file"  id="cin" name="cin[]"  multiple  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="scanits">{{ 'garantsociete.scanits'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input  type="file"  id="scanits" name="scanits"   >
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-4">
+                    <label for="nomheritier">{{ 'garantsociete.nomheritier'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input   type="text" id="nomheritier" name="nomheritier"  >
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label for="prenomheritier">{{ 'garantsociete.prenomheritier'|trans }}</label>
+                </div>
+                <div class="col-8">
+                    <input type="text" id="prenomheritier" name="prenomheritier"  >
+                </div>
+            </div>
+            <br>
+            <div class="float-right">
+
+                <button type="submit" id="btn" class="btn btn-success btn-lg float-right">
+                    <i class="fa fa-save fa-2x"></i> {{ 'garantsociete.btn'|trans }}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        $("#btn").click(function () {
+           if(test_its()){ return true}
+           else { return false}
+        })
+        function test_its() {
+            var str = document.getElementById("num_its").value;
+            var patt1 = /^[1-9]/g;
+            var res = str.match(patt1);
+            var taille = str.length;
+            if(res && taille==8){
+                $('#err_num_its').text('');
+                return true;
+            }
+            else
+            {
+                $('#err_num_its').text('Entrer un nombre de 8 chiffres et qui ne commence pas par zéro');
+                return false;
+            }
+        }
+    </script>
+
+{% endblock %}

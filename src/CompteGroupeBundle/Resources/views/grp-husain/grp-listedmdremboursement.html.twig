@@ -1,0 +1,98 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 50px;
+            height: 50px;
+            background-color: #0088CC;
+        }
+        col-lg .groove {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,input,select,textarea,p {
+            text-shadow: 0.1px 0.1px 1px black;
+
+        }
+        button {
+            border-radius: 0px;
+            box-shadow: 4px 4px 0px black;
+        }
+
+    </style>
+
+    <div class="container-fluid">
+        <br>
+        <div class="card text-center">
+            <div class="card-header">
+                <h3 class="text-info"><img src="{{ asset('/document/'~groupe.photo) }}" class="img img-fluid" alt="" width="50" height="50">
+                    {{ 'grp-listdmdremboursement.titre'|trans  }} {{ groupe.nomgroup }}
+                </h3>
+            </div>
+            <div class="card-body">
+                <form class="container" id="formmembre" action="#" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <div class="row">
+
+                            <div class="col-12">
+
+                                <table class="table table-striped">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">{{ 'grp-listdmdremboursement.date'|trans }}</th>
+
+                                        <th scope="col">{{ 'grp-listdmdremboursement.montant'|trans }}</th>
+                                        <th scope="col">{{ 'grp-listdmdremboursement.etat'|trans }}</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% set solde = 0 %}
+                                    {% set font = "font-style: italic" %}
+                                    {% set color = "color: #696969" %}
+                                    {% set couleur = ' ' %}
+                                    {% for remboursement in remboursements %}
+
+                                        {% if remboursement.etat ==  'En attente de confirmation' %}
+                                            {% set couleur = 'bg-primary' %}
+                                        {% endif %}
+
+                                        {% if remboursement.etat == 'Acceptée' %}
+                                            {% set couleur = 'bg-success' %}
+                                        {% endif %}
+
+                                        {% if  remboursement.etat == 'Refusée' %}
+                                            {% set couleur = 'bg-danger' %}
+                                        {% endif %} 
+
+                                        <tr>
+
+                                            <td >
+                                                {{ remboursement.date|date('d/m/Y') }}
+                                            </td>
+                                            <td >{{ remboursement.montant|number_format(2, ',', ' ') }}</td>
+
+                                            <td class="text-center {{ couleur }} " style="text-align: center; ">
+                                                {{ remboursement.etat }}
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

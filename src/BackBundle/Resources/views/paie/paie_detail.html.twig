@@ -1,0 +1,678 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}
+
+    {% endblock %}
+{% block body_container %}
+    <style>
+        .btn-lg,img{box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+        }
+        .btn-lg:hover{
+            text-decoration: none;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        }
+       li{font-size: 13px}
+        .card{box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);}
+
+        input[type="radio"].demo2 {
+            display: none;
+        }
+        input[type="radio"].demo2 + label {
+            padding: 0.5rem 1rem;
+            font-size: 1.25rem;
+            line-height: 1.5;
+            border-radius: 0.3rem;
+            color: #fff;
+            background-color: #6c757d;
+            border: 1px solid transparent;
+            transition: all 0.15s ease-in-out;
+        }
+        input[type="radio"].demo2.demoyes:hover + label {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        input[type="radio"].demo2.demoyes:checked + label {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        input[type="radio"].demo2.demono:hover + label {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+        input[type="radio"].demo2.demono:checked + label {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+    </style>
+    <br>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-3 container">
+                        <ul style="list-style:none ;"class="container">
+                            <br>
+                            <li><img src="{{ asset('document/'~pers.photo) }}" class="img img-thumbnail" alt="" width="150" height="150">
+                                <hr></li>
+                            <li><b>{{ 'compte_liste.nom'|trans }}</b> {{ pers.nom  }}</li>
+                            <li><b>{{ 'compte_liste.prenom'|trans }}</b> {{  pers.prenom }}</li>
+                            <li><b>{{ 'compte_liste.numero'|trans }}</b> {{ pers.numeroIts }}</li>
+                            <li><b>{{ 'compte_liste.contact'|trans }}</b>{{ pers.num1 }}</li>
+                            <hr>
+                            <li>
+                                <h4>COMPTE PAIE </h4>
+                                <p style="font-size: medium" id="paie" class="text-success">1000 000  0000</p>
+                                <hr>
+                                <br></li>
+                            <li><a href="#"  id="vers1" class="btn-info btn-lg">{{ 'compte_liste.credit'|trans }}</a><br><br></li>
+                            <li><a href="#"  id="rembourse"  class="btn-lg btn-success "> {{ 'compte_liste.debit'|trans }}</a></li>
+                            <li><br><a href="#"  id="suiviep"  class=" btn-lg btn-warning "> {{ 'compte_liste.suivie'|trans }}</a></li>
+
+                            <br>
+                        </ul>
+            </div>
+            <div class="col-9">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table  table-striped" id="myTable">
+                            <thead >
+                            <tr>
+                                <th >{{ 'compte_liste.date'|trans }}</th>
+                                <th >{{ 'compte_liste.libelle'|trans }}</th>
+                                <th >{{ 'compte_liste.credit'|trans }}</th>
+                                <th >{{ 'compte_liste.debit'|trans }}</th>
+                                <th  class="text-right" style="display: table-cell" >{{ 'compte_liste.solde'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set solde = 0 %}
+                            {% set font = "font-style: italic" %}
+                            {% set color = "color: #696969" %}
+                            {% for historique in historique %}
+                                <tr>
+                                    <td style=" {% if historique.type=="0" %}{{ font ~ ';' ~ color  }} {% endif %}">{{ historique.date|date('d/m/Y') }}</td>
+                                    <td style=" {% if historique.type=="0" %}{{ font ~ ';' ~ color  }} {% endif %};">{{ historique.libelle }}</td>
+                                    <td class="text-right" style="display: table-cell" >
+                                        {% if historique.type=="credit" %}
+                                            {{ historique.montant|number_format(2, ',', ' ') }}
+                                            {% set solde = solde + historique.montant %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-right" style="display: table-cell">
+                                        {% if historique.type=="debit" %}
+                                            {{ historique.montant|number_format(2, ',', ' ') }}
+                                            {% set solde = solde - historique.montant %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-right" style="white-space:nowrap;display: table-cell" width="115px" >
+                                        {{ solde|number_format(2, ',', ' ') }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><strong>{{ 'compte_liste.totale'|trans }}</strong></td>
+                                <td id="somme" style="white-space: nowrap">{{ solde|number_format(2, ',', ' ')~" Ar" }}</td>
+                                <td class="text-left" ></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#MODALE VERSEMENT#}
+    <form action="{{ path('versement_add') }}" method="post" enctype="multipart/form-data">
+        <div id="vers" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+
+                        <div class="">
+                            <input type="hidden" name="textid" value="{{ pers.id}}">
+
+                            <div class="card">
+                                <div class="card-header bg-primary text-white"><i class="fa fa-list"></i> {{ 'versement_ajouter.soustitre'|trans }}
+                                </div>
+                                <div class="card-body">
+                                    <form action="#" method="post" autocomplete="off">
+
+                                      {#  <div class="form-group">
+                                            <label for="email">{{ 'versement_ajouter.numero'|trans }}</label>
+                                            <input readonly name="numero_id" value="{{ numero.id}}" type="hidden" class="form-control" id="numero_id"   required autocomplete="off">
+                                            <input readonly name="numero_compte" value="{{ numero.numeroCompte}}" type="text" class="form-control" id="numero_compte"   required autocomplete="off">
+                                        </div>#}
+                                        <div class="form-group">
+                                            <label for="message">{{ 'versement_ajouter.date'|trans }}</label>
+                                            <div class="input-group date" id="datetime_versement" data-target-input="nearest">
+                                                <input type="text" id="datetime_versement" name="datetime_versement"  class="form-control datetimepicker-input" data-target="#datetime_versement"/>
+                                                <div class="input-group-append" data-target="#datetime_versement" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+
+                                            <script>
+                                                $('#datetime_versement').datetimepicker({
+                                                    format: 'DD/MM/YYYY',
+                                                });
+                                            </script>
+                                        </div>
+                                        <div class="form-group" >
+                                            <label for="message">{{ 'versement_ajouter.paiement'|trans }}</label>
+
+                                            <input id="paiement" name="paiement" type="text"  class="form-control "   list="defaultPaiement" >
+                                            <datalist id="defaultPaiement">
+
+                                                <option value="Espèce">
+                                                <option value="Chèque">
+
+                                            </datalist>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message">{{ 'versement_ajouter.montant'|trans }}</label>
+                                            <input  name="montant" type="text" class="form-control" id="montant"   required autocomplete="off">
+                                        </div>
+                                        <div class="form-group " >
+                                            <label for="message">{{ 'versement_ajouter.caisse'|trans }}</label>
+
+                                            <input id="caisse" name="caisse" type="text"  class="form-control " list="defaultCaisse" >
+                                            <datalist id="defaultCaisse">
+                                                {% for caisse in  caisses %}
+                                                <option value="{{ caisse.nom }}">
+                                                    {% endfor %}
+
+                                            </datalist>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="checkbox" id="procuration" name="procuration">
+                                            <label for="message">{{ 'versement_ajouter.procuration'|trans }}</label>
+                                        </div>
+                                        {% if procurations %}
+                                            <div class="form-group info" >
+                                                <input id="procuration" name="listProcuration" type="text"  class="form-control " list="defaultTels" >
+                                                <datalist id="defaultTels">
+                                                    {% for procuration in procurations %}
+                                                    <option value="{{ procuration.nom }}">
+                                                        {% endfor %}
+
+                                                </datalist>
+                                            </div>
+                                        {% endif %}
+
+                                        <div class="form-group">
+                                            <input type="checkbox" id="cheque" name="cheque">
+                                            <label for="message">{{ 'versement_ajouter.cheque'|trans }}</label>
+                                        </div>
+                                        <div class="form-group info1">
+                                            <input type="hidden" name="formulaire" value="formulaire">
+                                            <table>
+                                                <tr>
+                                                    <td >Banque: </td>
+                                                    <td>
+                                                        <input list="listBanque" class="form-control" id="banque" style="height: 30px" name="banque">
+
+                                                        <datalist id="listBanque">
+                                                            <option value="BMOI"  >		BMOI Madagascar </option>
+                                                            <option value="BNI" >		BNI Madagascar </option>
+                                                            <option value="MCB" >		MCB Madagascar </option>
+                                                            <option value="SBM" >		SBM Madagascar </option>
+                                                            <option value="BFV-SG" >		BFV-SG </option>
+                                                            <option value="BOA" >		BOA Madagascar </option>
+                                                            <option value="ABM" >		ABM </option>
+                                                            <option value="BGFIBank" >		BGFIBank Madagascar </option>
+                                                            <option value="Microcred" >		Microcred Banque Madagascar </option>
+                                                            <option value="BM Madagascar" >		BM Madagascar </option>
+                                                            <option value="SIPEM" >		SIPEM </option>
+                                                            <option value="CCP" >		CCP </option>
+                                                            <option value="DGT" >		DGT </option>
+                                                            <option value="BFM" >		BFM </option>
+                                                            <option value="Autre"  >	Autre </option>
+                                                        </datalist>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>N°  Chèque: </td>
+                                                    <td>
+                                                        <input type="text" class="form-control form-control-moyen only_phone_number" name="num_cheque" id="num_cheque"autocomplete="off">
+                                                        <i id="p_num_cheque"></i>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Libellé: </td>
+                                                    <td>
+                                                        <textarea class="form-control form-control-moyen" name="libelle_cheque" id="libelle_cheque"autocomplete="off"  cols="10" rows="10"></textarea>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Scan du chèque :</td>
+                                                    <td>
+                                                        <input type="file" class="form-control" name="fichier_cheque">
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                        <div class="mx-auto">
+                                            <button type="submit" class="btn btn-primary btn-block text-center">{{ 'versement_ajouter.valider'|trans }}</button>
+                                            <button  data-dismiss="modal" class="btn btn-light btn-block text-center">Annuler</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+               </div>
+            </div>
+        </div>
+    </form>
+    {#MODALE suivi#}
+    <form  id="myform" action="" method="post" enctype="multipart/form-data">
+        <div id="suivie" class="modal fade " tabindex="-1" role="dialog"  >
+            <div class="modal-dialog" style="width: 500px;" >
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <form action="" id="formSuivre" method="post">
+                            <div class="form-group">
+                                <label >Tapez le numéro its du personne à suivre</label>
+                                <b class="text-danger" id="err_num_its"></b>
+                                <input id="personne" value="{{ pers.numeroIts }}" name="personne"  type="hidden" class="form-control" id="its"   required autocomplete="off">
+                                <input  name="its"  type="number" class="form-control" id="its"   required autocomplete="off">
+
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="cherche" class="btn btn-lg btn-success">Chercher</button>
+                                <button type="button" id="personneSuivre" class="btn btn-lg btn-warning">Suivre</button>
+                                <a href="{{ path('paie_detail',{'slug': pers.comptePaie.slug}) }}" id="personneSuivre" class="btn btn-lg btn-danger">Fermer</a>
+                            </div>
+                        </form>
+
+                        <div class="row">
+
+                            <div class="col-12">
+                                <div class="card" >
+                                    <div class="card-header bg-primary text-white"><i class="fa fa-info"></i> Resultat du recherche
+                                    </div>
+                                    <div class="card-body">
+                                        {#{% if msg !="" %}
+                                            <div class="alert alert-success" role="alert">
+                                                {{ msg }}
+                                            </div>
+                                        {% endif %}#}
+
+                                        <div id="res">
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <script>
+        $(document).ready(function(){
+            $("#personneSuivre").hide();
+            $("#personneSuivre").click(function(){
+
+
+                 let personne=$("#personne").val();
+                 let its=$("#its").val();
+                //Affiche les résultats dans la console
+
+
+                $.ajax({
+                    url : '{{ path('confirmeback_invite') }}',
+                    type: 'get',
+                    data : {'personne':personne,'its':its}
+                }).done(function(response){
+                    $("#res").attr('class','alert alert-success');
+                    $("#res").html(response);
+                });
+            });
+        $("#cherche").click(function(){
+
+            let chaine = $("#myform").serialize();
+
+            /*Transforme les données du formulaire en un tableau d'objets de la forme
+            [
+            {
+                name : "prenom",
+                value : "pierre"
+                },
+                {
+                name : "mail",
+                value : "pierre.giraud@edhec.com"
+                }
+            ]*/
+           // let tb = $("myform").serializeArray();
+
+            //Affiche les résultats dans la console
+           // console.log(chaine);
+          //  console.log(tb);
+            $("#res").html("");
+            $.ajax({
+                url : '{{ path('addajax_invite1') }}',
+                type: 'post',
+                data : chaine
+            }).done(function(response){
+
+                $("#res").html(response);
+                $("#personneSuivre").show();
+            });
+        });
+        });
+
+
+
+
+
+
+        var values = [];
+        $('#defaultPaiement option').each(function () {
+            values.push($(this).val());
+        });
+        $('#paiement').on('input', function(e) {
+            if (values.indexOf($(this).val()) !== -1) {
+                if(($(this).val()=='Chèque')){
+                    $('#cheque').prop("checked",true)
+                    $('.info1').show(2000, "linear");
+                   // $('#cheque').prop('disabled',true)
+                }else{
+                    $('#cheque').prop("checked",false)
+                    $('.info1').hide(2000, "linear");
+                   // $('#cheque').prop('disabled',false)
+
+
+                }
+
+            }
+        });
+
+        $("#paie").html("")
+        $("#paie").append($("#somme").html())
+        $('.info').hide(2000, "linear");
+        $('.info1').hide(2000, "linear");
+
+        $("#cheque").change(function () {
+
+            if($('#cheque').prop("checked")){
+                $('.info1').show(2000, "linear");
+
+            }else{
+                $('.info1').hide(2000, "linear");
+
+            }
+        })
+        $("#procuration").change(function () {
+
+            if($('#procuration').prop("checked")){
+                $('.info').show(1000, "linear");
+
+            }else{
+                $('.info').hide(1000, "linear");
+
+            }
+        })
+        $('#vers1').click(function(){
+            $('#vers').modal({show:true})
+            $('input[type="checkbox"]').each(function () {
+                $(this).prop("checked",false);
+                if($('#procuration').prop("checked")){
+                    $('.info').show(1000, "linear");
+                }else{
+                    $('.info').hide(1000, "linear");
+                }
+            });
+        });
+        $('#suiviep').click(function(){
+            $('#suivie').modal({show:true})
+
+        });
+    </script>
+
+    {#MODALE REMBOURSEMENT#}
+
+    <form action="{{ path('demande_ajouter') }}" method="post" enctype="multipart/form-data" >
+        <div id="remboursement" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <input type="hidden" name="textid" value="{{ pers.id}}">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-header bg-success text-white"><i class="fa fa-list"></i> {{ 'dmdRemboursement_ajouter.soustitre'|trans }}
+                            </div>
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label for="name">{{ 'dmdRemboursement_ajouter.numero'|trans }}</label>
+                                    <input name="numero_demande" type="text" value="{{ num }}" class="form-control" id="numero_demande"  readonly  required autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">{{ 'dmdRemboursement_ajouter.date'|trans }}</label>
+                                    <div class="input-group date" id="datetime_remboursement" data-target-input="nearest">
+                                        <input type="text" id="datetime_remboursement" name="datetime_remboursement"  class="form-control datetimepicker-input" data-target="#datetime_remboursement"/>
+                                        <div class="input-group-append" data-target="#datetime_remboursement" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        $('#datetime_remboursement').datetimepicker({
+                                            format: 'DD/MM/YYYY',
+                                        });
+                                    </script>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="message">{{ 'versement_ajouter.paiement'|trans }}</label>
+
+                                    <input id="paiement1" name="paiement1" type="text"  class="form-control "   list="defaultPaiement1" >
+                                    <datalist id="defaultPaiement1">
+
+                                        <option value="Espèce">
+                                        <option value="Chèque">
+
+                                    </datalist>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">{{ 'dmdRemboursement_ajouter.montant'|trans }}</label>
+                                    <input name="montant" type="text" class="form-control" id="montantRemboursement"   required autocomplete="off">
+                                </div>
+                                <div class="form-group " >
+                                    <label for="message">{{ 'versement_ajouter.caisse'|trans }}</label>
+
+                                    <input id="caisse" name="caisse" type="text"  class="form-control " list="defaultCaisse" >
+                                    <datalist id="defaultCaisse">
+                                        {% for caisse in  caisses %}
+                                        <option value="{{ caisse.nom }}">
+                                            {% endfor %}
+
+                                    </datalist>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="checkbox" id="cheque1" name="cheque1">
+                                    <label for="message">{{ 'versement_ajouter.cheque'|trans }}</label>
+                                </div>
+                                <div class="info-cheque">
+                                    <div class="form-group">
+                                        <label for="email">{{ 'dmdRemboursement_ajouter.cheque'|trans }}</label>
+
+                                        <select id="cheque" name="cheque" class="form-control" required>
+                                            <option value="1" selected>{{ 'dmdRemboursement_ajouter.barrée'|trans }}</option>
+                                            <option value="0">{{ 'dmdRemboursement_ajouter.nonbarrée'|trans }}</option>
+                                        </select>
+
+                                    </div>
+
+
+                                    <div class="form-group info2">
+                                        <input type="hidden" name="formulaire" value="formulaire">
+                                        <table>
+                                            <tr>
+                                                <td >Banque: </td>
+                                                <td>
+                                                    <input list="listBanque" class="form-control" id="banque" style="height: 30px" name="banque">
+
+                                                    <datalist id="listBanque">
+                                                        <option value="BMOI"  >		BMOI Madagascar </option>
+                                                        <option value="BNI" >		BNI Madagascar </option>
+                                                        <option value="MCB" >		MCB Madagascar </option>
+                                                        <option value="SBM" >		SBM Madagascar </option>
+                                                        <option value="BFV-SG" >		BFV-SG </option>
+                                                        <option value="BOA" >		BOA Madagascar </option>
+                                                        <option value="ABM" >		ABM </option>
+                                                        <option value="BGFIBank" >		BGFIBank Madagascar </option>
+                                                        <option value="Microcred" >		Microcred Banque Madagascar </option>
+                                                        <option value="BM Madagascar" >		BM Madagascar </option>
+                                                        <option value="SIPEM" >		SIPEM </option>
+                                                        <option value="CCP" >		CCP </option>
+                                                        <option value="DGT" >		DGT </option>
+                                                        <option value="BFM" >		BFM </option>
+                                                        <option value="Autre"  >	Autre </option>
+                                                    </datalist>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>N°  Chèque: </td>
+                                                <td>
+                                                    <input type="text" class="form-control form-control-moyen only_phone_number" name="num_cheque" id="num_cheque"autocomplete="off">
+                                                    <i id="p_num_cheque"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Libellé: </td>
+                                                <td>
+                                                    <textarea class="form-control form-control-moyen" name="libelle_cheque" id="libelle_cheque"autocomplete="off"  cols="10" rows="10"></textarea>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Scan du chèque :</td>
+                                                <td>
+                                                    <input type="file" class="form-control" name="fichier_cheque">
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="mx-auto">
+                                    <button type="submit" class="btn btn-success  btn-block text-center">{{ 'dmdRemboursement_ajouter.valider'|trans }}</button>
+                                    <button  data-dismiss="modal" class="btn btn-light  btn-block text-center">Annuler</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        var values1 = [];
+        $('#defaultPaiement1 option').each(function () {
+            values1.push($(this).val());
+        });
+        $('#paiement1').on('input', function(e) {
+            if (values.indexOf($(this).val()) !== -1) {
+                if(($(this).val()=='Chèque')){
+                    $('#cheque1').prop("checked",true)
+                    $('.info-cheque').show(2000, "linear");
+                    // $('#cheque').prop('disabled',true)
+                }else{
+                    $('#cheque1').prop("checked",false)
+                    $('.info-cheque').hide(2000, "linear");
+                    // $('#cheque').prop('disabled',false)
+
+
+                }
+
+            }
+        });
+
+        $('.info-cheque').hide(2000, "linear");
+        $('#rembourse').click(function(){
+            $('#remboursement').modal({show:true})
+        });
+        $("#cheque1").change(function () {
+
+            if($('#cheque1').prop("checked")){
+                $('.info-cheque').show(2000, "linear");
+
+            }else{
+                $('.info-cheque').hide(2000, "linear");
+
+            }
+        })
+    </script>
+
+    {#NUMERAL FORMAT#}
+    <script>
+        numeralFormat('#montant');
+        numeralFormat('#montantRemboursement');
+    </script>
+
+
+    {#DATA TABLE SCROLABLE#}
+    {#SORT DU TABLE#}
+    <link rel="stylesheet" href="{{ asset('assets/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.css') }}">
+    <script src="{{ asset('assets/DataTables/datatables.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            var table = $('#myTable').DataTable( {
+                scrollY:        false,
+                scrollX:        false,
+                info: false,
+                ordering: false,
+                scrollCollapse: true,
+                paging:         false,
+                language: {
+                    processing:     "Traitement en cours...",
+                    search:         "Rechercher&nbsp;:",
+                    lengthMenu:    "Afficher _MENU_ &eacute;l&eacute;ments",
+                    info:           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                    infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    infoPostFix:    "",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    emptyTable:     "Aucune donnée disponible dans le tableau",
+                    paginate: {
+                        first:      "Premier",
+                        previous:   "Pr&eacute;c&eacute;dent",
+                        next:       "Suivant",
+                        last:       "Dernier"
+                    },
+                    aria: {
+                        sortAscending:  ": activer pour trier la colonne par ordre croissant",
+                        sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                    }
+                }
+
+            } );
+        } );
+    </script>
+
+{% endblock %}

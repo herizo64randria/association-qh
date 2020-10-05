@@ -1,0 +1,95 @@
+{% extends "@Back/base_backend.html.twig" %}
+
+
+{% block sous_menu_titre %}Liste des utilisateurs{% endblock %}
+
+{% block body_container %}
+    <ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menuAdmin">Liste des Administrateurs</a></li>
+        <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#menuUser">Liste des Utilisateurs Hussein Scheme</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="menuAdmin" class="tab-pane active" >
+            <br>
+            <a href="{{ path('utilisateur_nouveau') }}" class="btn btn-success btn-lg"><i class="fa fa-plus"></i> Nouveau Administrateur</a>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nom d'utilisateur</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    {% if user.ifRole('ROLE_ADMIN') %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.nom }}</td>
+                            <td>{{ user.prenom }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {#Modifier#}
+                                <a href="{{ path('utilisateur_modifier', { 'id' : user.id }) }}" class="btn btn-primary"><i class="fa fa-edit"></i> Modifier</a>
+                                {#Desactiver#}
+                                {% if user.enabled %}
+                                    <a href="{{ path('utilisateur_change_etat', { 'id' : user.id }) }}" class="btn btn-danger"><i class="fa fa-warning"></i> Désactiver</a>
+                                {% else %}
+                                    <a href="{{ path('utilisateur_change_etat', { 'id' : user.id }) }}" class="btn btn-success"><i class="fa fa-warning"></i> Activer</a>
+                                {% endif %}
+
+                            </td>
+                        </tr>
+                    {% endif %}
+
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <div id="menuUser" class="tab-pane fade">
+            <div id="menuAdmin" class="tab-pane active" >
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Numero ITS</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        {% if not user.ifRole('ROLE_ADMIN') %}
+                            <tr>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.nom }}</td>
+                                <td>{{ user.prenom }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    {#Desactiver#}
+                                    {% if user.enabled %}
+                                        <a href="{{ path('utilisateur_change_etat', { 'id' : user.id }) }}" class="btn btn-danger"><i class="fa fa-warning"></i> Désactiver</a>
+                                    {% else %}
+                                        <a href="{{ path('utilisateur_change_etat', { 'id' : user.id }) }}" class="btn btn-success"><i class="fa fa-warning"></i> Activer</a>
+                                    {% endif %}
+                                </td>
+                                <td><a href="{{ path('personne_admin_profil_user', { 'id' : user.id }) }}" class="btn btn-light"><i class="fa fa-eye"></i></a></td>
+                            </tr>
+                        {% endif %}
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

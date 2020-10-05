@@ -1,0 +1,10 @@
+{% set sexe = 'email.salutation.Monsieur' %}
+{% if personne.sexe == 'F' %}
+    {% set sexe = 'email.salutation.Madame' %}
+{% endif %}
+<p>
+    {{ sexe|trans }} {{ personne.nomIts }},
+    <br>
+    {{ 'email.salutation.suite'|trans }} {{ appli_titre }} {{ 'email.salutation.refuser'|trans }} <br>
+    {{ 'email.salutation.essaye'|trans }}
+</p>

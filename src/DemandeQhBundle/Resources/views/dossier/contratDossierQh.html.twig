@@ -1,0 +1,102 @@
+{% extends '@DemandeQh/dossier/Base1DemandeQH.html.twig' %}
+
+
+{% block body_container %}
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        input[type=datetime],.cal{
+            width: 90%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            height: 50px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .contenu {
+            border-radius: 0px;
+            background-color: #f2f2f2;
+            margin-top: 20px;
+            margin-left: 200px;
+            padding: 50px;
+            width: 850px;
+        }
+
+        .col-4 {
+            float: left;
+            width: 4%;
+            margin-top: 6px;
+        }
+
+        .col-8 {
+            float: left;
+            width: 8%;
+            margin-top: 6px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .col-4, .col-8, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+    </style>
+
+    <div class="contenu align-content-center">
+        <h2 class="text-success text-center">{{ 'contrat.info'|trans}}</h2>
+        <hr><br>
+        <form action="#" method="post" autocomplete="off">
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="form-group text-center">
+
+                        <div class="maxl">
+
+                            <a href="{{ path('contrat_pret',{id:demandeqh.id}) }}" class="btn btn-primary btn-lg" href="" id='pdfcontrat'  target="_blank">
+                                <i class="fa fa-print"></i> {{ 'contrat.btn'|trans }} </a>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </form>
+    </div>
+
+{% endblock %}

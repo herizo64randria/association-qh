@@ -1,0 +1,206 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+
+{% block body_container %}
+
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+            background-color: #0088CC;
+        }
+        fieldset {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,b,input,select,textarea,p {
+            text-shadow: 0.5px 0.5px 2px black;
+
+        }
+
+    </style>
+    <br> <br>
+    <form action="#" method="post" id="formulaire" enctype="multipart/form-data">
+    <div class="container mt-auto ">
+        <h1 class="text-success" >{{ 'importationdossierQH.titre'|trans }}</h1><br>
+
+
+                <div id="myCarousel" class="carousel slide " data-interval="false">
+
+                    <div class="carousel-inner">
+
+                        <fieldset class="groove">
+                            <br>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>{{ 'importationdossierQH.safahi'|trans }}</label>
+                                    </div>
+                                    <div class="col-md-5 ">
+
+                                        {% if((dossier) and (dossier.safahi != null)) %}
+                                            <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.safahi) }}">
+                                                {{ 'importationdossierQH.voir'|trans }}
+                                            </a>-
+                                            <a href="#" id="show_safahi">Modifier</a>
+                                            <div class="d-none" id="modif_safahi">
+                                                <input class="form-control" type="file" id="safahi" name="safahi"><br>
+                                            </div>
+                                        {% else %}
+                                        <input class="form-control " type="file" id="safahi" name="safahi">
+                                        {% endif %}
+                                            <br>
+                                        <b class="text-danger" id="err_safahi"></b>
+
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>{{ 'importationdossierQH.attestation_bon_fonctionnement'|trans }}</label>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        {% if( dossier and dossier.attestationCopmteBank!=null) %}
+                                            <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.attestationCopmteBank) }}">
+                                                {{ 'importationdossierQH.voir'|trans }}
+                                            </a>-
+                                            <a href="#" id="show_compte">Modifier</a>
+                                            <div class="d-none" id="modif_compte">
+                                                <input class="form-control" type="file" id="attestation_compte" name="attestation_compte"><br>
+                                            </div>
+
+                                        {% else %}
+                                        <input class="form-control " type="file" id="attestation_compte" name="attestation_compte"><br>
+                                        {% endif %}
+                                        <b class="text-danger" id="err_attestation_compte"></b>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>{{ 'importationdossierQH.attestation_solde_compte'|trans }}</label>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        {% if (dossier and dossier.attestationSoldeCompte != null) %}
+                                            <a target="_blank" id="lien" href="{{ asset('document/'~ dossier.attestationSoldeCompte) }}">
+                                                {{ 'importationdossierQH.voir'|trans }}
+                                            </a>-
+                                            <a href="#" id="show_solde">Modifier</a>
+                                            <div class="d-none" id="modif_solde">
+                                                <input class="form-control" type="file" id="attestation_solde" name="attestation_solde"><br>
+                                            </div>
+
+                                        {% else %}
+                                        <input  class="form-control " type="file" id="attestation_solde" name="attestation_solde"><br>
+                                        <b class="text-danger" id="err_attestation_solde"></b>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <br>
+                                 </div>
+                                </div>
+                            </div>
+                            <button  type="submit" class="btn-link btn btn-lg text-center float-right " id="import" >{{ 'demandeqh_ajouter.suivant'|trans }}</button>
+                        </fieldset>
+                    </div>
+
+
+        </div>
+    </div>
+        <script>
+            $(document).ready(function() {
+                $("#show_safahi").click(function(){
+                    $("#modif_safahi").removeClass("d-none");
+                    $("#modif_safahi").addClass("d-block");
+                    }
+
+                )
+                $("#show_compte").click(function(){
+                        $("#modif_compte").removeClass("d-none");
+                        $("#modif_compte").addClass("d-block");
+                    }
+
+                )
+                $("#show_solde").click(function(){
+                        $("#modif_solde").removeClass("d-none");
+                        $("#modif_solde").addClass("d-block");
+                    }
+
+                )
+                tailleFichier('#safahi','#err_safahi');
+                tailleFichier('#attestation_compte','#err_attestation_compte');
+                tailleFichier('#attestation_solde','#err_attestation_solde');
+
+                $("#import").click(function () {
+                    var ext = $('#safahi').val().split('.').pop();
+
+                    if (ext != '')
+                    {
+                    if (testExtension(ext)==false)
+                    {
+                        $('#err_safahi').html("Choisir une fichier image");
+                        return false;
+                    }
+                    }
+
+                    var ext1 = $('#attestation_compte').val().split('.').pop();
+                    if (ext1 != '')
+                    {
+                    if (testExtension(ext1)==false) {
+                        $('#err_attestation_compte').html("Choisir une fichier image");
+                        return false;
+                    }
+                    }
+
+                    var ext2 = $('#attestation_solde').val().split('.').pop();
+                    if (ext2 != '')
+                    {
+                    if (testExtension(ext2)==false) {
+                        $('#err_attestation_solde').html("Choisir une fichier image");
+                        return false;
+                    }
+                    }
+
+
+                })
+
+                function testExtension(ext) {
+
+                    var res = false;
+                    var tabext = ["jpg", "jpeg", "png", "gif", "ico"];
+                    var i;
+                    if (ext) {
+                        ext = ext.toLowerCase();
+                        for (i = 0; i < tabext.length; i++) {
+                            if (tabext[i].toLowerCase() === ext) {
+                                res = true;
+                                break;
+                            }
+                        }
+                    }
+                    return res;
+                }
+
+                function tailleFichier(id,err_id) {
+                    $(id).bind('change', function() {
+
+                        if(this.files[0].size > 8388608){
+
+                            $(err_id).html("Taille de l'image doit inférieur à 5 Méga");
+                            return false;
+                        }
+
+
+                    });
+                }
+            })
+
+        </script>
+</form>
+
+{% endblock %}

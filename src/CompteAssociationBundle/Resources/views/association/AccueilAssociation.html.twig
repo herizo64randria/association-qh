@@ -1,0 +1,53 @@
+{%extends '@CompteAssociation/BaseAssociation.html.twig' %}
+
+{% block body_container %}
+    <style>
+
+        .container .img{
+            text-align:center;
+        }
+        .container .details{
+            border-left:3px solid #ded4da;
+        }
+        .container .details p{
+            font-size:15px;
+            font-weight:bold;
+        }
+    </style>
+    <div class="container-fluid">
+        <br>
+        <div class="card text-center">
+            <div class="card-header">
+                <br>
+            </div>
+            <div class="container">
+                <div class="contact-image">
+                    <img src="{{ asset('Images/assoc.jpg') }}" alt="rocket_contact"/>
+                </div>
+                <form method="post">
+                    <h3>{{ association.nomassociation }}</h3>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <a href="" class="btn btn-primary">{{ 'accueilassociation.btn'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <a href="" class="btn btn-primary">{{ 'accueilassociation.btn1'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <br>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

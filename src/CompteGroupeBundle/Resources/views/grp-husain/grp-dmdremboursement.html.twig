@@ -1,0 +1,60 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+
+
+    <div class="container-fluid">
+        <br>
+        <div class="card text-center">
+            <div class="card-header">
+                <h3 class="text-info"><img src="{{ asset('Images/groupe.jpg') }}" class="img img-fluid" alt="" width="50" height="50">
+                    {{ groupe.nomgroup }} : {{ 'grp-dmdRemboursement.titre'|trans }}
+                </h3>
+            </div>
+            <div class="card-body">
+                     <form class="container" id="formmembre" action="#" method="POST" enctype="multipart/form-data">
+                         <div class="form-group">
+                             <label class="float-left" for="numero_demande">{{ 'grp-dmdRemboursement.numero'|trans }}</label>
+                             <input name="numero_demande" type="text" value="{{ num }}" class="form-control" id="numero_demande"  readonly  required autocomplete="off">
+                         </div>
+                         <div class="form-group">
+                             <div class="form-group">
+                                 <label class="float-left" for="date_demande">{{ 'grp-dmdRemboursement.date'|trans }}</label>
+                                 <div class="input-group date" id="date_demande" data-target-input="nearest">
+                                     <input type="text" id="date_demande" name="date_demande"  class="form-control datetimepicker-input" data-target="#date_demande"/>
+                                     <div class="input-group-append" data-target="#date_demande" data-toggle="datetimepicker">
+                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                         <script>
+                             $('#date_demande').datetimepicker({
+                                 format: 'DD/MM/YYYY',
+                             });
+                         </script>
+                         <div class="form-group">
+                             <label class="float-left" for="montant">{{ 'grp-dmdRemboursement.montant'|trans }}</label>
+                             <input name="montant" type="text" class="form-control" id="montant"   required autocomplete="off">
+                         </div>
+                         <div class="form-group">
+                             <label class="float-left" for="cheque">{{ 'grp-dmdRemboursement.cheque'|trans }}</label>
+
+                             <select id="cheque" name="cheque" class="form-control" required>
+                                 <option value="1" selected>{{ 'grp-dmdRemboursement.barrée'|trans }}</option>
+                                 <option value="0">{{ 'grp-dmdRemboursement.nonbarrée'|trans }}</option>
+                             </select>
+
+                         </div>
+                         <div class="mx-auto">
+                             <button type="submit" class="btn btn-primary text-right">{{ 'grp-dmdRemboursement.valider'|trans }}</button></div>
+
+                      </form>
+
+            </div>
+
+            </div>
+
+    </div>
+
+{% endblock %}

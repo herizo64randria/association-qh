@@ -1,0 +1,101 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}Listes des demandes{% endblock %}
+{% block body_container %}
+
+    {% set cheque = " " %}
+    <div class="col-12">
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="myTable">
+                <thead id="">
+                <tr>
+                    <th scope="col">{{ 'dmfRemboursement_liste.numero'|trans }}</th>
+                    <th scope="col">{{ 'dmfRemboursement_liste.photo'|trans }}</th>
+                    <th scope="col">{{ 'dmfRemboursement_liste.nom'|trans }}</th>
+                    <th scope="col">{{ 'dmfRemboursement_liste.date'|trans }}</th>
+                    <th scope="col">{{ 'dmfRemboursement_liste.montant'|trans }}</th>
+                    <th scope="col">{{ 'dmfRemboursement_liste.cheque'|trans }}</th>
+                    <th scope="col">{{ 'dmfRemboursement_liste.etat'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for demandes in demandes %}
+                    {% if demandes.typeCheque=="1" %}
+                        {% set cheque ='dmfRemboursement_liste.cheque barree'|trans %}
+                    {% endif %}
+
+                    {% if demandes.typeCheque=="0" %}
+                        {% set cheque = 'dmfRemboursement_liste.cheque non barree'|trans %}
+                    {% endif %}
+                    {% set couleur = '' %}
+                    {% set noir = '' %}
+                    {% if demandes.etat == 'confirmer' or demandes.etat == 'En attente de confirmation' %}
+                        {% set couleur = 'alert-primary' %}
+                    {% endif %}
+                    {% if demandes.etat == 'creation' or demandes.etat == 'En cour de création'  %}
+                        {% set noir = 'dz' %}
+                    {% endif %}
+
+                    {% if demandes.etat == 'okok' or demandes.etat == 'Demande acceptée' %}
+                        {% set couleur = 'alert-success' %}
+                    {% endif %}
+
+                    {% if demandes.etat == 'Retour (Demandes annulée)' or demandes.etat == 'Demande refusée' %}
+                        {% set couleur = 'alert-danger' %}
+                    {% endif %}
+                    <tr>
+                        <td><a href="{{ path('demande_confirmation',{ 'id' : demandes.id}) }}">{{ demandes.numero }}</a></td>
+                        <td><img src="{{ asset('document/'~demandes.personne.photo) }}" class="img img-fluid" alt="" width="50" height="50"></td>
+                        <td>{{ demandes.personne.nom ~' '~ demandes.personne.prenom }}</td>
+                        <td><strong class="d-none">{{ demandes.date|date('Ymd') }}</strong>{{ demandes.date|date('d/m/Y') }}</td>
+                        <td class="text-right">{{ demandes.montant|number_format('2',',',' ')}}</td>
+                        <td>{{ cheque }}</td>
+                        <td class="{{ couleur }} text-center" style=" background-color:{{ couleur }} ;text-align: center;  {% if noir != "" %}background-color: #dddddd; {% endif %}">
+                            {{ demandes.etat }}
+                        </td>
+                    </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {#SORT DU TABLE#}
+    <link rel="stylesheet" href="{{ asset('assets/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.css') }}">
+    <script src="{{ asset('assets/DataTables/datatables.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#myTable').DataTable({
+                info: false,
+                pageLength: 50,
+                order: [[ 0, "desc" ]],
+                language: {
+                    processing:     "Traitement en cours...",
+                    search:         "Rechercher&nbsp;:",
+                    lengthMenu:    "Afficher _MENU_ &eacute;l&eacute;ments",
+                    info:           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                    infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    infoPostFix:    "",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    emptyTable:     "Aucune donnée disponible dans le tableau",
+                    paginate: {
+                        first:      "Premier",
+                        previous:   "Pr&eacute;c&eacute;dent",
+                        next:       "Suivant",
+                        last:       "Dernier"
+                    },
+                    aria: {
+                        sortAscending:  ": activer pour trier la colonne par ordre croissant",
+                        sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                    }
+                }
+            });
+        });
+    </script>
+
+
+{% endblock %}

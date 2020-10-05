@@ -1,0 +1,21 @@
+
+demandeBack_route:
+    resource: "@BackBundle/Controller/demandeRemboursementController.php"
+    type:     annotation
+
+paieBack_route:
+    resource: "@BackBundle/Controller/comptePaieController.php"
+    type:     annotation
+
+versementBack_route:
+    resource: "@BackBundle/Controller/versementController.php"
+    type:     annotation
+demandeQhBack_route:
+    resource: "@BackBundle/Controller/demandeQhController.php"
+    type:     annotation
+dossierQhBack_route:
+    resource: "@BackBundle/Controller/dossierQHController.php"
+    type:     annotation
+societedemandeQhBack_route:
+    resource: "@BackBundle/Controller/societeDemandeQhController.php"
+    type:     annotation

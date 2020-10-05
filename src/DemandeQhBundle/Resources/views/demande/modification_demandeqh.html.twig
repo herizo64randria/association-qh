@@ -1,0 +1,284 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+
+{% block body_container %}
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        input[type=datetime],.cal{
+            width: 90%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            height: 50px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .contenu {
+            border-radius: 0px;
+            background-color: #f2f2f2;
+            margin-top: 20px;
+            margin-left: 200px;
+            padding: 50px;
+            width: 850px;
+        }
+
+        .col-4 {
+            float: left;
+            width: 4%;
+            margin-top: 6px;
+        }
+
+        .col-8 {
+            float: left;
+            width: 8%;
+            margin-top: 6px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .col-4, .col-8, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+    </style>
+
+    <div class="contenu align-content-center">
+        <h2 class="text-success text-center">{{ 'garant.modification_demandeqh'|trans}}</h2>
+        <hr>
+        <form action="#" method="post" autocomplete="off" name="telephone">
+            <div class="container-fluid">
+                <legende><label for=""><h3 class="text-primary">{{ 'demandeqh_ajouter.nouvelle_demande'|trans }}</h3> </label><br></legende>
+                <div class="form-group text-center">
+
+
+                    <div class="maxl">
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>{{ 'demandeqh_ajouter.resume_question'|trans }}</label>
+
+                                    </div>
+                                    {% if (demandeQH.siAncienDemande=='oui') %}
+                                        {% set x='oui' %}
+                                    {% else %}
+                                        {% set x='non' %}
+                                    {% endif %}
+                                    {% if x=='oui' %}
+                                        {% set z='non' %}
+                                    {% else %}
+                                        {% set z='oui' %}
+                                    {% endif %}
+                                    <div class="col-md-6">
+                                        <select name="resume_question" id="resume_question">
+                                            <option value="{{ x }}">{{ x }}</option>
+                                            <option value="{{ z}}">{{ z }}</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <br>
+                                {% if (demandeQH.siAncienDemande=='oui') %}
+                                    {% if (demandeQH.siAncienDemandeEtat=='oui') %}
+                                    {% set y='oui' %}
+                                {% else %}
+                                    {% set y='non' %}
+                                {% endif %}
+                                    {% if y=='oui' %}
+                                        {% set w='non' %}
+                                    {% else %}
+                                        {% set w='oui' %}
+                                    {% endif %}
+                                    <div class="row" id="resume_label">
+                                        <div class="col-md-6">
+                                            <label >{{ 'demandeqh_ajouter.resume_etat'|trans }}</label>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="resume_question" id="resume_etat">
+                                                <option value="{{ y }}">{{ y }}</option>
+                                                <option value="{{ w }}">{{ w }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {% if (x=='oui' and y=='oui') %}
+                <hr>
+                <legende><label for=""><h3 class="text-primary">{{ 'demandeqh_ajouter.resume_info'|trans }}</h3> <b class="text-danger" id="err_demande"></b></label><br></legende>
+                <div class="form-group text-center">
+
+                    <div class="maxl">
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <h3 align="center">{{ 'demandeqh_ajouter.annee'|trans }}</h3>
+                                <input  value="{{ demandeQH.annee1 }}" type="text" id="annee1" name="annee1"  >
+                                <br>
+                                <input  value="{{ demandeQH.annee2 }}" type="text" id="annee2" name="annee2"  >
+                                <br>
+                                <input  value="{{ demandeQH.annee3 }}" type="text" id="annee3" name="annee3"  >
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <h3 align="center">{{ 'demandeqh_ajouter.montant'|trans }}</h3>
+                                <input  value="{{ demandeQH.montant1 }}" type="text" id="montant1" name="montant1"  >
+                                <br>
+                                <input  value="{{ demandeQH.montant2 }}"  type="text" id="montant2" name="montant2"  >
+                                <br>
+                                <input  value="{{ demandeQH.montant3 }}" type="text" id="montant3" name="montant3"  >
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                {% endif %}
+                <hr>
+                <legende><label for=""><h3  class="text-primary">{{ 'demandeqh_ajouter.nouvelle_demande'|trans }}</h3> <b class="text-danger" id="err_demande"></b></label><br></legende>
+                <div class="form-group text-center">
+
+                    <div class="maxl">
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>{{ 'demandeqh_ajouter.monotant2'|trans }}</label>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <input value="{{ demandeQH.montant|number_format('2',' ',',',' ') }}" va type="text" id="montant" name="montant"  >
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>{{ 'demandeqh_ajouter.mois'|trans }}</label>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <input  value="{{ demandeQH.nombreMois }}" type="text" id="mois" name="mois"  >
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <hr>
+                <legende><label for=""><h3 class="text-primary">{{ 'demandeqh_ajouter.objet'|trans }}</h3> </label><br></legende>
+                <div class="form-group text-center">
+
+                    <div class="maxl">
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>{{ 'demandeqh_ajouter.motif'|trans }}</label>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <input value="{{ demandeQH.typeMotif }}"  type="text" id="motif" name="motif"  >
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>{{ 'demandeqh_ajouter.detail'|trans }}</label>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <input  value="{{ demandeQH.detailMotif }}" type="text" id="detail" name="detail"  >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <legende><label for=""><h3 class="text-primary">{{ 'demandeqh_ajouter.garentie'|trans }}</h3> </label><br></legende>
+                <div class="form-group text-center">
+
+                    <div class="maxl">
+
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>{{ 'demandeqh_ajouter.or'|trans }}</label>
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <input value="{{ demandeQH.garantieOR.valeurAr|number_format('2',' ',',',' ') }}"  type="text" id="or" name="or"  >
+                                    </div>
+
+                                </div>
+                                <br>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+                <button  type="submit" class="btn-link btn btn-lg text-center float-right " id="import" >{{ 'demandeqh_ajouter.btn_modif'|trans }}</button>
+
+            </div>
+
+
+    </form>
+    </div>
+{% endblock %}

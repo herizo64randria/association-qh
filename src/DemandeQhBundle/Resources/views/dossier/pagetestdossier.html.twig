@@ -1,0 +1,99 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+
+{% block body_container %}
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        input[type=datetime],.cal{
+            width: 90%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            height: 50px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .contenu {
+            border-radius: 0px;
+            background-color: #f2f2f2;
+            margin-top: 20px;
+            margin-left: 200px;
+            padding: 50px;
+            width: 850px;
+        }
+
+        .col-4 {
+            float: left;
+            width: 4%;
+            margin-top: 6px;
+        }
+
+        .col-8 {
+            float: left;
+            width: 8%;
+            margin-top: 6px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .col-4, .col-8, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+    </style>
+
+    <div class="contenu align-content-center">
+
+        <form action="#">
+            <h2 class="text-primary text-center">{{ 'pagedossier.info'|trans}}</h2>
+            <hr>
+            <b>{{ 'pagedossier.choix'|trans}}</b>
+            <br><br>
+            {% if (infodossier == false) %}
+                <br>
+                <a href="{{ path('ajouter_dossier') }}" class="btn btn-lg btn-info">{{ 'importationdossierQH.titre'|trans }}</a>
+                <br><br>
+            {% endif %}
+            {% if (infodossier1== false) %}
+
+                <a href="{{ path('ajouter_dossier_garant1') }}" class="btn btn-lg btn-info">{{ 'importationdossierQH.titre1'|trans }}</a>
+                <br>
+            {% endif %}
+            {% if (infodossier2== false) %}
+                <br>
+                <a href="{{ path('ajouter_dossier_garant2') }}" class="btn btn-lg btn-info">{{ 'importationdossierQH.titre2'|trans }}</a>
+            {% endif %}
+
+        </form>
+    </div>
+{% endblock %}

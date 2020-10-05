@@ -1,0 +1,77 @@
+
+{% extends '@Front/base_front.html.twig' %}
+{% block titre %}{% endblock %}
+{% block sous_menu %} {% endblock %}
+{% block stylecss %}
+    <style>
+
+        .container{
+
+            padding-top: 3px;
+
+        }
+        th,td{white-space: nowrap}
+    </style>
+
+{% endblock %}
+{% block body_container %}
+
+
+
+    <div class="container" style="font-family: 'Courier New'">
+    <div class="row">
+
+        <div class="col-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+
+                </div>
+                <div class="card-body">
+                    <a class="btn  btn-warning" href="{{ path('add_groupe') }}"><i class="fa fa-group"> </i> Ajouter groupe</a>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="col-9">
+            <div class="card" >
+                <div class="card-header bg-primary text-white">
+
+                    <h3 ><img src="{{ asset('Images/groupe.jpg') }}" class="img img-fluid" alt="" width="50" height="50">
+                        {{ 'listegroupe.titre'|trans  }}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>{{ 'listegroupe.date'|trans }}</th>
+                            <th>{{ 'listegroupe.nom'|trans }}</th>
+                            <th>{{ 'listegroupe.user'|trans }}</th>
+                            <th>{{ 'listegroupe.action'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody id ="membregroupe">
+
+                        {% for groupe in groupes  %}
+                            <tr class="active">
+                                <td>{{ groupe.groupe.datecreer|date('d/m/Y') }}</td><td>{{ groupe.groupe.nomgroup }}</td>
+                                <td>{{ groupe.groupe.userCreer.nom ~' '~ groupe.groupe.userCreer.prenom  }}</td>
+                                <td><a href="{{ path('page-choix-groupe',{'id': groupe.groupe.id}) }}"><i class="fa fa-eye text-info fa-2x"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+    <script>
+
+    </script>
+
+{% endblock %}

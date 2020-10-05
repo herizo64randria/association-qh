@@ -1,0 +1,281 @@
+{% extends '@Front/base_front.html.twig' %}
+{% block titre %}{{ 'inscription.modification'|trans }}{% endblock %}
+{% block sous_menu_titre %}{{ 'inscription.modification'|trans }}{% endblock %}
+
+{% block body_container %}
+    <style>
+        .error{
+            outline: 1px solid #f00;
+        }
+    </style>
+    <div class="container register" style="font-family: 'Courier New';background-color:#837d5f;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4); ">
+            <div class="row">
+                <div class="col-md-3 register-left">
+                    <h1><i class="fa fa-star"></i></h1>
+                    <h3>{{ 'inscription.welcome'|trans }}</h3>
+                    <p>{{ 'inscription.welcome_phrase'|trans }}</p>
+                </div>
+                <div class="col-md-9 register-right">
+                        <div class="infosup " style="width:600px;margin:20px;margin-left: 100px;">
+                            <div class="alert alert-danger " role="alert" >
+                                <h1><i class="fa fa-info"></i> Information</h1>
+                                <hr>
+                                <div >
+                                    <p>Veuillez vérifier votre photo ,scan its,scan cin, Procuration, héritier .</p>
+                                </div>
+                            </div>
+                        </div>
+                    <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a style="width: 150px;" class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ 'inscription.modification1'|trans }}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                            <form  id="form" action="#" method="post" autocomplete="off" enctype="multipart/form-data">
+                                <div class="row register-form">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>{{ 'inscription.photo'|trans }} <b class="text-danger" id="err_photo"></b></label>
+                                            {% if personne.photo %}
+                                                <img style="width: 300px;height: 150px;" src="{{ asset('document/'~ personne.photo) }}" alt="">
+                                                <input   type="file" name="tphoto" id="photo" class="form-control"   />
+                                            {% else %}
+                                                <input style="border-color: #8a1f11"   type="file" name="photo" id="photo" class="form-control"   />
+
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">{{ 'inscription.First Name'|trans }} <b class="text-danger" id="err_nom"></b></label>
+                                            <input id="testvide"  value="{{ personne.nom }}" required type="text" class="form-control" name="nom" id="nom"   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">{{ 'inscription.Last Name'|trans }} <b class="text-danger" id="err_prenom"></b></label>
+                                            <input id="testvide"   value="{{ personne.prenom }}" required type="text" class="form-control" name="prenom" id="prenom" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">{{ 'inscription.nom_its'|trans }} <b class="text-danger" id="err_nom_its"></b></label>
+                                            <input id="testvide"   value="{{ personne.nomits }}" required type="text" class="form-control" name="nom_its" id="nom_its" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="">{{ 'inscription.adresse'|trans }} <b class="text-danger" id="err_adresse"></b></label>
+                                            <input id="testvide"  value="{{ personne.adresse }}" required type="text" class="form-control" name="adresse" id="adresse"   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">{{ 'inscription.ville'|trans }} <b class="text-danger" id="err_ville"></b></label>
+                                            <input id="testvide"  value="{{ personne.ville }}" required type="text" class="form-control" name="ville" id="ville"   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'inscription.date_naissance'|trans }} <b class="text-danger" id="err_date_naissance"></b></label>
+                                            <div class="input-group date"  data-target-input="nearest">
+                                                <input id="testvide"  type="datetime" id="date_naissance" value="{{ personne.datenaissance|date('d/m/Y') }}" name="date_naissance"  class="form-control datetimepicker-input" />
+                                                <div class="input-group-append" data-target="#date_naissance" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                </div>
+                                            </div>
+                                            <script>
+                                                $('#date_naissance').datetimepicker({
+                                                    format: 'DD/MM/YYYY',
+                                                });
+                                            </script>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'inscription.lieu_naissance'|trans }} <b class="text-danger" id="err_lieu_naissance"></b></label>
+                                            <div class="input-group date"  data-target-input="nearest">
+                                                <input id="testvide"  type="text" value="{{ personne.lieu }}" id="lieu_naissance" name="lieu_naissance"  class="form-control " />
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'inscription.profession'|trans }} <b class="text-danger" id="err_ville_piece"></b></label>
+                                            <div class="input-group date"  data-target-input="nearest">
+                                                <input  id="testvide"  value="{{ personne.profession }}" type="text" id="profession" name="profession"  class="form-control " />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'inscription.pays_piece'|trans }} <b class="text-danger" id="err_pays_piece"></b></label>
+                                            <div class="input-group date"  data-target-input="nearest">
+                                                <input  id="testvide"  value="{{ personne.payspiece }}"  type="text" id="pays_piece" name="pays_piece"  class="form-control " />
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="delivrer">{{ 'inscription.delivrer'|trans }} <b class="text-danger" id="err_delivrer"></b></label>
+                                            <input id="testvide"  required type="text"  value="{{ personne.delivrer }}" name="delivrer" id="delivrer" class="form-control"   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">{{ 'inscription.num_sabil'|trans }} <b class="text-danger" id="err_num_sabil"></b></label>
+                                            <input id="testvide"  value="{{ personne.numeroSabil }}" required type="text" class="form-control" name="num_sabil" id="num_sabil"   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="piece_identite">{{ 'inscription.piece_identite'|trans }} <b class="text-danger" id="err_piece_identite"></b></label>
+                                            <select name="piece_identite" id="piece_identite" class="form-control">
+                                                <option value="{{ personne.typepiece }}">{{ personne.typepiece }}</option>
+                                                <option value="Passeport">Passeport</option>
+                                                <option value="CIN">CIN</option>
+                                                <option value="Carte de Résidence">Carte de Résidence</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="">{{ 'inscription.num_its'|trans }} <b class="text-danger" id="err_num_its"></b></label>
+                                            <input id="testvide"  value="{{ personne.numeroIts }}" required type="text" name="num_its" id="num_its" class="form-control"   />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="moze">{{ 'inscription.moza'|trans }} <b class="text-danger" id="err_moze"></b></label>
+                                            <select name="moze" id="moze" class="form-control">
+                                                {% for moze in mozes %}
+                                                    <option
+                                                            {% if personne.moze.moze==moze.moze %}
+                                                                    selected
+                                                            {% endif %}  if
+                                                            value="{{ moze.id }}">{{ moze.moze }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">{{ 'inscription.email'|trans }} <b class="text-danger" id="err_email1"></b></label>
+                                            <input id="testvide"  value="{{ personne.email }}" required type="email" name="email1" id="email1" class="form-control"   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'inscription.phone1'|trans }} <b class="text-danger" id="err_phone1"></b></label>
+                                            <input  value="{{ personne.num1 }}" required type="text" name="phone1" id="phone1" class="form-control"   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'inscription.phone2'|trans }} <b class="text-danger" id="err_phone2"></b></label>
+                                            <input id="testvide"  value="{{ personne.num2 }}" type="text" name="phone2" id="phone2" class="form-control"  />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'inscription.phone3'|trans }} <b class="text-danger" id="err_phone1"></b></label>
+                                            <input  value="{{ personne.num3 }}" type="text" name="phone3" id="phone3" class="form-control"   />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>{{ 'inscription.scan_its'|trans }} <b class="text-danger" id="err_scan_its"></b></label>
+                                            <div >
+                                                {% if personne.scan %}
+                                                    <img style="widh:150px;height: 150px" src="{{ asset('document/'~personne.scan) }}" alt="">
+                                                    <input value="{{ asset('document'~personne.scan) }}" type="file" name="tscan_its" id="scan_its" class="form-control"   />
+                                                {%else%}
+                                                    <input   style="border-color: #8a1f11" value="{{ asset('document'~personne.scan) }}" type="file" name="scan_its" id="scan_its" class="form-control"   />
+
+                                                {% endif %}
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'inscription.scan_cin'|trans }} <b class="text-danger" id="err_scan_its"></b></label>
+                                            {% if personne.scanCin %}
+                                                {% for scancin in personne.scanCin %}
+                                                    <img style="width:150px;height: 150px;" src="{{ asset('document/'~ scancin.url) }}" alt="cin">
+                                                    <br><br>
+                                                {% endfor %}
+                                                <input   type="file" name="tscan_cin[]" id="scan_cin" class="form-control"  multiple  />
+                                            {% else %}
+                                                <input  style="border-color: #8a1f11"  type="file" name="scan_cin[]" id="scan_cin" class="form-control"  multiple  />
+
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input  style="width: 150px;" type="submit"  class="btnRegister" id="btnInscrire"  value="{{ 'inscription.valider'|trans }}"/>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+</div>
+    <script>
+        $(document).ready(function () {
+            var purcentage={{ purcentage }}
+            $('.infosup').hide()
+            if(testVide() && purcentage !=100){
+                $('.infosup').show(5000, "linear");
+
+            }
+            if(testVide() && purcentage ==100){
+                $('.infosup').hide();
+
+            }
+            if(testVide()==false ){
+                $('.infosup').hide();
+
+            }
+            $('#form input[type="text"]').each(function(){
+
+                if($(this).val()){
+
+                    $(this).removeClass("error");
+
+                } else{
+                    $(this).addClass("error");
+                }
+            });
+            $('#form input[type="email"]').each(function(){
+
+                if($(this).val()){
+
+                    $(this).removeClass("error");
+
+                } else{
+                    $(this).addClass("error");
+                }
+            });
+
+            $(":input[type=text]", "#form").each(function() {
+                var field = $(this);
+                field.attr('required','required')
+            });
+
+            }
+        );
+    function testVide(){
+            var res =true;
+            $(":input[type=text]", "#form").each(function() {
+                var field = $(this);
+
+                if(field.val().length == 0) {
+
+                    field.attr('style','outline:1px solid #f00;')
+
+                    hauteur=field.offset().top;
+                    $('html,body').animate({scrollTop:hauteur+"5px"},1000);
+                    res=false;
+                }
+            });
+            $(":input[type=email]", "#form").each(function() {
+                var field = $(this);
+
+                if(field.val().length == 0) {
+
+                    field.attr('style','outline:1px solid #f00;')
+
+                    hauteur=field.offset().top;
+                    $('html,body').animate({scrollTop:hauteur+"5px"},1000);
+                    res=false;
+                }
+            });
+            return res;
+        }
+        $("#btnInscrire").click(function () {
+
+         if (testVide()){
+             return true;
+         }else{
+             return false;
+         }
+        })
+    </script>
+
+{% endblock %}

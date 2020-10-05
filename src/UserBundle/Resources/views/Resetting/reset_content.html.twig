@@ -1,0 +1,56 @@
+<!doctype html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ 'login'|trans }}</title>
+
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap-4.2.1/css/bootstrap.min.css') }}" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('assets/FosUser/login.css') }}">
+
+    <script src="{{ asset('assets/bootstrap-4.2.1/js/jquery-3.3.1.slim.min.js') }}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/bootstrap-4.2.1/js/popper.min.js') }}" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/bootstrap-4.2.1/js/bootstrap.min.js') }}" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+</head>
+
+<body id="LoginForm" style="zoom: 109%">
+<div class="container">
+    <br>
+    <h1 class="form-heading">{{ 'log.page'|trans }}</h1>
+    <hr>
+    <div class="login-form">
+
+        <div class="main-div">
+            <div class="panel">
+                <h2>{{ 'log.connecter'|trans }}</h2>
+                <p>{{ 'log.entrer'|trans }}</p>
+            </div>
+
+            {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+            {{ form_widget(form) }}
+            <br>
+            <div class="form-group">
+                <input type="submit" class="btn btn-danger btn-block" value="{{ 'resetting.reset.submit'|trans }}" />
+            </div>
+            {{ form_end(form) }}
+        </div>
+        <h3 class="botto-text"> {{ appli_titre }}</h3>
+    </div>
+</div>
+
+<script>
+    $('#fos_user_resetting_form_plainPassword_first').addClass('form-control');
+    $('#fos_user_resetting_form_plainPassword_second').addClass('form-control');
+
+</script>
+
+</body>
+
+</html>
+
+
+
+

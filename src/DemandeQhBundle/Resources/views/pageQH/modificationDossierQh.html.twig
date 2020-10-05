@@ -1,0 +1,1523 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+
+{% block body_container %}
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+            background-color: #0088CC;
+        }
+        col-lg .groove {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,input,select,textarea,p {
+            text-shadow: 0.1px 0.1px 1px black;
+
+        }
+    </style>
+    {#code test #}
+    {% set class_montant='d-none' %}
+    {% set note_montant='' %}
+
+    {% set class_mois='d-none' %}
+    {% set note_mois='' %}
+
+    {% set class_motif='d-none' %}
+    {% set note_motif='' %}
+
+    {% set class_detail='d-none' %}
+    {% set note_detail='' %}
+
+    {% set class_valeuror='d-none' %}
+    {% set note_valeuror='' %}
+
+    {% set class_photoor='d-none' %}
+    {% set note_photoor='' %}
+
+    {% set class_nomits='d-none' %}
+    {% set note_nomits='' %}
+
+    {% set class_gmoze='d-none' %}
+    {% set note_gmoze='' %}
+
+    {% set class_nomits1='d-none' %}
+    {% set note_nomits1='' %}
+
+    {% set class_gmoze1='d-none' %}
+    {% set note_gmoze1='' %}
+
+    {% set class_kalidas='d-none' %}
+    {% set note_kalidas='' %}
+
+    {% set class_gnom='d-none' %}
+    {% set note_gnom='' %}
+
+    {% set class_gprenom='d-none' %}
+    {% set note_gprenom='' %}
+
+    {% set class_gne='d-none' %}
+    {% set note_gne='' %}
+
+    {% set class_gnumits='d-none' %}
+    {% set note_gnumits='' %}
+
+    {% set class_gnumits1='d-none' %}
+    {% set note_gnumits1='' %}
+
+    {% set class_glieu='d-none' %}
+    {% set note_glieu='' %}
+
+    {% set class_gadresse='d-none' %}
+    {% set note_gadresse='' %}
+
+    {% set class_gville='d-none' %}
+    {% set note_gville='' %}
+
+    {% set class_gnationalite='d-none' %}
+    {% set note_gnationalite='' %}
+
+    {% set class_gsexe='' %}
+    {% set note_gsexe='' %}
+
+    {% set class_gtype='d-none' %}
+    {% set note_gtype='' %}
+
+    {% set class_gnumpiece='d-none' %}
+    {% set note_gnumpiece='' %}
+
+    {% set class_gdatepiece='d-none' %}
+    {% set note_gdatepiece='' %}
+
+    {% set class_gvillepiece='d-none' %}
+    {% set note_gvillepiece='' %}
+
+    {% set class_gpayspiece='d-none' %}
+    {% set note_gpayspiece='' %}
+
+    {% set class_gprofession='d-none' %}
+    {% set note_gprofession='' %}
+
+    {% set class_gtel1='d-none' %}
+    {% set note_gtel1='' %}
+
+    {% set class_gtel2='d-none' %}
+    {% set note_gtel2='' %}
+
+    {% set class_gemail='d-none' %}
+    {% set note_gemail='' %}
+
+    {% set class_gnumcheque1='d-none' %}
+    {% set note_gnumcheque1='' %}
+
+    {% set class_gbanquecheque1='d-none' %}
+    {% set note_gbanquecheque1='' %}
+
+    {% set class_gmontantcheque1='d-none' %}
+    {% set note_gmontantcheque1='' %}
+
+    {% set class_gdatecheque1='d-none' %}
+    {% set note_gdatecheque1='' %}
+
+    {% set class_gnumcheque2='d-none' %}
+    {% set note_gnumcheque2='' %}
+
+    {% set class_gbanquecheque2='d-none' %}
+    {% set note_gbanquecheque2='' %}
+
+    {% set class_gmontantcheque2='d-none' %}
+    {% set note_gmontantcheque2='' %}
+
+    {% set class_gdatecheque2='d-none' %}
+    {% set note_gdatecheque2='' %}
+
+    {% set class_gnumcheque3='d-none' %}
+    {% set note_gnumcheque3='' %}
+
+    {% set class_gbanquecheque3='d-none' %}
+    {% set note_gbanquecheque3='' %}
+
+    {% set class_gmontantcheque3='d-none' %}
+    {% set note_gmontantcheque3='' %}
+
+    {% set class_gdatecheque3='d-none' %}
+    {% set note_gdatecheque3='' %}
+
+    {% set class_gnomheritier='d-none' %}
+    {% set note_gnomheritier='' %}
+
+    {% set class_gprenomheritier='d-none' %}
+    {% set note_gprenomheritier='' %}
+
+
+    {% set class_g1nom='d-none' %}
+    {% set note_g1nom='' %}
+
+    {% set class_g1prenom='d-none' %}
+    {% set note_g1prenom='' %}
+
+    {% set class_g1ne='d-none' %}
+    {% set note_g1ne='' %}
+
+    {% set class_g1numits='d-none' %}
+    {% set note_g1numits='' %}
+
+    {% set class_g1numits1='' %}
+    {% set note_g1numits1='' %}
+
+    {% set class_g1lieu='d-none' %}
+    {% set note_g1lieu='' %}
+
+    {% set class_g1adresse='d-none' %}
+    {% set note_g1adresse='' %}
+
+    {% set class_g1ville='d-none' %}
+    {% set note_g1ville='' %}
+
+    {% set class_g1nationalite='d-none' %}
+    {% set note_g1nationalite='' %}
+
+    {% set class_g1sexe='' %}
+    {% set note_g1sexe='' %}
+
+    {% set class_g1type='d-none' %}
+    {% set note_g1type='' %}
+
+    {% set class_g1numpiece='d-none' %}
+    {% set note_g1numpiece='' %}
+
+    {% set class_g1datepiece='d-none' %}
+    {% set note_g1datepiece='' %}
+
+    {% set class_g1villepiece='d-none' %}
+    {% set note_g1villepiece='' %}
+
+    {% set class_g1payspiece='d-none' %}
+    {% set note_g1payspiece='' %}
+
+    {% set class_g1profession='d-none' %}
+    {% set note_g1profession='' %}
+
+    {% set class_g1tel1='d-none' %}
+    {% set note_g1tel1='' %}
+
+    {% set class_g1tel2='d-none' %}
+    {% set note_g1tel2='' %}
+
+    {% set class_g1email='d-none' %}
+    {% set note_g1email='' %}
+
+    {% set class_g1numcheque1='d-none' %}
+    {% set note_g1numcheque1='' %}
+
+    {% set class_g1banquecheque1='d-none' %}
+    {% set note_g1banquecheque1='' %}
+
+    {% set class_g1montantcheque1='d-none' %}
+    {% set note_g1montantcheque1='' %}
+
+    {% set class_g1datecheque1='d-none' %}
+    {% set note_g1datecheque1='' %}
+
+    {% set class_g1numcheque2='d-none' %}
+    {% set note_g1numcheque2='' %}
+
+    {% set class_g1banquecheque2='d-none' %}
+    {% set note_g1banquecheque2='' %}
+
+    {% set class_g1montantcheque2='d-none' %}
+    {% set note_g1montantcheque2='' %}
+
+    {% set class_g1datecheque2='d-none' %}
+    {% set note_g1datecheque2='' %}
+
+    {% set class_g1numcheque3='d-none' %}
+    {% set note_g1numcheque3='' %}
+
+    {% set class_g1banquecheque3='d-none' %}
+    {% set note_g1banquecheque3='' %}
+
+    {% set class_g1montantcheque3='d-none' %}
+    {% set note_g1montantcheque3='' %}
+
+    {% set class_g1datecheque3='d-none' %}
+    {% set note_g1datecheque3='' %}
+
+    {% set class_g1nomheritier='d-none' %}
+    {% set note_g1nomheritier='' %}
+
+    {% set class_g1prenomheritier='d-none' %}
+    {% set note_g1prenomheritier='' %}
+
+
+
+    {% set class_safahi='d-none' %}
+    {% set note_safahi='' %}
+    {% set class_solde='d-none' %}
+    {% set note_solde='' %}
+    {% set class_attestation='d-none' %}
+    {% set note_attestation='' %}
+    {% set class_formgarant='d-none' %}
+    {% set note_formgarant='' %}
+    {% set class_formgarant1='d-none' %}
+    {% set note_formgarant1='' %}
+    {% set class_chequebarre='d-none' %}
+    {% set note_chequebarre='' %}
+    {% set class_chequebarre1='d-none' %}
+    {% set note_chequebarre1='' %}
+
+    {% for modifier in modifiers %}
+        {% if (modifier.formulaire == "Nmontant") %}
+            {% set class_montant = 'd-block' %}
+            {% set note_montant =  modifier.notif  %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nmois") %}
+            {% set class_mois='d-block' %}
+            {% set note_mois =  modifier.notif  %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nmotif") %}
+            {% set class_motif ='d-block' %}
+            {% set note_motif = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ndetail") %}
+            {% set class_detail ='d-block' %}
+            {% set note_detail = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nvaleuror") %}
+            {% set class_valeuror ='d-block' %}
+            {% set note_valeuror = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nnomits") %}
+            {% set class_nomits ='d-block' %}
+            {% set note_nomits = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnumits") %}
+            {% set class_gnumits ='d-block' %}
+            {% set note_gnumits = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngmoze") %}
+            {% set class_gmoze ='d-block' %}
+            {% set note_gmoze = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nnomits1") %}
+            {% set class_nomits1 ='d-block' %}
+            {% set note_nomits1 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnumits1") %}
+            {% set class_gnumits1 ='d-block' %}
+            {% set note_gnumits1 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngmoze1") %}
+            {% set class_gmoze1 ='d-block' %}
+            {% set note_gmoze1 = modifier.notif %}
+        {% endif %}
+
+        {% if (modifier.formulaire == "Nkalidas") %}
+            {% set class_kalidas ='d-none' %}
+            {% set msg_kalidas ='d-block' %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnom") %}
+            {% set class_gnom ='d-block' %}
+            {% set note_gnom = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngprenom") %}
+            {% set class_gprenom ='d-block' %}
+            {% set note_gprenom = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngne") %}
+            {% set class_gne ='d-block' %}
+            {% set note_gne = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nglieu") %}
+            {% set class_glieu ='d-block' %}
+            {% set note_glieu = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngadresse") %}
+            {% set class_gadresse ='d-block' %}
+            {% set note_gadresse = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngville") %}
+            {% set class_gville ='d-block' %}
+            {% set note_gville = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnationalite") %}
+            {% set class_gnationalite ='d-block' %}
+            {% set note_gnationalite = modifier.notif %}
+        {% endif %}
+
+        {% if (modifier.formulaire == "Ngtype") %}
+            {% set class_gtype ='d-block' %}
+            {% set note_gtype = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnumpiece") %}
+            {% set class_gnumpiece ='d-block' %}
+            {% set note_gnumpiece = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngdatepiece") %}
+            {% set class_gdatepiece ='d-block' %}
+            {% set note_gdatepiece = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngvillepiece") %}
+            {% set class_gvillepiece ='d-block' %}
+            {% set note_gvillepiece = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngpayspiece") %}
+            {% set class_gpayspiece ='d-block' %}
+            {% set note_gpayspiece = modifier.notif  %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngprofession") %}
+            {% set class_gprofession ='d-block' %}
+            {% set note_gprofession = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngtel1") %}
+            {% set class_gtel1 ='d-block' %}
+            {% set note_gtel1 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngtel2") %}
+            {% set class_gtel2 ='d-block' %}
+            {% set note_gtel2 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngemail") %}
+            {% set class_gemail ='d-block' %}
+            {% set note_gemail = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnumcheque1") %}
+            {% set class_gnumcheque1 ='d-block' %}
+            {% set note_gnumcheque1 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngbanquecheque1") %}
+            {% set class_gbanquecheque1 ='d-block' %}
+            {% set note_gbanquecheque1 =  modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngmontantcheque1") %}
+            {% set class_gmontantcheque1 ='d-block' %}
+            {% set note_gmontantcheque1 =  modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngdatecheque1") %}
+            {% set class_gdatecheque1 ='d-block' %}
+            {% set note_gdatecheque1 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnumcheque2") %}
+            {% set class_gnumcheque2 ='d-block' %}
+            {% set note_gnumcheque2 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngbanquecheque2") %}
+            {% set class_gbanquecheque2 ='d-block' %}
+            {% set note_gbanquecheque2 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngmontantcheque2") %}
+            {% set class_gmontantcheque2 ='d-block' %}
+            {% set note_gmontantcheque2 = modifier.notif%}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngdatecheque2") %}
+            {% set class_gdatecheque2 ='d-block' %}
+            {% set note_gdatecheque2 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnumcheque3") %}
+            {% set class_gnumcheque3 ='d-block' %}
+            {% set note_gnumcheque3 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngbanquecheque3") %}
+            {% set class_gbanquecheque3 ='d-block' %}
+            {% set note_gbanquecheque3 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngmontantcheque3") %}
+            {% set class_gmontantcheque3 ='d-block' %}
+            {% set note_gmontantcheque3 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngdatecheque3") %}
+            {% set class_gdatecheque3 ='d-block' %}
+            {% set note_gdatecheque3 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnomheritier") %}
+            {% set class_gnomheritier ='d-block' %}
+            {% set note_gnomheritier = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngprenomheritier") %}
+            {% set class_gprenomheritier ='d-block' %}
+            {% set note_gprenomheritier = modifier.notif %}
+        {% endif %}
+
+
+
+        {% if (modifier.formulaire == "Ng1nom") %}
+            {% set class_g1nom ='d-block' %}
+            {% set note_g1nom = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1prenom") %}
+            {% set class_g1prenom ='d-block' %}
+            {% set note_g1prenom = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1ne") %}
+            {% set class_g1ne ='d-block' %}
+            {% set note_g1ne = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1lieu") %}
+            {% set class_g1lieu ='d-block' %}
+            {% set note_g1lieu = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1adresse") %}
+            {% set class_g1adresse ='d-block' %}
+            {% set note_g1adresse = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1ville") %}
+            {% set class_g1ville ='d-block' %}
+            {% set note_g1ville = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1nationalite") %}
+            {% set class_g1nationalite ='d-block' %}
+            {% set note_g1nationalite = modifier.notif %}
+        {% endif %}
+
+        {% if (modifier.formulaire == "Ng1type") %}
+            {% set class_g1type ='d-block' %}
+            {% set note_g1type = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1numpiece") %}
+            {% set class_g1numpiece ='d-block' %}
+            {% set note_g1numpiece = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1datepiece") %}
+            {% set class_g1datepiece ='d-block' %}
+            {% set note_g1datepiece = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1villepiece") %}
+            {% set class_g1villepiece ='d-block' %}
+            {% set note_g1villepiece = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1payspiece") %}
+            {% set class_g1payspiece ='d-block' %}
+            {% set note_g1payspiece = modifier.notif  %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1profession") %}
+            {% set class_g1profession ='d-block' %}
+            {% set note_g1profession = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1tel1") %}
+            {% set class_g1tel1 ='d-block' %}
+            {% set note_g1tel1 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1tel2") %}
+            {% set class_g1tel2 ='d-block' %}
+            {% set note_g1tel2 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1email") %}
+            {% set class_g1email ='d-block' %}
+            {% set note_g1email = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ngnumcheque1") %}
+            {% set class_gnumcheque1 ='d-block' %}
+            {% set note_gnumcheque1 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1banquecheque1") %}
+            {% set class_g1banquecheque1 ='d-block' %}
+            {% set note_g1banquecheque1 =  modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1montantcheque1") %}
+            {% set class_g1montantcheque1 ='d-block' %}
+            {% set note_g1montantcheque1 =  modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1datecheque1") %}
+            {% set class_g1datecheque1 ='d-block' %}
+            {% set note_g1datecheque1 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1numcheque2") %}
+            {% set class_g1numcheque2 ='d-block' %}
+            {% set note_g1numcheque2 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1banquecheque2") %}
+            {% set class_g1banquecheque2 ='d-block' %}
+            {% set note_g1banquecheque2 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1montantcheque2") %}
+            {% set class_gmontantcheque2 ='d-block' %}
+            {% set note_gmontantcheque2 = modifier.notif%}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1datecheque2") %}
+            {% set class_g1datecheque2 ='d-block' %}
+            {% set note_g1datecheque2 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1numcheque3") %}
+            {% set class_g1numcheque3 ='d-block' %}
+            {% set note_g1numcheque3 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1banquecheque3") %}
+            {% set class_g1banquecheque3 ='d-block' %}
+            {% set note_g1banquecheque3 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1montantcheque3") %}
+            {% set class_g1montantcheque3 ='d-block' %}
+            {% set note_g1montantcheque3 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1datecheque3") %}
+            {% set class_g1datecheque3 ='d-block' %}
+            {% set note_g1datecheque3 = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1nomheritier") %}
+            {% set class_g1nomheritier ='d-block' %}
+            {% set note_g1nomheritier = modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Ng1prenomheritier") %}
+            {% set class_g1prenomheritier ='d-block' %}
+            {% set note_g1prenomheritier = modifier.notif %}
+        {% endif %}
+
+
+
+
+
+
+
+
+
+        {% if (modifier.formulaire == "Nsafahi") %}
+            {% set class_safahi ='d-block' %}
+            {% set note_safahi =modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nsolde") %}
+            {% set class_solde ='d-block' %}
+            {% set note_solde =modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nattestation") %}
+            {% set class_attestation ='d-block' %}
+            {% set note_attestation =modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nchequebarre") %}
+            {% set class_chequebarre ='d-block' %}
+            {% set note_chequebarre =modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nchequebarre1") %}
+            {% set class_chequebarre1 ='d-block' %}
+            {% set note_chequebarre1 =modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nformgarant") %}
+            {% set class_formgarant ='d-block' %}
+            {% set note_formgarant =modifier.notif %}
+        {% endif %}
+        {% if (modifier.formulaire == "Nformgarant1") %}
+            {% set class_formgarant1 ='d-block' %}
+            {% set note_formgarant1 =modifier.notif %}
+        {% endif %}
+    {% endfor %}
+    {#code test#}
+<form action="#" method="POST" enctype="multipart/form-data">
+<div class="contenu align-content-center">
+    <div class="container">
+    <hr class="border-white">
+
+
+    <hr class="border-white">
+        {% if msg !='' %}
+            <div class="alert alert-success text-center">
+                <p> {{ msg }}</p>
+            </div>
+        {% endif %}
+    <h1 class="text-primary text-center"> Information sur le Demande QH</h1>
+    <hr class="groove">
+  {#  <div class="row">
+
+        <div class="col-lg-6">
+           <h4 class="text-primary">Antécédent</h4>
+            Dejà efectuer une demande QH auparavant :
+            {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
+                {% set x='oui' %}
+            {% else %}
+                {% set x='non' %}
+            {% endif %}
+            {{ x }}
+            <i class="fa fa-edit btn btn-danger btn-md" id="anciendemande"></i>
+            <i class="fa fa-comment btn btn-danger btn-md" id="notif_anciendemande"></i>
+            </p>
+            <input class="form-control d-none" value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="osiAncienDemande" id="osiAncienDemande" >
+            <br>
+            <input  class="form-control d-none" placeholder="saisir quelque chose ici" type="text" name="nsiAncienDemande" id="nsiAncienDemande" >
+            {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
+                {% if (demandeQH.demadeQH.siAncienDemandeEtat=='oui') %}
+                    {% set y='oui' %}
+
+                {% else %}
+                    {% set y='non' %}
+
+                {% endif %}
+                <p>Elle a été acceptée : {{ y }}
+
+                </p>
+            {% endif %}
+
+        </div>
+
+        {% if (x=='oui' and y=='oui') %}
+            <div class="col-lg-6">
+                <h4 class="text-primary">les trois dernier montant demandés
+                    <i class="fa fa-edit btn btn-danger btn-md" id="anciendemande"></i>
+                    <i class="fa fa-comment btn btn-danger btn-md" id="notif_anciendemande"></i>
+                    </p>
+                    <input class="form-control d-none" value="{{ demandeQH.demadeQH.siAncienDemande }}" type="text" name="osiAncienDemande" id="osiAncienDemande" >
+                    <br>
+                    <input  class="form-control d-none" placeholder="saisir quelque chose ici" type="text" name="nsiAncienDemande" id="nsiAncienDemande" ></h4>
+                <table class="table table-striped">
+                    <thead><th><label >{{ 'demandeqh_ajouter.annee'|trans }}</label></th>
+                    <th></th>
+                    <th><label >{{ 'demandeqh_ajouter.montant'|trans }}</label></th>
+                    </thead>
+                    <tr><td>
+
+                            <p >{{ demandeQH.demadeQH.annee1 }}</p>
+                        </td>
+                        <td> </td>
+                        <td>
+
+                            <p class="text-right" >{{ demandeQH.demadeQH.montant1|number_format('2',',',' ') }}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+
+                            <p >{{ demandeQH.demadeQH.annee2 }}</p>
+                        </td>
+                        <td>
+                        <td>
+
+                            <p class="text-right" >{{ demandeQH.demadeQH.montant2|number_format('2',',',' ') }}</p>
+                        </td>
+                    </tr>
+                    <tr><td>
+
+                            <p >{{ demandeQH.demadeQH.annee3 }}</p>
+                        </td>
+                        <td> </td>
+                        <td>
+                            <p class="text-right" >{{ demandeQH.demadeQH.montant3|number_format('2',',',' ') }}</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        {% endif %}
+
+    </div>#}
+
+    <div class="row">
+        <input type="hidden" id="id_dossier" value="{{ demandeQH.id }}" >
+
+        <div class="{{ 'col-lg-6 ' ~ class_montant }}"  >
+            <span class="text-danger" >{{ note_montant }}</span>
+            <p >Montant demandée en Ariary : {{ demandeQH.demadeQH.montant }}
+                <input type="text" class="form-control" name="Nmontant">
+            </p>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_mois }}"  >
+            <span class="text-danger" >{{ note_mois }}</span>
+            <p >Pour combien de mois : {{ demandeQH.demadeQH.nombreMois }}
+                <input class="form-control" type="text"  name="Nmois">
+            </p>
+
+        </div>
+
+        <div class="{{ 'col-lg-6 ' ~ class_motif }}">
+            <span class="text-danger" >{{ note_motif }}</span>
+            <p  >Motif : {{ demandeQH.demadeQH.typeMotif }}
+                <input class="form-control" type="text"   name="Nmotif">
+            </p>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_detail }}"  >
+            <span class="text-danger" >{{ note_detail }}</span>
+            <p >Détail : {{ demandeQH.demadeQH.detailMotif }}
+                <input class="form-control" type="text"  name="Ndetail">
+            </p>
+            <br>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_valeuror }}">
+            <span class="text-danger" >{{ note_valeuror }}</span>
+            <p >Valeur de l'or en Ariary : {{ demandeQH.demadeQH.garantieOR.valeurAr}}
+                <input class="form-control" type="text"  name="Nvaleuror">
+            </p>
+            <br>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_kalidas }}">
+        <span class="text-danger" >{{ note_valeuror }}</span>
+            <p >Scan du formulaire(remplir par kalidas):<br>
+                <a target="_blank" href="{{ asset('document/'~ demandeQH.demadeQH.garantieOR.scanKalidas) }}">
+                    <img src="{{ asset('document/'~ demandeQH.demadeQH.garantieOR.scanKalidas) }}" class="img img-fluid" alt="" width="50" height="50">
+                </a>
+                <input class="form-control" type="file"   name="Nkalidas">
+
+            </p>
+            <br>
+        </div>
+        <div class="col-lg-6">
+            <p class="{{ class_photoor }}">Photo du paquet scellé par kallidas:(Possibilité de mettre plusieurs photos):<br>
+                {% for photoor in photoor %}
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ photoor.url) }}"><img src="{{ asset('document/'~ photoor.url) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                {% endfor %}
+                <input class="form-control" type="file"   name="Nkalidas[]" multiple>
+            </p>
+        </div>
+
+    </div>
+        {% if demandeQH.demadeQH.garant1 %}
+
+
+    <div class="col-lg-12"><h1 class="text-primary text-center">Inormation sur le garant1</h1></div>
+    <hr class="groove">
+    <div class="row">
+
+        <div class="{{ 'col-lg-6 ' ~ class_nomits }}">
+            <span class="text-danger" >{{ note_nomits }}</span>
+            <p class="{{ class_nomits }}">Nom complet inscrit sur its : {{ demandeQH.demadeQH.garant1.nomIts }}
+                <input class="form-control" type="text"  name="Nnomits">
+            </p>
+            <br>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gnumits }}">
+            <span class="text-danger" >{{ note_gnumits }}</span>
+            <p> Numéro its : {{ demandeQH.demadeQH.garant1.numeroIts }}
+                <input class="form-control" type="text"   name="Ngnumits">
+            </p>
+            <br>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gmoze }}">
+            <span class="text-danger" >{{ note_gmoze }}</span>
+            <p >Moze :{{  demandeQH.demadeQH.garant1.moze }}
+                <input class="form-control" type="text"  name="Ngmoze">
+
+            </p>
+            <br>
+        </div>
+
+        <div class="{{ 'col-lg-6 ' ~ class_gnom }}">
+            <span class="text-danger" >{{ note_gnom }}</span>
+            <p >{{ 'garant.nom'|trans }} :  {{ demandeQH.demadeQH.garant1.nomcin }}
+
+                <input class="form-control" type="text"   name="Ngnom">
+
+            </p>
+            <br>
+
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gprenom }}">
+            <span class="text-danger" >{{ note_gprenom }}</span>
+            <p >{{ 'garant.prenom'|trans }} : {{ demandeQH.demadeQH.garant1.prenomcin }}
+
+                <input class="form-control" type="text"  name="Ngprenom">
+
+            </p>
+            <br>
+        </div>
+
+        <div class="{{ 'col-lg-6 ' ~ class_gne }}">
+            <span class="text-danger" >{{ note_gne }}</span>
+            <p class="class_ne">{{ 'garant.né'|trans }} : {{ demandeQH.demadeQH.garant1.dateNaissance|date('d/m/Y') }}
+
+                <input class="form-control" type="text"   name="Ngne">
+
+            </p>
+            <br>
+
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_glieu }}">
+            <span class="text-danger" >{{ note_glieu }}</span>
+            <p >{{ 'garant.lieu'|trans }} : {{ demandeQH.demadeQH.garant1.lieu }}
+                <input class="form-control" type="text"   name="Nglieu">
+
+            </p>
+            <br>
+
+        </div>
+
+
+
+        <div class="{{ 'col-lg-6 ' ~ class_gadresse }}">
+            <span class="text-danger" >{{ note_gadresse }}</span>
+            <p class="{{ class_gadresse }}">{{ 'garant.adresse'|trans }} : {{ demandeQH.demadeQH.garant1.adresse }}
+
+                <input class="form-control" type="text"   name="Ngadresse">
+
+            </p>
+            <br>
+
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gville }}">
+            <span class="text-danger" >{{ note_gville }}</span>
+            <p class="{{ class_gville }}">{{ 'garant.ville'|trans }}:
+
+                <input class="form-control" type="text"   name="Ngville">
+
+            </p>
+            <br>
+
+        </div>
+
+
+
+
+        <div class="{{ 'col-lg-6 ' ~ class_gnationalite }}">
+            <span class="text-danger" >{{ note_gnationalite }}</span>
+            <p >{{ 'garant.nationalite'|trans }} :  {{ demandeQH.demadeQH.garant1.nationalite }}
+
+                <input class="form-control" type="text"   name="Ngnationalite">
+
+            </p>
+            <br>
+
+        </div>
+
+        <div class="{{ 'col-lg-6 ' ~ class_gtype }}">
+            <span class="text-danger" >{{ note_gtype }}</span>
+            <p >{{ 'garant.type'|trans }} : {{ demandeQH.demadeQH.garant1.typePiece }}
+
+                <input class="form-control" type="text"   name="Ngtype">
+
+            </p>
+            <br>
+
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gnumpiece }}">
+            <span class="text-danger" >{{ note_gnumpiece }}</span>
+            <p >{{ 'garant.numero'|trans }} : {{ demandeQH.demadeQH.garant1.numeroPiece }}
+
+                <input class="form-control" type="text"   name="Ngnumpiece">
+
+            </p>
+            <br>
+
+        </div>
+
+        <div class="{{ 'col-lg-6 ' ~ class_gdatepiece }}">
+            <span class="text-danger" >{{ note_gdatepiece }}</span>
+            <p >{{ 'garant.date'|trans }} : {{ demandeQH.demadeQH.garant1.datePiece|date('d/m/Y') }}
+
+                <input class="form-control" type="text"   name="Ngdatepiece">
+            </p>
+            <br>
+
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gvillepiece }}">
+            <span class="text-danger" >{{ note_gvillepiece }}</span>
+            <p >{{ 'garant.villepiece'|trans }} :  {{ demandeQH.demadeQH.garant1.villePiece }}
+
+                <input class="form-control" type="text"   name="Ngvillepiece">
+
+            </p>
+            <br>
+        </div>
+
+
+
+        <div  class="{{ 'col-lg-6 ' ~ class_gpayspiece }}">
+            <span class="text-danger" >{{ note_gpayspiece }}</span>
+            <p >{{ 'garant.pays'|trans }} : {{ demandeQH.demadeQH.garant1.paysPiece }}
+
+                <input class="form-control" type="text"   name="Ngpayspiece">
+
+            </p>
+            <br>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gprofession }}">
+            <span class="text-danger" >{{ note_gprofession }}</span>
+            <p >{{ 'garant.profession'|trans }} : {{ demandeQH.demadeQH.garant1.profession }}
+                <input class="form-control" type="text"   name="Ngprofession">
+            </p>
+            <br>
+        </div>
+
+
+        <div class="{{ 'col-lg-6 ' ~ class_gtel1 }}">
+            <span class="text-danger" >{{ note_gtel1 }}</span>
+            <p >{{ 'garant.tel1'|trans }} : {{ demandeQH.demadeQH.garant1.tel1 }}
+
+                <input class="form-control" type="text"   name="Ngtel1">
+
+            </p>
+            <br>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gtel2 }}">
+            <span class="text-danger" >{{ note_gtel2 }}</span>
+            <p > {{ 'garant.tel2'|trans }} : {{ demandeQH.demadeQH.garant1.tel2 }}
+
+                <input class="form-control" type="text"   name="Ngtel2">
+
+            </p>
+            <br>
+        </div>
+
+
+        <div class="{{ 'col-lg-6 ' ~ class_gemail }}">
+            <span class="text-danger" >{{ note_gtel2 }}</span>
+            <p >{{ 'garant.email'|trans }} : {{ demandeQH.demadeQH.garant1.email }}
+                <input class="form-control" type="text"  name="Ngemail">
+
+            </p>
+            <br>
+        </div>
+        <div  class="{{ 'col-lg-6 ' ~ class_gnumcheque1 }}">
+            <span class="text-danger" >{{ note_gnumcheque1 }}</span>
+            <p >{{ 'garant.numerocheque'|trans }}1 : {{ demandeQH.demadeQH.garant1.numerocheque1 }}
+
+                <input class="form-control" type="text"   name="Ngnumcheque1">
+
+            </p>
+            <br>
+        </div>
+
+        <div  class="{{ 'col-lg-6 ' ~ class_gbanquecheque1 }}">
+            <span class="text-danger" >{{ note_gbanquecheque1 }}</span>
+            <p >{{ 'garant.banquecheque'|trans }}1 :  {{ demandeQH.demadeQH.garant1.banquecheque1 }}
+
+                <input class="form-control" type="text"  name="Ngbanquecheque1">
+
+            </p>
+            <br>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gmontantcheque1 }}">
+            <span class="text-danger" >{{ note_gmontantcheque1}}</span>
+            <p >{{ 'garant.montantcheque'|trans }}1 : {{ demandeQH.demadeQH.garant1.montantcheque1 }}
+
+                <input class="form-control" type="text"   name="Ngmontantcheque1">
+
+            </p>
+            <br>
+        </div>
+
+        <div class="{{ 'col-lg-6 ' ~ class_gdatecheque1 }}">
+            <span class="text-danger" >{{ note_gdatecheque1}}</span>
+            <p >{{ 'garant.datecheque'|trans }}1 : {{ demandeQH.demadeQH.garant1.datetcheque1|date('d/m/Y') }}
+
+                <input class="form-control" type="text"   name="Ngdatecheque1">
+
+            </p>
+            <br>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gnumcheque2 }}">
+            <span class="text-danger" >{{ note_gnumcheque2}}</span>
+            <p >{{ 'garant.numerocheque'|trans }}2 : {{ demandeQH.demadeQH.garant1.numerocheque2 }}
+
+                <input class="form-control" type="text"   name="Ngnumcheque2">
+
+            </p>
+            <br>
+
+        </div>
+
+        <div  class="{{ 'col-lg-6 ' ~ class_gbanquecheque2 }}">
+            <span class="text-danger" >{{ note_gbanquecheque2}}</span>
+            <p >{{ 'garant.banquecheque'|trans }}2 : {{ demandeQH.demadeQH.garant1.banquecheque2 }}
+
+                <input class="form-control" type="text"   name="Ngbanquecheque2">
+
+            </p>
+            <br>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gmontantcheque2 }}">
+            <span class="text-danger" >{{ note_gmontantcheque2}}</span>
+            <p >{{ 'garant.montantcheque'|trans }}2 : {{ demandeQH.demadeQH.garant1.montantcheque2 }}
+
+                <input class="form-control"  type="text"   name="Ngmontantcheque2">
+
+            </p>
+            <br>
+
+        </div>
+
+
+        <div class="{{ 'col-lg-6 ' ~ class_gdatecheque2 }}">
+            <span class="text-danger" >{{ note_gdatecheque2}}</span>
+            <p > {{ 'garant.datecheque'|trans }}2 : {{ demandeQH.demadeQH.garant1.datetcheque2|date('d/m/Y')}}
+                <input class="form-control" type="text"   name="Ngdatecheque2">
+            </p>
+            <br>
+        </div>
+
+        <div class="{{ 'col-lg-6 ' ~ class_gnumcheque3 }}">
+            <span class="text-danger" >{{ note_gnumcheque3}}</span>
+            <p >{{ 'garant.numerocheque'|trans }}3 : {{ demandeQH.demadeQH.garant1.numerocheque3 }}
+
+                <input class="form-control" type="text"   name="Ngnumcheque3">
+
+            </p>
+            <br>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gbanquecheque3 }}">
+            <span class="text-danger" >{{ note_gbanquecheque3 }}</span>
+            <p >{{ 'garant.banquecheque'|trans }}3 : {{ demandeQH.demadeQH.garant1.banquecheque3 }}
+
+                <input class="form-control" type="text"  name="Ngbanquecheque3">
+
+            </p>
+            <br>
+        </div>
+
+
+        <div  class="{{ 'col-lg-6 ' ~ class_gmontantcheque3 }}">
+            <span class="text-danger" >{{ note_gmontantcheque3 }}</span>
+            <p>{{ 'garant.montantcheque'|trans }}3 : {{ demandeQH.demadeQH.garant1.montantcheque3 }}
+
+                <input class="form-control" type="text"   name="Ngmontantcheque3">
+
+            </p>
+            <br>
+        </div>
+
+
+        <div class="{{ 'col-lg-6 ' ~ class_gdatecheque3 }}">
+            <span class="text-danger" >{{ note_gdatecheque3 }}</span>
+            <p  >{{ 'garant.datecheque'|trans }}3 : {{ demandeQH.demadeQH.garant1.datetcheque3|date('d/m/Y')}}
+
+                <input class="form-control" type="text"   name="Ngdatecheque3">
+
+            </p>
+            <br>
+        </div>
+        <div class="{{ 'col-lg-6 ' ~ class_gnomheritier }}">
+            <span class="text-danger" >{{ note_gnomheritier }}</span>
+            <p >{{ 'garant.nomheritier'|trans }} : {{ demandeQH.demadeQH.garant1.nomheritier1 }}
+
+                <input class="form-control" type="text"  name="Ngnomheritier">
+
+            </p>
+            <br>
+
+        </div>
+
+
+        <div class="{{ 'col-lg-6 ' ~ class_gprenomheritier }}">
+            <span class="text-danger" >{{ note_gprenomheritier }}</span>
+            <p >{{ 'garant.prenomheritier'|trans }} : {{ demandeQH.demadeQH.garant1.prenomheritier1}}
+
+                <input class="form-control" type="text"   name="Ngprenomheritier">
+
+            </p>
+            <br>
+        </div>
+
+
+    </div>
+        {% endif %}
+        {% if  demandeQH.demadeQH.garant2 %}
+
+
+        <div class="col-lg-12"><h1 class="text-primary text-center">Inormation sur le garant2</h1></div>
+        <hr class="groove">
+        <div class="row">
+            <div class="{{ 'col-lg-6 ' ~ class_nomits1 }}">
+                <span class="text-danger" >{{ note_nomits1 }}</span>
+                <p class="{{ class_nomits1 }}">Nom complet inscrit sur its : {{ demandeQH.demadeQH.garant2.nomIts }}
+                    <input class="form-control" type="text"  name="Nnomits1">
+                </p>
+                <br>
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_gnumits1 }}">
+                <span class="text-danger" >{{ note_gnumits1 }}</span>
+                <p> Numéro its : {{ demandeQH.demadeQH.garant2.numeroIts }}
+                    <input class="form-control" type="text"   name="Ngnumits1">
+                </p>
+                <br>
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_gmoze1 }}">
+                <span class="text-danger" >{{ note_gmoze1 }}</span>
+                <p >Moze :{{  demandeQH.demadeQH.garant2.moze }}
+                    <input class="form-control" type="text"  name="Ngmoze1">
+
+                </p>
+                <br>
+            </div>
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1nom }}">
+                <span class="text-danger" >{{ note_g1nom }}</span>
+                <p >{{ 'garant.nom'|trans }} :  {{ demandeQH.demadeQH.garant2.nomcin }}
+
+                    <input class="form-control" type="text"   name="Ng1nom">
+
+                </p>
+                <br>
+
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_g1prenom }}">
+                <span class="text-danger" >{{ note_g1prenom }}</span>
+                <p >{{ 'garant.prenom'|trans }} : {{ demandeQH.demadeQH.garant2.prenomcin }}
+
+                    <input class="form-control" type="text"  name="Ng1prenom">
+
+                </p>
+                <br>
+            </div>
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1ne }}">
+                <span class="text-danger" >{{ note_g1ne }}</span>
+                <p class="class_ne">{{ 'garant.né'|trans }} : {{ demandeQH.demadeQH.garant2.dateNaissance|date('d/m/Y') }}
+
+                    <input class="form-control" type="text"   name="Ng1ne">
+
+                </p>
+                <br>
+
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_g1lieu }}">
+                <span class="text-danger" >{{ note_g1lieu }}</span>
+                <p >{{ 'garant.lieu'|trans }} : {{ demandeQH.demadeQH.garant2.lieu }}
+                    <input class="form-control" type="text"   name="Ng1lieu">
+
+                </p>
+                <br>
+
+            </div>
+
+
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1adresse }}">
+                <span class="text-danger" >{{ note_g1adresse }}</span>
+                <p >{{ 'garant.adresse'|trans }} : {{ demandeQH.demadeQH.garant2.adresse }}
+
+                    <input class="form-control" type="text"   name="Ng1adresse">
+
+                </p>
+                <br>
+
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_g1ville }}">
+                <span class="text-danger" >{{ note_g1ville }}</span>
+                <p >{{ 'garant.ville'|trans }}: {{ demandeQH.demadeQH.garant2.ville }}
+
+                    <input class="form-control" type="text"   name="Ng1ville">
+
+                </p>
+                <br>
+
+            </div>
+
+
+
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1nationalite }}">
+                <span class="text-danger" >{{ note_g1nationalite }}</span>
+                <p >{{ 'garant.nationalite'|trans }} :  {{ demandeQH.demadeQH.garant2.nationalite }}
+
+                    <input class="form-control" type="text"   name="Ng1nationalite">
+
+                </p>
+                <br>
+
+            </div>
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1type }}">
+                <span class="text-danger" >{{ note_g1type }}</span>
+                <p >{{ 'garant.type'|trans }} : {{ demandeQH.demadeQH.garant2.typePiece }}
+
+                    <input class="form-control" type="text"   name="Ng1type">
+
+                </p>
+                <br>
+
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_g1numpiece }}">
+                <span class="text-danger" >{{ note_g1numpiece }}</span>
+                <p >{{ 'garant.numero'|trans }} : {{ demandeQH.demadeQH.garant2.numeroPiece }}
+
+                    <input class="form-control" type="text"   name="Ng1numpiece">
+
+                </p>
+                <br>
+
+            </div>
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1datepiece }}">
+                <span class="text-danger" >{{ note_g1datepiece }}</span>
+                <p >{{ 'garant.date'|trans }} : {{ demandeQH.demadeQH.garant2.datePiece|date('d/m/Y') }}
+
+                    <input class="form-control" type="text"   name="Ng1datepiece">
+                </p>
+                <br>
+
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_g1villepiece }}">
+                <span class="text-danger" >{{ note_g1villepiece }}</span>
+                <p >{{ 'garant.villepiece'|trans }} :  {{ demandeQH.demadeQH.garant2.villePiece }}
+
+                    <input class="form-control" type="text"   name="Ng1villepiece">
+
+                </p>
+                <br>
+            </div>
+
+
+
+            <div  class="{{ 'col-lg-6 ' ~ class_g1payspiece }}">
+                <span class="text-danger" >{{ note_g1payspiece }}</span>
+                <p >{{ 'garant.pays'|trans }} : {{ demandeQH.demadeQH.garant2.paysPiece }}
+
+                    <input class="form-control" type="text"   name="Ng1payspiece">
+
+                </p>
+                <br>
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_g1profession }}">
+                <span class="text-danger" >{{ note_g1profession }}</span>
+                <p >{{ 'garant.profession'|trans }} : {{ demandeQH.demadeQH.garant2.profession }}
+                    <input class="form-control" type="text"   name="Ng1profession">
+                </p>
+                <br>
+            </div>
+
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1tel1 }}">
+                <span class="text-danger" >{{ note_g1tel1 }}</span>
+                <p >{{ 'garant.tel1'|trans }} : {{ demandeQH.demadeQH.garant2.tel1 }}
+
+                    <input class="form-control" type="text"   name="Ng1tel1">
+
+                </p>
+                <br>
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_g1tel2 }}">
+                <span class="text-danger" >{{ note_g1tel2 }}</span>
+                <p > {{ 'garant.tel2'|trans }} : {{ demandeQH.demadeQH.garant2.tel2 }}
+
+                    <input class="form-control" type="text"   name="Ng1tel2">
+
+                </p>
+                <br>
+            </div>
+
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1email }}">
+                <span class="text-danger" >{{ note_g1tel2 }}</span>
+                <p >{{ 'garant.email'|trans }} : {{ demandeQH.demadeQH.garant2.email }}
+                    <input class="form-control" type="text"  name="Ng1email">
+
+                </p>
+                <br>
+            </div>
+            <div  class="{{ 'col-lg-6 ' ~ class_g1numcheque1 }}">
+                <span class="text-danger" >{{ note_g1numcheque1 }}</span>
+                <p >{{ 'garant.numerocheque'|trans }}1 : {{ demandeQH.demadeQH.garant2.numerocheque1 }}
+
+                    <input class="form-control" type="text"   name="Ng1numcheque1">
+
+                </p>
+                <br>
+            </div>
+
+            <div  class="{{ 'col-lg-6 ' ~ class_g1banquecheque1 }}">
+                <span class="text-danger" >{{ note_g1banquecheque1 }}</span>
+                <p >{{ 'garant.banquecheque'|trans }}1 :  {{ demandeQH.demadeQH.garant1.banquecheque1 }}
+
+                    <input class="form-control" type="text"  name="Ng1banquecheque1">
+
+                </p>
+                <br>
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_g1montantcheque1 }}">
+                <span class="text-danger" >{{ note_g1montantcheque1}}</span>
+                <p >{{ 'garant.montantcheque'|trans }}1 : {{ demandeQH.demadeQH.garant2.montantcheque1 }}
+
+                    <input class="form-control" type="text"   name="Ng1montantcheque1">
+
+                </p>
+                <br>
+            </div>
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1datecheque1 }}">
+                <span class="text-danger" >{{ note_g1datecheque1}}</span>
+                <p >{{ 'garant.datecheque'|trans }}1 : {{ demandeQH.demadeQH.garant2.datetcheque1|date('d/m/Y') }}
+
+                    <input class="form-control" type="text"   name="Ng1datecheque1">
+
+                </p>
+                <br>
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_g1numcheque2 }}">
+                <span class="text-danger" >{{ note_g1numcheque2}}</span>
+                <p >{{ 'garant.numerocheque'|trans }}2 : {{ demandeQH.demadeQH.garant2.numerocheque2 }}
+
+                    <input class="form-control" type="text"   name="Ng1numcheque2">
+
+                </p>
+                <br>
+
+            </div>
+
+            <div  class="{{ 'col-lg-6 ' ~ class_g1banquecheque2 }}">
+                <span class="text-danger" >{{ note_g1banquecheque2}}</span>
+                <p >{{ 'garant.banquecheque'|trans }}2 : {{ demandeQH.demadeQH.garant2.banquecheque2 }}
+
+                    <input class="form-control" type="text"   name="Ng1banquecheque2">
+
+                </p>
+                <br>
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_g1montantcheque2 }}">
+                <span class="text-danger" >{{ note_g1montantcheque2}}</span>
+                <p >{{ 'garant.montantcheque'|trans }}2 : {{ demandeQH.demadeQH.garant2.montantcheque2 }}
+
+                    <input class="form-control"  type="text"   name="Ng1montantcheque2">
+
+                </p>
+                <br>
+
+            </div>
+
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1datecheque2 }}">
+                <span class="text-danger" >{{ note_g1datecheque2}}</span>
+                <p > {{ 'garant.datecheque'|trans }}2 : {{ demandeQH.demadeQH.garant2.datetcheque2|date('d/m/Y')}}
+                    <input class="form-control" type="text"   name="Ng1datecheque2">
+                </p>
+                <br>
+            </div>
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1numcheque3 }}">
+                <span class="text-danger" >{{ note_g1numcheque3}}</span>
+                <p >{{ 'garant.numerocheque'|trans }}3 : {{ demandeQH.demadeQH.garant2.numerocheque3 }}
+
+                    <input class="form-control" type="text"   name="Ng1numcheque3">
+
+                </p>
+                <br>
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_g1banquecheque3 }}">
+                <span class="text-danger" >{{ note_g1banquecheque3 }}</span>
+                <p >{{ 'garant.banquecheque'|trans }}3 : {{ demandeQH.demadeQH.garant2.banquecheque3 }}
+
+                    <input class="form-control" type="text"  name="Ng1banquecheque3">
+
+                </p>
+                <br>
+            </div>
+
+
+            <div  class="{{ 'col-lg-6 ' ~ class_g1montantcheque3 }}">
+                <span class="text-danger" >{{ note_g1montantcheque3 }}</span>
+                <p>{{ 'garant.montantcheque'|trans }}3 : {{ demandeQH.demadeQH.garant2.montantcheque3 }}
+
+                    <input class="form-control" type="text"   name="Ng1montantcheque3">
+
+                </p>
+                <br>
+            </div>
+
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1datecheque3 }}">
+                <span class="text-danger" >{{ note_g1datecheque3 }}</span>
+                <p  >{{ 'garant.datecheque'|trans }}3 : {{ demandeQH.demadeQH.garant2.datetcheque3|date('d/m/Y')}}
+
+                    <input class="form-control" type="text"   name="Ng1datecheque3">
+
+                </p>
+                <br>
+            </div>
+            <div class="{{ 'col-lg-6 ' ~ class_g1nomheritier }}">
+                <span class="text-danger" >{{ note_g1nomheritier }}</span>
+                <p >{{ 'garant.nomheritier'|trans }} : {{ demandeQH.demadeQH.garant2.nomheritier1 }}
+
+                    <input class="form-control" type="text"  name="Ng1nomheritier">
+
+                </p>
+                <br>
+
+            </div>
+
+
+            <div class="{{ 'col-lg-6 ' ~ class_g1prenomheritier }}">
+                <span class="text-danger" >{{ note_g1prenomheritier }}</span>
+                <p >{{ 'garant.prenomheritier'|trans }} : {{ demandeQH.demadeQH.garant2.prenomheritier1}}
+
+                    <input class="form-control" type="text"   name="Ng1prenomheritier">
+
+                </p>
+                <br>
+            </div>
+
+
+        </div>
+
+
+        {% endif %}
+
+    <div class="col-lg-12"><h1 class="text-primary text-center">les formulaires </h1></div>
+    <hr class="groove">
+    <div class="row">
+
+        <div class="col-lg-6 ">
+            <span class="text-danger" >{{ note_safahi }}</span>
+            <p class="{{ class_safahi }}">{{ 'importationdossierQH.safahi'|trans }} :
+                <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.safahi) }}">
+                    <img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.safahi) }}" class="img img-fluid" alt="" width="50" height="50">
+                </a>
+                <input class="form-control" type="file"   name="Nsafahi">
+
+            </p>
+            <br>
+        </div>
+        <div class="col-lg-6">
+            <p class="{{ class_solde }}">{{ 'importationdossierQH.attestation_solde_compte'|trans }} :
+                <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.attestationSoldeCompte) }}"><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.attestationSoldeCompte) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                <input class="form-control" type="file" name="Nsolde">
+
+            </p>
+            <br>
+
+        </div>
+
+            <div class="col-lg-6">
+                <span class="text-danger" >{{ note_attestation }}</span>
+                <p class="{{ class_attestation }}">{{ 'importationdossierQH.attestation_bon_fonctionnement'|trans }} :
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.attestationCopmteBank) }}"><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.attestationCopmteBank) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                    <input class="form-control" type="file"  name="Nattestation">
+
+                </p>
+                <br>
+            </div>
+            <div class="col-lg-6">
+                <span class="text-danger" >{{ note_formgarant }}</span>
+                <p class="{{ class_formgarant }}">{{ 'importationdossierQH.formulaire_garant'|trans }} :
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.formulaireGarantie) }}"><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.formulaireGarantie) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                    <input class="form-control" type="file"  name="Nformgarant">
+
+                </p>
+                <br>
+            </div>
+
+
+            <div class="col-lg-6">
+                <span class="text-danger" >{{ note_chequebarre }}</span>
+                <p class="{{ class_chequebarre }}">{{ 'importationdossierQH.chequebarre'|trans }} :
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.chequeBare) }}"><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.chequeBare) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                    <input class="form-control" type="file" name="Nchequebarre">
+
+                </p>
+                <br>
+            </div>
+            <div class="col-lg-6">
+                <span class="text-danger" >{{ note_formgarant1 }}</span>
+                <p class="{{ class_formgarant1 }}">{{ 'importationdossierQH.formulaire_garant1'|trans }} :
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.formulaireGarantie1) }}"><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.formulaireGarantie1) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                    <input class="form-control" type="file"  name="Nformgarant1">
+
+                </p>
+                <br>
+            </div>
+
+            <div class="col-lg-6">
+                <span class="text-danger" >{{ note_chequebarre1 }}</span>
+                <p class="{{ class_chequebarre1 }}">{{ 'importationdossierQH.chequebarre1'|trans }} :
+                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.chequeBare1) }}"><img src="{{ asset('document/'~ demandeQH.demadeQH.personne.dossierEncours.chequeBare1) }}" class="img img-fluid" alt="" width="50" height="50"></a>
+                    <input class="form-control" type="file"  name="Nchequebarre1">
+
+                </p>
+                <br>
+            </div>
+        </div>
+        <div class="col-lg-4 float-right">
+
+            <input type="submit" class="btn btn-primary btn-block" name="btn" value="OK">
+        </div>
+
+    </div>
+ </div>
+</div>
+
+</form>
+
+{% endblock %}

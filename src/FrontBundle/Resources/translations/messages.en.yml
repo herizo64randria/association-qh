@@ -1,0 +1,5 @@
+# --accueil.html.twig
+accueil:
+  home: Home
+  singin: Sign In
+  login: Login

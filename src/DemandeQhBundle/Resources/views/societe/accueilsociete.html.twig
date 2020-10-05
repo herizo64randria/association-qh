@@ -1,0 +1,86 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+
+{% block body_container %}
+
+<section class="info-section">
+    <div class="container">
+        <div class="head-box text-center mb-5">
+            <h2>{{ 'accueilsociete.titre'|trans }}</h2>
+            <h6 class="text-underline-primary">{{ 'accueilsociete.stitre'|trans }}</h6>
+        </div>
+        <div class="three-panel-block mt-5">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="service-block-overlay text-center mb-5 p-lg-3">
+                        <i class="fa fa-money box-circle-solid mt-3 mb-3" aria-hidden="true"></i>
+                        <h3>
+                            <a href="{{ path('nouvelle_SocieteDemandeQH') }}">{{ 'accueilsociete.demande'|trans }}</a>
+                        </h3>
+                        <p class="px-4">Never in all their history have men been able truly to conceive of the world as one a single sphere</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="service-block-overlay text-center mb-5 p-lg-3">
+                        <i class="fa fa-bug box-circle-solid mt-3 mb-3" aria-hidden="true"></i>
+                        <h3>
+                            <a href="{{ path('liste_demandeqh_societe') }}">
+                                {{ 'accueilsociete.liste'|trans }}
+                            </a>
+
+                        </h3>
+                        <p class="px-4">Never in all their history have men been able truly to conceive of the world as one a single sphere</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="service-block-overlay text-center p-lg-3">
+                        <i class="fa fa-cloud-upload box-circle-solid mt-3 mb-3" aria-hidden="true"></i>
+                        <h3>Cloud Storage</h3>
+                        <p class="px-4">Never in all their history have men been able truly to conceive of the world as one a single sphere</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="service-block-overlay text-center p-lg-3">
+                        <i class="fa fa-diamond box-circle-solid mt-3 mb-3" aria-hidden="true"></i>
+                        <h3>Premium Features</h3>
+                        <p class="px-4">Never in all their history have men been able truly to conceive of the world as one a single sphere</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="service-block-overlay text-center p-lg-3">
+                        <i class="fa fa-comments box-circle-solid mt-3 mb-3" aria-hidden="true"></i>
+                        <h3>24/7 Support</h3>
+                        <p class="px-4">Never in all their history have men been able truly to conceive of the world as one a single sphere</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    /* $("form#garantForm").submit(function(){
+
+         var formData = new FormData(this);
+
+         $.ajax({
+             url: '',
+                type: 'POST',
+                data: formData,
+                async: true,
+                success: function (data) {
+                    $("input[type=text]").val("");
+                    $("input[type=file]").val("");
+                    $("input[type=datetime]").val("");
+                    alert(data);
+
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+
+            return false;
+        });*/
+</script>
+{% endblock %}

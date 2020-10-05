@@ -1,0 +1,24 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}Archives du demande QH  {% endblock %}
+{% block body_container %}
+    <hr class="groove">
+    <div class="row">
+
+        {% for personne in personnes %}
+
+            <div class="col-3">
+                <a href="{{ path('_ListeArchivedemandeqh',{ 'id' : personne.id}) }}" >
+                    <img src="{{ asset('document/'~ personne.photo) }}" class="img img-thumbnail" alt="" width="150" height="100">
+                    <b >{{ personne.nom }}</b><br>
+                    <b >{{ personne.prenom }}</b>
+                </a>
+
+            </div>
+
+
+        {% endfor %}
+
+    </div>
+
+
+{% endblock %}

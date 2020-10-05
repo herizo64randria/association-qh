@@ -1,0 +1,380 @@
+{% extends '@Back/base_backend.html.twig' %}
+{% block sous_menu_titre %}
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+            background-color: #0088CC;
+        }
+        col-lg .groove {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,input,select,textarea,p {
+            text-shadow: 0.1px 0.1px 1px black;
+
+        }
+    </style>
+    Confirmation du demandes QH :<br>
+    <h3>
+    {{ demandeQH.demadeQH.personne.nom ~' '~ demandeQH.demadeQH.personne.prenom ~' / '~
+    demandeQH.demadeQH.personne.numeroIts ~' / '~
+    demandeQH.demadeQH.numero
+    }}
+    </h3>
+{% endblock %}
+{% block body_container %}
+    {% set class_gnumits='d-none' %}
+    {% set msg_gnumits='d-none' %}
+    {% set check_gnumits='' %}
+    {% set edit_gnumits='' %}
+    {% set notif_gnumits ='d-none' %}
+
+        <div class="container-fluid">
+            <hr class="groove">
+            <input type="hidden" id="id_dossier" value="{{ demandeQH.id }}" >
+            {% if(demandeQH.nomEtat == "En attente de confirmation")%}
+                <div class="text-center">
+
+                    <a class="btn-success btn-lg  center" id="confirme_demandeqh" >Confirmer</a>
+                    <br><br>
+                    <a class="btn-success btn-lg  center" id="confirme_condition_demandeqh" >Confirmer avec condition</a>
+                    <br><br>
+                    <a class="btn-danger btn-lg  center" id="refuser_demandeqh">Refuser </a>
+
+                </div>
+
+                <br>
+                <hr class="groove">
+            {% else %}
+                <div class="text-center">
+
+                    <h4 class="text-success">{{ demandeQH.nomEtat }}</h4>
+                    <b>Confirmé par : {{ app.user }}</b>
+                </div>
+                <br>
+            {% endif%}
+            <hr class="groove">
+            <div class="row">
+                <div class="col-lg-6"><h4 class="text-primary">Antécédent</h4>
+                <p>Dejà efectuer une demande QH auparavant :
+                    {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
+                        {% set x='oui' %}
+                    {% else %}
+                        {% set x='non' %}
+                    {% endif %}
+                    {{ x }}</p>
+                    {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
+                        {% if (demandeQH.demadeQH.siAncienDemandeEtat=='oui') %}
+                            {% set y='oui' %}
+
+                        {% else %}
+                            {% set y='non' %}
+
+                        {% endif %}
+                        <p>Elle a été acceptée : {{ y }}</p>
+                    {% endif %}
+
+                </div>
+                {% if (x=='oui' and y=='oui') %}
+                    <div class="col-lg-6">
+                        <h4 class="text-primary">les trois dernier montant demandés</h4>
+                        <table class="table table-striped">
+                            <thead><th><label >{{ 'demandeqh_ajouter.annee'|trans }}</label></th>
+                            <th></th>
+                            <th><label f>{{ 'demandeqh_ajouter.montant'|trans }}</label></th>
+                            </thead>
+                            <tr><td>
+
+                                    <p >{{ demandeQH.demadeQH.annee1 }}</p>
+                                </td>
+                                <td> </td>
+                                <td>
+                                   
+                                    <p class="text-right" >{{ demandeQH.demadeQH.montant1|number_format('2',',',' ') }}</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    
+                                    <p >{{ demandeQH.demadeQH.annee2 }}</p>
+                                </td>
+                                <td>
+                                <td>
+                                   
+                                    <p class="text-right" >{{ demandeQH.demadeQH.montant2|number_format('2',',',' ') }}</p>
+                                </td>
+                            </tr>
+                            <tr><td>
+                                   
+                                    <p >{{ demandeQH.demadeQH.annee3 }}</p>
+                                </td>
+                                <td> </td>
+                                <td>
+                                    <p class="text-right" >{{ demandeQH.demadeQH.montant3|number_format('2',',',' ') }}</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                {% endif %}
+
+            </div>
+            <div class="row">
+                <div class="col-lg-6"><h4 class="text-primary">Nouvelle demande</h4>
+                <p>Montant demandée en Ariary : {{ demandeQH.demadeQH.montant|number_format('2',',',' ') }}</p>
+                <p>Pour combien de mois : {{ demandeQH.demadeQH.nombreMois }}</p>
+                </div>
+                <div class="col-lg-6"><h4 class="text-primary">Objet de la demande</h4>
+                <p>Motif : {{ demandeQH.demadeQH.typeMotif }}</p>
+                <p>Détail : {{ demandeQH.demadeQH.detailMotif }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6"><h4 class="text-primary">Garantie</h4>
+               <p>Valeur de l'or en Ariary :{{ demandeQH.demadeQH.garantieOR.valeurAr|number_format('2',',',' ')}}</p>
+               <p>Scan du formulaire(remplir par kalidas):<br>
+                   <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.garantieOR.scanKalidas) }}">
+                       <img src="{{ asset('document/'~ demandeQH.demadeQH.garantieOR.scanKalidas) }}" class="img img-thumbnail" alt="" width="50" height="50"></a>
+               </p>
+               <p>Photo du paquet scellé par kallidas:(Possibilité de mettre plusieurs photos):<br>
+                   {% for photoor in photoor %}
+                       <a target="_blank" id="lien" href="{{ asset('document/'~ photoor.url) }}">
+                           <img src="{{ asset('document/'~ photoor.url) }}" class="img img-thumbnail" alt="" width="50" height="50"></a>
+                   {% endfor %}
+
+               </p>
+                </div>
+                <div class="col-lg-6"><h4 class="text-primary">Garant numéro 1 </h4>
+
+                    <p>Nom complet inscrit sur its : {{ demandeQH.demadeQH.garant1.nomIts }}</p>
+
+                    <p> Numéro its :{{ demandeQH.demadeQH.garant1.numeroIts }}
+
+                        {% if  res  %}
+                            ( <a href="#" data-toggle="collapse" data-target="#demo"> ce numéro est déja occuper </a> )
+                            {% set msg=res.demadeQH.numero %}
+                        {% else%}
+                            {% set msg=' ' %}
+                        {% endif %}
+                    </p>
+
+                    <div id="demo" class="collapse">
+                        {% if  res  %}
+                            <a href="{{ path('confirmationdemandeQH',{ 'id' : res.id}) }}">{{ msg }}</a>
+
+                        {% endif %}
+
+                    </div>
+                    <input  onkeypress="pressEntergnumits(event)" class="{{ 'form-control '~ class_gnumits }}" placeholder="..." type="text" name="notif_gnumits" id="notif_gnumits" >
+                    <p>Moze :{{  demandeQH.demadeQH.garant1.moze }} </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+
+                </div>
+                <div class="col-lg-6">
+                    <h4 class="text-primary">Garant numéro 2</h4>
+                    <p>Nom complet inscrit sur its : {{ demandeQH.demadeQH.garant2.nomIts }}</p>
+                    <p> Numéro its :{{ demandeQH.demadeQH.garant2.numeroIts }}
+                        {% if  res1  %}
+                            ( <a href="#" data-toggle="collapse" data-target="#demo1"> ce numéro est déja occuper </a> )
+                            {% set msg1=res.demadeQH.numero %}
+                        {% else%}
+                            {% set msg1=' ' %}
+                        {% endif %}
+                    </p>
+                    <div id="demo1" class="collapse">
+                        {% if  res1  %}
+                            <a href="{{ path('confirmationdemandeQH',{ 'id' : res1.id}) }}">{{ msg }}</a>
+
+                        {% endif %}
+                    </div>
+                    <p>Moze :{{  demandeQH.demadeQH.garant2.moze }}</p>
+                </div>
+
+            </div>
+        </div>
+
+    {#Confirmation du demande QH#}
+    <form action="#" method="post" >
+        <div id="modal_confirme" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="text-center text-primary" >Confirmation du demande QH </h5>
+                    </div>
+                    <div class="modal-body">
+
+                        <input type="hidden" value="{{ demandeQH.id }}" name="id_etat">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Motif :</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <textarea class="form-control" name="motif_accepter" id="motif_accepter" cols="60" rows="5"></textarea>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="modal-footer">
+                        <input class="btn-primary" name="confirmer" type="submit" value="Valider">
+                        <button class="btn" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {#Confirmation du demande QH#}
+        <div id="modal_refuser" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="text-center text-primary" >Confirmation du demande QH</h5>
+                    </div>
+                    <div class="modal-body">
+
+                        <input type="hidden" value="{{ demandeQH.id }}" name="id_etat">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label>Motif utilisateur :</label>
+                            </div>
+                            <div class="col-md-7">
+                                <textarea class="form-control" name="motif_user" id="motif_user" cols="60" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label>Motif administrateur:</label>
+                            </div>
+                            <div class="col-md-7">
+                                <textarea class="form-control" name="motif_admin" id="motif_admin" cols="60" rows="5"></textarea>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input class="btn-primary" name="confirmer" type="submit" value="Refuser">
+                        <button class="btn" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {#Confirmation avec condition du demande QH#}
+        <div id="modal_confirme_condition" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="text-center text-primary" >Confirmation avec condition du demande QH</h5>
+                    </div>
+                    <div class="modal-body">
+
+                        <input type="hidden" value="{{ demandeQH.id }}" name="id_etat">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Montant :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input class="form-control" name="montant" id="montant" value="{{ demandeQH.demadeQH.montant }}" >
+
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Nombre de mois :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input  value="{{ demandeQH.demadeQH.nombreMois }}" class="form-control" name="mois" id="mois" >
+
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Motif :</label>
+                            </div>
+                            <div class="col-md-8">
+                                <textarea class="form-control" name="motif" id="motif" cols="60" rows="5"></textarea>
+
+                            </div>
+                        </div>
+                        <br><br>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <input class="btn-primary" name="confirmer" type="submit" value="Modifier">
+                        <button class="btn" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        $('#confirme_demandeqh').click(function(){
+            $('#modal_confirme').modal({show:true})
+        });
+    </script>
+    <script>
+        $('#refuser_demandeqh').click(function(){
+            $('#modal_refuser').modal({show:true})
+        });
+    </script>
+    <script>
+        $('#confirme_condition_demandeqh').click(function(){
+            $('#modal_confirme_condition').modal({show:true})
+        });
+    </script>
+    <script>
+        function affiche_check(param1,param2){
+
+            if(document.getElementById(param1).checked == true){
+
+                $(param2).removeClass('d-none');
+                $(param2).addClass('d-block');
+
+            }else {
+
+                $(param2).removeClass('d-block');
+                $(param2).addClass('d-none');
+
+            }
+
+        }
+
+        function notification1(dossier,formulaire,notif){
+            var id_demandeqh = $(dossier).val();
+            var check_montant = $(formulaire).val();
+            var notif_montant = $(notif).val();
+            var formData = {id_demandeqh: id_demandeqh,check_montant: check_montant,notif_montant: notif_montant};
+            $.post("{{ path('notification1Qh') }}",formData,
+                function (data, status) {
+                    //alert("Data: " + data + "\nStatus: " + status);
+                    $("span").html(data);
+                });
+            $(notif).val('');
+            /*$(notif).addClass('d-none');
+            $(formulaire).addClass('d-none');*/
+
+
+        }
+        function pressEntergnumits(event) {
+            var code = event.which || event.keyCode;
+            if (code == 13) { //code  touche Enter
+                notification1("#id_dossier","#check_gnumits","#notif_gnumits");
+
+            }
+        }
+    </script>
+{% endblock %}

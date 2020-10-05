@@ -1,0 +1,130 @@
+{% extends '@Front/base_front.html.twig' %}
+{% block sous_menu_titre %} {{ 'versement_ajouter.titre'|trans }}{% endblock %}
+{% block body_container %}
+    <style>
+
+        .card{ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        }
+        .card:hover{ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.8);
+        }
+    </style>
+
+
+    <div class="col" style="font-family: 'Courier New'">
+        <div class="card" >
+            <div class="card-header bg-primary text-white"><i class="fa fa-list"></i> {{ 'versement_ajouter.soustitre'|trans }}
+            </div>
+            <div class="card-body">
+
+                <form action="#" method="post" enctype="multipart/form-data" autocomplete="off">
+                   {# <div class="form-group">
+                        <label for="message">{{ 'versement_ajouter.date'|trans }}</label>
+                        <div class="input-group date" id="date_versement" data-target-input="nearest">
+                            <input type="text" id="date_versement" name="date_versement"  class="form-control datetimepicker-input" data-target="#date_versement"/>
+                            <div class="input-group-append" data-target="#date_versement" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>#}
+                <div class="form-group">
+                    <label for="dateVersement" class=" control-label">{{ 'versement_ajouter.date'|trans }}</label>
+                    <div class="input-group date form_date" data-date="" data-link-field="dateVersement" data-link-format="yyyy-mm-dd">
+                        <input required class="form-control"  type="text" value="" readonly name="date_versement">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon input-group-text"><i class="fa fa-calendar"></i></span>
+                    </div>
+
+                    <input type="hidden" id="dateVersement" value="" />
+                </div>
+
+
+                    <div class="form-group">
+                        <label for="email">{{ 'versement_ajouter.numero'|trans }}</label>
+
+                            <select id="numero" name="numero_compte" class="form-control" required>
+                                {% for numero in numero_compte %}
+                                    <option value="{{ numero.id }}" selected>{{ numero.banque }} - {{ numero.numeroCompte }}</option>
+                                {% endfor %}
+                            </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">{{ 'versement_ajouter.montant'|trans }}</label>
+                        <input name="montant" type="text" class="form-control" id="montant"   required autocomplete="off">
+                    </div>
+                    <input type="hidden" name="paiement" value="virement">
+
+                    <div class="form-group">
+                        <input type="checkbox" id="procuration" name="procuration">
+                        <label for="message">{{ 'versement_ajouter.procuration'|trans }}</label>
+                    </div>
+                    {% if procurations %}
+                        <div class="form-group info" >
+                            <input id="procuration" name="listProcuration" type="text"  class="form-control only_phone_number"  onsubmit="return false;" list="defaultTels" >
+                            <datalist id="defaultTels">
+                                {% for procuration in procurations %}
+                                <option class="form-control" value="{{ procuration.nom }}">
+                                    {% endfor %}
+
+                            </datalist>
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="fichier_cheque">Veuillez insérer ici un scan recto verso du borderau</label>
+                        <input name="fichier_cheque[]" type="file" class="form-control" id="fichier_cheque"  multiple  required >
+                    </div>
+                    <div class="mx-auto">
+                        <button type="submit" class="btn btn-primary text-right">{{ 'versement_ajouter.valider'|trans }}</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-4" style="font-family: 'Courier New'">
+        <div class="card bg-light mb-3">
+            <div class="card-header bg-success text-white text-uppercase"><i class="fa fa-home"></i> {{ 'versement_ajouter.adresse'|trans }}</div>
+            <div class="card-body">
+                <p>{{ personne.adresse }}</p>
+                <p>{{ personne.numeroSabil ~'-'~ personne.ville }}</p>
+                <p>Madagascar</p>
+                <p>Email : {{ personne.userCompte.email }}</p>
+                <p>Tel 1 : {{ personne.num1 }}</p>
+                <p>Tel 2 : {{ personne.num2 }}</p>
+
+            </div>
+
+        </div>
+    </div>
+    <script src="{{ asset('DatePicker1/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('DatePicker1/js/locales/bootstrap-datetimepicker.fr.js') }}" charset="UTF-8"></script>
+    <script>
+        $('.form_date').datetimepicker({
+            format: 'dd/mm/yyyy',
+            language:  'fr',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            color:'red'
+        });
+
+        $('.info').hide(2000, "linear");
+
+
+
+        $("#procuration").change(function () {
+
+            if($('#procuration').prop("checked")){
+                $('.info').show(2000, "linear");
+
+            }else{
+                $('.info').hide(2000, "linear");
+
+            }
+        })
+    </script>
+{% endblock %}

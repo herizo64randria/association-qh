@@ -1,0 +1,220 @@
+{% extends '@DemandeQh/dossier/Base1DemandeQH.html.twig' %}
+
+{% block body_container %}
+
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 50px;
+            height: 50px;
+            background-color: #0088CC;
+        }
+        col-lg .groove {
+            border: 1px outset #1b0b0e;
+            box-shadow: 4px 4px 0px black;
+        }
+        h1,h2,h3,label,button,input,select,textarea,p {
+            text-shadow: 0.1px 0.1px 1px black;
+
+        }
+        button {
+            border-radius: 0px;
+            box-shadow: 4px 4px 0px black;
+        }
+    </style>
+
+    <div class="container-fluid">
+        <form action="#" method="post">
+            <hr class="border-white">
+
+
+            <div class="row">
+                <div class="col-8">
+                    <h4>
+                        {{ demandeQH.societe ~' '~' / Demande QH N° : '~ demandeQH.numero
+                        }}
+                    </h4>
+                    <p>Fait le : {{ demandeQH.datedemande|date('d/m/y') }} par {{ demandeQH.personne.nom ~' '~demandeQH.personne.prenom }}</p>
+                </div>
+                <div class="col-4">
+
+                    <div class="text-center">
+
+                        <h4 class="text-success">{{ demandeQH.etat.nometat }}</h4>
+                    </div>
+
+                    <br>
+
+                    <hr class="border-white">
+
+                </div>
+            </div>
+
+
+
+            {% if demandeQH %}
+            <hr class="groove">
+            <div class="text-center">
+                {% set index =0 %}
+                {% for tab in res %}
+                    {% if tab.index== false %}
+
+                        {% set index=index+1 %}
+
+                    {% endif %}
+
+                {% endfor %}
+                {% if  demandeQH.etat.nometat == null %}
+                    <button class="btn- btn-lg btn-success">Envoyer</button>
+                    <hr class="groove">
+                {% endif %}
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <h4 class="text-primary ">Montant demandé</h4>
+
+                    <p >
+                        <i class="fa fa-star text-primary"></i>
+                        {{ demandeQH.montant|number_format('2',',',' ',' ') }} Ar
+                    </p>
+
+                </div>
+                <div class="col-lg-4">
+                    <h4 class="text-primary">Durée </h4>
+
+
+                    <p>
+                        <i class="fa fa-clock text-primary"></i>
+                        {{ demandeQH.nombreMois }} mois
+
+                    </p>
+
+                </div>
+
+                <div class="col-lg-4">
+                    <h4 class="text-primary">Motif pour la demande</h4>
+                    <p>
+
+                        <i class="fa fa-tags text-primary"></i>
+                        {{ demandeQH.motif }}
+
+                    </p>
+
+                </div>
+
+
+            </div>
+            <hr class="groove">
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <h4 class="text-primary">Liste garant </h4><br>
+                    {% for garant in garants  %}
+                        <i class="fa fa-star"></i>
+                        <a href="#" id="1" class="text-dark">{{ garant.nomcin ~''~garant.prenomcin }}  </a>
+                        <br><br>
+
+                    {% endfor %}
+
+                </div>
+                <div class="col-lg-4">
+                    <h4 class="text-primary">Action | <a href="#"  data-toggle="collapse" data-target="#aide">aide</a>
+                    </h4>
+
+                    <br>
+                    {% for garant in garants  %}
+                        <a href="{{ path('modif_demandesociete',{ 'id' : garant.id}) }}" class="text-dark" >
+                            <i class="fa fa-eye"></i> Voir information</a>
+                        {% if index > 0 %}
+                            - <a href="{{ path('modif_demandesociete',{ 'id' : garant.id}) }}" class="text-dark" >
+                            <i class="fa fa-file-pdf"></i> Générer contrat</a>
+                        {% endif %}
+
+                        <br><br>
+
+                        {#<b class="collapse  {{ garant.id }}" id="{{ garant.id }}" ></b><br><br>#}
+
+                    {% endfor %}
+                </div>
+                <div class="col-lg-4">
+                    <h4 class="text-primary">Autre information </h4>
+                    <div class="collapse card"  id="aide" style="width: 18rem;">
+
+                        <img src="{{ asset('Images/aide.gif') }}" class="img img-fluid float-left" alt="" width="60" height="50">
+                        <div class="card-body">
+                            <p class="card-text">
+                                Pour afficher le boutton envoyer vous devez remplir toutes les informations concernant les garants
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+   </div>
+
+        {% endif %}
+    </div>
+
+    <script>
+        $(document).ready(function(){
+
+        });
+
+        function info(param)
+        {
+            $.ajax({
+                type: 'POST',
+                data: {id : param},
+                url: '{{ path('ajax_garants') }}',
+                dataType: 'text',
+                success: function(data) {
+                    if(data==true)
+                    {
+                        $("#" + param).html(" <a href=\"#\"  \"><i class=\"fa fa-eye fa-2x \"></i></a>  <a href=\"{{ path('liste_demandeqh_societe') }}\"  \"><i class=\"fa fa-file-pdf fa-2x \"></i></a>  <a href=\"{{ path('liste_demandeqh_societe') }}\"  \"><i class=\"fa fa-edit fa-2x \"></i></a>");
+
+                         $("." + param).collapse('toggle');
+                    }
+                    else
+                    {
+
+                        $("#" + param).html('<a  href="#" onclick="infoincompler(' + param +')" > Information incompler </a>');
+
+
+                        $("." + param).collapse('toggle');
+                    }
+
+                },
+                error: function() {
+                    alert(data);
+                }
+
+            });
+
+
+        }
+        function infoincompler(param)
+        {
+            $.ajax({
+                type: 'POST',
+                data: {id : param},
+                url: '{{ path('ajax_modifgarants') }}',
+                dataType: 'text',
+                success: function(data) {
+                alert('1');
+
+                },
+                error: function() {
+                    alert('3');
+                }
+
+            });
+
+
+        }
+    </script>
+{% endblock %}
