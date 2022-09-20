@@ -46,7 +46,7 @@ class GaranService
                    {
                        if($demandeqh->getPersonne()->getNumeroDemandeQHtemp())
                        {
-                           $etat=$em->getRepository('DemandeQhBundle:Etat')->findOneBy(array('demadeQH'=>$demandeqh));
+                           $etat=$demandeqh;
                        }
                    }
 

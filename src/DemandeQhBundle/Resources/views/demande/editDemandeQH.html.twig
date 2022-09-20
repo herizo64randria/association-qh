@@ -1,0 +1,107 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+    <style>
+        {% include '@DemandeQh/style.css.twig' %}
+    </style>
+    <main>
+
+        <div class="stepper">
+
+            <div class="step--2 step-active">Votre demande</div>
+            {% if not demandeQh.garant1 or not demandeQh.garant2 %}
+            <div class="step--3"><a href="{{ path('addGarantQH',{'id':demandeQh.id}) }}">Ajouter Garant</a></div>
+            {% endif %}
+            <div class="step--4"><a href="{{ path('editGarantQH',{'id':demandeQh.id}) }}">Modifié Garant</a></div>
+
+        </div>
+
+
+        <form class="form form-active" action="#" method="post">
+            <div class="form--header-container">
+                <h1 class="form--header-title">
+                    FAIZ E MOHAMMADI QARDAN HASANAH
+                </h1>
+
+                <p class="form--header-text">
+
+                </p>
+            </div>
+
+            <table>
+                <tr><td>Montant demandé en Ariary <br><input value="{{ demandeQh.montant }}" id="montant" type="text" name="montant" /></td></tr>
+                <tr>
+                    <td><br>
+                        <ul style="list-style: none">
+                            <li>Remboursement  <br><input  value={{ demandeQh.nombreMois }} type="number" name="mois" /></li>
+                            <li>Indiquez le nombre de mois </li>
+                        </ul>
+
+                    </td><td>
+                        {#    <div id="div1" >Mensualité ou Annuel <br>
+                            <input type="radio"
+                                   name="unite" value="mois">
+                            <label for="contactChoice1">Mois</label><br>
+
+                            <input type="radio"
+                                   name="unite" value="annee">
+                            <label for="contactChoice1">Années</label>
+
+                        </div>#}
+
+                    </td></tr>
+                <tr >
+                    {% if(demandeQh.garantieOR) %}
+                <tr><td>Garentie Or/Rehen (en Ariary) <br><input value="{{ demandeQh.garantieOR.valeurAr }}" type="text" name="or" />
+
+                    </td>
+                    <td></td></tr>
+                {% endif %}
+                <tr>
+                    <td>
+                        Si vous n'avez pas encore de Garantie d'or, veuillez imprimer <a href="#">ce formulaire</a> <br>et vous rendre à la bijouterie Kalidas de votre ville pour évaluation.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 5px">
+                        <span > Veuillez décrire précisement l'objet de votre demande</span>
+                        <textarea name="motif" id="area" cols="30" rows="9">{{ demandeQh.detailMotif }}</textarea>
+                    </td>
+
+                    <td style="padding-top: 0px;padding-left: 50px">
+
+
+                    </td>
+                </tr>
+            </table>
+            <script>
+
+                var otherCheckbox = document.querySelector('input[value="other"]');
+                var otherText = document.querySelector('input[id="otherValue"]');
+                var msg = document.querySelector('.form--message');
+
+                msg.style.visibility = 'hidden';
+                otherCheckbox.onchange = function() {
+                    if(otherCheckbox.checked) {
+                        otherText.style.visibility = 'visible';
+                        otherText.value = '';
+                    } else {
+                        otherText.style.visibility = 'hidden';
+                    }
+                };
+                $("#btn-2-next").click(function () {
+                    var montant=$("#montant").val()
+                    alert(montant)
+                })
+
+            </script>
+            <table>
+                <tr><td> <button class="form__btn" id="btn-2-next">Valider</button></td></tr>
+            </table>
+            {# <button class="form__btn" id="btn-2-prev">Précédent</button>#}
+
+        </form>
+
+    </main>
+    </main>
+{% endblock %}

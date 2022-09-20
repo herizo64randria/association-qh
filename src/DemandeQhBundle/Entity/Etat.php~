@@ -54,16 +54,31 @@ class Etat
      * @ORM\Column(name="verification", type="string", length=255, nullable=true)
      */
     private $verification;
-
-    //    ---------------RELATION---------------
-
     /**
-     * @ORM\OneToOne(targetEntity="DemandeQhBundle\Entity\DemandeQh")
-     * @ORM\JoinColumn(nullable=true)
+     * @var string
+     *
+     * @ORM\Column(name="msgVuser", type="text", nullable=true)
      */
-    private $demadeQH;
+    private $msgVuser;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="msgVadmin", type="text", nullable=true)
+     */
+    private $msgVadmin;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="remarque", type="text", nullable=true)
+     */
+    private $remarque;
 
-//    ---------------//////RELATION//////---------------
+
+        const ATTENTE= "Demande en attente";
+        const REFUSER = "Demande refusé";
+        const ACCEPTER = "Demande accépté";
+        const ACCEPTER_MODIFIER = "Demande accépté mais modification à effectué";
+
 
     /**
      * Get id
@@ -193,5 +208,101 @@ class Etat
     public function getDemadeQH()
     {
         return $this->demadeQH;
+    }
+
+    /**
+     * Set verification
+     *
+     * @param string $verification
+     *
+     * @return Etat
+     */
+    public function setVerification($verification)
+    {
+        $this->verification = $verification;
+
+        return $this;
+    }
+
+    /**
+     * Get verification
+     *
+     * @return string
+     */
+    public function getVerification()
+    {
+        return $this->verification;
+    }
+
+    /**
+     * Set msgVuser
+     *
+     * @param string $msgVuser
+     *
+     * @return Etat
+     */
+    public function setMsgVuser($msgVuser)
+    {
+        $this->msgVuser = $msgVuser;
+
+        return $this;
+    }
+
+    /**
+     * Get msgVuser
+     *
+     * @return string
+     */
+    public function getMsgVuser()
+    {
+        return $this->msgVuser;
+    }
+
+    /**
+     * Set msgVadmin
+     *
+     * @param string $msgVadmin
+     *
+     * @return Etat
+     */
+    public function setMsgVadmin($msgVadmin)
+    {
+        $this->msgVadmin = $msgVadmin;
+
+        return $this;
+    }
+
+    /**
+     * Get msgVadmin
+     *
+     * @return string
+     */
+    public function getMsgVadmin()
+    {
+        return $this->msgVadmin;
+    }
+
+    /**
+     * Set remarque
+     *
+     * @param string $remarque
+     *
+     * @return Etat
+     */
+    public function setRemarque($remarque)
+    {
+        $this->remarque = $remarque;
+
+        return $this;
+    }
+
+    /**
+     * Get remarque
+     *
+     * @return string
+     */
+    public function getRemarque()
+    {
+        return $this->remarque;
     }
 }

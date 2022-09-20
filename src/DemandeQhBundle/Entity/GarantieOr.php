@@ -31,7 +31,7 @@ class GarantieOr
     /**
      * @var string
      *
-     * @ORM\Column(name="scanKalidas", type="string", length=255)
+     * @ORM\Column(name="scanKalidas", type="string", length=255,nullable=true)
      */
     private $scanKalidas;
 

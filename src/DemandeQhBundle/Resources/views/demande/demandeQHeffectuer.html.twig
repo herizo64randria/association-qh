@@ -4,7 +4,7 @@
     <style>
 
     </style>
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-top: 50px">
 
     <div class="table-responsive">
         <table class="table table-striped" >
@@ -13,25 +13,65 @@
             <tr>
                 <th scope="col">{{ 'listedemandeQH.numero'|trans }}</th>
                 <th scope="col">{{ 'listedemandeQH.date'|trans }}</th>
-                <th scope="col">{{ 'listedemandeQH.photo'|trans }}</th>
-                <th scope="col">{{ 'listedemandeQH.nom et prenom'|trans }}</th>
                 <th scope="col">{{ 'listedemandeQH.montant'|trans }}</th>
                 <th scope="col">{{ 'listedemandeQH.mois'|trans }}</th>
+                <th scope="col">Date <br>Confirmation</th>
+                <th scope="col">Date <br> Fin</th>
+                <th>Status</th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
-            {% for demandeQH in demandeQHs %}
+            {% set couleur =" " %}
 
+            {% for demandeQH in demandeQHs %}
+                {% if demandeQH.Dossier and demandeQH.Dossier.valide=="Dossier reçu" %}
+                    {% set dossier = '( Dossier reçu )' %}
+                    {% else %}
+                        {% set dossier =" " %}
+                {% endif %}
+
+
+{% set m=demandeQH.nombreMois %}
+
+                {% if demandeQH.etat.nomEtat == 'confirmer' or demandeQH.etat.nomEtat == 'Demande en attente' %}
+                    {% set couleur = 'alert-primary' %}
+                {% endif %}
+
+                {% if demandeQH.etat.nomEtat == 'okok' or demandeQH.etat.nomEtat == 'Demande accépté' %}
+                    {% set couleur = 'alert-success' %}
+                {% endif %}
+
+                {% if  demandeQH.etat.nomEtat == 'Demande refusé' %}
+                    {% set couleur = 'alert-danger' %}
+                {% endif %}
+                {% if  demandeQH.etat.nomEtat == 'Demande accépté mais modification à effectué' %}
+                    {% set couleur = 'alert-warning' %}
+                {% endif %}
 
                 <tr>
-                    <td><a href="{{ path('etatQH',{ 'id' : demandeQH.id}) }}" >{{ demandeQH.numero }}</a></td>
-                    <td><a >11/12/2019</a></td>
-                    <td><img src="{{ asset('document/'~ demandeQH.personne.photo) }}" class="img img-fluid" alt="" width="50" height="50"></td>
-                    <td>{{ demandeQH.personne.nom ~' '~ demandeQH.personne.prenom }}</td>
+                    <td>{{ demandeQH.numero }}</td>
+                    <td>{{ demandeQH.date|date('d/m/Y') }}</td>
+
                     <td class="text-right">{{ demandeQH.montant|number_format('2',',',' ')}}</td>
                     <td>{{ demandeQH.nombreMois }}</td>
-                    <td><a href="{{ path('_Mydetail',{id:demandeQH.id}) }}" class="btn btn-info"><i class="fa fa-eye fa-1x"></i></a></td>
+                    <td>
+                        {% if( demandeQH.dateConfirme) %}
+                            {{ demandeQH.dateConfirme|date('d/m/Y')  }}
+
+                        {% endif %}
+
+                    </td>
+                    <td>
+                        {% if( demandeQH.dateConfirme) %}
+                            {{ demandeQH.dateConfirme|date_modify("+"~m~ "months")|date("d/m/Y") }}
+
+
+                        {% endif %}
+
+                    </td>
+                    <td class="{{ couleur }}">{{ demandeQH.etat.nomEtat }}<br>{{ dossier }}</td>
+                    <td><a href="{{ path('detailDemandeQH',{id:demandeQH.id}) }}" class="btn btn-info"><i class="fa fa-eye fa-1x"></i></a></td>
 
                 </tr>
             {% endfor %}

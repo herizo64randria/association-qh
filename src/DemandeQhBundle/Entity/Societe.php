@@ -271,4 +271,28 @@ class Societe
     {
         return $this->societe;
     }
+
+    /**
+     * Set numTemp
+     *
+     * @param string $numTemp
+     *
+     * @return Societe
+     */
+    public function setNumTemp($numTemp)
+    {
+        $this->numTemp = $numTemp;
+
+        return $this;
+    }
+
+    /**
+     * Get numTemp
+     *
+     * @return string
+     */
+    public function getNumTemp()
+    {
+        return $this->numTemp;
+    }
 }

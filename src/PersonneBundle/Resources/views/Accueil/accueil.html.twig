@@ -18,7 +18,7 @@
 <!-- Top navigation -->
 <nav class="navbar navbar-expand-md fixed-top top-nav">
     <div class="container">
-        <a class="navbar-brand" href="#"><strong>Hussein Scheme</strong></a>
+        <a class="navbar-brand" href="#"><strong></strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
         </button>
@@ -29,7 +29,13 @@
                     <a class="nav-link" href="{{ path('page_accueil') }}">{{ 'accueil.home'|trans }} <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('personne_inscription') }}">{{ 'accueil.singin'|trans }}</a>
+                    {% if app.user %}
+                        <a class="nav-link" href="{{ path('personne_profil') }}" id="loginBtn" class="btnRegister"> Profil </a>
+
+                    {% else %}
+                        <a class="nav-link" href="{{ path('personne_inscription') }}">{{ 'accueil.singin'|trans }}</a>
+
+                    {% endif %}
                 </li>
                 <li class="nav-item">
                     {% if app.user %}
@@ -39,12 +45,12 @@
                     <a class="nav-link" href="{{ path('personne_profil') }}" id="loginBtn" class="btnRegister"> {{ 'accueil.login'|trans }} </a>
                     {% endif %}
                 </li>
-                <li class="nav-item">
+              {#  <li class="nav-item">
                     <a class="nav-link" href="{{ path('page_accueil_local', { '_locale' : 'fr' }) }}"><img src="{{ asset('Images/fr.png') }}" alt="FR" width="25" height="25"></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('page_accueil_local', { '_locale' : 'en' }) }}"><img src="{{ asset('Images/en.png') }}" alt="EN" width="25" height="25"></a>
-                </li>
+                </li>#}
             </ul>
         </div>
     </div>
@@ -60,11 +66,19 @@
         <div class="carousel-item active">
             <img class="d-block img-fluid" alt="First slide" src="{{ asset('Images/paysage-muslim.jpg') }}">
             <div class="carousel-caption ">
-                <h2 class="display-4 text-white mb-2 mt-4">In the business world, the rearview mirror is always clearer than the windshield.</h2>
-                <p class="text-white mb-3 px-5 lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do enim ad minim veniam, </p>
+                <h2 class="display-4 text-white mb-2 mt-4">FAIZ E MOHAMMADI QARDAN HASANAH</h2>
+                <p class="text-white mb-3 px-5 lead"> </p>
                 <div class="row">
-                    <div class="col-md-6"><a href="{{ path('personne_profil') }}" class="btn btn-primary btn-capsul px-4 py-2 btn-block btn-lg btn-accueil"><i class="fa fa-bank"></i> Hussein Scheme</a></div>
+
+                    <div class="col-md-3">{#<a href="{{ path('personne_profil') }}" class="btn btn-primary btn-capsul px-4 py-2 btn-block btn-lg btn-accueil"><i class="fa fa-bank"></i> Hussein Scheme</a>#}</div>
+                    {% if personne!="" %}
+                    {% if personne|profilComplet==100 %}
+                    <div class="col-md-6"><a href="{{ path('addDemandeQH') }}" class="btn btn-primary btn-capsul px-4 py-2 btn-block btn-lg btn-accueil">Demande de prêt</a></div>
+                    {% endif %}
+                    {% endif %}
+                    {#
                     <div class="col-md-6"><a href="{{ path('nouvelle_demandeQH') }}" class="btn btn-primary btn-capsul px-4 py-2 btn-block btn-lg btn-accueil">Demande de prêt</a></div>
+#}
                 </div>
             </div>
         </div>
@@ -74,8 +88,15 @@
                 <h2 class="display-4 text-white mb-2 mt-4">In the business world, the rearview mirror is always clearer than the windshield.</h2>
                 <p class="text-white mb-3 px-5 lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do enim ad minim veniam, </p>
                 <div class="row">
+                    {#
                     <div class="col-md-6"><a href="{{ path('personne_profil') }}" class="btn btn-primary btn-capsul px-4 py-2 btn-block btn-lg btn-accueil"><i class="fa fa-bank"></i> Hussein Scheme</a></div>
-                    <div class="col-md-6"><a href="{{ path('nouvelle_demandeQH') }}" class="btn btn-primary btn-capsul px-4 py-2 btn-block btn-lg btn-accueil">Demande de prêt</a></div>
+                                       <div class="col-md-6"><a href="{{ path('nouvelle_demandeQH') }}" class="btn btn-primary btn-capsul px-4 py-2 btn-block btn-lg btn-accueil">Demande de prêt</a></div>#}
+                                       <div class="col-md-3">{#<a href="{{ path('personne_profil') }}" class="btn btn-primary btn-capsul px-4 py-2 btn-block btn-lg btn-accueil"><i class="fa fa-bank"></i> Hussein Scheme</a>#}</div>
+                    {% if personne!="" %}
+                        {% if personne|profilComplet==100 %}
+                            <div class="col-md-6"><a href="{{ path('addDemandeQH') }}" class="btn btn-primary btn-capsul px-4 py-2 btn-block btn-lg btn-accueil">Demande de prêt</a></div>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -42,6 +42,8 @@ class ModificationController extends Controller
         $service=new MonService();
         $purcentage=$service->profilComplet($personne,$em);
         if ($request->getMethod() == 'POST') {
+            $dateN = \DateTime::createFromFormat('d/m/Y', $_POST['date_naissance']);
+            $dateC = \DateTime::createFromFormat('d/m/Y', $_POST['date_cin']);
 
             $personne->setNom($_POST['nom']);
             $personne->setPrenom($_POST['prenom']);
@@ -49,16 +51,21 @@ class ModificationController extends Controller
             $personne->setAdresse($_POST['adresse']);
             $personne->setVille($_POST['ville']);
             $personne->setNumeroSabil($_POST['num_sabil']);
+            $personne->setDateNaissance($dateN);
             $personne->setEmail($_POST['email1']);
+            $personne->setDateCin($dateC);
+            $personne->setPrefixe($_POST['prefixe']);
             $personne->setNum1($_POST['phone1']);
             $personne->setNum2($_POST['phone2']);
-            $personne->setNum3($_POST['phone3']);
+           // $personne->setNum3($_POST['phone3']);
             $personne->setNumeroIts($_POST['num_its']);
-            $personne->setLieu($_POST['lieu_naissance']);
-            $personne->setProfession($_POST['profession']);
-            $personne->setPaysPiece($_POST['pays_piece']);
+            $this->getUser()->setUsername($_POST['num_its']);
+            //$personne->setLieu($_POST['lieu_naissance']);
+            //$personne->setProfession($_POST['profession']);
+            $personne->setNationalite($_POST['nationalite']);
             $personne->setDelivrer($_POST['delivrer']);
             $personne->setTypePiece($_POST['piece_identite']);
+            $personne-> setNumerocin($_POST['numero_cin']);
             $moze = $em->getRepository('DemandeQhBundle:Moze')->findOneBy(array('id'=>$_POST['moze']));
             if($moze!=$personne->getMoze()){
                 $personne->setMoze($moze);

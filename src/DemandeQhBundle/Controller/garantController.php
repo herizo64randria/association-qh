@@ -2,6 +2,7 @@
 
 namespace DemandeQhBundle\Controller;
 
+use AppBundle\Service\ChiffresEnLettres;
 use AppBundle\Service\InfoGarantService;
 use AppBundle\Service\MonService;
 use AppBundle\Service\MultipleUpload;
@@ -24,15 +25,15 @@ class garantController extends Controller
     /**
      * ajoutergarant1 entities.
      *
-     * @Route("/information_garant1", name="ajouter_garant1")
+     * @Route("/information_garant1/AZ{id}ZZZ", name="ajouter_garant1")
      * @Method({"GET","POST"})
      */
-    public function informationgarant1Action(Request $request)
+    public function informationgarant1Action(Request $request,DemandeQh $demandeqh)
     {
         $em = $this->getDoctrine()->getManager();
         $user=$this->getUser();
         $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
-        $demandeqh=$em->getRepository('DemandeQhBundle:DemandeQh')->findOneBy(array('numero'=>$personne->getNumeroDemandeQHtemp()));
+        //$demandeqh=$em->getRepository('DemandeQhBundle:DemandeQh')->findOneBy(array('numero'=>$personne->getNumeroDemandeQHtemp()));
         $mozes = $em->getRepository('DemandeQhBundle:Moze')->findAll();
         $garant=$demandeqh->getGarant1();
         $infogarant = new InfoGarantService();
@@ -81,7 +82,8 @@ class garantController extends Controller
             $garant->setNationalite($_POST['nationalite']);
             $garant->setTypePiece($_POST['type']);
             $garant->setNumeroPiece($_POST['numero']);
-
+            $garant->setSabile($_POST['gsabil']);
+            $garant->setPrefixe($_POST['prefixe']);
             if(!empty($_POST['date']))
             {
                 $date= \DateTime::createFromFormat('d/m/Y',$_POST['date']);
@@ -90,13 +92,13 @@ class garantController extends Controller
 
             $garant->setVillePiece($_POST['villepiece']);
             $garant->setPaysPiece($_POST['pays']);
-            $garant->setProfession($_POST['profession']);
+          //  $garant->setProfession($_POST['profession']);
             $garant->setTel1($_POST['tel1']);
             $garant->setTel2($_POST['tel2']);
-            $garant->setEmail($_POST['email']);
-            $garant->setNumerocheque1($_POST['numerocheque1']);
+            /*$garant->setEmail($_POST['email']);*/
+            /*$garant->setNumerocheque1($_POST['numerocheque1']);
             $garant->setMontantcheque1($_POST['montantcheque1']);
-            $garant->setBanquecheque1($_POST['banquecheque1']);
+            $garant->setBanquecheque1($_POST['banquecheque1']);*/
 
             if(!empty($_POST['datecheque1']))
             {
@@ -104,9 +106,9 @@ class garantController extends Controller
                 $garant->setDatetcheque1($datecheque1);
             }
 
-            $garant->setNumerocheque2($_POST['numerocheque2']);
+           /* $garant->setNumerocheque2($_POST['numerocheque2']);
             $garant->setMontantcheque2($_POST['montantcheque2']);
-            $garant->setBanquecheque2($_POST['banquecheque2']);
+            $garant->setBanquecheque2($_POST['banquecheque2']);*/
 
             if(!empty($_POST['datecheque2']))
             {
@@ -114,9 +116,9 @@ class garantController extends Controller
                 $garant->setDatetcheque2($datecheque2);
             }
 
-            $garant->setNumerocheque3($_POST['numerocheque3']);
+            /*$garant->setNumerocheque3($_POST['numerocheque3']);
             $garant->setMontantcheque3($_POST['montantcheque3']);
-            $garant->setBanquecheque3($_POST['banquecheque3']);
+            $garant->setBanquecheque3($_POST['banquecheque3']);*/
 
             if(!empty($_POST['datecheque3']))
             {
@@ -124,18 +126,21 @@ class garantController extends Controller
                 $garant->setDatetcheque3($datecheque3);
             }
 
-            $garant->setNomheritier1($_POST['nomheritier']);
-            $garant->setPrenomheritier1($_POST['prenomheritier']);
+            /*$garant->setNomheritier1($_POST['nomheritier']);
+            $garant->setPrenomheritier1($_POST['prenomheritier']);*/
             $garant->setSexe($_POST['sexe']);
             $em->persist($garant);
             $em->flush();
 //            return $this->redirectToRoute('ajouter_dossier_garant1');
-            return $this->redirectToRoute('ajouter_garant2');
+            return $this->redirectToRoute('ajouter_garant2',array('id'=>$demandeqh->getId()));
 
         }
 
         if($infogarant->testInfo($garant)==true){
-            return $this->redirectToRoute('ajouter_garant2');
+            //return $this->redirectToRoute('ajouter_garant2',array('id'=>$demandeqh->getId()));
+            return $this->render('@DemandeQh/garant/garant1.html.twig',array('demandeqh'=>$demandeqh,
+                'garant'=>$garant));
+
         }
         else
           {
@@ -148,15 +153,15 @@ class garantController extends Controller
     /**
      * ajoutergarant2 entities.
      *
-     * @Route("/information_garant2", name="ajouter_garant2")
+     * @Route("/information_garant2/AZ24{id}45z", name="ajouter_garant2")
      * @Method({"GET","POST"})
      */
-    public function informationgarant2Action(Request $request)
+    public function informationgarant2Action(Request $request,DemandeQh $demandeqh)
     {
         $em = $this->getDoctrine()->getManager();
         $user=$this->getUser();
-        $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
-        $demandeqh=$em->getRepository('DemandeQhBundle:DemandeQh')->findOneBy(array('numero'=>$personne->getNumeroDemandeQHtemp()));
+       // $personne=$em->getRepository('PersonneBunde:Personne')->findOneBy(array('userCompte'=>$user));
+
         $garant1=$demandeqh->getGarant1();
         $garant=$demandeqh->getGarant2();
 
@@ -216,7 +221,8 @@ class garantController extends Controller
                 $garant->setNationalite($_POST['nationalite']);
                 $garant->setTypePiece($_POST['type']);
                 $garant->setNumeroPiece($_POST['numero']);
-
+                $garant->setPrefixe($_POST['prefixe']);
+                $garant->setSabile($_POST['gsabil']);
                 if(!empty($_POST['date']))
                 {
                     $date= \DateTime::createFromFormat('d/m/Y',$_POST['date']);
@@ -224,12 +230,12 @@ class garantController extends Controller
                 }
                 $garant->setVillePiece($_POST['villepiece']);
                 $garant->setPaysPiece($_POST['pays']);
-                $garant->setProfession($_POST['profession']);
+              // $garant->setProfession($_POST['profession']);
                 $garant->setTel1($_POST['tel1']);
                 $garant->setTel2($_POST['tel2']);
-                $garant->setNumerocheque1($_POST['numerocheque1']);
+                /*$garant->setNumerocheque1($_POST['numerocheque1']);
                 $garant->setMontantcheque1($_POST['montantcheque1']);
-                $garant->setBanquecheque1($_POST['banquecheque1']);
+                $garant->setBanquecheque1($_POST['banquecheque1']);*/
 
                 if(!empty($_POST['datecheque1']))
                 {
@@ -237,9 +243,9 @@ class garantController extends Controller
                    $garant->setDatetcheque1($datecheque1);
                 }
 
-                $garant->setNumerocheque2($_POST['numerocheque2']);
+              /*  $garant->setNumerocheque2($_POST['numerocheque2']);
                 $garant->setMontantcheque2($_POST['montantcheque2']);
-                $garant->setBanquecheque2($_POST['banquecheque2']);
+                $garant->setBanquecheque2($_POST['banquecheque2']);*/
 
                 if(!empty($_POST['datecheque2']))
                 {
@@ -248,9 +254,9 @@ class garantController extends Controller
                 }
 
 
-                $garant->setNumerocheque3($_POST['numerocheque3']);
+              /*  $garant->setNumerocheque3($_POST['numerocheque3']);
                 $garant->setMontantcheque3($_POST['montantcheque3']);
-                $garant->setBanquecheque3($_POST['banquecheque3']);
+                $garant->setBanquecheque3($_POST['banquecheque3']);*/
 
                 if(!empty($_POST['datecheque3']))
                 {
@@ -258,24 +264,23 @@ class garantController extends Controller
                     $garant->setDatetcheque3($datecheque3);
                 }
 
-                $garant->setEmail($_POST['email']);
+               /* $garant->setEmail($_POST['email']);
                 $garant->setNomheritier1($_POST['nomheritier']);
-                $garant->setPrenomheritier1($_POST['prenomheritier']);
+                $garant->setPrenomheritier1($_POST['prenomheritier']);*/
                 $garant->setSexe($_POST['sexe']);
                 $em->persist($garant);
                 $em->flush();
 
                 if(($infogarant->testInfo($garant)==true) and ($infogarant->testInfo($garant1)==true) )
                 {
-                    return $this->redirectToRoute('formulairegarant');
+                    return $this->redirectToRoute('formulairegarant',array('id'=>$demandeqh->getId()));
 
                 }
                  else
                 {
 
-                    return $this->redirectToRoute('pagetestgarant');
+                    return $this->redirectToRoute('pagetestgarant',array('id'=>$demandeqh->getId()));
                 }
-
 
         }
 
@@ -301,38 +306,37 @@ class garantController extends Controller
     /**
      * pagetestGarant
      *
-     * @Route("/page_information", name="pagetestgarant")
+     * @Route("/page_information/{id}", name="pagetestgarant")
      *
      */
-    public function pagetestGarantQHAction()
+    public function pagetestGarantQHAction(DemandeQh $demandeqh)
     {
         $em = $this->getDoctrine()->getManager();
         $user=$this->getUser();
         $infogarant = new InfoGarantService();
 
         $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
-        $demandeqh=$em->getRepository('DemandeQhBundle:DemandeQh')->findOneBy(array('numero'=>$personne->getNumeroDemandeQHtemp()));
+       // $demandeqh=$em->getRepository('DemandeQhBundle:DemandeQh')->findOneBy(array('numero'=>$personne->getNumeroDemandeQHtemp()));
         $garant1=$em->getRepository('DemandeQhBundle:Garant')->findOneBy(array('id'=>$demandeqh->getGarant1()));
         $garant2=$em->getRepository('DemandeQhBundle:Garant')->findOneBy(array('id'=>$demandeqh->getGarant2()));
         $info1=$infogarant->testInfo($garant1);
         $info2=$infogarant->testInfo($garant2);
         return $this->render('@DemandeQh/garant/pageTestGarant.html.twig',
-            array('garant'=>$garant1,'garant1'=>$garant2,'info1'=>$info1,'info2'=>$info2,));
+            array('demandeqh'=>$demandeqh,'garant'=>$garant1,'garant1'=>$garant2,'info1'=>$info1,'info2'=>$info2,));
 
     }
     /**
      * garant Generate PDF
      *
-     * @Route("/telechargement-engagement/pdf/", name="formulairegarant")
+     * @Route("/telechargement-engagement/pdf/{id}", name="formulairegarant")
      *
      */
-    public function formulaireGaarantQHAction()
+    public function formulaireGaarantQHAction(DemandeQh $demandeqh)
     {
         $em = $this->getDoctrine()->getManager();
         $user=$this->getUser();
         $infogarant = new InfoGarantService();
         $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
-        $demandeqh=$em->getRepository('DemandeQhBundle:DemandeQh')->findOneBy(array('numero'=>$personne->getNumeroDemandeQHtemp()));
         $garant1=$em->getRepository('DemandeQhBundle:Garant')->findOneBy(array('id'=>$demandeqh->getGarant1()));
         $garant2=$em->getRepository('DemandeQhBundle:Garant')->findOneBy(array('id'=>$demandeqh->getGarant2()));
         $info1=$infogarant->testInfo($garant1);
@@ -342,7 +346,7 @@ class garantController extends Controller
         }
         else
         {
-            return $this->render('@DemandeQh/garant/acteEngagement.html.twig',array('id_garant'=>$garant1,'id_garant1'=>$garant2));
+            return $this->render('@DemandeQh/garant/acteEngagement.html.twig',array('demandeqh'=>$demandeqh));
         }
 
 
@@ -354,24 +358,32 @@ class garantController extends Controller
      * @Route("/acte-engagement-caution-garant1/pdf/12ZS12{id}AZSD", name="garant1")
      * @Method({"GET","POST"})
      */
-    public function garant1_engagementAction(Request $request,Garant $garant1)
+    public function garant1_engagementAction(Request $request,DemandeQh $demandeqh)
     {
         $em = $this->getDoctrine()->getManager();
         $user=$this->getUser();
         $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
-        $demandeqh=$em->getRepository('DemandeQhBundle:DemandeQh')->findOneBy(array('numero'=>$personne->getNumeroDemandeQHtemp()));
-        $garant1=$em->getRepository('DemandeQhBundle:Garant')->findOneBy(array('id'=>$demandeqh->getGarant1()));
+        //$demandeqh=$em->getRepository('DemandeQhBundle:DemandeQh')->findOneBy(array('numero'=>$personne->getNumeroDemandeQHtemp()));
+        $garant1=$demandeqh->getGarant1();
         $tfox = $this->get('t_fox_mpdf_port.pdf');
+        $chiffreEnLettre = new ChiffresEnLettres();
 
-
+        $sommeLettre = $chiffreEnLettre->Conversion($demandeqh->getMontant());
+/*
             $html = $this->render('@DemandeQh/pdf/engagement_G1.html.twig', array(
                 'num_demande' => $demandeqh->getNumero(),
                 'garant1'=>$garant1,
                 'personne'=>$personne,
                 'demandeqh'=>$demandeqh
+            ));*/
+
+            return $this->render('@DemandeQh/pdf/g1.html.twig',array(
+                'num_demande' => $demandeqh->getNumero(),
+                'garant'=>$garant1,
+                'personne'=>$personne,
+                'demandeqh'=>$demandeqh,
+                'lettre'=>$sommeLettre
             ));
-
-
 
 //        return $html;
         return new \TFox\MpdfPortBundle\Response\PDFResponse($tfox->generatePdf($html));
@@ -383,24 +395,32 @@ class garantController extends Controller
      * @Route("/acte-engagement-caution-garant2/pdf/AZRD1{id}3AZ", name="garant2")
      * @Method({"GET","POST"})
      */
-    public function garant2_engagementAction(Request $request,Garant $garant1)
+    public function garant2_engagementAction(Request $request,DemandeQh $demandeqh)
     {
         $em = $this->getDoctrine()->getManager();
         $user=$this->getUser();
         $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
-        $demandeqh=$em->getRepository('DemandeQhBundle:DemandeQh')->findOneBy(array('numero'=>$personne->getNumeroDemandeQHtemp()));
-        $garant2=$em->getRepository('DemandeQhBundle:Garant')->findOneBy(array('id'=>$demandeqh->getGarant2()));
+       // $demandeqh=$em->getRepository('DemandeQhBundle:DemandeQh')->findOneBy(array('numero'=>$personne->getNumeroDemandeQHtemp()));
+        $garant2=$demandeqh->getGarant2();
         $tfox = $this->get('t_fox_mpdf_port.pdf');
 
+        $chiffreEnLettre = new ChiffresEnLettres();
 
-        $html = $this->render('@DemandeQh/pdf/engagement_G2.html.twig', array(
+        $sommeLettre = $chiffreEnLettre->Conversion($demandeqh->getMontant());
+       /* $html = $this->render('@DemandeQh/pdf/engagement_G2.html.twig', array(
             'num_demande' => $demandeqh->getNumero(),
             'garant1'=>$garant2,
             'personne'=>$personne,
             'demandeqh'=>$demandeqh
+        ));*/
+
+        return $this->render('@DemandeQh/pdf/g1.html.twig',array(
+            'num_demande' => $demandeqh->getNumero(),
+            'garant'=>$garant2,
+            'personne'=>$personne,
+            'demandeqh'=>$demandeqh,
+            'lettre'=>$sommeLettre
         ));
-
-
 
 //        return $html;
         return new \TFox\MpdfPortBundle\Response\PDFResponse($tfox->generatePdf($html));

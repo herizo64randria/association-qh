@@ -57,33 +57,6 @@
                 <br>
                    <div class="row">
 
-                          <div class="col-lg-6">
-                              <h4 class="text-primary">Antécédent</h4>
-                              <p>
-                                  Dejà efectuer une demande QH auparavant :
-                                  {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
-                                      {% set x='oui' %}
-                                  {% else %}
-                                      {% set x='non' %}
-                                  {% endif %}
-                                 {{ x }}
-                              </p>
-
-                              {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
-                                  {% if (demandeQH.demadeQH.siAncienDemandeEtat=='oui') %}
-                                      {% set y='oui' %}
-
-                                  {% else %}
-                                      {% set y='non' %}
-
-                                  {% endif %}
-                                  <p>Elle a été acceptée : {{ y }}
-
-                                  </p>
-                              {% endif %}
-
-                          </div>
-
                           {% if (x=='oui' and y=='oui') %}
                               <div class="col-lg-6">
                                   <h4 class="text-primary">les trois dernier montant demandés

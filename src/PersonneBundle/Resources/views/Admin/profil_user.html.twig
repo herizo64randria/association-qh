@@ -1,5 +1,5 @@
 {% extends '@Back/base_backend.html.twig' %}
-{% block sous_menu_titre %}{{ 'demande_confirmation.titre'|trans }}{% endblock %}
+{% block sous_menu_titre %}{% endblock %}
 
 
 {% block stylecss %}
@@ -108,40 +108,41 @@
     <div class="row">
         <div class="col-md-4">
             <div class="profile-img">
-                <img  width="70%" height="100%" src="{{ asset('/document/'~personne.photo) }}" alt=""/>
+                {% if(personne.photo) %}
+
+                <img  width="70%" height="100%" src="{{ asset('/document/'~personne.photo) }}" alt="photo avec rida"/>
+                {% else %}
+
+
+                {% endif %}
             </div>
         </div>
         <div class="col-md-6">
             <div class="profile-head">
                 <h5>
-                    {{ personne.nom }} {{ personne.prenom }}
+                    <b>{{ personne.nom }} {{ personne.prenom }}</b>
                 </h5>
-                <h6>
-                    <b>{{ 'liste_demande.numits '|trans }}</b> {{ personne.numeroIts }}
-                </h6>
-                <h6>
-                    <b>{{ 'liste_demande.cin'|trans }}</b> {{ personne.numerocin }}
-                </h6>
 
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ 'liste_demande.information'|trans }}</a>
-                    </li>
-                    {#<li class="nav-item">#}
-                    {#<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>#}
-                    {#</li>#}
-                </ul>
+                <h6>
+                    <b>Contact :</b> {{ personne.num1 }}
+                </h6>
+                <h6>
+                    <b> Whatsapp :</b> {{ personne.num2 }}
+                </h6>
+                <h6>
+                    <b> E-mail :</b> {{ personne.email }}
+                </h6>
             </div>
 
         </div>
 
     </div>
     <div class="row">
-        <div class="col-md-5">
+       {# <div class="col-md-5">
             <div class="profile-work"><br>
-                <h5>{{ 'liste_demande.liste_benef'|trans }}</h5>
-                <a href="#" class="text-primary">N°- {{ 'liste_demande.numeroits'|trans }} - {{ 'liste_demande.nom'|trans }}- {{ 'liste_demande.relation'|trans }} </a><br/>
-                {% set i=0 %}
+              #}{#  <h5>{{ 'liste_demande.liste_benef'|trans }}</h5>
+                <a href="#" class="text-primary">N°- {{ 'liste_demande.numeroits'|trans }} - {{ 'liste_demande.nom'|trans }}- {{ 'liste_demande.relation'|trans }} </a><br/>#}{#
+               #}{# {% set i=0 %}
                 {% for procuration in procurations %}
                     {% set i=i+1 %}
                     <a href="#">{{ '#'~ i ~' - '~ procuration.numeroits ~' - '~ procuration.nom ~' -('~ procuration.relation ~')'}}</a><br/>
@@ -149,108 +150,157 @@
                 <br>
                 <p>{{ 'liste_demande.its'|trans }}</p>
                 <a href="{{ asset('/document/'~personne.scan) }}"><img src="{{ asset('/document/'~personne.scan) }}" width="150" height="106"></a>
-                <p>{{ 'liste_demande.cin'|trans }}</p>
-                {% for cin in cins  %}
+                <p>{{ 'liste_demande.cin'|trans }}</p>#}{#
+               #}{# {% for cin in cins  %}
                     <a href="{{ asset('/document/'~ cin.url) }}"><img src="{{ asset('/document/'~ cin.url) }}" width="150" height="106"></a>
                     <br><br>
-                {% endfor %}
+                {% endfor %}#}{#
             </div>
-        </div>
-        <div class="col-md-7">
+        </div>#}
+        <div class="col-md-1">
+            <div class="profile-work"><br>
+
+                </div>
+            </div>
+        <div class="col-md-11">
+            <div class="profile-head">
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Informations</a>
+                    </li>
+                    {#<li class="nav-item">#}
+                    {#<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>#}
+                    {#</li>#}
+                </ul>
+            </div>
             <div class="tab-content profile-tab" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <br>
                     <div class="row">
+                        <h5 class="text-info">PIECE D'IDENTITE</h5>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-4">
+
+                            <label>Type pièce :</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.typePiece }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Date de naissance :</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.dateNaissance|date('d/m/Y') }}</p>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Age :</label>
+                        </div>
+
+                        <div class="col-md-6">
+                            <p>{{ age }} ans</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>N° pièce :</label>
+                        </div>
+                        <div class="col-md-6" >
+                            <p >{{ personne.numerocin}}</p>
+                        </div>
+                    </div>
+                   {# <div class="row">
                         <div class="col-md-3">
-                            <label>{{ 'inscription.its'|trans }}</label>
+                            <label>{{ 'inscription.moza'|trans }}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p></p>
+                        </div>
+                    </div>#}
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Délivré le</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.datecin|date('d/m/Y') }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>A :</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.delivrer }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h5 class="text-info">CARTE ITS</h5>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <label>Nom complet :</label>
                         </div>
                         <div class="col-md-6">
                             <p>{{ personne.nomIts }}</p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <label>{{ 'inscription.num_sabil'|trans }}</label>
+                        <div class="col-md-4">
+                            <label>N° ITS :</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ personne.numeroIts }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Moze :</label>
+                        </div>
+                        <div class="col-md-6">
+                            {% if(personne.moze) %}
+                            <p>{{ personne.moze.moze }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>N° Sabil :</label>
                         </div>
                         <div class="col-md-6">
                             <p>{{ personne.numeroSabil }}</p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <label>{{ 'inscription.moza'|trans }}</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>{{ personne.moza }}</p>
-                        </div>
+                        <h5 class="text-info">COORDONNEES</h5>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <label>Email</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>{{ personne.email }}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label>{{ 'inscription.num1'|trans }}</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>{{ personne.num1 }}</p>
-                        </div>
-                    </div>
-                    {% if personne.num2 %}
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>{{ 'inscription.num2'|trans }}</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>{{ personne.num2 }}</p>
-                            </div>
-                        </div>
-                    {% endif %}
-                    {% if personne.num3 %}
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>{{ 'inscription.num3'|trans }}</label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>{{ personne.num3 }}</p>
-                            </div>
-                        </div>
-                    {% endif %}
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label>{{ 'inscription.adresse'|trans }}</label>
+                        <div class="col-md-4">
+
+                            <label>Adresse :</label>
                         </div>
                         <div class="col-md-6">
                             <p>{{ personne.adresse }}</p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <label>Profession</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>Web Developer and Designer</p>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label>{{ 'inscription.ville'|trans }}</label>
+                        <div class="col-md-4">
+                            <label>Ville</label>
                         </div>
                         <div class="col-md-6">
                             <p>{{ personne.ville }}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label>{{ 'inscription.Sexe'|trans }}</label>
-                        </div>
-                        <div class="col-md-6">
-                            <p>{{ personne.sexe|trans }}</p>
                         </div>
                     </div>
                 </div>

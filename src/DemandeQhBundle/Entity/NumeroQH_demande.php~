@@ -35,19 +35,6 @@ class NumeroQH_demande
      */
     private $numeroQH;
 
-    //    ---------------RELATION---------------
-
-
-    /**
-     * @ORM\ManyToOne(targetEntity="PersonneBundle\Entity\Personne",
-    cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     *
-     */
-    private $personne;
-    //    ---------------RELATION---------------
-
-
     /**
      * Get id
      *
@@ -105,5 +92,5 @@ class NumeroQH_demande
     {
         return $this->numeroQH;
     }
-}
 
+}

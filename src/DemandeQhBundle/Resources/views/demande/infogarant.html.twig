@@ -1,0 +1,78 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+    <style>
+        {% include '@DemandeQh/style.css.twig' %}
+    </style>
+    <main>
+
+        <div class="stepper">
+            <div class="step--3 step-active" style="width:250px">Documents à préparer</div>
+            <div class="step--4">Formulaire Garants</div>
+
+
+        </div>
+
+
+        <form class="form form-active" action="#" method="post">
+            <div class="form--header-container">
+                <h1 class="form--header-title">
+                    FAIZ E MOHAMMADI QARDAN HASANAH
+                </h1>
+
+                <p class="form--header-text" >
+                    Merci de préparer les documents suivants pour compléter l'ensemble des formulaires
+                </p>
+            </div>
+
+             <table >
+                 <tr >
+                     <td style="text-align: left">
+                         <p><b>GARANT1 :</b></p>
+                         <p>
+                             Pièce d'Identité Garant 1
+                         </p>
+                         <p>
+                             Photocopie ITS Garant 1
+                         </p>
+                         <p>
+                             Contact Téléphone et Whatsapp Garant 1
+                         </p>
+                         <p>
+                             Adresse & Ville Garant 1
+                         </p>
+                     </td>
+
+                 </tr>
+                 <tr>
+                     <td style="text-align:left">
+                         <p><b>GARANT2 :</b></p>
+                         <p>
+                             Pièce d'Identité Garant 2
+                         </p>
+                         <p>
+                             Photocopie ITS Garant 2
+                         </p>
+                         <p>
+                             Contact Téléphone et Whatsapp Garant 2
+                         </p>
+                         <p>
+                             Adresse & Ville Garant 2
+                         </p>
+                     </td>
+                 </tr>
+                 <tr>
+                     <td>
+                         <a style="text-align: left" href="{{ path('pagetestgarant',{'id':DemandeQh.id}) }}" class="form__btn" id="btn-2-prev">Suivant</a>
+
+                     </td>
+                 </tr>
+             </table>
+
+            <br><br>
+
+        </form>
+
+    </main>
+    </main>
+{% endblock %}

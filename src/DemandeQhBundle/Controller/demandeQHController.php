@@ -35,20 +35,22 @@ class demandeQHController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user=$this->getUser();
         $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
-        $demandeQH=$em->getRepository('DemandeQhBundle:DemandeQh')->findBy(array('numero'=>$personne->getNumeroDemandeQHtemp()));
+        $demandeQH=$em->getRepository('DemandeQhBundle:DemandeQh')->findBy(array('numero'=>'0110/QH'));
         $nbr=count($demandeQH);
-        $etat=$em->getRepository('DemandeQhBundle:Etat')->findOneBy(array('demadeQH'=>$demandeQH));
+       // $etat=$demandeQH->getEtat();
 
         if($demandeQH){
-            return $this->redirectToRoute('listeDemandeQHeffectuer');
-
+           // return $this->redirectToRoute('listeDemandeQHeffectuer');
+            return $this->render('@DemandeQh/demande/download.html.twig',array('personne'=>$personne,
+                'nbr'=>$nbr
+            ));
 
         }else{
 
             if($request->getMethod() == 'POST'){
 
                 $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
-                $demandeQH=$em->getRepository('DemandeQhBundle:DemandeQh')->findBy(array('numero'=>$personne->getNumeroDemandeQHtemp()));
+                $demandeQH=$em->getRepository('DemandeQhBundle:DemandeQh')->findBy(array('numero'=>'0110/QH'));
                 $nbr=count($demandeQH);
                 return $this->render('@DemandeQh/demande/download.html.twig',array('personne'=>$personne,
                     'nbr'=>$nbr));
@@ -61,6 +63,171 @@ class demandeQHController extends Controller
 
     }
     /**
+     * AddDemandeQH entities.
+     *
+     * @Route("/ajout-demandeQH", name="addDemandeQH")
+     */
+    public function AddDemandeQHAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $monservice=new MonService();
+        $mozes=$em->getRepository('DemandeQhBundle:Moze')->findAll();
+        $user=$this->getUser();
+        $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
+        if($request->getMethod() == 'POST') {
+            $repository_numDemande = $em->getRepository('DemandeQhBundle:NumeroQH_demande');
+            $numRetour = '';
+            $qNumDemande = $repository_numDemande->findOneBy(array('id'=>1));
+            $numDemande = $qNumDemande;
+            $intNextNum = $numDemande->getIntnumeroQH() + 1;
+            $nextNum = $intNextNum;
+            $numeroqh_demande=$this->recupererNumero();
+
+            $numDemande->setIntnumeroQH($intNextNum);
+
+            if(strlen($intNextNum) == 1){
+                $nextNum = '000'.$intNextNum;
+            }
+
+            if(strlen($intNextNum) == 2){
+                $nextNum = '00'.$intNextNum;
+            }
+
+            if(strlen($intNextNum) == 3){
+                $nextNum = '0'.$intNextNum;
+            }
+            $numDemande->setNumeroQH($nextNum);
+            $Tquestion='';
+            $demandeQH=new DemandeQh();
+            $demandeQH->setDate(new \DateTime());
+            $demandeQH->setMontant($_POST['montant']);
+            $demandeQH->setNombreMois($_POST['mois']);
+            $demandeQH->setPersonne($personne);
+            $demandeQH->setNumero($numeroqh_demande);
+                foreach ( $_POST['question'] as $key=>$question){
+                    if(!empty($question)){
+                        $Tquestion=$Tquestion.$question.', ';
+                    }
+
+                }
+                if(!empty($_POST['other'])){
+                    $Tquestion=$Tquestion.$_POST['other'];
+
+                }
+                $demandeQH->setTypeMotif($Tquestion);
+
+
+            if(!empty($_POST['or'])){
+                $garantieOR=new GarantieOr();
+                $garantieOR->setValeurAr($_POST['or']);
+                $demandeQH->setGarantieOR($garantieOR);
+                $em->persist($garantieOR);
+            }
+
+            $demandeQH->setGarant1(null);
+            $demandeQH->setGarant2(null);
+            $demandeQH->setDetailMotif($_POST['motif']);
+
+             $etat=new Etat();
+             $etat->setNomEtat(Etat::ATTENTE);
+             $demandeQH->setEtat($etat);
+             $em->persist($etat);
+            $em->persist($demandeQH);
+            $em->flush();
+            return $this->redirectToRoute('addGarantQH',array('id'=>$demandeQH->getId()));
+            //return $this->redirect($this->generateUrl('attenteQH'),array('id'=>$demandeQH->getId()));
+        }
+        return $this->render('@DemandeQh/demande/demande.html.twig',array('mozes'=>$mozes,'personne'=>$personne));
+
+    }
+    /**
+     * editDemandeQH entities.
+     *
+     * @Route("/modifier-demandeQH/{id}", name="editDemandeQH")
+     */
+    public function editDemandeQHQHAction(Request $request,DemandeQh $demandeQH)
+    {
+        if($request->getMethod() == 'POST') {
+            $em = $this->getDoctrine()->getManager();
+            $demandeQH->setMontant($_POST['montant']);
+            $demandeQH->setNombreMois($_POST['mois']);
+            $demandeQH->setDetailMotif($_POST['motif']);
+            $demandeQH->getEtat()->setNomEtat(Etat::ATTENTE);
+            if(!empty($_POST['or'])){
+                $garantieOR=$demandeQH->getGarantieOR();
+                $garantieOR->setValeurAr($_POST['or']);
+
+            }
+            $demandeQH->getEtat()->setNomEtat(Etat::ATTENTE);
+            $em->flush();
+            return $this->redirectToRoute('detailDemandeQH',array('id'=> $demandeQH->getId()));
+        }
+       return $this->render('@DemandeQh/demande/editDemandeQH.html.twig', array('demandeQh' =>$demandeQH ));
+
+    }
+    /**
+     * editGarantQH entities.
+     *
+     * @Route("/modifier-garantQH/{id}", name="editGarantQH")
+     */
+    public function editGarantQHQHAction(Request $request,DemandeQh $demandeQH)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $mozes=$em->getRepository('DemandeQhBundle:Moze')->findAll();
+        if($request->getMethod() == 'POST') {
+            $em = $this->getDoctrine()->getManager();
+            $garant1=$demandeQH->getGarant1();
+            $garant2=$demandeQH->getGarant2();
+            $garant1->SetNomIts($_POST['nitsgarant1']);
+            $garant1->setNumeroIts($_POST['itsgarant1']);
+            $garant1->setMoze($_POST['mozegarant1']);
+
+            $garant2->SetNomIts($_POST['nitsgarant2']);
+            $garant2->setNumeroIts($_POST['itsgarant2']);
+            $garant2->setMoze($_POST['mozegarant2']);
+            $demandeQH->getEtat()->setNomEtat(Etat::ATTENTE);
+
+            $em->flush();
+            return $this->redirectToRoute('detailDemandeQH',array('id'=> $demandeQH->getId()));
+        }
+        return $this->render('@DemandeQh/demande/editGarant.html.twig', array('demandeQh' =>$demandeQH,'mozes'=>$mozes ));
+
+    }
+    /**
+     * AddGarantQH entities.
+     *
+     * @Route("/ajout-garantQH/{id}", name="addGarantQH")
+     */
+    public function AddGarantQHAction(Request $request,DemandeQh $demande)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $monservice=new MonService();
+        $mozes=$em->getRepository('DemandeQhBundle:Moze')->findAll();
+        $user=$this->getUser();
+        $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
+        if($request->getMethod() == 'POST') {
+            $garant1=new Garant();
+            $garant2=new Garant();
+            $garant1->SetNomIts($_POST['nitsgarant1']);
+            $garant1->setNumeroIts($_POST['itsgarant1']);
+            $garant1->setMoze($_POST['mozegarant1']);
+
+            $garant2->SetNomIts($_POST['nitsgarant2']);
+            $garant2->setNumeroIts($_POST['itsgarant2']);
+            $garant2->setMoze($_POST['mozegarant2']);
+            $em->persist($garant1);
+            $em->persist($garant2);
+            $demande->setGarant1($garant1);
+            $demande->setGarant2($garant2);
+            $em->flush();
+            return  $this->redirectToRoute('listeDemandeQHeffectuer');
+        }
+
+
+            return $this->render('@DemandeQh/demande/garant.html.twig',array('demande'=>$demande));
+
+    }
+    /**
      * formulaireQH entities.
      *
      * @Route("/formulaire-QH", name="FenetreQH")
@@ -69,12 +236,14 @@ class demandeQHController extends Controller
     {
 
         $numeroqh_demande=$this->recupererNumero();
-
+        $em = $this->getDoctrine()->getManager();
         $monservice=new MonService();
-
+        $mozes=$em->getRepository('DemandeQhBundle:Moze')->findAll();
+        $user=$this->getUser();
+        $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
         if($request->getMethod() == 'POST'){
 
-            $em = $this->getDoctrine()->getManager();
+
 
             $user=$this->getUser();
             $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
@@ -107,6 +276,7 @@ class demandeQHController extends Controller
             $garant2=new Garant();
             $etat=new Etat();
             $garantieOR=new GarantieOr();
+
             $upload=new MultipleUpload();
             $nbr=$upload->uploadFichiers('kalidas','photo','photos');
 
@@ -169,7 +339,7 @@ class demandeQHController extends Controller
 
             return $this->redirect($this->generateUrl('attenteQH'));
         }
-        return $this->render('@DemandeQh/demande/new.html.twig',array('numeroqh'=>$numeroqh_demande));
+        return $this->render('@DemandeQh/demande/new.html.twig',array('mozes'=>$mozes,'numeroqh'=>$numeroqh_demande,'personne'=>$personne));
     }
     /* Fonction Recuperer Numero_demande QH */
     public function recupererNumero(){
@@ -241,6 +411,7 @@ class demandeQHController extends Controller
         $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
         $personne->setNumeroDemandeQHtemp('');
         $em->persist($personne);
+
         $em->flush();
         return $this->redirectToRoute('nouvelle_demandeQH');
 
@@ -323,5 +494,34 @@ class demandeQHController extends Controller
 
         return $this->render('@DemandeQh/demande/demandeQHeffectuer.html.twig', array('demandeQHs' =>$etat ));
     }
+    /**
+     * detaildemandeQH  entities.
+     *
+     * @Route(" detail_demandeQH/AZEeR12-{id}344E", name="detailDemandeQH")
+     */
+    public function detailDemandeQAction(Request $request, DemandeQh $param)
+    {
+        $em=$this->getDoctrine()->getManager();
+        if($param->getEtat()->getNomEtat()=='Demande accépté'){
+            return $this->redirectToRoute('infoDemandeQH',array('id'=>$param->getId()));
 
+        }else{
+            return $this->render('@DemandeQh/demande/detailDemandeQh.html.twig', array('demandeQH' =>$param ));
+        }
+
+
+    }
+    /**
+     * detaildemandeQH  entities.
+     *
+     * @Route(" info_garant_demandeQH/AS78{id}568", name="infoDemandeQH")
+     */
+    public function infoDemandeQAction(Request $request,DemandeQh $demandeQh)
+    {
+        $em=$this->getDoctrine()->getManager();
+
+            return $this->render('@DemandeQh/demande/infogarant.html.twig',array('DemandeQh'=>$demandeQh));
+
+
+    }
 }

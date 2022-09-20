@@ -1,0 +1,183 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+    <style>
+        {% include '@DemandeQh/style.css.twig' %}
+    </style>
+    <main>
+
+        <div class="stepper">
+            {% if(demandeQH.etat.nomEtat!='Demande accépté' ) %}
+                <div class=""></div>
+                <div class="" style="width:400px"><a href="{{ path('editDemandeQH',{'id':demandeQH.id}) }}" class="btn btn-success btn-lg">Clique ici si vous avez besoin de modifié les informations</a></div>
+                <div class=""></div>
+            {% endif %}
+
+        </div>
+
+
+        <form class="form form-active" action="#" method="post">
+            <div class="form--header-container">
+                <h1 class="form--header-title">
+                    FAIZ E MOHAMMADI QARDAN HASANAH
+                </h1>
+                <p class="form--header-text" >
+                   ETAT : {{ demandeQH.etat.nomEtat }} (
+                    {% if(demandeQH.etat.nomEtat=="Demande en attente") %}
+                    Votre demande est envoyé aux résponsables pour la validation.
+                    {% endif %} )
+                </p>
+            </div>
+
+            <table>
+                <tr>
+                    <td>
+
+
+                            {% if(demandeQH.etat.nomEtat=='Demande refusé' and demandeQH.etat.motifFrontRefuser) %}
+                                <div class="alert alert-danger" role="alert">
+                                    Message de l'administrateur  : <br>
+                                    {{ demandeQH.etat.motifFrontRefuser}}
+                                </div>
+
+                            {% endif %}
+                        {% if(demandeQH.etat.nomEtat=='Demande accépté mais modification à effectué' and demandeQH.etat.remarque) %}
+                            <div class="alert alert-danger" style="width:450px" role="alert">
+                                Message de l'administrateur  : <br>
+                                {{ demandeQH.etat.remarque}}
+                            </div>
+
+                        {% endif %}
+                        {% if(demandeQH.etat.nomEtat=='Demande accépté' and demandeQH.etat.remarque) %}
+                            <div class="alert alert-danger" style="width:450px" role="alert">
+                                Message de l'administrateur  : <br>
+                                {{ demandeQH.etat.remarque }}
+                            </div>
+
+                        {% endif %}
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>
+                             Détail de votre demande QH numéro : {{ demandeQH.numero }}
+                        </b>
+                    </td>
+                </tr>
+                <tr><td>* Montant demandé en Ariary : {{ demandeQH.montant|number_format('2',',',' ') }}</td></tr>
+                <tr>
+                    <td>
+                        <ul style="list-style: none">
+                            <li>* Remboursement : {{ demandeQH.nombreMois }} mois</li>
+                            <li> </li>
+                        </ul>
+
+                    </tr>
+                {% if(demandeQH.garantieOR) %}
+                <tr><td>
+                        * Garentie Or/Rehen (en Ariary) : {{ demandeQH.garantieOR.valeurAr|number_format('2',',',' ') }}
+
+                    </td>
+                    <td></td></tr>
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td>
+                        * Motif: {{ demandeQH.typeMotif }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 5px">
+                        <span > * l'objet de votre demande :</span>
+                        {{ demandeQH.detailMotif }}
+                    </td>
+
+                    <td style="padding-top: 0px;padding-left: 50px">
+
+                       {# <div id="div1">
+                            Motif <br>
+                            <input type="checkbox" id="coding" name="question[]" value="Culturel">
+                            <label for="coding">Culturel</label>
+                        </div>
+                        <div id="div1">
+                            <input type="checkbox" id="music" name="question[]" value="Social">
+                            <label for="music">Social</label>
+                        </div>
+                        <div id="div1">
+                            <input type="checkbox" id="art" name="question[]" value="Professionel">
+                            <label for="art">Professionel</label>
+                        </div>
+                        <div id="div1">
+                            <input type="checkbox" id="sports" name="question[]" value="Personnel">
+                            <label for="sports">Personnel</label>
+                        </div>
+                        <div id="div1">
+                            <input type="checkbox" id="other" name="question[]" value="">
+                            <label for="other">Autre</label>
+                            <input type="text" id="otherValue" name="other">
+                        </div>#}
+
+                    </td>
+                </tr>
+            </table>
+            <table>
+                {% if(demandeQH.garant1) %}
+                <tr><td><b>Garant 1:</b></td></tr>
+                <tr>
+                    <td>* Nom selon ITS : {{ demandeQH.garant1.nomIts }}</td>
+                </tr>
+                <tr>
+                    <td>* N° ITS : {{ demandeQH.garant1.numeroIts }}</td>
+                </tr>
+                <tr>
+                    <td>* Moze : {{ demandeQH.garant1.moze }}</td>
+                </tr>
+                {% endif %}
+                {% if(demandeQH.garant2) %}
+                <tr>
+                    <td> <b>Garant2 :</b> </td>
+                </tr>
+                <tr>
+                    <td>* Nom selon ITS : {{ demandeQH.garant2.nomIts }}</td>
+                </tr>
+                <tr>
+                    <td>* N° ITS :  {{ demandeQH.garant2.numeroIts }}</td>
+                </tr>
+                <tr>
+                    <td>* Moze :{{ demandeQH.garant2.moze }}</td>
+                </tr>
+                {% endif %}
+            </table>
+            <script>
+
+                var otherCheckbox = document.querySelector('input[value="other"]');
+                var otherText = document.querySelector('input[id="otherValue"]');
+                var msg = document.querySelector('.form--message');
+
+                msg.style.visibility = 'hidden';
+                otherCheckbox.onchange = function() {
+                    if(otherCheckbox.checked) {
+                        otherText.style.visibility = 'visible';
+                        otherText.value = '';
+                    } else {
+                        otherText.style.visibility = 'hidden';
+                    }
+                };
+                $("#btn-2-next").click(function () {
+                    var montant=$("#montant").val()
+                    alert(montant)
+                })
+
+            </script>
+
+            {# <button class="form__btn" id="btn-2-prev">Précédent</button>#}
+
+        </form>
+
+    </main>
+    </main>
+{% endblock %}

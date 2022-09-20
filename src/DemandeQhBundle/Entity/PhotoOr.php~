@@ -70,4 +70,28 @@ class PhotoOr
     }
 
 
+
+    /**
+     * Set garantieor
+     *
+     * @param \DemandeQhBundle\Entity\GarantieOr $garantieor
+     *
+     * @return PhotoOr
+     */
+    public function setGarantieor(\DemandeQhBundle\Entity\GarantieOr $garantieor = null)
+    {
+        $this->garantieor = $garantieor;
+
+        return $this;
+    }
+
+    /**
+     * Get garantieor
+     *
+     * @return \DemandeQhBundle\Entity\GarantieOr
+     */
+    public function getGarantieor()
+    {
+        return $this->garantieor;
+    }
 }

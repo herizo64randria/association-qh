@@ -41,6 +41,96 @@ class Dossier
      */
     private $safahi;
     /**
+     * @var array
+     *
+     * @ORM\Column(name="cin", type="array", nullable=true)
+     */
+    private $cin;
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="pret1", type="array", nullable=true)
+     */
+    private $pret1;
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="acte1", type="array", nullable=true)
+     */
+    private $acte1;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="its", type="string", nullable=true)
+     */
+    private $its;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pret", type="string", length=255,nullable=true)
+     */
+    private $pret;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rehen", type="string", length=255,nullable=true)
+     */
+    private $rehen;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vente", type="string", length=255,nullable=true)
+     */
+    private $vente;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="acte", type="string", length=255,nullable=true)
+     */
+    private $acte;
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="rembourse", type="array", length=255,nullable=true)
+     */
+    private $rembourse;
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="chequesG1", type="array", length=255,nullable=true)
+     */
+    private $chequesG1;
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="pieceG1", type="array", length=255,nullable=true)
+     */
+    private $pieceG1;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="itsG1", type="string", length=255,nullable=true)
+     */
+    private $itsG1;
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="chequesG2", type="array", length=255,nullable=true)
+     */
+    private $chequesG2;
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="pieceG2", type="array", length=255,nullable=true)
+     */
+    private $pieceG2;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="itsG2", type="string", length=255,nullable=true)
+     */
+    private $itsG2;
+    /**
      * @var string
      *
      * @ORM\Column(name="attestationCopmteBank", type="string", length=255,nullable=true)
@@ -64,6 +154,24 @@ class Dossier
      * @ORM\Column(name="chequeBare", type="string", length=255,nullable=true)
      */
     private $chequeBare;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="valide", type="string", length=255,nullable=true)
+     */
+    private $valide;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="complet", type="string", length=255,nullable=true)
+     */
+    private $complet;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="raison", type="string", length=255,nullable=true)
+     */
+    private $raison;
     /**
      * @var string
      *
@@ -385,5 +493,487 @@ class Dossier
     public function getChequeBare1()
     {
         return $this->chequeBare1;
+    }
+
+    /**
+     * Set cheque1Bare
+     *
+     * @param string $cheque1Bare
+     *
+     * @return Dossier
+     */
+    public function setCheque1Bare($cheque1Bare)
+    {
+        $this->cheque1Bare = $cheque1Bare;
+
+        return $this;
+    }
+
+    /**
+     * Get cheque1Bare
+     *
+     * @return string
+     */
+    public function getCheque1Bare()
+    {
+        return $this->cheque1Bare;
+    }
+
+    /**
+     * Set cheque2Bare
+     *
+     * @param string $cheque2Bare
+     *
+     * @return Dossier
+     */
+    public function setCheque2Bare($cheque2Bare)
+    {
+        $this->cheque2Bare = $cheque2Bare;
+
+        return $this;
+    }
+
+    /**
+     * Get cheque2Bare
+     *
+     * @return string
+     */
+    public function getCheque2Bare()
+    {
+        return $this->cheque2Bare;
+    }
+
+    /**
+     * Set cheque1Bare1
+     *
+     * @param string $cheque1Bare1
+     *
+     * @return Dossier
+     */
+    public function setCheque1Bare1($cheque1Bare1)
+    {
+        $this->cheque1Bare1 = $cheque1Bare1;
+
+        return $this;
+    }
+
+    /**
+     * Get cheque1Bare1
+     *
+     * @return string
+     */
+    public function getCheque1Bare1()
+    {
+        return $this->cheque1Bare1;
+    }
+
+    /**
+     * Set cheque2Bare1
+     *
+     * @param string $cheque2Bare1
+     *
+     * @return Dossier
+     */
+    public function setCheque2Bare1($cheque2Bare1)
+    {
+        $this->cheque2Bare1 = $cheque2Bare1;
+
+        return $this;
+    }
+
+    /**
+     * Get cheque2Bare1
+     *
+     * @return string
+     */
+    public function getCheque2Bare1()
+    {
+        return $this->cheque2Bare1;
+    }
+
+    /**
+     * Set cin
+     *
+     * @param array $cin
+     *
+     * @return Dossier
+     */
+    public function setCin($cin)
+    {
+        $this->cin = $cin;
+
+        return $this;
+    }
+
+    /**
+     * Get cin
+     *
+     * @return array
+     */
+    public function getCin()
+    {
+        return $this->cin;
+    }
+
+    /**
+     * Set its
+     *
+     * @param array $its
+     *
+     * @return Dossier
+     */
+    public function setIts($its)
+    {
+        $this->its = $its;
+
+        return $this;
+    }
+
+    /**
+     * Get its
+     *
+     * @return array
+     */
+    public function getIts()
+    {
+        return $this->its;
+    }
+
+    /**
+     * Set pret
+     *
+     * @param string $pret
+     *
+     * @return Dossier
+     */
+    public function setPret($pret)
+    {
+        $this->pret = $pret;
+
+        return $this;
+    }
+
+    /**
+     * Get pret
+     *
+     * @return string
+     */
+    public function getPret()
+    {
+        return $this->pret;
+    }
+
+    /**
+     * Set rehen
+     *
+     * @param string $rehen
+     *
+     * @return Dossier
+     */
+    public function setRehen($rehen)
+    {
+        $this->rehen = $rehen;
+
+        return $this;
+    }
+
+    /**
+     * Get rehen
+     *
+     * @return string
+     */
+    public function getRehen()
+    {
+        return $this->rehen;
+    }
+
+    /**
+     * Set vente
+     *
+     * @param string $vente
+     *
+     * @return Dossier
+     */
+    public function setVente($vente)
+    {
+        $this->vente = $vente;
+
+        return $this;
+    }
+
+    /**
+     * Get vente
+     *
+     * @return string
+     */
+    public function getVente()
+    {
+        return $this->vente;
+    }
+
+    /**
+     * Set acte
+     *
+     * @param string $acte
+     *
+     * @return Dossier
+     */
+    public function setActe($acte)
+    {
+        $this->acte = $acte;
+
+        return $this;
+    }
+
+    /**
+     * Get acte
+     *
+     * @return string
+     */
+    public function getActe()
+    {
+        return $this->acte;
+    }
+
+
+
+    /**
+     * Set rembourse
+     *
+     * @param array $rembourse
+     *
+     * @return Dossier
+     */
+    public function setRembourse($rembourse)
+    {
+        $this->rembourse = $rembourse;
+
+        return $this;
+    }
+
+    /**
+     * Get rembourse
+     *
+     * @return array
+     */
+    public function getRembourse()
+    {
+        return $this->rembourse;
+    }
+
+    /**
+     * Set chequesG1
+     *
+     * @param array $chequesG1
+     *
+     * @return Dossier
+     */
+    public function setChequesG1($chequesG1)
+    {
+        $this->chequesG1 = $chequesG1;
+
+        return $this;
+    }
+
+    /**
+     * Get chequesG1
+     *
+     * @return array
+     */
+    public function getChequesG1()
+    {
+        return $this->chequesG1;
+    }
+
+    /**
+     * Set pieceG1
+     *
+     * @param array $pieceG1
+     *
+     * @return Dossier
+     */
+    public function setPieceG1($pieceG1)
+    {
+        $this->pieceG1 = $pieceG1;
+
+        return $this;
+    }
+
+    /**
+     * Get pieceG1
+     *
+     * @return array
+     */
+    public function getPieceG1()
+    {
+        return $this->pieceG1;
+    }
+
+    /**
+     * Set itsG1
+     *
+     * @param string $itsG1
+     *
+     * @return Dossier
+     */
+    public function setItsG1($itsG1)
+    {
+        $this->itsG1 = $itsG1;
+
+        return $this;
+    }
+
+    /**
+     * Get itsG1
+     *
+     * @return string
+     */
+    public function getItsG1()
+    {
+        return $this->itsG1;
+    }
+
+    /**
+     * Set chequesG2
+     *
+     * @param array $chequesG2
+     *
+     * @return Dossier
+     */
+    public function setChequesG2($chequesG2)
+    {
+        $this->chequesG2 = $chequesG2;
+
+        return $this;
+    }
+
+    /**
+     * Get chequesG2
+     *
+     * @return array
+     */
+    public function getChequesG2()
+    {
+        return $this->chequesG2;
+    }
+
+    /**
+     * Set pieceG2
+     *
+     * @param array $pieceG2
+     *
+     * @return Dossier
+     */
+    public function setPieceG2($pieceG2)
+    {
+        $this->pieceG2 = $pieceG2;
+
+        return $this;
+    }
+
+    /**
+     * Get pieceG2
+     *
+     * @return array
+     */
+    public function getPieceG2()
+    {
+        return $this->pieceG2;
+    }
+
+    /**
+     * Set itsG2
+     *
+     * @param string $itsG2
+     *
+     * @return Dossier
+     */
+    public function setItsG2($itsG2)
+    {
+        $this->itsG2 = $itsG2;
+
+        return $this;
+    }
+
+    /**
+     * Get itsG2
+     *
+     * @return string
+     */
+    public function getItsG2()
+    {
+        return $this->itsG2;
+    }
+
+    /**
+     * Set valide
+     *
+     * @param string $valide
+     *
+     * @return Dossier
+     */
+    public function setValide($valide)
+    {
+        $this->valide = $valide;
+
+        return $this;
+    }
+
+    /**
+     * Get valide
+     *
+     * @return string
+     */
+    public function getValide()
+    {
+        return $this->valide;
+    }
+
+    /**
+     * Set raison
+     *
+     * @param string $raison
+     *
+     * @return Dossier
+     */
+    public function setRaison($raison)
+    {
+        $this->raison = $raison;
+
+        return $this;
+    }
+
+    /**
+     * Get raison
+     *
+     * @return string
+     */
+    public function getRaison()
+    {
+        return $this->raison;
+    }
+
+    /**
+     * Set complet
+     *
+     * @param string $complet
+     *
+     * @return Dossier
+     */
+    public function setComplet($complet)
+    {
+        $this->complet = $complet;
+
+        return $this;
+    }
+
+    /**
+     * Get complet
+     *
+     * @return string
+     */
+    public function getComplet()
+    {
+        return $this->complet;
     }
 }

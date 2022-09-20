@@ -1,0 +1,88 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+    <style>
+        {% include '@DemandeQh/style.css.twig' %}
+    </style>
+    <main>
+
+
+        <form class="form form-active" action="{{ path('ajouter_garant_dossier_qh',{'id':demandeqh.id}) }}" method="post" enctype="multipart/form-data" >
+            <div class="form--header-container">
+                <h1 class="form--header-title">
+                    FAIZ E MOHAMMADI QARDAN HASANAH
+                </h1>
+
+                <p class="form--header-text" >
+                    DOSSIER GARANTS
+                </p>
+            </div>
+
+            <table >
+                <tr >
+                    <td style="text-align: left;">
+                        <p>3 chèques Non datés du Garant 1:</p>
+                        <p style=""><input type="file" name="cheques[]" multiple="multiple"></p>
+
+
+                        <p>
+                            Pièce d'Identité Garant 1 :
+                        </p>
+                        <p style=""><input type="file" name="cin[]" multiple="multiple"></p>
+                        <p>
+                            Photocopie ITS Garant 1 :
+                        </p>
+                        <p style=""><input type="file" name="its"></p>
+                        <p>3 chèques Non datés du Garant 2:</p>
+                        <p style=""><input type="file" name="cheques1[]" multiple="multiple"></p>
+                        <p>
+                            Pièce d'Identité Garant 2 :
+                        </p>
+                        <p style=""><input type="file" name="cin1[]" multiple="multiple"></p>
+                        <p>
+                            Photocopie ITS Garant 2 :
+                        </p>
+                        <p style=""><input type="file" name="its1"></p>
+
+                        {# <p>
+                            Si votre demande  est reçu le
+                        </p>
+                        <p>
+                            3 chèques Non datés du Garant 1
+                        </p>
+                        <p>
+                            Pièce d'Identité Garant 1
+                        </p>
+                        <p>
+                            Photocopie ITS Garant 1
+                        </p>
+                        <p>
+                            3 chèques Non datés du Garant 2
+                        </p>
+                        <p>
+                            Pièce d'Identité Garant 2
+                        </p>
+                        <p>
+                            Photocopie ITS Garant 2
+                        </p>#}
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-success"> Envoyer</button>
+                        {#
+                        <a style="text-align: left" href="{{ path('pagetestgarant',{'id':DemandeQh.id}) }}" class="form__btn" id="btn-2-prev">Suivant</a>
+                        #}
+
+                    </td>
+                </tr>
+            </table>
+            <br>
+        </form>
+
+    </main>
+    </main>
+
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+    <style>
+        {% include '@DemandeQh/style.css.twig' %}
+    </style>
+    <main>
+
+        <div class="stepper">
+
+            <div class="step--2 step-active">Votre demande</div>
+            <div class="step--4">Vos garanties</div>
+
+        </div>
+
+
+        <form class="form form-active" action="#" method="post">
+            <div class="form--header-container">
+                <h1 class="form--header-title">
+                    FAIZ E MOHAMMADI QARDAN HASANAH
+                </h1>
+
+                <p class="form--header-text">
+
+                </p>
+            </div>
+
+            <table>
+                <tr><td>Montant demandé en Ariary <br>
+
+                        <input id="montant" type="text" name="montant" /></td></tr>
+                <tr>
+                    <td><br>
+                        <ul style="list-style: none">
+                            <li>Remboursement  <br><input type="number" name="mois" /></li>
+                            <li>Indiquez le nombre de mois </li>
+                        </ul>
+
+                    </td><td>
+                    {#    <div id="div1" >Mensualité ou Annuel <br>
+                            <input type="radio"
+                                   name="unite" value="mois">
+                            <label for="contactChoice1">Mois</label><br>
+
+                            <input type="radio"
+                                   name="unite" value="annee">
+                            <label for="contactChoice1">Années</label>
+
+                        </div>#}
+
+                    </td></tr>
+                <tr >
+                <tr id="or" style="display:none"><td>Garentie Or/Rehen (en Ariary) <br><input type="text" name="or" />
+
+                    </td>
+                <td></td></tr>
+                <tr id="or1" style="display:none">
+                    <td>
+                        Si vous n'avez pas encore de Garantie d'or, veuillez imprimer
+                        <a download="document/QH - Form Evaluation Rehen" href="{{  absolute_url(asset('document/QH - Form Evaluation Rehen V2.1.pdf')) }}">ce formulaire</a> <br>et vous rendre à la bijouterie Kalidas de votre ville pour évaluation.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 5px">
+                        <span > Veuillez décrire précisement l'objet de votre demande</span>
+                        <textarea name="motif" id="area" cols="30" rows="9"></textarea>
+                    </td>
+
+                    <td style="padding-top: 0px;padding-left: 50px">
+                        <div id="div1">
+                            Motif <br>
+                            <input type="checkbox" id="coding" name="question[]" value="Culturel">
+                            <label for="coding">Culturel</label>
+                        </div>
+                        <div id="div1">
+                            <input type="checkbox" id="music" name="question[]" value="Social">
+                            <label for="music">Social</label>
+                        </div>
+                        <div id="div1">
+                            <input type="checkbox" id="art" name="question[]" value="Professionel">
+                            <label for="art">Professionel</label>
+                        </div>
+                        <div id="div1">
+                            <input type="checkbox" id="sports" name="question[]" value="Personnel">
+                            <label for="sports">Personnel</label>
+                        </div>
+                        <div id="div1">
+                            <input type="checkbox" id="other" name="question[]" value="">
+                            <label for="other">Autre</label>
+                            <input type="text" id="otherValue" name="other">
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+            <script>
+
+                var otherCheckbox = document.querySelector('input[value="other"]');
+                var otherText = document.querySelector('input[id="otherValue"]');
+                var msg = document.querySelector('.form--message');
+                var montant =document.querySelector('#montant');
+                montant.onchange = function() {
+                    if(montant.value>=10000000){
+                        $('#or').removeAttr('style')
+                        $('#or1').removeAttr('style')
+                        $('#or').attr('style','display:bloc')
+                        $('#or1').attr('style','display:bloc')
+                    }else{
+                        $('#or').removeAttr('style')
+                        $('#or1').removeAttr('style')
+                        $('#or').attr('style','display:none')
+                        $('#or1').attr('style','display:none')
+                    };
+                };
+                msg.style.visibility = 'hidden';
+                otherCheckbox.onchange = function() {
+                    if(otherCheckbox.checked) {
+                        otherText.style.visibility = 'visible';
+                        otherText.value = '';
+                    } else {
+                        otherText.style.visibility = 'hidden';
+                    }
+                };
+                $("#btn-2-next").click(function () {
+                    var montant=$("#montant").val()
+                    alert(montant)
+                })
+
+            </script>
+<table>
+    <tr><td> <button class="form__btn" id="btn-2-next">Suivant</button></td></tr>
+</table>
+           {# <button class="form__btn" id="btn-2-prev">Précédent</button>#}
+
+        </form>
+
+    </main>
+    </main>
+{% endblock %}

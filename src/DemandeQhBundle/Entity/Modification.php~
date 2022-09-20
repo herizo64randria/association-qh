@@ -50,7 +50,7 @@ class Modification
     //    ---------------RELATION---------------
 
     /**
-     * @ORM\OneToOne(targetEntity="DemandeQhBundle\Entity\Etat")
+     * @ORM\ManyToOne(targetEntity="DemandeQhBundle\Entity\Etat")
      * @ORM\JoinColumn(nullable=true)
      */
     private $etat;
@@ -139,5 +139,52 @@ class Modification
     {
         return $this->notif;
     }
-}
 
+    /**
+     * Set message
+     *
+     * @param string $message
+     *
+     * @return Modification
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * Get message
+     *
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * Set etat
+     *
+     * @param \DemandeQhBundle\Entity\Etat $etat
+     *
+     * @return Modification
+     */
+    public function setEtat(\DemandeQhBundle\Entity\Etat $etat = null)
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * Get etat
+     *
+     * @return \DemandeQhBundle\Entity\Etat
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
+}

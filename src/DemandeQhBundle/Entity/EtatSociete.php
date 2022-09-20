@@ -156,4 +156,3 @@ class EtatSociete
         return $this->motifAccepter;
     }
 }
-

@@ -180,9 +180,14 @@
         <br><br>
             <div class="row" style="font-family: 'Courier New';float: left;margin-left: -100px" >
 
-                <div class="col-md-4" >
+                <div class="col-md-4" style="margin-left:10px" >
                     <div class="card" id="card_profil"  >
+                        {% if(personne.photo) %}
                         <img style="width: 75% ;align-content: center;margin: 40px" src="{{ asset('/document/'~personne.photo) }}" alt="Avatar" class="img-fluid">
+                        {% else %}
+                            <img style="width: 75% ;align-content: center;margin: 40px" src="{{ asset('/document/profil/user-1.png') }}" alt="Avatar" class="img-fluid">
+
+                        {% endif %}
                         <div class="container">
                             <hr>
                             <h4 class="text-info"><b> {{ personne.nom }} {{ personne.prenom }}</b></h4>
@@ -191,31 +196,34 @@
                                 <br>
                                 <b><i class="fa fa-id-card"></i> {{ 'liste_demande.cin'|trans }}</b>  {{ personne.numerocin }}
                                 <br>
+                                <b><i class="fa fa-envelope"></i> Age :</b>{{ age }} ans
+                                <br>
                                 <b><i class="fa fa-envelope"></i> Email :</b>{{ personne.email }}
                                 <br>
                                 <b><i class="fa fa-phone"></i> {{ 'inscription.num1'|trans }} : </b>
                                  <ul>
+                                {% if personne.num1 %}
                                     <li>{{ personne.num1 }}</li>
+                                {% endif %}
+
                                 {% if personne.num2 %}
-                                     <li>{{ personne.num2 }}</li>
+                                     <li> {{ personne.num2 }}(Whatsapp)</li>
                                 {% endif %}
-                                {% if personne.num3 %}
-                                    <li>{{ personne.num3 }}</li>
-                                {% endif %}
+
                                 </ul>
 
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="card">
                         <div class="card-body">
                             <div class="profile-head">
 
                                 <ul class="nav nav-pills" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="home-tab" data-toggle="pill" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ 'liste_demande.information'|trans }}</a>
+                                        <a class="nav-link active" id="home-tab" data-toggle="pill" href="#home" role="tab" aria-controls="home" aria-selected="true">A propos</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="profile-tab" data-toggle="pill" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{ 'liste_demande.procuration'|trans }}</a>
@@ -325,8 +333,36 @@
                                                 <div class="col-md-6">
 
                                                     <div  role="tabpanel" aria-bledby="home-tab">
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>{{ 'inscription.piece'|trans }}:</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.typePiece }}</p>
+                                                            </div>
+                                                        </div>
 
                                                         <div class="row">
+                                                            <div class="">
+                                                                <b>Délivré le:</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                {% if(personne.dateCin) %}
+                                                                <p>{{ personne.dateCin|date('d/m/Y') }}</p>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="">
+                                                                <b>A :</b>
+                                                            </div>
+                                                            <div class="left">
+                                                                <p>{{ personne.delivrer }}</p>
+                                                            </div>
+                                                        </div>
+
+                                                       {# <div class="row">
                                                             <div class="">
                                                                 <b>{{ 'inscription.date_naissance'|trans }} :</b>
                                                             </div>
@@ -343,26 +379,17 @@
                                                                 <p>{{ personne.lieu }}</p>
                                                             </div>
                                                         </div>
-                                                        <br>
+                                                        <br>#}
                                                         <div class="row">
                                                             <div class="">
-                                                                <b>{{ 'inscription.adresse'|trans }}:</b>
+                                                                <b>Adresse :</b>
                                                             </div>
                                                             <div class="left">
                                                                 <p>{{ personne.adresse }}</p>
                                                             </div>
                                                         </div>
-                                                        <br>
-                                                        <div class="row">
-                                                            <div class="">
-                                                                <b>{{ 'inscription.Sexe'|trans }}:</b>
-                                                            </div>
-                                                            <div class="left">
-                                                                <p>{{ personne.sexe|trans }}</p>
-                                                            </div>
-                                                        </div>
 
-                                                        <br>
+
                                                         <div class="row">
                                                             <div class="">
                                                                 <b>{{ 'inscription.ville'|trans }}:</b>
@@ -371,25 +398,16 @@
                                                                 <p>{{ personne.ville }}</p>
                                                             </div>
                                                         </div>
-                                                        <br>
-                                                        <div class="row">
+                                                        {#<div class="row">
                                                             <div class="">
                                                                 <b>Profession :</b>
                                                             </div>
                                                             <div class="left">
                                                                 <p>{{ personne.profession }}</p>
                                                             </div>
-                                                        </div>
-                                                        <br>
-                                                        <div class="row">
-                                                            <div class="">
-                                                                <b>{{ 'inscription.piece'|trans }}:</b>
-                                                            </div>
-                                                            <div class="left">
-                                                                <p>{{ personne.typePiece }}</p>
-                                                            </div>
-                                                        </div>
-                                                        <br>
+                                                        </div>#}
+
+
 
 
                                                     </div>
@@ -398,24 +416,7 @@
                                                 <div class="col-md-6">
                                                     <div class="tab-pane " >
 
-                                                        <div class="row">
-                                                            <div class="">
-                                                                <b>{{ 'inscription.date_cin'|trans }}:</b>
-                                                            </div>
-                                                            <div class="left">
-                                                                <p>{{ personne.dateCin|date('d/m/Y') }}</p>
-                                                            </div>
-                                                        </div>
-                                                        <br>
-                                                        <div class="row">
-                                                            <div class="">
-                                                                <b>{{ 'inscription.delivrer'|trans }}:</b>
-                                                            </div>
-                                                            <div class="left">
-                                                                <p>{{ personne.delivrer }}</p>
-                                                            </div>
-                                                        </div>
-                                                        <br>
+
                                                         <div class="row">
                                                             <div class="">
                                                                 <b>{{ 'inscription.its'|trans }}:</b>
@@ -424,16 +425,18 @@
                                                                 <p>{{ personne.nomIts }}</p>
                                                             </div>
                                                         </div>
-                                                        <br>
+
                                                         <div class="row">
                                                             <div class="">
                                                                 <b>{{ 'inscription.moza'|trans }}:</b>
                                                             </div>
                                                             <div class="left">
+                                                                {% if(personne.moze) %}
                                                                 <p>{{ personne.moze.moze }}</p>
+                                                                {% endif %}
                                                             </div>
                                                         </div>
-                                                        <br>
+
                                                         <div class="row">
                                                             <div class="">
                                                                 <b>{{ 'inscription.num_sabil'|trans }}:</b>
@@ -442,7 +445,7 @@
                                                                 <p>{{ personne.numeroSabil }}</p>
                                                             </div>
                                                         </div>
-                                                        <br>
+
 
                                                     </div>
 
@@ -718,7 +721,7 @@
             </div>
 
     </div>
-
+    </div>
     </div>
     <script>
         $(document).ready(function(){

@@ -4,11 +4,15 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-3 register-left">
+        <div class="col-md-3 register-left" style="position: relative;margin-top: 80px">
             <h1><i class="fa fa-star"></i></h1>
             <h3>{{ 'inscription.welcome'|trans }}</h3>
             <p>{{ 'inscription.welcome_phrase'|trans }}</p>
-            <a href="{{ path('fos_user_security_login') }}" id="loginBtn" class="btnRegister"> {{ 'login'|trans }} </a>
+            <p>
+{#
+                <a href="{{ path('fos_user_security_login') }}" id="loginBtn" class="btnRegister"> {{ 'login'|trans }} </a>
+#}
+            </p>
         </div>
         <div class="col-md-9 register-right">
             <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
@@ -18,11 +22,55 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+{#
                     <h3 class="register-heading">{{ 'inscription.information'|trans }}</h3>
+#}
                     <form action="#" method="post" name="telephone" autocomplete="off" enctype="multipart/form-data">
                         <div class="row register-form">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
+
                                 <div class="form-group">
+                                    <label for="">E-mail <b class="text-danger" id="err_email1"></b></label>
+                                    <input required type="email" name="email1" id="email1" class="form-control"   />
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Retapez votre E-Mail <b class="text-danger" id="err_email2"></b></label>
+                                    <input required type="email" name="email2" id="email2" class="form-control"  />
+                                </div>
+                                <div class="form-group">
+                                    <label for="">{{ 'inscription.Password'|trans }} <b class="text-danger" id="err_mdp1"></b></label>
+                                    <div class="input-group">
+                                        <input  required type="password" name="mdp1" id="mdp1" class="form-control "   />
+                                        <div class="input-group-append" data-target="#mdp1" onmousedown="afficher_pwd1()" onmouseup="afficher_pwd1()" >
+                                            <div id="btn1" class="input-group-text"><i class="fa fa-eye"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Retapez votre Mot de Passe <b class="text-danger" id="err_mdp2"></b></label>
+
+                                    <div class="input-group">
+                                        <input required type="password" name="mdp2" id="mdp2" class="form-control"   />
+                                        <div class="input-group-append" data-target="#mdp2" onmousedown="afficher_pwd2()" onmouseup="afficher_pwd2()" >
+                                            <div id="btn2" class="input-group-text"><i class="fa fa-eye"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input  type="submit" class="btnRegister" id="btnInscrire"  value="{{ 'inscription.register'|trans }}"/>
+
+                                {#   <div class="form-group">
+                                    <label for="moze">{{ 'inscription.moza'|trans }} <b class="text-danger" id="err_moze"></b></label>
+                                    <select name="moze" id="moze" class="form-control">
+                                        {% for moze in mozes %}
+                                            <option value="{{ moze.id }}">{{ moze.moze }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>#}
+
+
+                                {#          <div class="form-group">
                                     <label for="nom">{{ 'inscription.First'|trans }} <b class="text-danger" id="err_nom"></b></label>
                                     <input required type="text" class="form-control" name="nom" id="nom"   />
                                 </div>
@@ -128,11 +176,12 @@
                                             <span>{{ 'inscription.Female'|trans }} </span>
                                         </label>
                                     </div>
-                                </div>
+                                </div>#}
 
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
+                            {#<div class="col-md-6">
+
+                               #}{# <div class="form-group">
                                     <label>{{ 'inscription.profession'|trans }} <b class="text-danger" id="err_ville_piece"></b></label>
                                     <div class="input-group date"  data-target-input="nearest">
                                         <input type="text" id="profession" name="profession"  class="form-control " />
@@ -141,50 +190,7 @@
 
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="num_its">{{ 'inscription.num_its'|trans }} <b class="text-danger" id="err_num_its"></b></label>
-                                    <input required type="number" name="num_its" id="num_its" class="form-control"   />
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="">{{ 'inscription.Password'|trans }} <b class="text-danger" id="err_mdp1"></b></label>
-                                    <div class="input-group">
-                                        <input  required type="password" name="mdp1" id="mdp1" class="form-control "   />
-                                        <div class="input-group-append" data-target="#mdp1" onmousedown="afficher_pwd1()" onmouseup="afficher_pwd1()" >
-                                            <div id="btn1" class="input-group-text"><i class="fa fa-eye"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>{{ 'inscription.Confirm Password'|trans }} <b class="text-danger" id="err_mdp2"></b></label>
-
-                                    <div class="input-group">
-                                        <input required type="password" name="mdp2" id="mdp2" class="form-control"   />
-                                        <div class="input-group-append" data-target="#mdp2" onmousedown="afficher_pwd2()" onmouseup="afficher_pwd2()" >
-                                            <div id="btn2" class="input-group-text"><i class="fa fa-eye"></i></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="moze">{{ 'inscription.moza'|trans }} <b class="text-danger" id="err_moze"></b></label>
-                                    <select name="moze" id="moze" class="form-control">
-                                        {% for moze in mozes %}
-                                            <option value="{{ moze.id }}">{{ moze.moze }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">{{ 'inscription.email'|trans }} <b class="text-danger" id="err_email1"></b></label>
-                                    <input required type="email" name="email1" id="email1" class="form-control"   />
-                                </div>
-                                <div class="form-group">
-                                    <label for="">{{ 'inscription.email2'|trans }} <b class="text-danger" id="err_email2"></b></label>
-                                    <input required type="email" name="email2" id="email2" class="form-control"  />
-                                </div>
-
-                                <div class="form-group">
+                                #}{#<div class="form-group">
                                     <label>{{ 'inscription.phone1'|trans }} <b class="text-danger" id="err_phone1"></b></label>
                                     <input id="phone1" name="phone1" type="text"  class="form-control only_phone_number"  onsubmit="return false;" list="defaultTels" >
 
@@ -226,10 +232,11 @@
                                 <div class="form-group">
                                     <label>{{ 'inscription.scan_its'|trans }} <b class="text-danger" id="err_scan_its"></b></label>
                                     <input required type="file" name="scan_its" id="scan_its" class="form-control"   />
-                                </div>
+                                </div>#}{#
+#}{#
                                 <input type="checkbox" name="check" id="check" required> En cliquant sur cette case,j'accepte les conditions générales  <button class="btn btn-link" id="lire" type="button"> Cliquez ici pour lire les conditions </button>
-                                <input  type="submit" class="btnRegister" id="btnInscrire"  value="{{ 'inscription.register'|trans }}"/>
-                            </div>
+#}{#
+                            </div>#}
                         </div>
                     </form>
                 </div>

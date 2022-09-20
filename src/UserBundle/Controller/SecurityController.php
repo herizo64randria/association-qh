@@ -28,7 +28,7 @@ class SecurityController extends Controller
         $request = $this->getRequest();
         $session = $request->getSession();
 
-        // On vérifie s'il y a des erreurs d'une précédente soumissiondu formulaire
+        // On vérifie s'il y a des erreurs d'une précédente soumission du formulaire
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } else {

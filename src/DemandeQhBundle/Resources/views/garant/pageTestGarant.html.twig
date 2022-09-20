@@ -75,15 +75,27 @@
 <div class="contenu align-content-center">
 
     <form action="#">
-        <h2 class="text-primary text-center">{{ 'page.info'|trans}}</h2>
+        <h2 class="text-primary text-center">Informations Garants</h2>
         <hr>
-        <b>{{ 'page.choix'|trans}}</b>
+        {#<b>{{ 'page.choix'|trans}}</b>#}
         <br>
-        {% if (info1==false) %}
-            <a href="{{ path('ajouter_garant1') }}" class="btn btn-lg btn-info">Garant 1</a>
-        {% endif %}
-        {% if (info2==false) %}
-            <a href="{{ path('ajouter_garant2') }}" class="btn btn-lg btn-info">Garant 2</a>
+
+            <a href="{{ path('ajouter_garant1',{'id':demandeqh.id}) }}" class="btn btn-lg btn-dark">Garant 1</a>
+
+            <a href="{{ path('ajouter_garant2',{'id':demandeqh.id}) }}" class="btn btn-lg btn-dark">Garant 2</a>
+        {% if (info1==true and info2==true  ) %}
+            <hr>
+            <h2 class="text-primary text-center">Formulaires </h2>
+
+            <a href="{{ path('formulairegarant',{'id':demandeqh.id}) }}" class="btn btn-lg btn-info"> Acte d'engagement de caution</a>
+            <br><br>
+            <a target="_blank" href="{{ path('contrat_pret',{'id':demandeqh.id}) }}" class="btn btn-lg btn-success"> CONTRAT DE PRÊT</a>
+            <br><br>
+            <a target="_blank" href="{{ path('vente',{'id':demandeqh.id}) }}" class="btn btn-lg btn-warning"> AUTORISATION DE VENTE</a>
+            <br><br>
+            <h2 class="text-primary text-center">Dossier à préparer </h2>
+            <a target="_blank" href="{{ path('fournir_dossier',{'id':demandeqh.id}) }}" class="btn btn-lg btn-danger"> DOSSIER COMPLET</a>
+
         {% endif %}
 
     </form>

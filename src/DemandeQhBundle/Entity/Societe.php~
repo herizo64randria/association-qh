@@ -26,6 +26,12 @@ class Societe
      * @ORM\Column(name="nom", type="string", length=255, nullable=true)
      */
     private $nom;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numTemp", type="string", length=255, nullable=true)
+     */
+    private $numTemp;
 
     /**
      * @var string

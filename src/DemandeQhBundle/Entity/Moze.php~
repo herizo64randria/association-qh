@@ -63,4 +63,3 @@ class Moze
         return $this->moze;
     }
 }
-

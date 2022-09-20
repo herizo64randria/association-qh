@@ -1,0 +1,194 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+    <style>
+        {% include '@DemandeQh/style.css.twig' %}
+    </style>
+    <main>
+
+        <div class="stepper">
+            <div class="step--1 step-active" style="width:250px">Documents</div>
+        </div>
+        <form class="form form-active" action="#" method="post">
+            <div class="form--header-container">
+                <h1 class="form--header-title">
+                    FAIZ E MOHAMMADI QARDAN HASANAH
+                </h1>
+
+                <p class="form--header-text" >
+                    {% if(demandeqh.Dossier) %}
+
+                        {% if(demandeqh.Dossier.valide=='Dossier reçu') %}
+
+                            <span class="alert alert-info">Votre dossier a été reçu.</span>
+
+                        {% endif %}
+                        {% if(demandeqh.Dossier.valide=='Dossier non reçu')%}
+                            <span class="alert alert-info">Votre dossier a été envoyé au responsable pour être vérifé.</span>
+
+                        {% endif %}
+                    {% endif %}
+                </p>
+            </div>
+            <table>
+                <tr>
+                    <td >
+                        {% if(demandeqh.Dossier) %}
+
+                            {% if(  demandeqh.Dossier.complet==""  ) %}
+                                <a href="{{ path('ajouter_dossier_qh',{'id':demandeqh.id}) }}" class="btn btn-lg badge-info">Envoyer dossier</a>
+                            {% endif %}
+
+                        {% endif %}
+                    </td>
+                    <td>
+
+                        {% if(demandeqh.Dossier) %}
+
+
+                            {% if(  demandeqh.Dossier.complet=='non' ) %}
+                                <a href="{{ path('ajouter_garant_dossier_qh',{'id':demandeqh.id}) }}" class="btn btn-lg badge-success">Envoyer dossier garant</a>
+
+
+                            {% endif %}
+
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if( demandeqh.Dossier and demandeqh.Dossier.complet=='oui' ) %}
+                            <button style="width: 250px" type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#flipFlopx">
+                                Voir votre dossier
+                            </button>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                </tr>
+            </table>
+
+            <br><br>
+
+        </form>
+
+    </main>
+    </main>
+    <div class="modal fade" id="flipFlopx" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <form action="" method="POST">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-info">
+                        DOSSIER
+
+                    </div>
+                    <div class="modal-body">
+                        {% if( demandeQH.dossier.complet is defined and demandeQH.dossier.complet=='oui') %}
+                            Pièce:<br>
+                            {% for piece in demandeQH.dossier.cin %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}"><img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt=""></a>
+                            {% endfor %}<br>
+                            ITS: <br>
+                            <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.its1) }}"><img style="width: 100px;height: 100px" src="{{ asset('/document/'~demandeQH.dossier.its1) }}" alt=""></a>
+                            <br>
+                            Formulaire Contrat de prêt:
+                            <br>
+                            {% for piece in demandeQH.dossier.pret1 %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}"><img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt=""></a>
+                            {% endfor %}<br>
+
+                            Formulaire d'évaluation Rehen:
+                            <br>   <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.rehen) }}">
+                            <img style="width: 100px;height: 100px" src="{{ asset('/document/'~demandeQH.dossier.rehen) }}" alt="">
+                        </a>
+                            {% if(demandeQH.dossier.acte1) %}
+                                <br>
+                                Formulaire d'Acte d'engagement:
+                                <br>
+                                {% for piece in demandeQH.dossier.acte1 %}
+                                    <a target="_blank" href="{{ asset('/document/'~piece.url) }}"><img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt=""></a>
+                                {% endfor %}<br>
+
+                            {% endif %}<br>
+                            Formulaire d'Autorisation de vente:
+
+                            <br>   <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.vente) }}">
+                            <img style="width: 100px;height: 100px" src="{{ asset('/document/'~demandeQH.dossier.vente) }}" alt="">
+
+                        </a>
+                            <br>
+                            Chèques de remboursements :<br>
+                            {% for piece in demandeQH.dossier.rembourse %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                    <img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt="">
+
+                                </a>
+                            {% endfor %}<br>
+                            Safahi Chithi :
+                            <br>
+
+                            <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.safahi) }}">
+                                <img style="width: 100px;height: 100px" src="{{ asset('/document/'~demandeQH.dossier.safahi) }}" alt="">
+
+                            </a>
+                            <div class="modal-header text-info">
+                                DOSSIER GARANT 1:
+
+                            </div>
+                            <br>
+                            3 chèques Non datés du Garant 1 :<br>
+                            {% for piece in demandeQH.dossier.chequesG1 %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                    <img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt="">
+
+                                </a>
+                            {% endfor %}<br>
+                            Pièce d'Identité Garant 1:<br>
+
+                            {% for piece in demandeQH.dossier.pieceG1 %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}"><img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt=""></a>
+                            {% endfor %}<br>
+
+                            Photocopie ITS Garant 1 :<br>
+
+                            <br>   <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.itsG2) }}">
+                            <img style="width: 100px;height: 100px" src="{{ asset('/document/'~demandeQH.dossier.itsG1) }}" alt="">
+                        </a>
+                            <div class="modal-header text-info">
+                                DOSSIER GARANT 2:
+
+                            </div>
+                            <br>
+                            3 chèques Non datés du Garant 2 :<br>
+                            {% for piece in demandeQH.dossier.chequesG2 %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                    <img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt="">
+
+                                </a>
+                            {% endfor %}<br>
+                            Pièce d'Identité Garant2:<br>
+
+                            {% for piece in demandeQH.dossier.pieceG2 %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}"><img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt=""></a>
+                            {% endfor %}<br>
+
+                            Photocopie ITS Garant 2 :<br>
+
+                            <br>   <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.itsG2) }}">
+                            <img style="width: 100px;height: 100px" src="{{ asset('/document/'~demandeQH.dossier.itsG2) }}" alt="">
+                        </a>
+                        {% endif %}
+
+
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

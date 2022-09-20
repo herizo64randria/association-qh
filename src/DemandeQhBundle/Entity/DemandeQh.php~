@@ -30,16 +30,16 @@ class DemandeQh
 
 
     /**
-     * @var bool
+     * @var string
      *
-     * @ORM\Column(name="siAncienDemande", type="boolean")
+     * @ORM\Column(name="siAncienDemande", type="string", nullable=true)
      */
     private $siAncienDemande;
 
     /**
-     * @var bool
+     * @var string
      *
-     * @ORM\Column(name="siAncienDemandeEtat", type="boolean", nullable=true)
+     * @ORM\Column(name="siAncienDemandeEtat", type="string", nullable=true)
      */
     private $siAncienDemandeEtat;
 
@@ -95,7 +95,7 @@ class DemandeQh
     /**
      * @var string
      *
-     * @ORM\Column(name="typeMotif", type="string", length=100)
+     * @ORM\Column(name="typeMotif", type="string", length=100,nullable=true )
      */
     private $typeMotif;
 
@@ -106,10 +106,55 @@ class DemandeQh
      */
     private $detailMotif;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prefixe", type="text", nullable=true)
+     */
+    private $prefixe;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="msgVuser", type="text", nullable=true)
+     */
+    private $msgVuser;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="msgVadmin", type="text", nullable=true)
+     */
+    private $msgVadmin;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="remarque", type="text", nullable=true)
+     */
+    private $remarque;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="date", type="datetime", nullable=true)
+     */
+    private $date;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dateConfirme", type="datetime", nullable=true)
+     */
+    private $dateConfirme;
 
+    //    ---------------RELATION---------------
 
-//    ---------------RELATION---------------
-
+    /**
+     * @ORM\OneToOne(targetEntity="DemandeQhBundle\Entity\Etat")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $Etat;
+    /**
+     * @ORM\OneToOne(targetEntity="DemandeQhBundle\Entity\Dossier")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $Dossier;
 
     /**
      * @ORM\ManyToOne(targetEntity="PersonneBundle\Entity\Personne",
@@ -147,7 +192,6 @@ class DemandeQh
     private $garantieOR;
 
 //    ---------------//////RELATION//////---------------
-
 
     /**
      * Get id
@@ -617,5 +661,199 @@ class DemandeQh
     public function getUserConfirme()
     {
         return $this->userConfirme;
+    }
+
+
+
+    /**
+     * Set unite
+     *
+     * @param string $unite
+     *
+     * @return DemandeQh
+     */
+    public function setUnite($unite)
+    {
+        $this->unite = $unite;
+
+        return $this;
+    }
+
+    /**
+     * Get unite
+     *
+     * @return string
+     */
+    public function getUnite()
+    {
+        return $this->unite;
+    }
+
+    /**
+     * Set prefixe
+     *
+     * @param string $prefixe
+     *
+     * @return DemandeQh
+     */
+    public function setPrefixe($prefixe)
+    {
+        $this->prefixe = $prefixe;
+
+        return $this;
+    }
+
+    /**
+     * Get prefixe
+     *
+     * @return string
+     */
+    public function getPrefixe()
+    {
+        return $this->prefixe;
+    }
+
+    /**
+     * Set etat
+     *
+     * @param \DemandeQhBundle\Entity\Etat $etat
+     *
+     * @return DemandeQh
+     */
+    public function setEtat(\DemandeQhBundle\Entity\Etat $etat = null)
+    {
+        $this->Etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * Get etat
+     *
+     * @return \DemandeQhBundle\Entity\Etat
+     */
+    public function getEtat()
+    {
+        return $this->Etat;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return DemandeQh
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set msgVuser
+     *
+     * @param string $msgVuser
+     *
+     * @return DemandeQh
+     */
+    public function setMsgVuser($msgVuser)
+    {
+        $this->msgVuser = $msgVuser;
+
+        return $this;
+    }
+
+    /**
+     * Get msgVuser
+     *
+     * @return string
+     */
+    public function getMsgVuser()
+    {
+        return $this->msgVuser;
+    }
+
+    /**
+     * Set msgVadmin
+     *
+     * @param string $msgVadmin
+     *
+     * @return DemandeQh
+     */
+    public function setMsgVadmin($msgVadmin)
+    {
+        $this->msgVadmin = $msgVadmin;
+
+        return $this;
+    }
+
+    /**
+     * Get msgVadmin
+     *
+     * @return string
+     */
+    public function getMsgVadmin()
+    {
+        return $this->msgVadmin;
+    }
+
+    /**
+     * Set remarque
+     *
+     * @param string $remarque
+     *
+     * @return DemandeQh
+     */
+    public function setRemarque($remarque)
+    {
+        $this->remarque = $remarque;
+
+        return $this;
+    }
+
+    /**
+     * Get remarque
+     *
+     * @return string
+     */
+    public function getRemarque()
+    {
+        return $this->remarque;
+    }
+
+    /**
+     * Set dateConfirme
+     *
+     * @param \DateTime $dateConfirme
+     *
+     * @return DemandeQh
+     */
+    public function setDateConfirme($dateConfirme)
+    {
+        $this->dateConfirme = $dateConfirme;
+
+        return $this;
+    }
+
+    /**
+     * Get dateConfirme
+     *
+     * @return \DateTime
+     */
+    public function getDateConfirme()
+    {
+        return $this->dateConfirme;
     }
 }

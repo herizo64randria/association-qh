@@ -92,7 +92,7 @@ class SocieteDemandeQH
     private $personne;
     /**
      * @ORM\OneToOne(targetEntity="DemandeQhBundle\Entity\EtatSociete")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $etat;
 
@@ -347,5 +347,29 @@ class SocieteDemandeQH
     public function getPersonne()
     {
         return $this->personne;
+    }
+
+    /**
+     * Set dateenvoie
+     *
+     * @param \DateTime $dateenvoie
+     *
+     * @return SocieteDemandeQH
+     */
+    public function setDateenvoie($dateenvoie)
+    {
+        $this->dateenvoie = $dateenvoie;
+
+        return $this;
+    }
+
+    /**
+     * Get dateenvoie
+     *
+     * @return \DateTime
+     */
+    public function getDateenvoie()
+    {
+        return $this->dateenvoie;
     }
 }

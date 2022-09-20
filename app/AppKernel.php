@@ -25,7 +25,6 @@ class AppKernel extends Kernel
             new BackBundle\BackBundle(),
             new DemandeQhBundle\DemandeQhBundle(),
 
-            new TFox\MpdfPortBundle\TFoxMpdfPortBundle(),
             new CompteGroupeBundle\CompteGroupeBundle(),
             new CompteAssociationBundle\CompteAssociationBundle(),
         ];

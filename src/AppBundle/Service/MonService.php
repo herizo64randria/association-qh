@@ -39,10 +39,10 @@ class MonService
             $data[]=$personne->getNom();
             $data[]=$personne->getPrenom();
             $data[]=$personne->getAdresse();
-            $data[]=$personne->getDateNaissance();
-            $data[]=$personne->getDateCin();
+            //$data[]=$personne->getDateNaissance();
+            //$data[]=$personne->getDateCin();
             $data[]=$personne->getEmail();
-            $data[]=$personne->getLieu();
+            //$data[]=$personne->getLieu();
             //$data[]=$personne->getMoze();
             $data[]=$personne->getNationalite();
             $data[]=$personne->getNomIts();
@@ -51,17 +51,17 @@ class MonService
             $data[]=$personne->getNumerocin();
             $data[]=$personne->getNumeroIts();
             $data[]=$personne->getNationalite();
-            $data[]=$personne->getProfession();
+            //$data[]=$personne->getProfession();
             $data[]=$personne->getNumeroSabil();
-            $data[]=$personne->getPaysPiece();
+           // $data[]=$personne->getPaysPiece();
             $data[]=$personne->getTypePiece();
             $data[]=$personne->getVille();
-            $data[]=$personne->getScanCin();
-            $data[]=$personne->getScan();
+            //$data[]=$personne->getScanCin();
+            //$data[]=$personne->getScan();
             $data[]=$personne->getPhoto();
             $data[]=$personne->getMoze();
-            $data[]=$valP;
-            $data[]=$valH;
+            //$data[]=$valP;
+            //$data[]=$valH;
 
             $purcentage=0;
             foreach ($data as $val){

@@ -43,6 +43,7 @@ class ConfirmationQH
      * @ORM\JoinColumn(nullable=true)
      *
      */
+    
     private $societeDemandeQH;
 
     /**
@@ -110,5 +111,52 @@ class ConfirmationQH
     {
         return $this->montant;
     }
-}
 
+    /**
+     * Set societeDemandeQH
+     *
+     * @param \DemandeQhBundle\Entity\SocieteDemandeQH $societeDemandeQH
+     *
+     * @return ConfirmationQH
+     */
+    public function setSocieteDemandeQH(\DemandeQhBundle\Entity\SocieteDemandeQH $societeDemandeQH = null)
+    {
+        $this->societeDemandeQH = $societeDemandeQH;
+
+        return $this;
+    }
+
+    /**
+     * Get societeDemandeQH
+     *
+     * @return \DemandeQhBundle\Entity\SocieteDemandeQH
+     */
+    public function getSocieteDemandeQH()
+    {
+        return $this->societeDemandeQH;
+    }
+
+    /**
+     * Set userConfirme
+     *
+     * @param \UserBundle\Entity\User $userConfirme
+     *
+     * @return ConfirmationQH
+     */
+    public function setUserConfirme(\UserBundle\Entity\User $userConfirme = null)
+    {
+        $this->userConfirme = $userConfirme;
+
+        return $this;
+    }
+
+    /**
+     * Get userConfirme
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUserConfirme()
+    {
+        return $this->userConfirme;
+    }
+}

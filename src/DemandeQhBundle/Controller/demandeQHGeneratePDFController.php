@@ -2,6 +2,7 @@
 
 namespace DemandeQhBundle\Controller;
 
+use Proxies\__CG__\PaieBundle\Entity\Demande_Remboursement;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,22 +61,23 @@ class demandeQHGeneratePDFController extends Controller
 
             $em->flush();
 
-            $html = $this->render('@DemandeQh/pdf/examination_secellage.html.twig', array(
+            $html =  $this->render('@DemandeQh/pdf/rehen.html.twig');
+            /*$html = $this->render('@DemandeQh/pdf/examination_secellage.html.twig', array(
                 'num_demande' => $personne->getNumeroDemandeQHtemp()
-            ));
+            ));*/
         }
         else{
 
-
-            $html = $this->render('@DemandeQh/pdf/examination_secellage.html.twig', array(
+            $html =  $this->render('@DemandeQh/pdf/rehen.html.twig');
+            /*$html = $this->render('@DemandeQh/pdf/examination_secellage.html.twig', array(
                 'num_demande' => $personne->getNumeroDemandeQHtemp()
-            ));
+            ));*/
 
 
         }
 
 
-//        return $html;
+
         return new \TFox\MpdfPortBundle\Response\PDFResponse($tfox->generatePdf($html));
 
     }

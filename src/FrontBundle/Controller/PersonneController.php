@@ -315,11 +315,18 @@ class PersonneController extends Controller
         if($usercompte->ifRole('ROLE_ADMIN')){
             return $this->redirectToRoute('paie_liste1');
         }
-
+        $age="";
         $repository_personne=$em->getRepository('PersonneBundle:Personne');
         $personne = $repository_personne->findOneBy(array('userCompte'=>$usercompte));
         $service=new MonService();
         $purcentage=$service->profilComplet($personne,$em);
+        $datetime1 = new \DateTime('now'); // date actuelle
+        if($personne->getDateNaissance()){
+            $datetime2 = $personne->getDateNaissance();
+            $age = $datetime1->diff($datetime2, true)->y;
+        }
+
+
         $cin=$personne->getScanCin();
         $procurations=$em->getRepository('PaieBundle:Procuration')->findBy(array('personne'=>$personne));
         //return new Response($purcentage);
@@ -328,6 +335,7 @@ class PersonneController extends Controller
             'procurations'=>$procurations,
             'cins'=>$cin,
             'purcentage'=>$purcentage,
+                'age'=>$age
         )
         );
     }

@@ -80,9 +80,46 @@
 </style>
 
     <div class="contenu align-content-center">
-        <h2 class="text-primary text-center">{{ 'garant.titre'|trans}}{{ garant.nomcin }}</h2>
+        <h2 class="text-primary text-center">{{ 'garant.titre'|trans}}</h2>
         <hr><br>
             <form action="#" method="post" autocomplete="off" name="telephone" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-4">
+
+                    </div>
+                    <div class="col-8">
+                        <h2 class="text-primary text-left">PIECE D'IDENTITE</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="type">{{ 'garant.type'|trans }}</label>
+                    </div>
+                    <div class="col-8">
+                        <select id="type" name="type">
+                            <option {% if(garant.typePiece=='Passesport') %}selected{% endif %} value="Passesport">Passesport</option>
+                            <option {% if(garant.typePiece=='CIN') %}selected{% endif %} value="CIN">CIN</option>
+                            <option {% if(garant.typePiece=='Carte de résidence') %}selected{% endif %} value="Carte de résidence">Carte de résidence</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="piece_identite">Préfixe</label>
+                    </div>
+                    <div class="col-8">
+                        <select name="prefixe" id="piece_identite" class="form-control">
+
+                                <option {% if(garant.prefixe=='M.') %}selected{% endif %}value="M.">M.</option>
+                                <option {% if(garant.prefixe=='Mme') %}selected{% endif %} value="Mme">Mme</option>
+                                <option {% if(garant.prefixe=='Mlle') %}selected{% endif %}value="Mlle">Mlle</option>
+
+                        </select>
+                    </div>
+                </div>
+
+
+
                 <div class="row">
                     <div class="col-4">
                         <label for="lieu">{{ 'garant.nom'|trans }}</label>
@@ -99,6 +136,8 @@
                         <input value="{{ garant.prenomcin }}" type="text" id="prenom" name="prenom"  >
                     </div>
                 </div>
+
+
                 <div class="row">
 
                     <div class="col-4">
@@ -107,19 +146,92 @@
 
                     <div class="input-group date col-8">
 
-                        <input  value="{% if garant.dateNaissance %}{{ garant.dateNaissance|date('d/m/Y') }}{% endif %}"  type="datetime" id="ne" name="ne"  >
-
-                        <div class="input-group-append" data-target="#ne" data-toggle="datetimepicker">
-                            <div class="input-group-text cal"><i class="fa fa-calendar"></i></div>
+                        <div class="input-group date form_date" data-date="" data-link-field="ne" data-link-format="yyyy-mm-dd">
+                            <input  style="height: 55px" class="form-control"  type="text" value="{% if garant.dateNaissance %}{{ garant.dateNaissance|date('d/m/Y') }}{% endif %}"  name="ne">
+                            <span class="input-group-append"><span class="glyphicon glyphicon-remove"></span></span>
+                            <span class="input-group-addon input-group-text"><i class="fa fa-calendar"></i></span>
                         </div>
+
+                        <input type="hidden" id="ne" value="" />
                     </div>
 
+                    <script src="{{ asset('DatePicker1/js/bootstrap-datetimepicker.min.js') }}"></script>
+                    <script type="text/javascript" src="{{ asset('DatePicker1/js/locales/bootstrap-datetimepicker.fr.js') }}" charset="UTF-8"></script>
                     <script>
-                        $('#ne').datetimepicker({
+                        $('.form_date').datetimepicker({
+                            format: 'dd/mm/yyyy',
+                            language:  'fr',
+                            weekStart: 1,
+                            todayBtn:  1,
+                            autoclose: 1,
+                            todayHighlight: 1,
+                            startView: 2,
+                            minView: 2,
+                            forceParse: 0,
+                            color:'red'
+                        });
+
+                        jQuery('#datetimepicker').datetimepicker();
+                        $('#ne').DatePicker({
                             format: 'DD/MM/YYYY',
                         });
                     </script>
                 </div>
+
+
+
+                <div class="row">
+                    <div class="col-4">
+                        <label for="numero">{{ 'garant.numero'|trans }}</label>
+                    </div>
+                    <div class="col-8">
+                        <input value="{{ garant.numeroPiece }}" type="text" id="numero" name="numero"  >
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-4">
+                        <label for="ne">Date  du pièce d'identité</label>
+                    </div>
+
+                    <div class="input-group date col-8">
+
+                        <div class="input-group date form_date" data-date="" data-link-field="ne" data-link-format="yyyy-mm-dd">
+                            <input  style="height: 55px" class="form-control"  type="text" value="{% if garant.datePiece %}{{ garant.datePiece|date('d/m/Y') }}{% endif %}"  name="date">
+                            <span class="input-group-append"><span class="glyphicon glyphicon-remove"></span></span>
+                            <span class="input-group-addon input-group-text"><i class="fa fa-calendar"></i></span>
+                        </div>
+
+                        <input type="hidden" id="date" value="" />
+                    </div>
+
+                    <script src="{{ asset('DatePicker1/js/bootstrap-datetimepicker.min.js') }}"></script>
+                    <script type="text/javascript" src="{{ asset('DatePicker1/js/locales/bootstrap-datetimepicker.fr.js') }}" charset="UTF-8"></script>
+                    <script>
+                        $('.form_date').datetimepicker({
+                            format: 'dd/mm/yyyy',
+                            language:  'fr',
+                            weekStart: 1,
+                            todayBtn:  1,
+                            autoclose: 1,
+                            todayHighlight: 1,
+                            startView: 2,
+                            minView: 2,
+                            forceParse: 0,
+                            color:'red'
+                        });
+
+                        jQuery('#datetimepicker').datetimepicker();
+                        $('#date').DatePicker({
+                            format: 'DD/MM/YYYY',
+                        });
+                    </script>
+                </div>
+
+
+
+
                 <div class="row">
                     <div class="col-4">
                         <label for="lieu">{{ 'garant.lieu'|trans }}</label>
@@ -128,22 +240,55 @@
                         <input value="{{ garant.lieu }}" type="text" id="lieu" name="lieu"  >
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-4">
-                        <label for="adresse">{{ 'garant.adresse'|trans }}</label>
+                        <label for="nationalite">{{ 'garant.nationalite'|trans }}</label>
                     </div>
                     <div class="col-8">
-                        <input  value="{{ garant.adresse }}" type="text" id="adresse" name="adresse"  >
+                        <input  value="{{ garant.nationalite}}"  type="text" id="nationalite" name="nationalite"  >
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-4">
-                        <label for="ville">{{ 'garant.ville'|trans }}</label>
+                        <label for="sexe">{{ 'garant.sexe'|trans }}</label>
                     </div>
                     <div class="col-8">
-                        <input   value="{{ garant.ville }}" type="text" id="ville" name="ville"  >
+                        <label class="radio inline">
+                            <input {% if(garant.sexe=='H') %}checked{% endif %} type="radio" name="sexe" id="sexeH" value="H" >
+                            <span> {{ 'inscription.Male'|trans }} </span>
+                        </label>
+                        <label class="radio inline">
+                            <input {% if(garant.sexe=='F') %}checked{% endif %} type="radio" name="sexe" id="sexeF" value="F">
+                            <span>{{ 'inscription.Female'|trans }} </span>
+                        </label>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="villepiece">{{ 'garant.villepiece'|trans }}</label>
+                    </div>
+                    <div class="col-8">
+                        <input value="{{ garant.villePiece }}" type="text" id="villepiece" name="villepiece"  >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="pays">{{ 'garant.pays'|trans }}</label>
+                    </div>
+                    <div class="col-8">
+                        <input value="{{ garant.paysPiece }}"type="text" id="pays" name="pays"  >
+                    </div>
+                </div>
+{#                <div class="row">
+                    <div class="col-4">
+                        <label for="lieu">{{ 'garant.lieu'|trans }}</label>
+                    </div>
+                    <div class="col-8">
+                        <input value="{{ garant.lieu }}" type="text" id="lieu" name="lieu"  >
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-4">
                         <label for="nationalite">{{ 'garant.nationalite'|trans }}</label>
@@ -167,63 +312,8 @@
                         </label>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-4">
-                        <label for="type">{{ 'garant.type'|trans }}</label>
-                    </div>
-                    <div class="col-8">
-                        {% if (garant.typePiece)%}
-                            <input  value="{{ garant.typePiece  }}" type="text" id="type" name="type"  >
-                        {% else %}
-                        <select id="type" name="type">
-                            <option value="Passesport">Passesport</option>
-                            <option value="CIN">CIN</option>
-                            <option value="Carte de résidence">Carte de résidence</option>
-                        </select>
-                        {% endif%}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <label for="numero">{{ 'garant.numero'|trans }}</label>
-                    </div>
-                    <div class="col-8">
-                        <input value="{{ garant.numeroPiece }}" type="text" id="numero" name="numero"  >
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <label for="date">{{ 'garant.date'|trans }}</label>
-                    </div>
-                    <div class="input-group date col-8">
-                        <input value="{% if garant.datePiece %}{{ garant.datePiece|date('d/m/Y') }}{% endif %}" type="datetime" id="date" name="date"  >
-                        <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
-                            <div class="input-group-text cal"><i class="fa fa-calendar"></i></div>
-                        </div>
-                    </div>
 
-                    <script>
-                        $('#date').datetimepicker({
-                            format: 'DD/MM/YYYY',
-                        });
-                    </script>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <label for="villepiece">{{ 'garant.villepiece'|trans }}</label>
-                    </div>
-                    <div class="col-8">
-                        <input value="{{ garant.villePiece }}" type="text" id="villepiece" name="villepiece"  >
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-4">
-                        <label for="pays">{{ 'garant.pays'|trans }}</label>
-                    </div>
-                    <div class="col-8">
-                        <input value="{{ garant.paysPiece }}"type="text" id="pays" name="pays"  >
-                    </div>
-                </div>
+
                 <hr>
                 <div class="row">
                     <div class="col-4">
@@ -232,8 +322,74 @@
                     <div class="col-8">
                         <input value="{{ garant.profession }}" type="text" id="profession" name="profession"  >
                     </div>
+                </div>#}
+                <hr>
+
+                <div class="row">
+                    <div class="col-4">
+
+                    </div>
+                    <div class="col-8">
+                        <h2 class="text-primary text-left">CARTE ITS</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="profession">Nom complet</label>
+                    </div>
+                    <div class="col-8">
+                        <input value="{{ garant.nomIts }}" type="text" id="nomcomplet" name="nomcomplet"  >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="profession">N° ITS</label>
+                    </div>
+                    <div class="col-8">
+                        <input value="{{ garant.numeroIts }}" type="text" id="numeroits" name="numeroits"  >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="profession">Moze</label>
+                    </div>
+                    <div class="col-8">
+                        <input value="{{ garant.moze }}" type="text" id="gmoze" name="gmoze"  >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="profession">N° Sabil</label>
+                    </div>
+                    <div class="col-8">
+                        <input value="{{ garant.sabile }}" type="text" id="gsabil" name="gsabil"  >
+                    </div>
                 </div>
                 <hr>
+                <div class="row">
+                    <div class="col-4">
+
+                    </div>
+                    <div class="col-8">
+                        <h2 class="text-primary text-left">COORDONNEES</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="adresse">{{ 'garant.adresse'|trans }}</label>
+                    </div>
+                    <div class="col-8">
+                        <input  value="{{ garant.adresse }}" type="text" id="adresse" name="adresse"  >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="ville">{{ 'garant.ville'|trans }}</label>
+                    </div>
+                    <div class="col-8">
+                        <input   value="{{ garant.ville }}" type="text" id="ville" name="ville"  >
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-4">
                         <label for="tel1">{{ 'garant.tel1'|trans }}</label>
@@ -257,7 +413,7 @@
                 </div>
                 <div class="row">
                     <div class="col-4">
-                        <label for="tel2">{{ 'garant.tel2'|trans }}</label>
+                        <label for="tel2">Numéro Whatsapp</label>
                     </div>
                     <div class="col-8">
                         {% if(garant.tel2) %}
@@ -274,7 +430,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="row">
+                {#<div class="row">
                     <div class="col-4">
                         <label for="email">{{ 'garant.email'|trans }}</label>
                     </div>
@@ -441,7 +597,7 @@
                     <div class="col-8">
                         <input value="{{ garant.prenomheritier1 }}"  type="text" id="prenomheritier" name="prenomheritier"  >
                     </div>
-                </div>
+                </div>#}
                 <br>
                 <div class="float-right">
                     <input type="submit" class="btn btn-success btn-lg float-right" value="valider">

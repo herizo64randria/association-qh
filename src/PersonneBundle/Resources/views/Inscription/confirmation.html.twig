@@ -4,18 +4,16 @@
 
 {% block body %}
 <div>
-    <a class="text-left" href="{{ path('homepage') }}">{{ 'inscription.retour_acceuil'|trans }}</a>
 </div>
 <br>
 <h1 class="form-heading">{{ 'inscription.confirmation'|trans }}</h1>
 <hr>
 <div class="login-form">
     <br><br>
-    <h3 class="text-white">{{ 'inscription.ok'|trans }}</h3>
-    <br>
+    <h3 class="text-white">
+        Veuiller <a class="text-left" href="{{ absolute_url(asset(url))  }}">cliquer ici </a> pour activer votre compte
+    </h3>
 
-    <br><br>
-    <h3 class="botto-text"> {{ appli_titre }}</h3>
 </div>
 {% endblock %}
 

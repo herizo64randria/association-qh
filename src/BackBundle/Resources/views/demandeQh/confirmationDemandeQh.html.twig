@@ -18,11 +18,13 @@
     </style>
     Confirmation du demandes QH :<br>
     <h3>
-    {{ demandeQH.demadeQH.personne.nom ~' '~ demandeQH.demadeQH.personne.prenom ~' / '~
-    demandeQH.demadeQH.personne.numeroIts ~' / '~
-    demandeQH.demadeQH.numero
+    {{ demandeQH.personne.nom ~' '~ demandeQH.personne.prenom
     }}
     </h3>
+    <h4>
+        N° ITS :{{ demandeQH.personne.numeroIts }}
+        </h4>
+    <h4>Numéro :{{ demandeQH.numero }}</h4>
 {% endblock %}
 {% block body_container %}
     {% set class_gnumits='d-none' %}
@@ -34,12 +36,12 @@
         <div class="container-fluid">
             <hr class="groove">
             <input type="hidden" id="id_dossier" value="{{ demandeQH.id }}" >
-            {% if(demandeQH.nomEtat == "En attente de confirmation")%}
+            {% if(demandeQH.etat.nomEtat == "Demande en attente") %}
                 <div class="text-center">
 
                     <a class="btn-success btn-lg  center" id="confirme_demandeqh" >Confirmer</a>
                     <br><br>
-                    <a class="btn-success btn-lg  center" id="confirme_condition_demandeqh" >Confirmer avec condition</a>
+                    <a class="btn-info btn-lg  center" id="confirme_condition_demandeqh" >Confirmation avec condition</a>
                     <br><br>
                     <a class="btn-danger btn-lg  center" id="refuser_demandeqh">Refuser </a>
 
@@ -50,111 +52,102 @@
             {% else %}
                 <div class="text-center">
 
-                    <h4 class="text-success">{{ demandeQH.nomEtat }}</h4>
+                    <h4 class="text-success">{{ demandeQH.etat.nomEtat }}</h4>
                     <b>Confirmé par : {{ app.user }}</b>
                 </div>
                 <br>
             {% endif%}
-            <hr class="groove">
-            <div class="row">
-                <div class="col-lg-6"><h4 class="text-primary">Antécédent</h4>
-                <p>Dejà efectuer une demande QH auparavant :
-                    {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
-                        {% set x='oui' %}
-                    {% else %}
-                        {% set x='non' %}
-                    {% endif %}
-                    {{ x }}</p>
-                    {% if (demandeQH.demadeQH.siAncienDemande=='oui') %}
-                        {% if (demandeQH.demadeQH.siAncienDemandeEtat=='oui') %}
-                            {% set y='oui' %}
+    {% if(demandeQH.Dossier and demandeQH.Dossier.valide=="Dossier reçu") %}
 
-                        {% else %}
-                            {% set y='non' %}
+    <div class="text-center">
 
-                        {% endif %}
-                        <p>Elle a été acceptée : {{ y }}</p>
-                    {% endif %}
+        <h4 class="text-success">{{ demandeQH.Dossier.valide }}</h4>
 
+    </div>
+    <br>
+    {% endif %}
+                <div class="text-center">
+                    <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#flipFlop2">
+                       <i class="fa fa-folder"></i> Voir Dossier
+                    </button>
                 </div>
-                {% if (x=='oui' and y=='oui') %}
-                    <div class="col-lg-6">
-                        <h4 class="text-primary">les trois dernier montant demandés</h4>
-                        <table class="table table-striped">
-                            <thead><th><label >{{ 'demandeqh_ajouter.annee'|trans }}</label></th>
-                            <th></th>
-                            <th><label f>{{ 'demandeqh_ajouter.montant'|trans }}</label></th>
-                            </thead>
-                            <tr><td>
+                <br>
+            <hr class="groove">
 
-                                    <p >{{ demandeQH.demadeQH.annee1 }}</p>
-                                </td>
-                                <td> </td>
-                                <td>
-                                   
-                                    <p class="text-right" >{{ demandeQH.demadeQH.montant1|number_format('2',',',' ') }}</p>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    
-                                    <p >{{ demandeQH.demadeQH.annee2 }}</p>
-                                </td>
-                                <td>
-                                <td>
-                                   
-                                    <p class="text-right" >{{ demandeQH.demadeQH.montant2|number_format('2',',',' ') }}</p>
-                                </td>
-                            </tr>
-                            <tr><td>
-                                   
-                                    <p >{{ demandeQH.demadeQH.annee3 }}</p>
-                                </td>
-                                <td> </td>
-                                <td>
-                                    <p class="text-right" >{{ demandeQH.demadeQH.montant3|number_format('2',',',' ') }}</p>
-                                </td>
-                            </tr>
-                        </table>
+<table>
+    <tr>
+        <td><div class=""><h4 class="text-primary">Demande</h4>
+                <p>Montant demandée en Ariary : {{ demandeQH.montant|number_format('2',',',' ') }}</p>
+                <p>Pour combien de mois : {{ demandeQH.nombreMois }}</p>
+            </div>
+            <div class=""><h4 class="text-primary">Objet de la demande</h4>
+                <p>Motif : {{ demandeQH.typeMotif }}</p>
+                <p>Détail : {{ demandeQH.detailMotif }}</p>
+            </div></td>
+            <td>
+                {% if(demandeQH.etat.nomEtat=='Demande refusé') %}
+                <div class="alert alert-danger" role="alert">
+                    Raison pour la refus :<br>
+                    {{ demandeQH.etat.motifFrontRefuser}}
+                </div>
+                <div class="alert alert-info" role="alert">
+                    Remarque pour les administrateur :<br>
+                    {{ demandeQH.etat.motifBackRefuser}}
+                </div>
+                {% endif %}
+                {% if(demandeQH.etat.nomEtat=='Demande accépté mais modification à effectué') %}
+                    <div class="alert alert-warning" role="alert">
+                        Condition de l'administrateur pour cette demande :<br>
+                        {{ demandeQH.etat.remarque }}
                     </div>
                 {% endif %}
-
-            </div>
-            <div class="row">
-                <div class="col-lg-6"><h4 class="text-primary">Nouvelle demande</h4>
-                <p>Montant demandée en Ariary : {{ demandeQH.demadeQH.montant|number_format('2',',',' ') }}</p>
-                <p>Pour combien de mois : {{ demandeQH.demadeQH.nombreMois }}</p>
-                </div>
-                <div class="col-lg-6"><h4 class="text-primary">Objet de la demande</h4>
-                <p>Motif : {{ demandeQH.demadeQH.typeMotif }}</p>
-                <p>Détail : {{ demandeQH.demadeQH.detailMotif }}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6"><h4 class="text-primary">Garantie</h4>
-               <p>Valeur de l'or en Ariary :{{ demandeQH.demadeQH.garantieOR.valeurAr|number_format('2',',',' ')}}</p>
-               <p>Scan du formulaire(remplir par kalidas):<br>
+               {# {% if(demandeQH.etat.remarque) %}
+                    <div class="alert alert-dark" role="alert">
+                        A simple danger alert check it out!
+                    </div>
+                {% endif %}#}
+            </td>
+    </tr>
+    {% if(demandeQH.garantieOR) %}
+    <tr>
+        <td>
+            <div class=""><h4 class="text-primary">Garantie</h4>
+                <p>Valeur de l'or en Ariary :{{ demandeQH.garantieOR.valeurAr|number_format('2',',',' ')}}</p>
+                {# <p>Scan du formulaire(remplir par kalidas):<br>
                    <a target="_blank" id="lien" href="{{ asset('document/'~ demandeQH.demadeQH.garantieOR.scanKalidas) }}">
                        <img src="{{ asset('document/'~ demandeQH.demadeQH.garantieOR.scanKalidas) }}" class="img img-thumbnail" alt="" width="50" height="50"></a>
                </p>
                <p>Photo du paquet scellé par kallidas:(Possibilité de mettre plusieurs photos):<br>
-                   {% for photoor in photoor %}
+                   {% for photoor i</div>n photoor %}
                        <a target="_blank" id="lien" href="{{ asset('document/'~ photoor.url) }}">
                            <img src="{{ asset('document/'~ photoor.url) }}" class="img img-thumbnail" alt="" width="50" height="50"></a>
                    {% endfor %}
 
-               </p>
-                </div>
-                <div class="col-lg-6"><h4 class="text-primary">Garant numéro 1 </h4>
+               </p>#}
+            </div>
+        </td>
+    </tr>
+    {% endif %}
+</table>
 
-                    <p>Nom complet inscrit sur its : {{ demandeQH.demadeQH.garant1.nomIts }}</p>
 
-                    <p> Numéro its :{{ demandeQH.demadeQH.garant1.numeroIts }}
+
+
+
+
+
+    <table>
+        <tr>
+            <td>
+                <div class=""><h4 class="text-primary">Garant numéro 1 </h4>
+
+                    <p>Nom complet inscrit sur its : {{ demandeQH.garant1.nomIts }}</p>
+
+                    <p> Numéro its :{{ demandeQH.garant1.numeroIts }}
 
                         {% if  res  %}
                             ( <a href="#" data-toggle="collapse" data-target="#demo"> ce numéro est déja occuper </a> )
-                            {% set msg=res.demadeQH.numero %}
+                            {% set msg=res.numero %}
                         {% else%}
                             {% set msg=' ' %}
                         {% endif %}
@@ -168,21 +161,24 @@
 
                     </div>
                     <input  onkeypress="pressEntergnumits(event)" class="{{ 'form-control '~ class_gnumits }}" placeholder="..." type="text" name="notif_gnumits" id="notif_gnumits" >
-                    <p>Moze :{{  demandeQH.demadeQH.garant1.moze }} </p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-6">
+                    <p>Moze :{{  demandeQH.garant1.moze }} </p>
 
                 </div>
-                <div class="col-lg-6">
+
+            </td><td><button type="button" class="btn btn-info  btn-lg" data-toggle="modal" data-target="#flipFlop">
+                    Voir détail
+                </button></td>
+        </tr>
+        <tr>
+            <td>
+
+                <div class="">
                     <h4 class="text-primary">Garant numéro 2</h4>
-                    <p>Nom complet inscrit sur its : {{ demandeQH.demadeQH.garant2.nomIts }}</p>
-                    <p> Numéro its :{{ demandeQH.demadeQH.garant2.numeroIts }}
+                    <p>Nom complet inscrit sur its : {{ demandeQH.garant2.nomIts }}</p>
+                    <p> Numéro its :{{ demandeQH.garant2.numeroIts }}
                         {% if  res1  %}
                             ( <a href="#" data-toggle="collapse" data-target="#demo1"> ce numéro est déja occuper </a> )
-                            {% set msg1=res.demadeQH.numero %}
+                            {% set msg1=res1.numero %}
                         {% else%}
                             {% set msg1=' ' %}
                         {% endif %}
@@ -193,12 +189,14 @@
 
                         {% endif %}
                     </div>
-                    <p>Moze :{{  demandeQH.demadeQH.garant2.moze }}</p>
+                    <p>Moze :{{  demandeQH.garant2.moze }}</p>
+
                 </div>
-
-            </div>
-        </div>
-
+            </td><td><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#flipFlop1">
+                    Voir détail
+                </button></td>
+        </tr>
+    </table>
     {#Confirmation du demande QH#}
     <form action="#" method="post" >
         <div id="modal_confirme" class="modal fade" tabindex="-1" role="dialog">
@@ -211,10 +209,10 @@
 
                         <input type="hidden" value="{{ demandeQH.id }}" name="id_etat">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <label>Motif :</label>
+                                <div class="col-md-4">
+                                        <label>Consigne pour l'étape suivant   <br/> (facultatif) </label>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <textarea class="form-control" name="motif_accepter" id="motif_accepter" cols="60" rows="5"></textarea>
 
                                 </div>
@@ -241,7 +239,7 @@
                         <input type="hidden" value="{{ demandeQH.id }}" name="id_etat">
                         <div class="row">
                             <div class="col-md-5">
-                                <label>Motif utilisateur :</label>
+                                <label>La raison du refus  :</label>
                             </div>
                             <div class="col-md-7">
                                 <textarea class="form-control" name="motif_user" id="motif_user" cols="60" rows="5"></textarea>
@@ -250,7 +248,7 @@
                         <br><br>
                         <div class="row">
                             <div class="col-md-5">
-                                <label>Motif administrateur:</label>
+                                <label>Remarque (Seule les administrateurs peuvent voir):</label>
                             </div>
                             <div class="col-md-7">
                                 <textarea class="form-control" name="motif_admin" id="motif_admin" cols="60" rows="5"></textarea>
@@ -272,35 +270,35 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="text-center text-primary" >Confirmation avec condition du demande QH</h5>
+                        <h5 class="text-center text-primary" > </h5>
                     </div>
                     <div class="modal-body">
 
-                        <input type="hidden" value="{{ demandeQH.id }}" name="id_etat">
+                       {# <input type="hidden" value="{{ demandeQH.id }}" name="id_etat">
                         <div class="row">
                             <div class="col-md-4">
                                 <label>Montant :</label>
                             </div>
                             <div class="col-md-8">
-                                <input class="form-control" name="montant" id="montant" value="{{ demandeQH.demadeQH.montant }}" >
+                                <input class="form-control" name="montant" id="montant" value="{{ demandeQH.montant }}" >
 
                             </div>
                         </div>
-                        <br>
-                        <div class="row">
+                        <br>#}
+                    {#    <div class="row">
                             <div class="col-md-4">
                                 <label>Nombre de mois :</label>
                             </div>
                             <div class="col-md-8">
-                                <input  value="{{ demandeQH.demadeQH.nombreMois }}" class="form-control" name="mois" id="mois" >
+                                <input  value="{{ demandeQH.nombreMois }}" class="form-control" name="mois" id="mois" >
 
                             </div>
-                        </div>
+                        </div>#}
 
                         <br>
                         <div class="row">
                             <div class="col-md-4">
-                                <label>Motif :</label>
+                                <label>Condition :</label>
                             </div>
                             <div class="col-md-8">
                                 <textarea class="form-control" name="motif" id="motif" cols="60" rows="5"></textarea>
@@ -377,4 +375,345 @@
             }
         }
     </script>
+
+
+    <!-- The modal -->
+    <div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                  INFORMATION GARANT 1
+
+                </div>
+                <div class="modal-body">
+                    
+
+                    <h4>PIECE D'IDENTITE :</h4>
+                    <hr>
+                    <p>Type de pièce :{{ demandeQH.garant1.typePiece }}</p>
+                    <p>Nom et prénom :{{ demandeQH.garant1.nomcin ~' '~demandeQH.garant1.prenomcin }}</p>
+                    <p>Date de naissance :{{ demandeQH.garant1.dateNaissance|date('d/m/Y') }}</p>
+                   <p>Numéro pièce : {{ demandeQH.garant1.numeroPiece }}</p>
+                    <p>Délivré le : {{ demandeQH.garant1.datePiece|date('d/m/Y') }}</p>
+                    <p>A : {{ demandeQH.garant1.villePiece }}</p>
+                    <h4>CARTE ITS :</h4>
+                    <hr>
+                    <p>Nom complet :{{ demandeQH.garant1.nomIts }}</p>
+                    <p>N° ITS :{{ demandeQH.garant1.numeroIts }}</p>
+                    <p>Moze :{{ demandeQH.garant1.moze }}</p>
+                    <p>Numéro Sabil : {{ demandeQH.garant1.sabile }}</p>
+                    <h4>COORDONNEES :</h4>
+                    <hr>
+                    <p>Adresse :{{ demandeQH.garant1.adresse }}</p>
+                    <p>Ville  :{{ demandeQH.garant1.ville }}</p>
+                    <p>N° Téléphone :{{ demandeQH.garant1.tel1 }}</p>
+                    <p>N° Whatsapp : {{ demandeQH.garant1.tel2 }}</p>
+
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- The modal -->
+    <div class="modal fade" id="flipFlop1" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    INFORMATION GARANT 2
+
+                </div>
+                <div class="modal-body">
+
+
+                    <h4>PIECE D'IDENTITE :</h4>
+                    <hr>
+                    <p>Type de pièce :{{ demandeQH.garant2.typePiece }}</p>
+                    <p>Nom et prénom :{{ demandeQH.garant2.nomcin ~' '~demandeQH.garant2.prenomcin }}</p>
+                    <p>Date de naissance :{{ demandeQH.garant2.dateNaissance|date('d/m/Y') }}</p>
+                    <p>Numéro pièce : {{ demandeQH.garant2.numeroPiece }}</p>
+                    <p>Délivré le : {{ demandeQH.garant2.datePiece|date('d/m/Y') }}</p>
+                    <p>A : {{ demandeQH.garant2.villePiece }}</p>
+                    <h4>CARTE ITS :</h4>
+                    <hr>
+                    <p>Nom complet :{{ demandeQH.garant2.nomIts }}</p>
+                    <p>N° ITS :{{ demandeQH.garant2.numeroIts }}</p>
+                    <p>Moze :{{ demandeQH.garant2.moze }}</p>
+                    <p>Numéro Sabil : {{ demandeQH.garant2.sabile }}</p>
+                    <h4>COORDONNEES :</h4>
+                    <hr>
+                    <p>Adresse :{{ demandeQH.garant2.adresse }}</p>
+                    <p>Ville  :{{ demandeQH.garant2.ville }}</p>
+                    <p>N° Téléphone :{{ demandeQH.garant2.tel1 }}</p>
+                    <p>N° Whatsapp : {{ demandeQH.garant2.tel2 }}</p>
+
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- The modal -->
+    <div class="modal fade" id="flipFlop2" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <form action="{{ path('reçu_DossierQH',{'id':demandeQH.id}) }}" method="POST">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-info">
+                    DOSSIER
+
+                </div>
+                <div class="modal-body">
+                    {% if( demandeQH.dossier.complet is defined and demandeQH.dossier.complet=='oui') %}
+                    Pièce:
+
+                        <br>
+                    {% for piece in demandeQH.dossier.cin %}
+                        {% set ext=piece.url|ext() %}
+                        {% if(ext=='pdf') %}
+                            <a  target="_blank" href="{{ asset('/document/'~piece.url) }}"><img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt=""></a>
+
+                        {% else %}
+
+                            <a target="_blank" href="{{ asset('/document/'~piece.url) }}"><img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt=""></a>
+
+                        {% endif %}
+                    {% endfor %}<br>
+                    ITS: <br>
+                        {% set ext=demandeQH.dossier.its1|ext() %}
+                        {% if(ext=='pdf') %}
+                            <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.its1) }}">
+                                <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+                            </a>
+
+                            {% else %}
+                            <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.its1) }}"><img style="width: 100px;height: 100px" src="{{ asset('/document/'~demandeQH.dossier.its1) }}" alt=""></a>
+
+                        {% endif %}
+                    <br>
+
+                    Formulaire Contrat de prêt:
+                    <br>
+                        {% for piece in demandeQH.dossier.pret1 %}
+                            {% set ext=piece.url|ext() %}
+                            {% if(ext=='pdf') %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                    <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+                                </a>
+                            {% else %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}"><img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt=""></a>
+                            {% endif %}
+
+                        {% endfor %}<br>
+
+                    Formulaire d'évaluation Rehen:
+                    <br>
+                        {% set ext=demandeQH.dossier.rehen|ext() %}
+                        {% if(ext=='pdf') %}
+                            <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.rehen) }}">
+                                <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+                            </a>
+                        {% else %}
+                            <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.rehen) }}">
+                                <img style="width: 100px;height: 100px" src="{{ asset('/document/'~demandeQH.dossier.rehen) }}" alt="">
+                            </a>
+                        {% endif %}
+
+                    {% if(demandeQH.dossier.acte1) %}
+                    <br>
+                    Formulaire d'Acte d'engagement:
+                    <br>
+                        {% for piece in demandeQH.dossier.acte1 %}
+                            {% set ext=piece.url|ext() %}
+
+                            {% if(ext=='pdf') %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                    <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+
+                                </a>
+
+                            {% else %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}"><img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt=""></a>
+
+                            {% endif %}
+                        {% endfor %}<br>
+
+
+                    {% endif %}<br>
+                    Formulaire d'Autorisation de vente:
+                   {% set ext=demandeQH.dossier.vente|ext() %}
+                        {% if(ext=='pdf') %}
+                            <br>   <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.vente) }}">
+                            <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+
+                        </a>
+
+                        {% else %}
+                            <br>   <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.vente) }}">
+                            <img style="width: 100px;height: 100px" src="{{ asset('/document/'~demandeQH.dossier.vente) }}" alt="">
+
+                        </a>
+
+                        {% endif %}
+                                        <br>
+                    Chèques de remboursements :<br>
+                    {% for piece in demandeQH.dossier.rembourse %}
+                        {% set ext=piece.url|ext() %}
+                        {% if(ext=='pdf') %}
+                            <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+
+                            </a>
+                        {% else %}
+                            <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                <img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt="">
+
+                            </a>
+                        {% endif %}
+
+                    {% endfor %}<br>
+                    Safahi Chithi :
+                    <br>
+                    {% set ext=demandeQH.dossier.safahi|ext() %}
+                        {% if(ext=='pdf') %}
+                            <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.safahi) }}">
+                                <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+
+                            </a>
+                            {% else %}
+                                <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.safahi) }}">
+                                    <img style="width: 100px;height: 100px" src="{{ asset('/document/'~demandeQH.dossier.safahi) }}" alt="">
+
+                                </a>
+                        {% endif %}
+
+                        <div class="modal-header text-info">
+                            DOSSIER GARANT 1:
+
+                        </div>
+                        <br>
+                        3 chèques Non datés du Garant 1 :<br>
+                        {% for piece in demandeQH.dossier.chequesG1 %}
+                            {% set ext=piece.url|ext() %}
+                            {% if(ext=='pdf') %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                    <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+                                </a>
+                            {% else %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                    <img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt="">
+
+                                </a>
+                            {% endif %}
+
+                        {% endfor %}<br>
+                        Pièce d'Identité Garant 1:<br>
+
+                        {% for piece in demandeQH.dossier.pieceG1 %}
+                            {% set ext=piece.url|ext() %}
+                            {% if(ext=='pdf') %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                    <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+                                </a>
+
+                            {% else %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}"><img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt=""></a>
+
+                            {% endif %}
+
+                        {% endfor %}<br>
+
+                        Photocopie ITS Garant 1 :<br>
+
+                        <br>
+                        {% set ext=demandeQH.dossier.itsG2|ext() %}
+                        {% if(ext=='pdf') %}
+                            <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.itsG2) }}">
+                                <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+                            </a>
+                         {% else %}
+                             <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.itsG2) }}">
+                                 <img style="width: 100px;height: 100px" src="{{ asset('/document/'~demandeQH.dossier.itsG1) }}" alt="">
+                             </a>
+                         {% endif %}
+
+                        <div class="modal-header text-info">
+                            DOSSIER GARANT 2:
+
+                        </div>
+                        <br>
+                        3 chèques Non datés du Garant 2 :<br>
+                        {% for piece in demandeQH.dossier.chequesG2 %}
+                            {% set ext=piece.url|ext() %}
+                            {% if(ext=='pdf') %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                    <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+                                </a>
+                            {% else %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                    <img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt="">
+
+                                </a>
+                                {% endif %}
+
+                        {% endfor %}<br>
+                        Pièce d'Identité Garant2:<br>
+
+                        {% for piece in demandeQH.dossier.pieceG2 %}
+                          {% set ext=piece.url|ext() %}
+                            {% if(ext=='pdf') %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}">
+                                    <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+
+                                </a>
+                            {% else %}
+                                <a target="_blank" href="{{ asset('/document/'~piece.url) }}"><img style="width: 100px;height: 100px" src="{{ asset('/document/'~piece.url) }}" alt=""></a>
+                             {% endif %}
+
+                        {% endfor %}<br>
+
+                        Photocopie ITS Garant 2 :<br>
+
+                        <br>
+                        {% set ext=demandeQH.dossier.itsG2|ext() %}
+                        {% if(ext=='pdf') %}
+                            <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.itsG2) }}">
+                                <img style="width: 100px;height: 100px" src="{{ asset('/Images/pdf.png') }}" alt="">
+
+                            </a>
+                        {% else %}
+                            <a target="_blank" href="{{ asset('/document/'~demandeQH.dossier.itsG2) }}">
+                                <img style="width: 100px;height: 100px" src="{{ asset('/document/'~demandeQH.dossier.itsG2) }}" alt="">
+                            </a>
+                        {% endif %}
+
+                    {% endif %}
+
+
+
+                </div>
+                <div class="modal-footer">
+                    {% if(demandeQH.dossier.complet is defined and demandeQH.dossier.complet =='oui') %}
+                        {% if(demandeQH.Dossier and demandeQH.Dossier.valide!="Dossier reçu") %}
+                            <button type="submit" class="btn btn-success" ><i class="fa fa-check"></i>Reçu</button>
+                        {% endif %}
+
+                    {% endif %}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
 {% endblock %}

@@ -1,0 +1,91 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+    <style>
+        <style>
+        {% include '@DemandeQh/style.css.twig' %}
+    </style>
+    </style>
+    <main>
+
+        <div class="stepper">
+
+            <div class="step--2">Votre demande</div>
+            <div class="step--3 step-active">Vos garanties</div>
+            <div class="step--4">Fin</div>
+        </div>
+
+
+
+        <form class="form form-active" action="#" method="post">
+            <div class="form--header-container">
+                <h1 class="form--header-title">
+                    FAIZ E MOHAMMADI QARDAN HASANAH
+                </h1>
+
+                <p class="form--header-text">
+
+                </p>
+            </div>
+
+            <table id="tableau">
+                <tr>
+                    <td>
+                        <legend style="">Votre Garant1</legend>N° ITS  <br>
+                        <input  type="text" name="itsgarant1" /></td>
+                    <td>
+                        <legend style="">Votre Garant2</legend>
+                        N° ITS  <br>
+                        <input  type="text" name="itsgarant2" /></td>
+                </tr>
+                <tr>
+                    <td>Nom selon ITS
+                        <input type="text" name="nitsgarant1" /></td>
+                    <td>Nom selon ITS
+                        <input type="text" name="nitsgarant2" /></td>
+                    <td>
+                </tr>
+                <tr><td>
+                    Moze
+                    <select name="mozegarant1" >
+                        <option value=""></option>
+                        <option value="Tananarivo Jamaat">Tananarivo Jamaat</option>
+                        <option value="Morondava Jamaat">Morondava Jamaat</option>
+                        <option value="Majinga Jamaat">Majunga Jamaat</option>
+                        <option value="Maroantsetra Jamaat">Maroantsetra Jamaat</option>
+                        <option value="Maintirano Jamaat">Maintirano Jamaat</option>
+                        <option value="Fort Dauphin Jamaat">Fort Dauphin Jamaat</option>
+                        <option value="Ambilobe Jamaat">Ambilobe Jamaat</option>
+                        <option value="Ambanja Jamaat">Ambanja Jamaat</option>
+                        <option value="Vohemar Jamaat">Vohemar Jamaat</option>
+                        <option value="Sambava Jamaat">Sambava Jamaat</option>
+                        <option value="Diego Jamaat">Diego Jamaat</option>
+                    </select>                    </td>
+                    <td>
+                        Moze
+                        <select name="mozegarant2" >
+                            <option value=""></option>
+                            <option value="Tananarivo Jamaat">Tananarivo Jamaat</option>
+                            <option value="Morondava Jamaat">Morondava Jamaat</option>
+                            <option value="Majinga Jamaat">Majunga Jamaat</option>
+                            <option value="Maroantsetra Jamaat">Maroantsetra Jamaat</option>
+                            <option value="Maintirano Jamaat">Maintirano Jamaat</option>
+                            <option value="Fort Dauphin Jamaat">Fort Dauphin Jamaat</option>
+                            <option value="Ambilobe Jamaat">Ambilobe Jamaat</option>
+                            <option value="Ambanja Jamaat">Ambanja Jamaat</option>
+                            <option value="Vohemar Jamaat">Vohemar Jamaat</option>
+                            <option value="Sambava Jamaat">Sambava Jamaat</option>
+                            <option value="Diego Jamaat">Diego Jamaat</option>
+                        </select>                    </td>
+                </tr>
+            </table>
+
+
+            <button class="form__btn" id="btn-3-prev">Précédent</button>
+            <button class="form__btn" id="btn-3-next">Suivant</button>
+        </form>
+
+
+    </main>
+    </main>
+{% endblock %}

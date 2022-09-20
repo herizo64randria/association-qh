@@ -83,9 +83,9 @@
 
                         <div class="maxl">
 
-                                <a  class="btn btn-primary btn-lg" href="{{ path('garant1',{ 'id' : id_garant.id}) }}" id='pdfgarant1'  target="_blank">
+                                <a  class="btn btn-primary btn-lg" href="{{ path('garant1',{ 'id' : demandeqh.id}) }}" id='pdfgarant1'  target="_blank">
                                     <i class="fa fa-print"></i> {{ 'garant.garant1'|trans }}</button></a>
-                                 <a  class="btn btn-primary btn-lg" href="{{ path('garant2',{ 'id' : id_garant1.id}) }}" id='pdfgarant2'  target="_blank">
+                                 <a  class="btn btn-primary btn-lg" href="{{ path('garant2',{ 'id' : demandeqh.id}) }}" id='pdfgarant2'  target="_blank">
                                 <i class="fa fa-print"></i> {{ 'garant.garant2'|trans }}</button></a>
 
                         </div>
@@ -95,7 +95,25 @@
 
 
             </div>
-            <a  id="etape" href="{{ path('ajouter_dossier') }}"  class="btn-link btn btn-lg text-center float-right "  >{{ 'demandeqh_ajouter.suivant'|trans }}</a>
+ <div class="row">
+
+                <div class="col-12">
+                    <div class="form-group" >
+
+                        <div class="maxl">
+
+                   <a class="btn btn-lg btn-success" style="text-align: right"  href="{{ path('pagetestgarant',{'id':demandeqh.id}) }}"  class="btn-link btn btn-lg text-center float-right "  >Retour</a>
+
+                        </div>
+
+                    </div>
+                </div>
+    </div>
+
+
+        {#    <a  id="etape" href="{{ path('ajouter_dossier') }}"  class="btn-link btn btn-lg text-center float-right "  >{{ 'demandeqh_ajouter.suivant'|trans }}</a>
+#}
+
             <br>
 
         </form>

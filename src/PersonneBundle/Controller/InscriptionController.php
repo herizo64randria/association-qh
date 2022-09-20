@@ -11,8 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\MultipleUpload;
 use DemandeQhBundle\Entity\Moze;
-
-
+use UserBundle\Entity\User;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 /**
  * Inscription des Utilisateurs
  *
@@ -34,7 +35,9 @@ class InscriptionController extends Controller
         if($request->getMethod() == 'POST'){
             $em = $this->getDoctrine()->getManager();
             //test des données
-            $types = array('nom', 'prenom', 'nom_its', 'adresse', 'ville', 'num_sabil', 'num_its', 'email1', 'mdp1', 'phone1');
+           // $types = array('nom', 'prenom', 'nom_its', 'adresse', 'ville', 'num_sabil', 'num_its', 'email1', 'mdp1', 'phone1');
+            $types = array('email1','email2', 'mdp2', 'mdp1');
+
             $vide = 0;
 
             foreach ($types as $type){
@@ -45,13 +48,13 @@ class InscriptionController extends Controller
                 return new Response('Vous devez remplir toute les champs. Veuillez réessayer');
             }
 
-            $moze = $em->getRepository('DemandeQhBundle:Moze')->findOneBy(array('id'=>$_POST['moze']));
+/* $moze = $em->getRepository('DemandeQhBundle:Moze')->findOneBy(array('id'=>$_POST['moze']));*/
             $personne = new Personne();
             $uploads= new MultipleUpload();
             $upload = new MonService();
             $tab_cin = array();
 
-            if(isset($_FILES['scancin']))
+           /* if(isset($_FILES['scancin']))
             {
                 if($res = $uploads->uploadFichiers('cin','cin','scancin'))
                 {
@@ -64,17 +67,17 @@ class InscriptionController extends Controller
 
                     $personne->setScanCin($tab_cin);
                 }
-            }
+            }*/
 
-            $personne->setNom($_POST['nom']);
+           /* $personne->setNom($_POST['nom']);
             $personne->setPrenom($_POST['prenom']);
             $personne->setNomIts($_POST['nom_its']);
             $personne->setAdresse($_POST['adresse']);
             $personne->setVille($_POST['ville']);
-            $personne->setNumeroSabil($_POST['num_sabil']);
+            $personne->setNumeroSabil($_POST['num_sabil']);*/
             $personne->setEmail($_POST['email1']);
             $personne->setMdp($_POST['mdp1']);
-            $personne->setNum1($_POST['phone1']);
+           /* $personne->setNum1($_POST['phone1']);
             $personne->setTypePiece($_POST['piece_identite']);
             $personne->setLieu($_POST['lieu_naissance']);
             $personne->setProfession($_POST['profession']);
@@ -88,12 +91,12 @@ class InscriptionController extends Controller
             $personne->setMoze($moze);
             $date_cin = \DateTime::createFromFormat('d/m/Y', $_POST['date_cin']);
             $personne->setDateCin($date_cin);
-            $personne->setSexe($_POST['sexe']);
+            $personne->setSexe($_POST['sexe']);*/
 
             $monservice = new MonService();
             $personne->setSlug($monservice->randomLettre(10));
 
-            if(isset($_POST['phone2'])){
+            /*if(isset($_POST['phone2'])){
                 $personne->setNum2($_POST['phone2']);
             }
             if(isset($_POST['phone3'])){
@@ -112,7 +115,7 @@ class InscriptionController extends Controller
                     return new Response('Erreur! Erreur dans le téléchargement de l\'images..');
                 }
             }
-           
+           */
 
             $comptePaie = new Compte_Paie();
             $comptePaie->setSlug($monservice->randomLettre(10));
@@ -123,15 +126,97 @@ class InscriptionController extends Controller
             $em->persist($comptePaie);
             $em->persist($personne);
 
-            $em->flush();
 
-            return $this->render('@Personne/Inscription/confirmation.html.twig');
+            $em->flush();
+/*
+            $user = $this->get('fos_user.user_manager')->findUserByEmail($email);
+            $url = $this->generateUrl('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), true);
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Registration confirmation')
+                ->setFrom('rijarija1991@gmail.com')
+                ->setTo($email)
+                ->setContentType('text/html')
+                ->setBody(
+                    $this->renderView(
+                        "@Personne/Inscription/confirmation.html.twig", array(
+                        'user' => $user,
+                        'url' => $url))
+                )
+            ;
+
+            $mailer = $this->get('swiftmailer.mailer');
+            $mailer->send($message);*/
+
+           $this->sendConfirmationEmail($personne,$_POST['email1']);
+            return $this->render('@Personne/Inscription/message.html.twig');
 
         }
 
         return $this->render('@Personne/Inscription/incription.html.twig',array('mozes'=>$mozes));
     }
+    /**
+     * PROFIL des Utilisateurs
+     *
+     * @Route("/c/email/confirme/{id}", name="personne1_confirmer")
+     */
+    public function confirmerUserAction(Request $request ,Personne $personne)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = new User();
+        //$personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('id'=>$personne));
+        $user->setNom($personne->getNom());
+        $user->setPrenom($personne->getPrenom());
 
+        $user->setUsername('*');
+
+        $user->setPlainPassword($personne->getMdp());
+        $user->setEmail($personne->getEmail());
+        $user->setEmailCanonical($personne->getEmail());
+        $user->setRoles(array('ROLE_USER'));
+        $user->setEnabled(true);
+
+       $userMager = $this->container->get('fos_user.user_manager');
+        $userMager->updateUser($user, true);
+
+        $personne->setMdp(null);
+        $personne->setUserCompte($user);
+
+
+        $em->persist($user);
+        $em->persist($personne);
+
+        $em->flush();
+
+        return $this->redirectToRoute('fos_user_security_login');
+    }
+
+    private function sendConfirmationEmail(Personne  $personne,$email)
+    {
+
+
+        $subject = 'Email Confirmation';
+        $label = 'Confirm Email';
+
+
+        $href = $this->generateUrl('personne1_confirmer',array('id'=>$personne->getId()));
+        $hote = $_SERVER['HTTP_HOST'];
+        $url=$href;
+        $message = \Swift_Message::newInstance()
+            ->setSubject($subject)
+            ->setFrom('rijarija1991@gmail.com')
+            ->setTo( $email )
+            ->setContentType('text/html')
+            ->setBody(
+                $this->renderView(
+                    "@Personne/Inscription/confirmation.html.twig", array(
+                    'url' => $url))
+            );
+
+        $this->get('mailer')->send($message);
+
+        return true;
+    }
     /**
      * Inscription des Utilisateurs
      *

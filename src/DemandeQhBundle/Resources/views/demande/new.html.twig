@@ -2,30 +2,312 @@
 
 {% block body_container %}
 
-    <style>
-        /* Make the image fully responsive */
-        .carousel-inner img {
-            width: 100%;
-            height: 100%;
-            background-color: #0088CC;
-        }
-        fieldset.groove {
-            border: 1px outset #1b0b0e;
-            box-shadow: 4px 4px 0px black;
-        }
-        h1,h2,h3,label,button,b,input,select,textarea,p {
-            text-shadow: 0.5px 0.5px 2px black;
 
-        }
-
-    </style>
     <div class="col-12">
+      <h1 style="text-align:center"></h1>
+        <main>
+
+            <div class="stepper">
+                <div class="step--1 step-active">Vos infos</div>
+                <div class="step--2">Votre demande</div>
+                <div class="step--3">Vos garanties</div>
+                <div class="step--4">Fin</div>
+            </div>
+
+            <form class="form form-active">
+                <div id="1" style="margin-left: -15px">
+                    <div class="form--header-container">
+                        <h1 class="form--header-title">
+                            FAIZ E MOHAMMADI QARDAN HASANAH
+                        </h1>
+
+                        <p class="form--header-text">
+
+                        </p>
+                    </div>
+                    <table>
+                        <tr><td>Photo :{{ personne.moze.moze }}</td><td><input type="file" name="photo" /></td></tr>
+                        <tr><td>Moze :</td><td>
+                                <select name="moze" id="moza">
+                                    {% for moze in mozes %}
+                                    <option
+                                            {% if(personne.moze.moze==moze.moze) %}
+                                            selected
+                                            {% endif %}
+                                            value="{{ moze.moze }}">{{ moze.moze }}</option>
+
+                                    {% endfor %}
+                                </select>
+                            </td></tr>
+                    </table>
+                    <table style="width: 25rem;">
+
+                        <tr>
+                            <td>
+                                ITS N° </br>
+                                <input id="itsuser" value="{{ personne.numeroIts }}" type="text" name="its" /></td>
+                            <b class="text-danger" id="err_itsuser"></b>
+                            <div class="form--message"></div>
+                            <td>
+                                Sabil N°</br><input value="{{ personne.numeroSabil }}" id="tab" type="text" name="sabil" /></td>
+                            <td>
+                                Age </br> <input value="{{ personne.datenaissance|date('d/m/Y') }}" id="tab" type="text" name="age" /></td>
+                        </tr>
+
+                      </table>
+                    <hr>
+                    <p class="form--header-text">
+                        Nom inscrit sur la carte ITS
+                    </p>
+                    <table style="width: 25rem;">
+
+                        <tr>
+                            <td>
+                                Préfixe </br>
+                                <select name="prefixe" id="tab0" >
+
+                                    <option value="">  </option>
+                                    <option value="Sheik."> Sheik. </option>
+                                    <option value="Mulla."> Mulla. </option>
+                                    <option value="Bhai."> Bhai. </option>
+                                    <option value="Behn."> Behn. </option>
+
+                                </select>
+                            </td><td>
+                                Prénom</br><input value="{{ personne.prenom }}" name="prenom" id="tab2" type="text" placeholder="" /></td>
+                            <td>
+                                Nom de famille </br> <input value="{{ personne.nom }}" name="nom" id="tab2" type="text" placeholder="" /></td>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <button class="form__btn" id="btn-1" onclick="test_its('itsuser','err_itsuser')">Suivant</button>
+            </form>
+            <form class="form">
+                <div class="form--header-container">
+                    <h1 class="form--header-title">
+                        FAIZ E MOHAMMADI QARDAN HASANAH
+                    </h1>
+
+                    <p class="form--header-text">
+
+                    </p>
+                </div>
+
+                <table>
+                    <tr><td>Montant demandé en Ariary <br><input type="text" name="montant" /></td></tr>
+                    <tr>
+                        <td><br>
+                            <ul style="list-style: none">
+                                <li>Remboursement en <br><input type="number" name="mois" /></li>
+                                <li>Indiquez le nombre de mois ou d'années de remboursement</li>
+                            </ul><br>
+
+                        </td><td>
+                            <div id="div1" >Mensualité ou Annuel <br>
+                                 <input type="radio"
+                                             name="unite" value="mois">
+                                    <label for="contactChoice1">Mois</label><br>
+
+                                <input type="radio"
+                                       name="unite" value="annee">
+                                <label for="contactChoice1">Années</label>
+
+                            </div>
+
+                        </td></tr>
+                    <tr >
+                        <td style="padding-top: 5px">
+                            <span > Détaillez la raison du prêt / Vos Motifs </span>
+                            <textarea name="motif" id="area" cols="30" rows="9"></textarea>
+                        </td>
+                        <td style="padding-top: 55px">
+                            <div id="div1">
+                                Type de question <br>
+                                <input type="checkbox" id="coding" name="interest" value="coding">
+                                <label for="coding">Culturel</label>
+                            </div>
+                            <div id="div1">
+                                <input type="checkbox" id="music" name="question" value="music">
+                                <label for="music">Social</label>
+                            </div>
+                            <div id="div1">
+                                <input type="checkbox" id="art" name="question" value="art">
+                                <label for="art">Professionel</label>
+                            </div>
+                            <div id="div1">
+                                <input type="checkbox" id="sports" name="question" value="sports">
+                                <label for="sports">Personnel</label>
+                            </div>
+                            <div id="div1">
+                                <input type="checkbox" id="other" name="question" value="other">
+                                <label for="other">Autre</label>
+                                <input type="text" id="otherValue" name="other">
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+                <script>
+                    var otherCheckbox = document.querySelector('input[value="other"]');
+                    var otherText = document.querySelector('input[id="otherValue"]');
+                    var msg = document.querySelector('.form--message');
+                    otherText.style.visibility = 'hidden';
+                    msg.style.visibility = 'hidden';
+                    otherCheckbox.onchange = function() {
+                        if(otherCheckbox.checked) {
+                            otherText.style.visibility = 'visible';
+                            otherText.value = '';
+                        } else {
+                            otherText.style.visibility = 'hidden';
+                        }
+                    };
+                    function test_its(x,y) {
+
+                        var str = document.getElementById(x).value;
+
+                        var patt1 = /^[1-9]/g;
+                        var res = str.match(patt1);
+                        //alert(res);
+                        var taille = str.length;
+                        if(res!=null && taille==8){
+                            $(y).text('');
+
+
+                            return true;
+                        }
+                        else
+                        {
+                            //alert($('#itsuser').val())
+                            //alert('Entrer un nombre de 8 chiffres et qui ne commence pas par zéro');
+                            //$(y).text('Entrer un nombre de 8 chiffres et qui ne commence pas par zéro');
+                            return false;
+                        }
+
+                    }
+                </script>
+
+                <button class="form__btn" id="btn-2-prev">Précédent</button>
+                <button class="form__btn" id="btn-2-next">Suivant</button>
+            </form>
+            <form class="form">
+                <div class="form--header-container">
+                    <h1 class="form--header-title">
+                        FAIZ E MOHAMMADI QARDAN HASANAH
+                    </h1>
+
+                    <p class="form--header-text">
+
+                    </p>
+                </div>
+                <legend style="text-align: left">Votre Garant1</legend>
+                <table>
+                    <tr>
+                        <td> Prénom <br>
+                            <input id="tab" type="text" name="pgarant1" /></td>
+                        <td> Nomde famille <br><input id="tab"type="text" name="ngarant1" /></td>
+
+                        <td> Téléphone <br><input  id="tab" type="text" name="telgarant1"/></td>
+                    </tr>
+                </table>
+                <table>
+                    <td>ITS N°
+                        <input id="tab" type="text" name="itsgarant1" /></td>
+                    <td>
+                        Moze
+                        <select name="mozegarant1" id="tab">
+                            <option value=""></option>
+                            <option value="Tananarivo Jamaat">Tananarivo Jamaat</option>
+                            <option value="Morondava Jamaat">Morondava Jamaat</option>
+                            <option value="Majinga Jamaat">Majunga Jamaat</option>
+                            <option value="Maroantsetra Jamaat">Maroantsetra Jamaat</option>
+                            <option value="Maintirano Jamaat">Maintirano Jamaat</option>
+                            <option value="Fort Dauphin Jamaat">Fort Dauphin Jamaat</option>
+                            <option value="Ambilobe Jamaat">Ambilobe Jamaat</option>
+                            <option value="Ambanja Jamaat">Ambanja Jamaat</option>
+                            <option value="Vohemar Jamaat">Vohemar Jamaat</option>
+                            <option value="Sambava Jamaat">Sambava Jamaat</option>
+                            <option value="Diego Jamaat">Diego Jamaat</option>
+                        </select>                    </td>
+                </table>
+                <hr>
+                <legend style="text-align: left">Votre Garant2</legend>
+                <table>
+                    <tr>
+                        <td> Prénom <br>
+                            <input id="tab" type="text" name="pgarant2" /></td>
+                        <td> Nomde famille <br><input id="tab"type="text" name="ngarant2" /></td>
+
+                        <td> Téléphone <br><input  id="tab" type="text" name="telgarant2"/></td>
+                    </tr>
+                </table>
+                <table>
+                    <td>ITS N°
+                        <input id="tab" type="text" name="itsgarant2" /></td>
+                    <td>
+                        Moze
+                        <select name="mozegarant2" id="tab">
+                            <option value=""></option>
+                            <option value="Tananarivo Jamaat">Tananarivo Jamaat</option>
+                            <option value="Morondava Jamaat">Morondava Jamaat</option>
+                            <option value="Majinga Jamaat">Majunga Jamaat</option>
+                            <option value="Maroantsetra Jamaat">Maroantsetra Jamaat</option>
+                            <option value="Maintirano Jamaat">Maintirano Jamaat</option>
+                            <option value="Fort Dauphin Jamaat">Fort Dauphin Jamaat</option>
+                            <option value="Ambilobe Jamaat">Ambilobe Jamaat</option>
+                            <option value="Ambanja Jamaat">Ambanja Jamaat</option>
+                            <option value="Vohemar Jamaat">Vohemar Jamaat</option>
+                            <option value="Sambava Jamaat">Sambava Jamaat</option>
+                            <option value="Diego Jamaat">Diego Jamaat</option>
+                        </select>                    </td>
+                </table>
+                <button class="form__btn" id="btn-3-prev">Précédent</button>
+                <button class="form__btn" id="btn-3-next">Suivant</button>
+            </form>
+            <form class="form">
+                <div class="form--header-container">
+                    <h1 class="form--header-title">
+                        FAIZ E MOHAMMADI QARDAN HASANAH
+                    </h1>
+
+                    <p class="form--header-text">
+
+                    </p>
+                </div>
+
+                <p style="white-space: pre">
+                    Si votre demande est acceptée, vous devez préparer les documents ci-dessous:
+
+                    - Une lettre du responsable de QH de votre ville: démontrant que vous n'avez pas emprunter de QH dans votre ville
+
+                    - Photocopie CIN du demandeur et des deux Garants
+
+                    - Photocopie couleur de votre carte ITS
+
+                    - Photocopie couleur des cartes ITS des deux Garants (G1 & G2)
+
+                    - Safai Chitthi délivré par votre Amil Saheb
+
+                    - Formulaire de vérification de l'or, Kalidas devra la remplir: (Modèle disponible chez nous)
+
+                    - Formulaire de Garantie: à remplir par les deux Garants (Modèle disponible chez nous)
+
+                    Pour toutes autres demandes:
+
+                    fmqardanhasanah@gmail.com ou +261 34 05 230 62
+                </p>
+                <button class="form__btn" id="btn-4-prev">Précédent</button>
+                <button  type ="submit" style="width:20rem" class="form__btn" id="btn-4">Valider Votre Demande</button>
+            </form>
+            <div class="form--message"></div>
+        </main>
         <br>
         <div class="container mt-auto">
 
-            <h1 class="text-primary" id="ftitre">{{ 'demandeqh_ajouter.titre'|trans }}</h1><br>
-
-                <div id="titre">
+           {# <h1 class="text-primary" id="ftitre">{{ 'demandeqh_ajouter.titre'|trans }}</h1><br>
+#}
+            {#    <div id="titre">
                     <button type="button" class="btn btn-link text-danger text-center " id="etape2" > Antécédents</button>
                     <button type="button" class="btn btn-link text-danger text-center d-none" id="etape3"> </button>
                     <button type="button" class="btn btn-link text-danger text-center d-none" id="etape4" > </button>
@@ -33,33 +315,33 @@
                     <button type="button" class="btn btn-link text-danger text-center d-none" id="etape6" > </button>
                     <button type="button" class="btn btn-link text-danger text-center d-none" id="etape7" > </button>
                 </div>
-
+#}
             <div id="myCarousel" class="carousel slide " data-interval="false">
 
                 <form action="#" method="post" id="formulaire" enctype="multipart/form-data">
                 <!-- The slideshow -->
-                <div class="carousel-inner">
+                {#<div class="carousel-inner">
 
-                    {#CAROUSEL 0#}
+                    #}{#CAROUSEL 0#}{#
                     {% include '@DemandeQh/demande/carousel0.html.twig' %}
 
-                    {#CAROUSEL 1#}
+                    #}{#CAROUSEL 1#}{#
                     {% include '@DemandeQh/demande/carousel1.html.twig' %}
 
-                    {#CAROUSEL 2#}
+                    #}{#CAROUSEL 2#}{#
                     {% include '@DemandeQh/demande/carousel2.html.twig' %}
 
-                    {#CAROUSEL 3#}
+                    #}{#CAROUSEL 3#}{#
                     {% include '@DemandeQh/demande/carousel3.html.twig' %}
 
-                    {#CAROUSEL 4#}
+                    #}{#CAROUSEL 4#}{#
                     {% include '@DemandeQh/demande/carousel4.html.twig' %}
 
-                    {#CAROUSEL 5#}
+                    #}{#CAROUSEL 5#}{#
                     {% include '@DemandeQh/demande/carousel5.html.twig' %}
-                    {#CAROUSEL 6#}
-                    {#{% include '@DemandeQh/demande/carousel6.html.twig' %}#}
-                </div>
+                    #}{#CAROUSEL 6#}{#
+                    #}{#{% include '@DemandeQh/demande/carousel6.html.twig' %}#}{#
+                </div>#}
 
               </form>
 
@@ -340,21 +622,7 @@
 
             });
 
-            function test_its(x,y) {
-                var str = document.getElementById(x).value;
-                var patt1 = /^[1-9]/g;
-                var res = str.match(patt1);
-                var taille = str.length;
-                if(res && taille==8){
-                    $(y).text('');
-                    return true;
-                }
-                else
-                {
-                    $(y).text('Entrer un nombre de 8 chiffres et qui ne commence pas par zéro');
-                    return false;
-                }
-            }
+
 
 
                 // function de requirement de carousel2
@@ -771,7 +1039,72 @@
             }
             else {return true }
             }
+            const formBtn1 = document.querySelector("#btn-1")
+            const formBtnPrev2 = document.querySelector("#btn-2-prev")
+            const formBtnNext2 = document.querySelector("#btn-2-next")
+            const formBtnPrev3 = document.querySelector("#btn-3-prev")
+            const formBtnNext3 = document.querySelector("#btn-3-next")
+            const formBtnPrev4 = document.querySelector("#btn-4-prev")
+            const formBtn4 = document.querySelector("#btn-4")
+            formBtn1.addEventListener("click", function(e) {
+                gotoNextForm(formBtn1, formBtnNext2, 1, 2)
+                e.preventDefault()
+            })
 
+            // Next button listener of form 2
+            formBtnNext2.addEventListener("click", function(e) {
+                gotoNextForm(formBtnNext2, formBtnNext3, 2, 3)
+                e.preventDefault()
+            })
+            formBtnNext3.addEventListener("click", function(e) {
+                gotoNextForm(formBtnNext3, formBtn4, 3, 4)
+                e.preventDefault()
+            })
+
+            // Previous button listener of form 2
+            formBtnPrev2.addEventListener("click", function(e) {
+                gotoNextForm(formBtnNext2, formBtn1, 2, 1)
+                e.preventDefault()
+            })
+            // Previous button listener of form 2
+            formBtnPrev3.addEventListener("click", function(e) {
+                gotoNextForm(formBtnNext3, formBtnNext2, 3,2)
+                e.preventDefault()
+            })
+            formBtnPrev4.addEventListener("click", function(e) {
+                gotoNextForm(formBtn4, formBtnNext3, 4,3)
+                e.preventDefault()
+            })
+            // Button listener of form 3
+           /* formBtn3.addEventListener("click", function(e) {
+                document.querySelector(`.step--3`).classList.remove("step-active")
+                document.querySelector(`.step--4`).classList.add("step-active")
+                formBtn3.parentElement.style.display = "none"
+                document.querySelector(".form--message").innerHTML = `
+   <h1 class="form--message-text">Your account is successfully created </h1>
+   `
+                e.preventDefault()
+            })*/
+            const gotoNextForm = (prev, next, stepPrev, stepNext) => {
+                // Get form through the button
+                const prevForm = prev.parentElement
+                const nextForm = next.parentElement
+                const nextStep = document.querySelector(`.step--${stepNext}`)
+                const prevStep = document.querySelector(`.step--${stepPrev}`)
+                // Add active/inactive classes to both previous and next form
+                nextForm.classList.add("form-active")
+                nextForm.classList.add("form-active-animate")
+                prevForm.classList.add("form-inactive")
+                // Change the active step element
+                prevStep.classList.remove("step-active")
+                nextStep.classList.add("step-active")
+                // Remove active/inactive classes to both previous an next form
+                setTimeout(() => {
+                    prevForm.classList.remove("form-active")
+                    prevForm.classList.remove("form-inactive")
+                    nextForm.classList.remove("form-active-animate")
+                }, 1000)
+            }
         </script>
 
     </div>

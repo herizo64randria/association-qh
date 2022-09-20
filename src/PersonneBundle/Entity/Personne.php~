@@ -25,20 +25,20 @@ class Personne
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=50)
+     * @ORM\Column(name="nom", type="string", length=50, nullable=true)
      */
     private $nom;
     /**
      * @var string
      *
-     * @ORM\Column(name="nationalite", type="string", length=50)
+     * @ORM\Column(name="nationalite", type="string", length=50, nullable=true)
      */
     private $nationalite;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=50)
+     * @ORM\Column(name="prenom", type="string", length=50, nullable=true)
      */
     private $prenom;
 
@@ -52,28 +52,28 @@ class Personne
     /**
      * @var string
      *
-     * @ORM\Column(name="nomIts", type="string", length=255)
+     * @ORM\Column(name="nomIts", type="string", length=255, nullable=true)
      */
     private $nomIts;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="numeroIts", type="string", length=50, unique=true)
+     * @ORM\Column(name="numeroIts", type="string", length=50, unique=true, nullable=true)
      */
     private $numeroIts;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="adresse", type="string", length=100)
+     * @ORM\Column(name="adresse", type="string", length=100, nullable=true)
      */
     private $adresse;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="num1", type="string", length=50)
+     * @ORM\Column(name="num1", type="string", length=50, nullable=true)
      */
     private $num1;
 
@@ -93,21 +93,21 @@ class Personne
     /**
      * @var string
      *
-     * @ORM\Column(name="sexe", type="string", length=25)
+     * @ORM\Column(name="sexe", type="string", length=25, nullable=true)
      */
     private $sexe;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="numeroSabil", type="string", length=255)
+     * @ORM\Column(name="numeroSabil", type="string", length=255, nullable=true)
      */
     private $numeroSabil;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ville", type="string", length=50)
+     * @ORM\Column(name="ville", type="string", length=50, nullable=true)
      */
     private $ville;
 
@@ -115,7 +115,7 @@ class Personne
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=50, unique=true)
+     * @ORM\Column(name="slug", type="string", length=50, unique=true, nullable=true)
      */
     private $slug;
 
@@ -129,14 +129,14 @@ class Personne
     /**
      * @var string
      *
-     * @ORM\Column(name="photo", type="string", length=250)
+     * @ORM\Column(name="photo", type="string", length=250, nullable=true)
      */
     private $photo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="scan", type="string", length=250)
+     * @ORM\Column(name="scan", type="string", length=250, nullable=true)
      */
     private $scan;
     /**
@@ -148,15 +148,21 @@ class Personne
     /**
      * @var string
      *
-     * @ORM\Column(name="numerocin", type="string", length=255)
+     * @ORM\Column(name="numerocin", type="string", length=255, nullable=true)
      */
     private $numerocin;
     /**
      * @var string
      *
-     * @ORM\Column(name="delivrer", type="string", length=50)
+     * @ORM\Column(name="delivrer", type="string", length=50, nullable=true)
      */
     private $delivrer;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prefixe", type="string", length=50, nullable=true)
+     */
+    private $prefixe;
     /**
      * @var \DateTime
      *
@@ -1057,4 +1063,80 @@ class Personne
         return $this->moze;
     }
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->inviter1 = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->personne1 = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add inviter1
+     *
+     * @param \PersonneBundle\Entity\Personne $inviter1
+     *
+     * @return Personne
+     */
+    public function addInviter1(\PersonneBundle\Entity\Personne $inviter1)
+    {
+        $this->inviter1[] = $inviter1;
+
+        return $this;
+    }
+
+    /**
+     * Remove inviter1
+     *
+     * @param \PersonneBundle\Entity\Personne $inviter1
+     */
+    public function removeInviter1(\PersonneBundle\Entity\Personne $inviter1)
+    {
+        $this->inviter1->removeElement($inviter1);
+    }
+
+    /**
+     * Get inviter1
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInviter1()
+    {
+        return $this->inviter1;
+    }
+
+    /**
+     * Add personne1
+     *
+     * @param \PersonneBundle\Entity\Personne $personne1
+     *
+     * @return Personne
+     */
+    public function addPersonne1(\PersonneBundle\Entity\Personne $personne1)
+    {
+        $this->personne1[] = $personne1;
+
+        return $this;
+    }
+
+    /**
+     * Remove personne1
+     *
+     * @param \PersonneBundle\Entity\Personne $personne1
+     */
+    public function removePersonne1(\PersonneBundle\Entity\Personne $personne1)
+    {
+        $this->personne1->removeElement($personne1);
+    }
+
+    /**
+     * Get personne1
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPersonne1()
+    {
+        return $this->personne1;
+    }
 }

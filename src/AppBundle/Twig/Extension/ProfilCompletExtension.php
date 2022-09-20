@@ -22,7 +22,15 @@ class ProfilCompletExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('profilComplet', array($this,'ProfilComplet')),
             new \Twig_SimpleFilter('datelettre', array($this,'dateLettre')),
+            new \Twig_SimpleFilter('ext',array($this,'extension')),
+
         );
+    }
+    public function extension($fichier)
+    {
+        //$resultat = explode('&',$fichier, 2)[1];
+        $resultat = substr(strrchr($fichier, '.'), 1);
+        return $resultat;
     }
     public function dateLettre($date)
     {

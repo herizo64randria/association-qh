@@ -236,6 +236,18 @@ class Garant
     /**
      * @var string
      *
+     * @ORM\Column(name="prefixe", type="string", nullable=true)
+     */
+    private $prefixe;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sabile", type="string", nullable=true)
+     */
+    private $sabile;
+    /**
+     * @var string
+     *
      * @ORM\Column(name="scanits", type="string", length=255,nullable=true)
      */
     private $scanits;
@@ -1176,5 +1188,53 @@ class Garant
     public function getSocieteDemandeqh()
     {
         return $this->societe_demandeqh;
+    }
+
+    /**
+     * Set prefixe
+     *
+     * @param string $prefixe
+     *
+     * @return Garant
+     */
+    public function setPrefixe($prefixe)
+    {
+        $this->prefixe = $prefixe;
+
+        return $this;
+    }
+
+    /**
+     * Get prefixe
+     *
+     * @return string
+     */
+    public function getPrefixe()
+    {
+        return $this->prefixe;
+    }
+
+    /**
+     * Set sabile
+     *
+     * @param string $sabile
+     *
+     * @return Garant
+     */
+    public function setSabile($sabile)
+    {
+        $this->sabile = $sabile;
+
+        return $this;
+    }
+
+    /**
+     * Get sabile
+     *
+     * @return string
+     */
+    public function getSabile()
+    {
+        return $this->sabile;
     }
 }

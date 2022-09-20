@@ -55,9 +55,10 @@ class AdminInscriptionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $procurations=$em->getRepository('PaieBundle:Procuration')->findBy(array('personne'=>$personne));
+
         return $this->render('@Personne/Admin/profil.html.twig', array(
             'personne' => $personne,
-            'procurations'=> $procurations
+            'procurations'=> $procurations,
         ));
     }
     /**
@@ -70,11 +71,14 @@ class AdminInscriptionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $personne=$em->getRepository('PersonneBundle:Personne')->findOneBy(array('userCompte'=>$user));
-
+        $datetime1 = new \DateTime(); // date actuelle
+        $datetime2 = $personne->getDateNaissance();
+        $age = $datetime1->diff($datetime2, true)->y;
         $procurations=$em->getRepository('PaieBundle:Procuration')->findBy(array('personne'=>$personne));
         return $this->render('@Personne/Admin/profil_user.html.twig', array(
             'personne' => $personne,
-            'procurations'=> $procurations
+            'procurations'=> $procurations,
+            'age'=>$age
         ));
     }
 

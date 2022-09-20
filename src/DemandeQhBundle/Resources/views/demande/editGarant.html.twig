@@ -1,0 +1,79 @@
+{% extends '@DemandeQh/demande/BaseDemandQH.html.twig' %}
+
+{% block body_container %}
+    <style>
+        <style>
+        {% include '@DemandeQh/style.css.twig' %}
+    </style>
+    </style>
+    <main>
+
+        <div class="stepper">
+
+            <div class="step--2">Votre demande</div>
+            <div class="step--3 step-active">Vos garanties</div>
+
+        </div>
+
+
+
+        <form class="form form-active" action="#" method="post">
+            <div class="form--header-container">
+                <h1 class="form--header-title">
+                    FAIZ E MOHAMMADI QARDAN HASANAH
+                </h1>
+
+                <p class="form--header-text">
+
+                </p>
+            </div>
+
+            <table id="tableau">
+                <tr>
+                    <td>
+                        <legend style="">Votre Garant1</legend>N° ITS  <br>
+                        <input value="{{ demandeQh.garant1.numeroIts }}" type="text" name="itsgarant1" /></td>
+                    <td>
+                        <legend style="">Votre Garant2</legend>
+                        N° ITS  <br>
+                        <input  value="{{ demandeQh.garant2.numeroIts }}" type="text" name="itsgarant2" /></td>
+                </tr>
+                <tr>
+                    <td>Nom selon ITS
+                        <input value="{{ demandeQh.garant1.nomIts }}" type="text" name="nitsgarant1" /></td>
+                    <td>Nom selon ITS
+                        <input  value="{{ demandeQh.garant2.nomIts }}" type="text" name="nitsgarant2" /></td>
+                    <td>
+                </tr>
+                <tr><td>
+                        Moze
+                        <select name="mozegarant1" >
+                            {% for moze in mozes %}
+                                <option
+                                        {% if(demandeQh.garant1.moze==moze.moze) %}
+                                        selected
+                                        {% endif %}="{{ moze.moze }}">{{ moze.moze }}</option>
+                            {% endfor %}
+
+                        </select>                    </td>
+                    <td>
+                        Moze
+                        <select name="mozegarant2" >
+                            {% for moze in mozes %}
+                                <option
+                                        {% if(demandeQh.garant2.moze==moze.moze) %}
+                                        selected
+                                        {% endif %}
+                                        value="{{ moze.moze }}">{{ moze.moze }}</option>
+                            {% endfor %}
+                        </select>                    </td>
+                </tr>
+            </table>
+
+            <button class="form__btn" id="btn-3-next">Valider</button>
+        </form>
+
+
+    </main>
+    </main>
+{% endblock %}
